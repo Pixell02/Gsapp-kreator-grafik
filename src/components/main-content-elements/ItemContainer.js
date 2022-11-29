@@ -4,6 +4,7 @@ import Block from "./Block";
 function ItemContainer(props) {
   return (
     <div className="Item-container">
+      {props.element}
     </div>
   );
 }
