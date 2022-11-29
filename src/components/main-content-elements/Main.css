@@ -4,9 +4,13 @@
 }
 .ml-5 {
     margin-left: 10px ;
+    min-height: 80vh;
 }
 .title-container {
     margin-left: 20px;
+}
+.title-container h3 {
+   padding-top: 10px;
 }
 .item-container {
     display: flex;
