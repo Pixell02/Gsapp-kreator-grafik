@@ -22,7 +22,7 @@ function LeftBar() {
              <li className="link-container"><span>Przeciwnicy</span></li>
           </a>
           <a href="/sponsors" className="text-white">
-            <li className="link-container"><span>Sposorzy</span></li>
+            <li className="link-container"><span>Sponsorzy</span></li>
           </a>
           <a href="/yourTeams" className="text-white">
           <li className="link-container"><span>Twoje dużyny</span></li>
