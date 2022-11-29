@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter,Link ,Route, Routes} from "react-router-dom";
+import {BrowserRouter,Link ,Route, Routes, redirect} from "react-router-dom";
 import { authentication } from "./firebase-config";
 import Header from "./components/Header";
 import Footer from "./components/MainFooter";
@@ -17,11 +17,14 @@ import Offer from "./components/Offer";
 import Account from "./components/Account";
 import "./App.css"
 function App() {
+  
+     
+  
 
   return (
     <BrowserRouter>
     <Routes>
-      <Route path="/login" element = {<Login/>} />
+      <Route exact path="/login" element = {<Login/>} />
       <Route path="/register" element = {<Register />} />
       <Route path="/generator" element = {<Generator />} />
       <Route path="/catalog" element = {<Catalog />} />
