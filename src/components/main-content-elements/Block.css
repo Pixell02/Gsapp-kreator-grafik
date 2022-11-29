@@ -1,0 +1,32 @@
+.item-window {
+    margin: 20px 20px 20px 20px;
+    width: 200px;
+    height: 150px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease-in-out ;
+    display: flex;
+    flex-direction: column;
+}
+.item-window:hover {
+    transition: 0.3s ease-in-out ;
+    background-color: rgb(226, 226, 226);
+}
+.name-content {
+    position: relative;
+    margin: 2px 0px 0px 5px;
+    font-size: 15px;
+    font-weight: 600;
+    width: 90%;
+}
+.image-content {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+.image-content img {
+    max-height: 100%;
+    max-width: 150px;
+}

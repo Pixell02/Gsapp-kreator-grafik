@@ -1,0 +1,9 @@
+h3 {
+    text-align: left;
+}
+.Item-container {
+    width: 100%;
+    display: flex;
+    min-height: 10vh;
+    flex-wrap: wrap;
+}

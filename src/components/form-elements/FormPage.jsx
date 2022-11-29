@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {authentication} from '../firebase-config';
+import {authentication} from '../../firebase-config';
 import {getAuth, signInWithPopup, GoogleAuthProvider} from 'firebase/auth'; 
 import './formPage.css';
-import google from '../img/google.png';
-import facebook from '../img/fb.png';
+import google from '../../img/google.png';
+import facebook from '../../img/fb.png';
 
-function FormPage () {
+function FormPage (props) {
    
     const signInWithGoogle = () => {
         const provider = new GoogleAuthProvider();
@@ -19,11 +19,11 @@ function FormPage () {
         })
     }
     return (
-        // <form action="/Your-Team" method='post'>
+        
         <div className="form">
           <div className="form-group">
             <div className="text-left">
-                <p className='login'>Zaloguj sie</p>
+                <p className='login'>{props.name}</p>
             </div>
             <div className="google-btn">
               <button onClick={signInWithGoogle}>
@@ -31,7 +31,7 @@ function FormPage () {
                   <img src={google} alt="google_logo" className='logo'/>
                 </div>
                   <div className='login-content'>
-                    <span> Zaloguj się przy pomocy Google</span>
+                    <span> {props.name} przy pomocy Google</span>
                   </div>
               </button>
             </div>
@@ -41,19 +41,22 @@ function FormPage () {
                     <img src={facebook} alt="facebook_logo" className='logo' />
                   </div>
                     <div className="login-content">
-                      <span> Zaloguj się przy pomocy facebooka</span>
+                      <span> {props.name} przy pomocy facebooka</span>
                     </div>
                 </button>
             </div>
-            <input type="email" name="email" placeholder='email *' />
+            <div className="email-container">
+              <input type="email" name="email"  placeholder='email *'  />
+            </div>
             <input type="password" name="password" placeholder='hasło *' />
-            <button type='submit' className='btn btn-dark button'>Zaloguj się</button>
+            <div className="email-container">
+              <button type='submit' className='btn btn-dark button'>Zaloguj się</button>
+            </div>
             <div className="text-left register-container">
-                <span>Nie masz jeszcze konta? <a href='/register' className='bold-text' > Zarejestruj się</a></span>
+             {props.footer}
             </div>
           </div>
          </div>
-        // </form>
     );
 }
 
