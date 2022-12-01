@@ -1,30 +1,27 @@
 import React from "react";
-import {BrowserRouter,Link ,Route, Routes, redirect} from "react-router-dom";
-import { authentication } from "./firebase-config";
+import {BrowserRouter,Link ,Route, Routes, Navigate} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/MainFooter";
 import FormPage from "./components/form-elements/FormPage";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Generator from "./components/Generator";
-import Catalog from "./components/Catalog";
-import YourTeamPanel from "./components/YourTeamPanel";
-import Players from "./components/Players";
-import Opponents from "./components/Opponents";
-import Sponsors from "./components/Sponsors";
-import YourTeams from "./components/YourTeams";
-import Offer from "./components/Offer";
-import Account from "./components/Account";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Generator from "./pages/Generator/Generator";
+import Catalog from "./pages/Catalog/Catalog";
+import YourTeamPanel from "./pages/YourTeamPanel/YourTeamPanel";
+import Players from "./pages/Players/Players";
+import Opponents from "./pages/Opponents/Opponents";
+import Sponsors from "./pages/Sponsors/Sponsors";
+import YourTeams from "./pages/YourTeams/YourTeams";
+import Offer from "./pages/Offer/Offer";
+import Account from "./pages/Account/Account";
 import "./App.css"
 function App() {
   
-     
-  
-
   return (
     <BrowserRouter>
     <Routes>
-      <Route exact path="/login" element = {<Login/>} />
+      <Route path="/" element = {<Navigate to="/login" />} />
+      <Route path="/login" element = {<Login/>} />
       <Route path="/register" element = {<Register />} />
       <Route path="/generator" element = {<Generator />} />
       <Route path="/catalog" element = {<Catalog />} />

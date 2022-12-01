@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './Header';
-import LeftBar from './Left-Bar';
-import PlayerMainContent from './main-content-elements/Player-MainContent';
-import "../App.css";
+import Header from '../../components/Header';
+import LeftBar from '../../components/Left-Bar';
+import PlayerMainContent from '../../components/main-content-elements/Player-MainContent';
+import "../../App.css";
   
 function Players () {
 

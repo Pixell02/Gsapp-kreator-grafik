@@ -1,17 +1,23 @@
-import React from 'react';
 import './Block.css';
 
-function Block(props) {
-    return (
-        <div className='item-window'>
-            <div className='name-content'>
-                <span className='name-content'>{props.name}</span>
-            </div>
-            <div className='image-content'>
-                <img src={props.img} alt={props.img} />
-            </div>
-        </div>
-    );
-}
+export default function Block({posters}) {
 
-export default Block;
+
+    return (
+        
+            <div className='catalog-container'>  
+            {posters.map((poster) => (
+              <div className='item-window'>
+              <div className='name-content'>
+                  <span key={poster.key} className='name-content'>{poster.title}</span>
+                </div>
+                <div className='image-content'>
+                  <img src={poster.img} alt={poster.img} />
+                </div>   
+                </div>
+            
+            ))}
+            </div>
+        
+    )
+}

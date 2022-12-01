@@ -1,9 +1,8 @@
 import React from 'react';
-import Header from './Header';
-import LeftBar from './Left-Bar';
-import MainYourTeams from './main-content-elements/MainYourTeams';
-
-import "../App.css";
+import Header from '../../components/Header';
+import LeftBar from '../../components/Left-Bar';
+import MainYourTeams from '../../components/main-content-elements/MainYourTeams';
+import "../../App.css";
 function YourTeams () {
 
     return (

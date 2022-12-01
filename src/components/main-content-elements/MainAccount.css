@@ -1,0 +1,19 @@
+.account-content {
+    display: flex;
+    flex-direction: column;
+    
+}
+.account-content .account-items input[type="text"],
+.account-content .account-items label {
+    border: none;
+    margin-left: 20px;
+}
+.account-content .account-items input[type="text"]{
+    background-color: rgb(241, 241, 241);
+}
+.account-content .account-items input[type="text"]:first-child,
+.account-content .account-items label:first-child {
+    margin-top: 10px;
+    
+    
+}

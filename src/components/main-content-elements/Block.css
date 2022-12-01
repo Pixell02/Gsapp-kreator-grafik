@@ -30,3 +30,8 @@
     max-height: 100%;
     max-width: 150px;
 }
+.catalog-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
