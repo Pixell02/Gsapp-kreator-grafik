@@ -1,17 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import Header from '../../components/Header';
-import FormPage from '../../components/form-elements/FormPage';
+import LoginPage from '../../components/form-elements/FormPage';
 import Footer from '../../components/MainFooter';
 import "../../App.css";
 function Login() {
+    
     return (
       <div className="page-container">
         <div className="content-wrap">
         <Header />
         <div className="form-align-center">
-          <FormPage name = "Zaloguj się" footer = {
+          <LoginPage name = "Zaloguj się" footer = {
           <span>Nie masz jeszcze konta? 
-            <a href='/register' className='bold-text' > Zarejestruj się</a>
+            <Link to='/register' className='bold-text' > Zarejestruj się</Link>
           </span>}/>
         </div>
        </div>

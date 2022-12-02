@@ -1,42 +1,45 @@
 import React from "react";
+import { Link } from 'react-router-dom'
+import { useLogout } from '../hooks/useLogout'
 import './LeftBar.css';
 
 
 function LeftBar() {
+  const { logout } = useLogout();
   return (
     <div className="left-bar bg-secondary">
       <ul>
-          <a href="/generator" className="text-white">
+          <Link to="/generator" className="text-white">
             <li className="link-container"><span>Generator grafik</span></li>
-          </a>        
-          <a href="/catalog" className="text-white">
+          </Link>        
+          <Link to="/catalog" className="text-white">
             <li className="link-container"><span>Katalog</span></li>
-          </a>
-          <a href="/yourTeamPanel" className="text-white">
+          </Link>
+          <Link to="/yourTeamPanel" className="text-white">
            <li className="link-container"><span>Panel drużyny</span></li>
-          </a>
-          <a href="/players" className="text-white">
+          </Link>
+          <Link to="/players" className="text-white">
             <li className="link-container"><span>Zawodnicy </span></li>
-          </a>        
-          <a href="/opponents" className="text-white">
+          </Link>        
+          <Link to="/opponents" className="text-white">
              <li className="link-container"><span>Przeciwnicy</span></li>
-          </a>
-          <a href="/sponsors" className="text-white">
+          </Link>
+          <Link to="/sponsors" className="text-white">
             <li className="link-container"><span>Sponsorzy</span></li>
-          </a>
-          <a href="/yourTeams" className="text-white">
+          </Link>
+          <Link to="/yourTeams" className="text-white">
           <li className="link-container"><span>Twoje dużyny</span></li>
-          </a>
+          </Link>
         
-          <a href="/offer" className="text-white">
+          <Link to="/offer" className="text-white">
            <li className="link-container"><span>Kup dostęp</span></li>
-          </a>
-          <a href="/account" className="text-white">
+          </Link>
+          <Link to="/account" className="text-white">
             <li className="link-container"><span>Konto</span></li>
-          </a>
-          <a href="/login" className="text-white">
-            <li className="link-container"><span>Wyloguj się</span></li>
-          </a>
+          </Link>
+          <Link to="/login" className="text-white">
+            <li onClick={ logout } className="link-container"><span>Wyloguj się</span></li>
+          </Link>
       </ul>
     </div>
   );
