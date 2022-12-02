@@ -1,6 +1,6 @@
 import Title from './Title';
 import Footer from '../MainFooter';
-import Block from './Block';
+import Catalog from './Block';
 import './Main.css';
 import { useCollection } from '../../hooks/useCollection';
 
@@ -13,7 +13,7 @@ function MainCatalog() {
             <div className="ml-5">
               <Title  title = "Katalog"/>
                 <div className='item-container'>
-                  {posters && <Block posters = {posters} />}
+                  {posters && <Catalog posters = {posters} />}
                 </div>
             </div>
             <Footer />

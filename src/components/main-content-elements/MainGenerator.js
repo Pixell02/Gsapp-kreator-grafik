@@ -1,6 +1,5 @@
 import React from 'react';
 import Title from './Title';
-import Buttons from './Buttons';
 import Footer from '../MainFooter';
 import ItemContainer from './ItemContainer';
 import Block from './Block';
@@ -12,7 +11,7 @@ function MainGenerator() {
         <div className='main-content'>
             <div className="ml-5">
             <Title  title = "Wygeneruj grafikę"/>
-            <Block name = "wybierz grafikę" img = {plusIcon} />
+            {/* <Block  title = "wybierz grafikę" img = {plusIcon} /> */}
             <Title title = "Ulubione" />
             <ItemContainer />
             <Title title = "Propozycje" />

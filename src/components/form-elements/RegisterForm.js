@@ -1,21 +1,22 @@
-import { Navigate} from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { useState } from 'react'; 
-import { useLogin } from '../../hooks/useLogin'
+import { useSignup } from '../../hooks/useSignup'
 
 // import styles and images
 import './formPage.css';
 import google from '../../img/google.png';
 import facebook from '../../img/fb.png';
 
-function LoginPage (props) {
-    
+export default function RegisterForm(props) {
+
+      
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { error, login } = useLogin();
+    const { error, signup } = useSignup();
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      login(email, password);
+      signup(email, password);
     }
 
     return (
@@ -59,15 +60,12 @@ function LoginPage (props) {
             value={password}
             />
             <div className="email-container">
-              <button className='btn btn-dark button' >Zaloguj się</button>
-              
+              <button  className='btn btn-dark button' >Zaloguj się</button>
             </div>
             <div className="text-left register-container">
              {props.footer}
             </div>
           </div>
          </form>
-    );
+    )
 }
-
-export default LoginPage;

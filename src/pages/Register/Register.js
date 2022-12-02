@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import Header from "../../components/Header";
-import FormPage from "../../components/form-elements/FormPage";
+import RegisterForm from "../../components/form-elements/RegisterForm";
 import Footer from '../../components/MainFooter';
 import "../../App.css";
 
@@ -10,10 +11,10 @@ function Register() {
         <div className="content-wrap">
           <Header />
           <div className="form-align-center">
-          <FormPage
+          <RegisterForm
           name = "Zarejestruj się" footer = {
           <span>Masz już konto? 
-            <a href="/login">Zaloguj się</a>
+            <Link to="/login">Zaloguj się</Link>
           </span>
         } />
         </div>

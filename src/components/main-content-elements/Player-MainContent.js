@@ -12,7 +12,7 @@ function PlayerMainContent(props) {
         <div className="ml-5">
           <Title title = "Zawodnicy" />
           <Buttons name = "Dodaj zawodnika" />
-          <ItemContainer element = {<Block />} />
+          {/* <ItemContainer element = {<Block />} /> */}
         </div>
         <MainFooter />
       </div>
