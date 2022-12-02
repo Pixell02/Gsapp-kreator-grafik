@@ -1,7 +1,8 @@
 import { Navigate} from "react-router-dom";
 import { useState } from 'react'; 
 import { useLogin } from '../../hooks/useLogin'
-
+import { signInWithPopup, FacebookAuthProvider} from "firebase/auth";
+import { auth } from "../../firebase/config"
 // import styles and images
 import './formPage.css';
 import google from '../../img/google.png';
@@ -17,6 +18,17 @@ function LoginPage (props) {
       e.preventDefault();
       login(email, password);
       
+    }
+    const signInWithFacebook = () => {
+      
+      const provider = new FacebookAuthProvider();
+      signInWithPopup(auth, provider)
+       .then((res) => {
+          console.log(res);
+       })
+       .catch((err) => {
+        console.log(err.message);
+       })
     }
 
     return (
@@ -36,7 +48,7 @@ function LoginPage (props) {
               </button>
             </div>
             <div className="facebook-btn">
-                <button >
+                <button onClick={signInWithFacebook} >
                   <div className="logo-container">
                     <img src={facebook} alt="facebook_logo" className='logo' />
                   </div>
@@ -60,7 +72,7 @@ function LoginPage (props) {
             value={password}
             />
             <div className="email-container">
-              <button className='btn btn-dark button' >Zaloguj się</button>
+              <button  className='btn btn-dark button' >Zaloguj się</button>
               
             </div>
             <div className="text-left register-container">
