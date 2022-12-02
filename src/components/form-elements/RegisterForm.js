@@ -60,7 +60,7 @@ export default function RegisterForm(props) {
             value={password}
             />
             <div className="email-container">
-              <button  className='btn btn-dark button' >Zaloguj się</button>
+              <button  className='btn btn-dark button' >{props.name}</button>
             </div>
             <div className="text-left register-container">
              {props.footer}
