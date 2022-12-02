@@ -16,6 +16,7 @@ function LoginPage (props) {
     const handleSubmit = (e) => {
       e.preventDefault();
       login(email, password);
+      
     }
 
     return (
@@ -35,7 +36,7 @@ function LoginPage (props) {
               </button>
             </div>
             <div className="facebook-btn">
-                <button>
+                <button >
                   <div className="logo-container">
                     <img src={facebook} alt="facebook_logo" className='logo' />
                   </div>
