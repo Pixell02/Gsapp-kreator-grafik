@@ -1,7 +1,7 @@
-import { Navigate} from "react-router-dom";
+import { Navigate, useNavigate} from "react-router-dom";
 import { useState } from 'react'; 
 import { useLogin } from '../../hooks/useLogin'
-import { signInWithPopup, FacebookAuthProvider} from "firebase/auth";
+import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider} from "firebase/auth";
 import { auth } from "../../firebase/config"
 // import styles and images
 import './formPage.css';
@@ -19,16 +19,31 @@ function LoginPage (props) {
       login(email, password);
       
     }
+    const navigate = useNavigate();
+
     const signInWithFacebook = () => {
       
       const provider = new FacebookAuthProvider();
       signInWithPopup(auth, provider)
        .then((res) => {
-          console.log(res);
+          // navigate('/uid/generator')
        })
        .catch((err) => {
         console.log(err.message);
        })
+       
+       
+    }
+    const signInWithGoogle = () => {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+       .then((res) => {
+        // navigate('/generator')
+       })
+       .catch((err) =>
+       console.log(err)
+       )
+       
     }
 
     return (
@@ -38,7 +53,7 @@ function LoginPage (props) {
                 <p className='login'>{props.name}</p>
             </div>
             <div className="google-btn">
-              <button >
+              <button onClick={ signInWithGoogle }>
                 <div className='logo-container'>
                   <img src={google} alt="google_logo" className='logo'/>
                 </div>
@@ -72,9 +87,10 @@ function LoginPage (props) {
             value={password}
             />
             <div className="email-container">
-              <button  className='btn btn-dark button' >Zaloguj się</button>
+              <button className='btn btn-dark button' >Zaloguj się</button>
               
             </div>
+            {error && <p>{error}</p>}
             <div className="text-left register-container">
              {props.footer}
             </div>
