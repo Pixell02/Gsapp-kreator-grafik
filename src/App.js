@@ -24,8 +24,8 @@ function App() {
     {authIsReady && (
     <Routes>
       <Route path="/" element = {<Navigate to="/login" />} />
-      <Route path="/login" element = {<Login/>} />
-      <Route path="/register" element = {<Register />} />
+      <Route path="/login" element = {!user ? <Login /> : <Navigate to="/generator" />} />
+      <Route path="/register" element = {!user ? <Register /> : <Navigate to="generator" />} />
       <Route path="/generator" element = {user ? <Generator /> : <Navigate to="/login" />} />
       <Route path="/catalog" element = {user ? <Catalog /> : <Navigate to="/login" />} />
       <Route path="/yourTeamPanel" element = {user ? <YourTeamPanel /> : <Navigate to="/login" />} />
