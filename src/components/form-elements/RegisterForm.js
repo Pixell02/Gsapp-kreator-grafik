@@ -9,7 +9,6 @@ import facebook from '../../img/fb.png';
 
 export default function RegisterForm(props) {
 
-      
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { error, signup } = useSignup();
@@ -60,7 +59,7 @@ export default function RegisterForm(props) {
             value={password}
             />
             <div className="email-container">
-              <button  className='btn btn-dark button' >{props.name}</button>
+              <button className='btn btn-dark button' >{props.name}</button>
             </div>
             <div className="text-left register-container">
              {props.footer}
