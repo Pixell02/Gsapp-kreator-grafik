@@ -10,7 +10,7 @@ function MainYourTeamPanel() {
     <div className="main-content">
       <div className="ml-5">
         <Title title="Panel drużyny" />
-        <ItemContainer element={<Block title="nazwa teamu" />} />
+        <ItemContainer  />
       </div>
       <MainFooter />
     </div>

@@ -11,7 +11,7 @@ function OpponentsMainContent() {
           <div className="ml-5">
             <Title title = "Przeciwnicy" />
             <Buttons name = "Dodaj przeciwnika"/>
-            <ItemContainer element = {<Block />} />
+            <ItemContainer />
           </div>
           <MainFooter />
         </div>

@@ -11,7 +11,7 @@ function SponsorsMainContent() {
           <div className="ml-5">
             <Title title = "Sponsorzy" />
             <Buttons name = "Dodaj sponsora"/>
-            <ItemContainer element = {<Block />} />
+            <ItemContainer  />
           </div>
           <MainFooter />
         </div>
