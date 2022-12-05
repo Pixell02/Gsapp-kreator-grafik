@@ -1,6 +1,6 @@
-import { createContext, useReducer, useEffect } from 'react'
+import { createContext, useReducer, useEffect, useContext } from 'react'
 import { auth } from '../firebase/config'
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signInWithRedirect, signOut } from 'firebase/auth'
 
 export const AuthContext = createContext()
 
@@ -30,11 +30,15 @@ export const AuthContextProvider = ({ children }) => {
         })
     }, [])
 
-    console.log('AuthContext state:',state)
-
     return (
         <AuthContext.Provider value={{...state, dispatch }}>
             {children}
         </AuthContext.Provider>
     )
+    
+}
+
+
+export const UserAuth = () => {
+    return useContext(AuthContext)
 }
