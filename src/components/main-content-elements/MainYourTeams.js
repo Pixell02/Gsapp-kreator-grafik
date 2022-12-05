@@ -3,20 +3,24 @@ import MainFooter from "../MainFooter";
 import Title from "./Title";
 import Buttons from "./Buttons";
 import ItemContainer from "./ItemContainer";
-import Block from "./Block";
+import YourTeamsBlock from "./YourTeamsBlock";
 import AddTeamWindow from "./addTeamWindow";
+import { useCollection } from '../../hooks/useCollection';
+import "../../App.css";
 
 export default function MainYourTeams () {
-    const [openModal, setOpenModal] = useState(true)
+  const {documents: Teams} = useCollection('Teams')
 
+  const [openModal, setOpenModal] = useState(false)
     return (
         <div className="main-content">
-          
+          <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} />
           <div className="ml-5">
             <Title title = "Twoje drużyny" />
-            <button className="btn primary-btn" >Dodaj drużynę</button>
+            <button onClick={() => setOpenModal(true)} className="btn primary-btn" >Dodaj drużynę</button>
             
-            <ItemContainer  />
+              
+            <ItemContainer element={Teams && <YourTeamsBlock teams={Teams} />}  />
           </div>
           <MainFooter />
         </div>
