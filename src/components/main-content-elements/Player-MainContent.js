@@ -1,18 +1,22 @@
-import React from 'react';
+import {useState} from 'react';
 import MainFooter from '../MainFooter';
 import ItemContainer from './ItemContainer';
-import Block from './Block';
-import Buttons from './Buttons';
 import Title from './Title';
+import PlayersBlock from './PlayersBlock';
+import AddPlayerWindow from './addPlayerWindow';
+import { useCollection } from '../../hooks/useCollection';
+import "../../App.css";
+function PlayerMainContent() {
+  const {documents: Players} = useCollection('Players')
 
-function PlayerMainContent(props) {
-
+  const [openModal, setOpenModal] = useState(false)
     return (
       <div className="main-content">
+        <AddPlayerWindow open={openModal} onClose={() => setOpenModal(false)} />
         <div className="ml-5">
           <Title title = "Zawodnicy" />
-          <Buttons name = "Dodaj zawodnika" />
-          {/* <ItemContainer element = {<Block />} /> */}
+          <button className="btn primary-btn" onClick={() => setOpenModal(true)}>Dodaj zawodnika</button>
+          <ItemContainer element = {Players && <PlayersBlock players = {Players} />} />
         </div>
         <MainFooter />
       </div>
