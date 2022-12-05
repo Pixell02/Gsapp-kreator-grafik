@@ -1,18 +1,24 @@
-import React from "react";
+import {useState} from "react";
 import MainFooter from "../MainFooter";
 import Title from "./Title";
-import Buttons from "./Buttons";
 import ItemContainer from "./ItemContainer";
-import Block from "./Block";
+import OpponentBlock from "./OpponentBlock";
+import AddOpponentWindow from "./addOpponentWindow";
+import { useCollection } from '../../hooks/useCollection';
+
 
 function OpponentsMainContent() {
+  const {documents: Opponents} = useCollection('Opponents')
+
+  const [openModal, setOpenModal] = useState(false)
     return (
         <div className="main-content">
-          <div className="ml-5">
-            <Title title = "Przeciwnicy" />
-            <Buttons name = "Dodaj przeciwnika"/>
-            <ItemContainer />
-          </div>
+          <AddOpponentWindow open={openModal} onClose={() => setOpenModal(false)} />
+            <div className="ml-5">
+              <Title title = "Przeciwnicy" />
+              <button onClick={() => setOpenModal(true)} className="btn primary-btn" >Dodaj drużynę</button>
+              <ItemContainer element={Opponents && <OpponentBlock opponents={Opponents} />} />
+            </div>
           <MainFooter />
         </div>
     );
