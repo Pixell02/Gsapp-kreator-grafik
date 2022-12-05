@@ -6,7 +6,9 @@ import { db } from '../../firebase/config'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 
-function AddTeamWindow()  {
+
+function AddTeamWindow({open, onClose})  {
+  
   const [firstTeamName, setFirstTeamName] = useState('')
   const [secondTeamName, setSecondTeamName] = useState('')
   const [image, setImage] = useState(null)
@@ -16,6 +18,7 @@ function AddTeamWindow()  {
   const onButtonClick = () => {
     fileInputRef.current.click();
   }
+  
   useEffect (() => {
     if(image) {
       if(Math.round(image.size/1024) < 150) {
@@ -25,33 +28,37 @@ function AddTeamWindow()  {
         }
        reader.readAsDataURL(image); 
       } else {
-        setPreview(null);
+        setPreview(null)
         alert("maksymalna wielkość obrazu to 150KB")
       }
     } else {
-      setPreview(null);
+      setPreview(null)
     }
   }, [image])
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await addDoc(collection(db, 'Teams'), {
-      firstTeamName: firstTeamName,
-      secondTeamName: secondTeamName,
-      logo: preview,
-      uid: user.uid
-    })
+      await addDoc(collection(db, 'Teams'), {
+        firstTeamName: firstTeamName,
+        secondTeamName: secondTeamName,
+        logo: preview,
+        uid: user.uid
+      })
+      onClose(true)
+      setFirstTeamName('')
+      setSecondTeamName('')
+      setImage(null)
   }
 
+
     return (
-      <div className="overlay">
-        <div className='add-window'>
-          <form onSubmit={handleSubmit}>
+      <div className={open ? "active-modal" : "modal"} >
+        <div className='add-window' >
+          
             <label for = "firstTeamName">Pierwsza część nazwy drużyny</label>
-            <input type='text' onChange={(e) => setFirstTeamName(e.target.value)} value={firstTeamName} className = 'firstTeamName' required />
+            <input type='text' onChange={(e) => setFirstTeamName(e.target.value)} value={firstTeamName} className = 'firstTeamName' required/>
             <label for = "firstTeamName">Druga część nazwy drużyny</label>
-            <input type='text' onChange={(e) => setSecondTeamName(e.target.value)} value={secondTeamName} className = 'secondTeamName' required />
+            <input type='text' onChange={(e) => setSecondTeamName(e.target.value)} value={secondTeamName} className = 'secondTeamName' required/>
             <button 
               onClick={onButtonClick}
               className='btn primary-btn add-img'
@@ -65,7 +72,7 @@ function AddTeamWindow()  {
                onChange={(e) => {
                 const file = e.target.files[0];
                 if(file) {
-                  setImage(file );
+                  setImage(file);
                 } else {
                   setImage(null);
                 }
@@ -80,10 +87,16 @@ function AddTeamWindow()  {
               </div>
             </div>
             <div className='buttons-container'>
-              <button className='btn primary-btn'>Anuluj</button>
-              <button className='btn primary-btn'>Zapisz</button>
+              <button onClick={() => {
+                onClose()
+                firstTeamName('')
+                secondTeamName('')
+                image(null)
+              }
+                } className='btn primary-btn'>Anuluj</button>
+              <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>
             </div>
-          </form>
+          
         </div>
       </div>
     )
