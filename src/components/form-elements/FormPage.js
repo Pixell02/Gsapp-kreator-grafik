@@ -24,6 +24,7 @@ function LoginPage(props) {
   const { error, login } = useLogin();
   const [user, setUser] = useState({});
   const { dispatch } = useAuthContext()
+
   const handleSubmit = (e) => {
     e.preventDefault();
     login(email, password);
@@ -32,11 +33,11 @@ function LoginPage(props) {
 
   const signInWithFacebook = async() => {
     const provider = new FacebookAuthProvider();
-    await signInWithPopup(auth, provider)
       try {
         await signInWithPopup(auth, provider)
         .then((res) => {
           dispatch({type: 'LOGIN', payload: res.user});
+          console.log(res.user);
           navigate('/YourTeams');
         })
       } catch (err) {
@@ -101,7 +102,7 @@ function LoginPage(props) {
         <div className="email-container">
           <button className="btn btn-dark button">Zaloguj się</button>
         </div>
-        {error && <p>{error}</p>}
+        
         <div className="text-left register-container">{props.footer}</div>
       </div>
     </form>
