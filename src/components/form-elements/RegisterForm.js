@@ -1,6 +1,15 @@
-import { Navigate, Link } from "react-router-dom";
-import { useState } from 'react'; 
+import { Navigate, Link, useNavigate } from "react-router-dom"
+import { useState } from 'react'
 import { useSignup } from '../../hooks/useSignup'
+import { useAuthContext } from '../../hooks/useAuthContext'
+import {
+  signInWithPopup,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  onAuthStateChanged
+} from "firebase/auth"
+import { auth } from "../../firebase/config"
+import { UserAuth } from "../../context/AuthContext"
 
 // import styles and images
 import './formPage.css';
@@ -9,13 +18,43 @@ import facebook from '../../img/fb.png';
 
 export default function RegisterForm(props) {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const { error, signup } = useSignup();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const { error, signup } = useSignup()
+    const [user, setUser] = useState({})
+    const { dispatch } = useAuthContext()
 
     const handleSubmit = (e) => {
       e.preventDefault();
       signup(email, password);
+    }
+    const navigate = useNavigate()
+
+    const signUpWithGoogle = async () => {
+      const provider = new GoogleAuthProvider()
+    try {
+      await signInWithPopup(auth,provider)
+      .then((res) => {
+        dispatch({type: 'LOGIN', payload: res.user })
+        navigate('/YourTeams');
+      })
+    } catch (err) {
+      console.log(err);
+    }
+
+    }
+    const signUpWithFacebook = async () => {
+      const provider = new FacebookAuthProvider();
+      try {
+        await signInWithPopup(auth, provider)
+        .then((res) => {
+          dispatch({type: 'LOGIN', payload: res.user});
+          console.log(res.user);
+          navigate('/YourTeams');
+        })
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     return (
@@ -25,7 +64,7 @@ export default function RegisterForm(props) {
                 <p className='login'>{props.name}</p>
             </div>
             <div className="google-btn">
-              <button >
+              <button onClick={ signUpWithGoogle }>
                 <div className='logo-container'>
                   <img src={google} alt="google_logo" className='logo'/>
                 </div>
@@ -35,7 +74,7 @@ export default function RegisterForm(props) {
               </button>
             </div>
             <div className="facebook-btn">
-                <button>
+                <button onClick={ signUpWithFacebook }>
                   <div className="logo-container">
                     <img src={facebook} alt="facebook_logo" className='logo' />
                   </div>

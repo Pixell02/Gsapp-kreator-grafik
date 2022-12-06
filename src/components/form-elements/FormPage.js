@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useRouter } from "react";
-import { useLogin } from "../../hooks/useLogin";
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useNavigate } from "react-router-dom"
+import { useState, useRouter } from "react"
+import { useLogin } from "../../hooks/useLogin"
+import { useAuthContext } from '../../hooks/useAuthContext'
 
 import {
   signInWithPopup,
   FacebookAuthProvider,
   GoogleAuthProvider,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { auth } from "../../firebase/config";
+  onAuthStateChanged
+} from "firebase/auth"
+import { auth } from "../../firebase/config"
 import { UserAuth } from "../../context/AuthContext";
 
 // import styles and images
@@ -46,7 +46,7 @@ function LoginPage(props) {
   };
 
   const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider()
     try {
       await signInWithPopup(auth,provider)
       .then((res) => {
@@ -74,7 +74,7 @@ function LoginPage(props) {
           </button>
         </div>
         <div className="facebook-btn">
-          <button onClick={() => signInWithFacebook()}>
+          <button onClick={ signInWithFacebook }>
             <div className="logo-container">
               <img src={facebook} alt="facebook_logo" className="logo" />
             </div>
