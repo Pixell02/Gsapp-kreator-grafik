@@ -36,9 +36,14 @@ function AddTeamWindow({open, onClose})  {
     }
   }, [image])
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-      await addDoc(collection(db, 'Teams'), {
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      if(!firstTeamName || !secondTeamName) {
+        return alert('puste pole')
+      } else if (!preview){
+        return alert('brak obrazu')
+      } else {
+      addDoc(collection(db, 'Teams'), {
         firstTeamName: firstTeamName,
         secondTeamName: secondTeamName,
         logo: preview,
@@ -48,13 +53,14 @@ function AddTeamWindow({open, onClose})  {
       setFirstTeamName('')
       setSecondTeamName('')
       setImage(null)
+      }
   }
 
 
     return (
       <div className={open ? "active-modal" : "modal"} >
         <div className='add-window' >
-          
+          {/* <form onSubmit={handleSubmit}> */}
             <label for = "firstTeamName">Pierwsza część nazwy drużyny</label>
             <input type='text' onChange={(e) => setFirstTeamName(e.target.value)} value={firstTeamName} className = 'firstTeamName' required/>
             <label for = "firstTeamName">Druga część nazwy drużyny</label>
@@ -96,7 +102,7 @@ function AddTeamWindow({open, onClose})  {
                 } className='btn primary-btn'>Anuluj</button>
               <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>
             </div>
-          
+          {/* </form> */}
         </div>
       </div>
     )
