@@ -6,10 +6,15 @@ import ItemContainer from "./ItemContainer";
 import YourTeamsBlock from "./YourTeamsBlock";
 import AddTeamWindow from "./addTeamWindow";
 import { useCollection } from '../../hooks/useCollection';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import "../../App.css";
 
 export default function MainYourTeams () {
-  const {documents: Teams} = useCollection('Teams')
+  const { user } = useAuthContext()
+  const {documents: Teams} = useCollection(
+    'Teams',
+    ['uid', '==', user.uid]
+    )
 
   const [openModal, setOpenModal] = useState(false)
     return (
