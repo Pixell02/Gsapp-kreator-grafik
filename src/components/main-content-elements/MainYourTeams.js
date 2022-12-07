@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import MainFooter from "../MainFooter";
 import Title from "./Title";
 import Buttons from "./Buttons";

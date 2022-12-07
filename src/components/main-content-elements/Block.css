@@ -18,6 +18,7 @@
     font-weight: 600;
     width: 90%;
     color: black;
+    display: flex;
 }
 .image-content {
     margin-top: auto;
@@ -35,4 +36,29 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+.hide-list {
+    opacity: 0;
+}
+.show-list {
+    opacity: 1;
+    margin-top: 5px;
+}
+.show-list li {
+    background-color: white;
+    padding: 10px;
+    transition: ease-in-out 0.2s;
+}
+.show-list li:hover {
+    background-color: rgb(221, 221, 221);
+    transition: ease-in-out 0.2s;
+}
+.option-container {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    margin-left: 170px;
+}
+.show-option {
+    margin-top: 5px;
 }
