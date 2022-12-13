@@ -5,10 +5,15 @@ import ItemContainer from "./ItemContainer";
 import OpponentBlock from "./OpponentBlock";
 import AddOpponentWindow from "./addOpponentWindow";
 import { useCollection } from '../../hooks/useCollection';
-
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 function OpponentsMainContent() {
-  const {documents: Opponents} = useCollection('Opponents')
+  const { user } = useAuthContext()
+
+  const {documents: Opponents} = useCollection(
+    'Opponents',
+    ['uid', '==', user.uid]
+    )
 
   const [openModal, setOpenModal] = useState(false)
     return (

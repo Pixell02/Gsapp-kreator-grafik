@@ -39,12 +39,18 @@ function AddPlayerWindow({open, onClose})  {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!firstPlayerName || secondPlayerName) {
+      alert("puste pole");
+    } else if (!preview) {
+      alert("brak zdjecia");
+    } else {
       await addDoc(collection(db, 'Players'), {
         firstPlayerName: firstPlayerName,
         secondPlayerName: secondPlayerName,
         logo: preview,
         uid: user.uid
       })
+    }
       onClose(true)
       setFirstPlayerName('')
       setSecondPlayerName('')
@@ -55,11 +61,11 @@ function AddPlayerWindow({open, onClose})  {
         <div className='add-window' >
           
             <label for = "firstPlayerName">Imię</label>
-            <input type='text' onChange={(e) => setFirstPlayerName(e.target.value)} value={firstPlayerName} className = 'firstPlayerName' required/>
+            <input type='text' onChange={(e) => setFirstPlayerName(e.target.value)} value={firstPlayerName} className = 'firstPlayerName' />
             <label for = "firstPlayerName">Nazwisko</label>
-            <input type='text' onChange={(e) => setSecondPlayerName(e.target.value)} value={secondPlayerName} className = 'secondPlayerName' required/>
+            <input type='text' onChange={(e) => setSecondPlayerName(e.target.value)} value={secondPlayerName} className = 'secondPlayerName' />
             <label for = "Number">Numer zawodnika</label>
-            <input type='number' onChange={(e) => setNumber(e.target.value)} value={number} className = 'Number' required/>
+            <input type='number' onChange={(e) => setNumber(e.target.value)} value={number} className = 'Number' />
             <button 
               onClick={onButtonClick}
               className='btn primary-btn add-img'

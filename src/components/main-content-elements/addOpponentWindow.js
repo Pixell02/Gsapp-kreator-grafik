@@ -39,6 +39,11 @@ function AddOpponentWindow({open, onClose})  {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!firstOpponentName || !secondOpponentName) {
+      alert("puste pole")
+    }  else if (!preview) {
+      alert("brak obrazu")
+    } else {
       await addDoc(collection(db, 'Opponents'), {
         firstOpponentName: firstOpponentName,
         secondOpponentName: secondOpponentName,
@@ -49,6 +54,7 @@ function AddOpponentWindow({open, onClose})  {
       setFirstOpponentName('')
       setSecondOpponentName('')
       setImage(null)
+    }
   }
     return (
       <div className={open ? "active-modal" : "modal"} >

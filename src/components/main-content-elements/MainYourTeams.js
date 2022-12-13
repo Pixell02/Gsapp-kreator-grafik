@@ -1,7 +1,6 @@
 import { useState } from "react";
 import MainFooter from "../MainFooter";
 import Title from "./Title";
-import Buttons from "./Buttons";
 import ItemContainer from "./ItemContainer";
 import YourTeamsBlock from "./YourTeamsBlock";
 import AddTeamWindow from "./addTeamWindow";
@@ -17,6 +16,7 @@ export default function MainYourTeams () {
     )
 
   const [openModal, setOpenModal] = useState(false)
+
     return (
         <div className="main-content">
           <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} />

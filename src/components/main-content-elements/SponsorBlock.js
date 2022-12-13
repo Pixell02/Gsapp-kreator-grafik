@@ -9,23 +9,18 @@ import './Block.css'
 import ItemContainer from './ItemContainer'
 import Options from './Options'
 
-export default function YourTeamsBlock({teams}) {
+export default function SponsorBlock({sponsors}) {
 
-    const [list, setList] = useState(false);
-    const [showHide, setShowHide] = useState(false);
-
-    const handleClick = async (id) => {
-      const docRef = doc()
-    }
-    
+  const [showHide, setShowHide] = useState(false);
+  
     return (
         <div className='catalog-container'>  
-        {teams.map((team) => (
+        {sponsors.map((sponsor) => (
           <div className='item-window'>
-          <div className='name-content'>
-              <span key={team.id} className='name-content'>{team.firstTeamName + " " + team.secondTeamName}</span>
-              <div className='option-container' >
-                <button onClick = {() => {
+            <div className='name-content'>
+              <span key={sponsor.id} className='name-content'>{sponsor.firstSponsorName + " " + sponsor.secondSponsorName}</span>
+            <div className='option-container'>
+            <button onClick = {() => {
                   if(showHide == true) {
                     setShowHide(false);
                   } else {
@@ -38,12 +33,11 @@ export default function YourTeamsBlock({teams}) {
                 
               <Options showHide= {showHide} />
               </div>
-            </div>
+              </div>
             <div className='image-content'>
-              <img src={team.logo} alt={team.firstTeamName + " " + team.secondTeamName} />
+              <img src={sponsor.logo} alt={sponsor.firstSponsorName + " " + sponsor.secondSponsorName} />
             </div>   
-            </div>
-        
+          </div>
         ))}
         </div>
     )

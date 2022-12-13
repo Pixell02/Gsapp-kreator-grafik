@@ -1,7 +1,6 @@
 import React from "react";
 import MainFooter from "../MainFooter";
 import Title from "./Title";
-import Buttons from "./Buttons";
 import ItemContainer from "./ItemContainer";
 import Block from "./Block";
 import "./MainContentOffer.css";

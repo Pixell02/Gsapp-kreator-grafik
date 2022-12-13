@@ -5,9 +5,16 @@ import Title from './Title';
 import PlayersBlock from './PlayersBlock';
 import AddPlayerWindow from './addPlayerWindow';
 import { useCollection } from '../../hooks/useCollection';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import "../../App.css";
 function PlayerMainContent() {
-  const {documents: Players} = useCollection('Players')
+
+  const { user } = useAuthContext()
+
+  const {documents: Players} = useCollection(
+    'Players',
+    ['uid', '==', user.uid]
+    )
 
   const [openModal, setOpenModal] = useState(false)
     return (
