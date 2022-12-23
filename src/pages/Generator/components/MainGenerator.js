@@ -1,9 +1,9 @@
 import React from 'react';
-import Title from './Title';
-import Footer from '../MainFooter';
-import ItemContainer from './ItemContainer';
+import Title from '../../../components/main-content-elements/Title';
+import Footer from '../../../components/MainFooter';
+import ItemContainer from '../../../components/main-content-elements/ItemContainer';
 import AddPosterInGenerator from './addPosterInGenerator';
-import "./Main.css";
+import "../../../components/main-content-elements/Main.css";
 function MainGenerator() {
 
     return (

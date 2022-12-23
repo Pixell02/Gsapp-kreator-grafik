@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import SponsorsMainContent from '../../components/main-content-elements/Sponsors-MainContent';
+import SponsorsMainContent from './components/Sponsors-MainContent';
 import "../../App.css";
 
 function Sponsors () {

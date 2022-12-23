@@ -1,8 +1,6 @@
 import React from "react";
-import MainFooter from "../MainFooter";
-import Title from "./Title";
-import ItemContainer from "./ItemContainer";
-import Block from "./Block";
+import MainFooter from "../../../components/MainFooter";
+import Title from "../../../components/main-content-elements/Title";
 import "./MainContentOffer.css";
 import BuyFormContainer from "./BuyFormContainer";
 function MainContentOffer() {

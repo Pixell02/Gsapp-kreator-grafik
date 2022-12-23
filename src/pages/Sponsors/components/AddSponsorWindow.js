@@ -1,16 +1,18 @@
-import { useRef ,useState, useEffect } from 'react'
-import './addTeamWindow.css'
-import bin from '../../img/binIcon.png'
+import { useRef ,useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom'
+import '../../YourTeams/components/addTeamWindow.css'
+import bin from '../../../img/binIcon.png'
 import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../../firebase/config'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { db } from '../../../firebase/config'
+import { useAuthContext } from '../../../hooks/useAuthContext'
 
 
 
 function AddSponsorWindow({open, onClose})  {
   
+  const { id } = useParams();
   const [sponsorName, setSponsorName] = useState('')
-  const [number, setNumber] = useState('')
+  const [number, setNumber] = useState(null)
   const [image, setImage] = useState(null)
   const [preview, setPreview] = useState(null)
   const { user } = useAuthContext()
@@ -44,16 +46,17 @@ function AddSponsorWindow({open, onClose})  {
       alert("brak zdjecia");
     } else {
       await addDoc(collection(db, 'Sponsors'), {
-        sponsorName: sponsorName,
+        firstName: sponsorName,
         number: number,
-        logo: preview,
-        uid: user.uid
+        img: preview,
+        uid: id
       })
-    }
       onClose(true)
       setSponsorName('')
       setNumber('')
       setImage(null)
+    }
+      
   }
     return (
       <div className={open ? "active-modal" : "modal"} >
@@ -84,10 +87,10 @@ function AddSponsorWindow({open, onClose})  {
                />
             <div className='add-logo-window'>
               <div className='image-container'>
-            {preview && <img src={preview} />}
+            {preview && <img src={preview} className = "image" />}
               </div>
               <div className='bin-container'>
-               {preview && <img src={bin} />}
+               {preview && <img src={bin} onClick= {() => setPreview(null)}/>}
               </div>
             </div>
             <div className='buttons-container'>

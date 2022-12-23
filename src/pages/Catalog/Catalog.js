@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import MainCatalog from '../../components/main-content-elements/MainCatalog';
+import MainCatalog from './components/MainCatalog';
 import Footer from '../../components/MainFooter';
 import "../../App.css";
 function Catalog () {

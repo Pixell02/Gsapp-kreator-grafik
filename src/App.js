@@ -16,6 +16,7 @@ import YourTeams from "./pages/YourTeams/YourTeams";
 import Offer from "./pages/Offer/Offer";
 import Account from "./pages/Account/Account";
 import "./App.css"
+import Creator from "./pages/Creator/Creator";
 function App() {
   const {user, authIsReady} = useAuthContext()
 
@@ -26,15 +27,16 @@ function App() {
       <Route path="/" element = {<Navigate to="/login" />} />
       <Route path="/login" element = {!user ? <Login /> : <Navigate to="/yourTeams" />} />
       <Route path="/register" element = {!user ? <Register /> : <Navigate to="yourTeams" />} />
-      <Route path="/generator" element = {user ? <Generator /> : <Navigate to="/login" />} />
-      <Route path="/catalog" element = {user ? <Catalog /> : <Navigate to="/login" />} />
-      <Route path="/yourTeamPanel" element = {user ? <YourTeamPanel /> : <Navigate to="/login" />} />
-      <Route path="/players" element = {user ? <Players /> : <Navigate to="/login" />} />
-      <Route path="/opponents" element = {user ? <Opponents /> : <Navigate to="/login" />} />
-      <Route path="/sponsors" element = {user ? <Sponsors /> : <Navigate to="/login" />} />
+      <Route path="/:id/generator" element = {user ? <Generator /> : <Navigate to="/login" />} />
+      <Route path="/:id/catalog" element = {user ? <Catalog /> : <Navigate to="/login" />} />
+      <Route path="/:id/yourTeamPanel" element = {user ? <YourTeamPanel /> : <Navigate to="/login" />} />
+      <Route path="/:id/players" element = {user ? <Players /> : <Navigate to="/login" />} />
+      <Route path="/:id/opponents" element = {user ? <Opponents /> : <Navigate to="/login" />} />
+      <Route path="/:id/sponsors" element = {user ? <Sponsors /> : <Navigate to="/login" />} />
       <Route path="/yourTeams" element = {user ? <YourTeams /> : <Navigate to="/login" />} />
-      <Route path="/offer" element = {user ? <Offer /> : <Navigate to="/login" />} />
-      <Route path="/account" element = {user ? <Account /> : <Navigate to="/login" />} />
+      <Route path="/:id/offer" element = {user ? <Offer /> : <Navigate to="/login" />} />
+      <Route path="/:id/account" element = {user ? <Account /> : <Navigate to="/login" />} />
+      <Route path="/:id/creator/:poster" element = {user ? <Creator /> : <Navigate to="/login" />} />
       <Route path="/*" element = {<Navigate to="/login" />} />
     </Routes>
     )}

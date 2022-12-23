@@ -1,9 +1,9 @@
 import { useRef ,useState, useEffect } from 'react'
 import './addTeamWindow.css'
-import bin from '../../img/binIcon.png'
+import bin from '../../../img/binIcon.png'
 import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../../firebase/config'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { db } from '../../../firebase/config'
+import { useAuthContext } from '../../../hooks/useAuthContext'
 
 
 
@@ -44,9 +44,9 @@ function AddTeamWindow({open, onClose})  {
         return alert('brak obrazu')
       } else {
       addDoc(collection(db, 'Teams'), {
-        firstTeamName: firstTeamName,
-        secondTeamName: secondTeamName,
-        logo: preview,
+        firstName: firstTeamName,
+        secondName: secondTeamName,
+        img: preview,
         uid: user.uid
       })
       onClose(true)
@@ -61,9 +61,9 @@ function AddTeamWindow({open, onClose})  {
       <div className={open ? "active-modal" : "modal"} >
         <div className='add-window' >
           {/* <form onSubmit={handleSubmit}> */}
-            <label for = "firstTeamName">Pierwsza część nazwy drużyny</label>
+            <label >Pierwsza część nazwy drużyny</label>
             <input type='text' onChange={(e) => setFirstTeamName(e.target.value)} value={firstTeamName} className = 'firstTeamName' required/>
-            <label for = "firstTeamName">Druga część nazwy drużyny</label>
+            <label >Druga część nazwy drużyny</label>
             <input type='text' onChange={(e) => setSecondTeamName(e.target.value)} value={secondTeamName} className = 'secondTeamName' required/>
             <button 
               onClick={onButtonClick}
@@ -86,10 +86,10 @@ function AddTeamWindow({open, onClose})  {
                />
             <div className='add-logo-window'>
               <div className='image-container'>
-               {preview && <img src={preview} />}
+               {preview && <img src={preview} className="image" />}
               </div>
               <div className='bin-container'>
-               {preview && <img src={bin} />}
+               {preview && <img src={bin} onClick= {() => setPreview(null)} />}
               </div>
             </div>
             <div className='buttons-container'>

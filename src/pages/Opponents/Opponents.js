@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import OpponentsMainContent from '../../components/main-content-elements/Opponents-MainContent';
+import OpponentsMainContent from './components/Opponents-MainContent';
 import "../../App.css";
 
 function Opponents () {

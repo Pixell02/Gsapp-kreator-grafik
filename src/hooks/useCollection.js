@@ -10,19 +10,21 @@ export const useCollection = (c, _q) => {
     // set up query
 
     const q = useRef(_q).current
-
+    
     useEffect(() => {
         let ref = collection(db, c)
-
+        
         if(q) {
           ref = query(ref, where(...q)) 
         }
-        console.log (ref);
         const unsub = onSnapshot(ref, (snapshot) => {
+            
             let results = []
             snapshot.docs.forEach(doc => {
                 results.push({...doc.data(), id: doc.id})
+                
             })
+            
             setDocuments(results)
         })
 

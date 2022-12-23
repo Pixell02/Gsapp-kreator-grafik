@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import MainYourTeams from '../../components/main-content-elements/MainYourTeams';
-import AddTeamWindow from "../../components/main-content-elements/addTeamWindow";
+import MainYourTeams from './components/MainYourTeams';
+import AddTeamWindow from "./components/addTeamWindow";
+import MainFooter from "../../components/MainFooter";
 import "../../App.css";
 
 function YourTeams () {
@@ -11,8 +12,8 @@ function YourTeams () {
         <div className="page-container">
       <div className='content-wrap'>
         <Header />
-        <LeftBar />
         <MainYourTeams />
+        <MainFooter />
       </div>
     </div>
     );

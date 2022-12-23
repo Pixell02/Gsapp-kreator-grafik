@@ -1,13 +1,13 @@
-import { db } from '../../firebase/config'
+import { db } from '../../../firebase/config'
 import { useState } from 'react'
 import { doc, deleteDoc} from 'firebase/firestore'
 
 // Styling
 import * as Icon from 'react-bootstrap-icons'
-import './Block.css'
+import '../../../components/main-content-elements/Block.css'
 
-import ItemContainer from './ItemContainer'
-import Options from './Options'
+import ItemContainer from '../../../components/main-content-elements/ItemContainer'
+import Options from '../../../components/main-content-elements/Options'
 
 export default function SponsorBlock({sponsors}) {
 

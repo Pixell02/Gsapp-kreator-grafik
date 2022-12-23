@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import PlayerMainContent from '../../components/main-content-elements/Player-MainContent';
+import PlayerMainContent from './components/Player-MainContent';
 import "../../App.css";
   
 function Players () {

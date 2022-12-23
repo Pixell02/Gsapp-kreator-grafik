@@ -1,4 +1,4 @@
-import './Block.css'
+import '../../../components/main-content-elements/Block.css'
 
 
 export default function OpponentBlock({opponents}) {

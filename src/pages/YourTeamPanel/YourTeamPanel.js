@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import MainYourTeamPanel from '../../components/main-content-elements/MainYourTeamPanel';
+import MainYourTeamPanel from './components/MainYourTeamPanel';
 import "../../App.css";
 function YourTeamPanel () {
 

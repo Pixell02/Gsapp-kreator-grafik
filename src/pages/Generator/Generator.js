@@ -1,8 +1,8 @@
-import React from 'react';
+
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
-import Main from '../../components/main-content-elements/MainGenerator';
-import Footer from '../../components/MainFooter';
+import Main from './components/MainGenerator';
+
 import "../../App.css";
 function Generator () {
 

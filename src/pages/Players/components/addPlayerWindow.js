@@ -1,16 +1,19 @@
 import { useRef ,useState, useEffect } from 'react'
-import './addTeamWindow.css'
-import bin from '../../img/binIcon.png'
+import '../../YourTeams/components/addTeamWindow.css'
+import bin from '../../../img/binIcon.png'
 import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../../firebase/config'
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { db } from '../../../firebase/config'
+import { useAuthContext } from '../../../hooks/useAuthContext'
+import { useParams } from 'react-router-dom'
 
 
 
-function AddOpponentWindow({open, onClose})  {
+function AddPlayerWindow({open, onClose})  {
+
+  const { id } = useParams();
   
-  const [firstOpponentName, setFirstOpponentName] = useState('')
-  const [secondOpponentName, setSecondOpponentName] = useState('')
+  const [firstPlayerName, setFirstPlayerName] = useState('')
+  const [secondPlayerName, setSecondPlayerName] = useState('')
   const [number, setNumber] = useState('')
   const [image, setImage] = useState(null)
   const [preview, setPreview] = useState(null)
@@ -39,36 +42,40 @@ function AddOpponentWindow({open, onClose})  {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!firstOpponentName || !secondOpponentName) {
-      alert("puste pole")
-    }  else if (!preview) {
-      alert("brak obrazu")
+    if(!firstPlayerName || !secondPlayerName) {
+      alert("puste pole");
+    } else if (!preview) {
+      alert("brak zdjecia");
     } else {
-      await addDoc(collection(db, 'Opponents'), {
-        firstOpponentName: firstOpponentName,
-        secondOpponentName: secondOpponentName,
-        logo: preview,
-        uid: user.uid
+      await addDoc(collection(db, 'Players'), {
+        firstName: firstPlayerName,
+        secondName: secondPlayerName,
+        img: preview,
+        uid: id
       })
       onClose(true)
-      setFirstOpponentName('')
-      setSecondOpponentName('')
+      setFirstPlayerName('')
+      setSecondPlayerName('')
+      setNumber('')
       setImage(null)
     }
+      
   }
     return (
       <div className={open ? "active-modal" : "modal"} >
         <div className='add-window' >
           
-            <label for = "firstOpponentName">Pierwsza część nazwy przeciwnika</label>
-            <input type='text' onChange={(e) => setFirstOpponentName(e.target.value)} value={firstOpponentName} className = 'firstOpponentName' required/>
-            <label for = "SecondOpponentName">Druga część nazwy przeciwnika</label>
-            <input type='text' onChange={(e) => setSecondOpponentName(e.target.value)} value={secondOpponentName} className = 'secondOpponentName' required/>
+            <label >Imię</label>
+            <input type='text' onChange={(e) => setFirstPlayerName(e.target.value)} value={firstPlayerName} className = 'firstPlayerName' />
+            <label >Nazwisko</label>
+            <input type='text' onChange={(e) => setSecondPlayerName(e.target.value)} value={secondPlayerName} className = 'secondPlayerName' />
+            <label >Numer zawodnika</label>
+            <input type='number' onChange={(e) => setNumber(e.target.value)} value={number} className = 'Number' />
             <button 
               onClick={onButtonClick}
               className='btn primary-btn add-img'
               >
-                Dodaj Logo
+                Dodaj Zdjęcie
               </button>
             <input type="file"
              style={{display:"none"}}
@@ -85,7 +92,7 @@ function AddOpponentWindow({open, onClose})  {
                />
             <div className='add-logo-window'>
               <div className='image-container'>
-               {preview && <img src={preview} />}
+               {preview && <img src={preview} className="image" onClick= {() => setPreview(null)} />}
               </div>
               <div className='bin-container'>
                {preview && <img src={bin} />}
@@ -94,8 +101,8 @@ function AddOpponentWindow({open, onClose})  {
             <div className='buttons-container'>
               <button onClick={() => {
                 onClose()
-                firstOpponentName('')
-                secondOpponentName('')
+                firstPlayerName('')
+                secondPlayerName('')
                 image(null)
               }
                 } className='btn primary-btn'>Anuluj</button>
@@ -107,4 +114,4 @@ function AddOpponentWindow({open, onClose})  {
     )
 }
 
-export default AddOpponentWindow;
+export default AddPlayerWindow;
