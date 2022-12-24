@@ -101,9 +101,9 @@ function AddPlayerWindow({open, onClose})  {
             <div className='buttons-container'>
               <button onClick={() => {
                 onClose()
-                firstPlayerName('')
-                secondPlayerName('')
-                image(null)
+                setFirstPlayerName('')
+                setSecondPlayerName('')
+                setImage(null)
               }
                 } className='btn primary-btn'>Anuluj</button>
               <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>

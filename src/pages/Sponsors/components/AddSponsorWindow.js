@@ -96,9 +96,9 @@ function AddSponsorWindow({open, onClose})  {
             <div className='buttons-container'>
               <button onClick={() => {
                 onClose()
-                sponsorName('')
-                number('')
-                image(null)
+                setSponsorName('')
+                setNumber('')
+                setImage(null)
               }
                 } className='btn primary-btn'>Anuluj</button>
               <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>

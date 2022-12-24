@@ -97,9 +97,9 @@ function AddOpponentWindow({open, onClose})  {
             <div className='buttons-container'>
               <button onClick={() => {
                 onClose()
-                firstOpponentName('')
-                secondOpponentName('')
-                image(null)
+                setFirstOpponentName('')
+                setSecondOpponentName('')
+                setImage(null)
               }
                 } className='btn primary-btn'>Anuluj</button>
               <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>
