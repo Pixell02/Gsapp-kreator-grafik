@@ -60,7 +60,6 @@ function AddTeamWindow({open, onClose})  {
     return (
       <div className={open ? "active-modal" : "modal"} >
         <div className='add-window' >
-          {/* <form onSubmit={handleSubmit}> */}
             <label >Pierwsza część nazwy drużyny</label>
             <input type='text' onChange={(e) => setFirstTeamName(e.target.value)} value={firstTeamName} className = 'firstTeamName' required/>
             <label >Druga część nazwy drużyny</label>

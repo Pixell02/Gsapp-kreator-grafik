@@ -22,9 +22,12 @@ function MainYourTeamPanel() {
       setYourTeam(doc.data());
     });
   };
-  useEffect(() => {
+  
     teamLogo();
-  },[setYourTeam])
+ 
+
+  // const {document : Team} = useCollection('Teams',[])
+  // console.log(Team)
   
   
 

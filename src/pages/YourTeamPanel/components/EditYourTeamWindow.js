@@ -21,6 +21,19 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
   };
   
 
+  const handleEdit = (e) => {
+    const file = e.target.files[0];
+    if( file.size > 150000) {
+      alert("Maksymalny rozmiar obrazu to 150KB")
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreview(reader.result);
+    } 
+    reader.readAsDataURL(file);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!firstTeamName) {
@@ -73,24 +86,7 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
-            const file = e.target.files[0];
-            if(file) {
-              setImage(file);
-              if(image){
-              if (Math.round(image.size/1024) < 150) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                setPreview(reader.result);
-                }
-              reader.readAsDataURL(image); 
-              } else {
-                setPreview(null);
-                alert("maksymalny rozmiar obrazu to 150KB")
-                }
-              } else {
-                setPreview(null);
-              }
-            }
+            handleEdit(e)
           }}
         />
         <div className="add-logo-window">

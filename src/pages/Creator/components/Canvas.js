@@ -6,11 +6,19 @@ import { db } from "../../../firebase/config";
 import { useParams } from "react-router-dom";
 import { useCollection } from "../../../hooks/useCollection";
 
-function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, opponentName, Sponsors }) {
+function FabricCanvas({
+  poster,
+  selectedPlayer,
+  opponent,
+  yourLogo,
+  date,
+  opponentName,
+  Sponsors,
+}) {
   const [isPoster, setIsPoster] = useState();
   const backImg = new Image();
   backImg.src = poster[0].background;
-  
+
   const { id } = useParams();
   const canvasRef = useRef();
   const fabricRef = useRef();
@@ -19,8 +27,6 @@ function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, oppone
   const [logo, setLogo] = useState([]);
   const [sponsors, setSponsors] = useState([]);
   useEffect(() => {});
-
-  
 
   const typeDate = () => {
     if (date) {
@@ -53,7 +59,6 @@ function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, oppone
         if (fabricRef.current.item(i).className == "opponentImage") {
           fabricRef.current.remove(fabricRef.current.item(i));
         }
-       
       });
       const opponentImg = new Image();
       opponentImg.src = opponent;
@@ -70,28 +75,27 @@ function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, oppone
 
         fabricRef.current.add(opponentImage);
       };
-      
     }
   };
   const opponentsName = () => {
-    if(opponentName) {
-    fabricRef.current._objects.forEach((image, i) => {
-    if(fabricRef.current.item(i).className == "opponentsName") {
+    if (opponentName) {
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className == "opponentsName") {
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
-        const opponentsName = new fabric.Textbox(opponentName, {
-          selectable: false,
+      const opponentsName = new fabric.Textbox(opponentName, {
+        selectable: false,
         top: 470,
         left: 120,
         width: 200,
         fontSize: 30,
         fill: "yellow",
         className: "opponentsName",
-      })
+      });
       fabricRef.current.add(opponentsName);
     }
-  }
+  };
 
   useEffect(() => {
     const initFabric = () => {
@@ -103,12 +107,16 @@ function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, oppone
         const img = new Image();
         img.src = poster.background;
         img.onload = () => {
-          const newImg = new fabric.Image(img);
+          const newImg = new fabric.Image.fromURL(img.src, function (img) {
+            
+            fabricRef.current.setBackgroundImage(
+              img,
+              fabricRef.current.renderAll.bind(fabricRef.current)
+            );
+          });
+
           fabricRef.current.width = img.width;
-          fabricRef.current.setBackgroundImage(
-            newImg,
-            fabricRef.current.renderAll.bind(fabricRef.current)
-          );
+
           setIsPoster(newImg);
           document.querySelector(".lower-canvas").style.width =
             img.width + "px";
@@ -136,10 +144,10 @@ function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, oppone
         canvasBlock.appendChild(sponsorBlock);
         Sponsors.forEach((sponsor) => {
           let img = document.createElement("img");
-          img.className = "sponsor-image"
-          img.src =sponsor.img
-          sponsorBlock.appendChild(img)
-        })
+          img.className = "sponsor-image";
+          img.src = sponsor.img;
+          sponsorBlock.appendChild(img);
+        });
       });
     };
     initFabric();
@@ -166,32 +174,32 @@ function FabricCanvas({ poster, selectedPlayer, opponent, yourLogo, date, oppone
       };
     });
   }, [isPoster]);
-useEffect(() => {
-const teamName = () => {
-    const name = new fabric.Textbox(yourLogo.firstName, {
-      selectable: false,
-      top: 400,
-      left: 50,
-      fill: "white",
-      fontSize: 55
-    })
-    fabricRef.current.add(name)
-  }
-  teamName()
-},[isPoster]);
+  useEffect(() => {
+    const teamName = () => {
+      const name = new fabric.Textbox(yourLogo.firstName, {
+        selectable: false,
+        top: 400,
+        left: 50,
+        fill: "white",
+        fontSize: 55,
+      });
+      fabricRef.current.add(name);
+    };
+    teamName();
+  }, [isPoster]);
 
-useEffect(() => {
-const vs = () => {
-  const vs = new fabric.Text("VS", {
-    selectable: false,
-    top:470,
-    left:50,
-    fill: "yellow"
-  })
-  fabricRef.current.add(vs)
-}
-  vs()
-},[isPoster])
+  useEffect(() => {
+    const vs = () => {
+      const vs = new fabric.Text("VS", {
+        selectable: false,
+        top: 470,
+        left: 50,
+        fill: "yellow",
+      });
+      fabricRef.current.add(vs);
+    };
+    vs();
+  }, [isPoster]);
 
   opponentLogo();
   opponentsName();
