@@ -21,7 +21,6 @@ function WorkSpace() {
       scale: 2
     })
     .then((canvas) => {
-      console.log(canvas.width)
       const link = document.createElement("a");
       
       link.download = "image.png"
