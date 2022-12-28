@@ -88,10 +88,10 @@ function AddOpponentWindow({open, onClose})  {
                />
             <div className='add-logo-window'>
               <div className='image-container'>
-               {preview && <img src={preview} onClick= {() => setPreview(null)} />}
+               {preview && <img src={preview} className="image"  />}
               </div>
               <div className='bin-container'>
-               {preview && <img src={bin} />}
+               {preview && <img src={bin} onClick= {() => setPreview(null)} />}
               </div>
             </div>
             <div className='buttons-container'>

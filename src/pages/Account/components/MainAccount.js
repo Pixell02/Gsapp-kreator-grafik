@@ -6,8 +6,9 @@ import "./MainAccount.css";
 function MainAccount() {
   
   const { user } = useAuthContext()
-
-  const [userId, setUserId] = useState(user.id)
+  const [userId, setUserId] = useState(user.uid)
+  const [userEmail, setUserEmail] = useState(user.email)
+  
     return (
         <div className="main-content">
           <div className="ml-5">
@@ -15,9 +16,13 @@ function MainAccount() {
               <Title title = "Konto" />
                 <div className='account-items'>
                   <label for ="userId">Id konta</label>
-                  <input type="text" className="userId" value={setUserId} />
+                  <div className="userId account-data-container" >
+                    <span className='account-data'>{userId} </span> 
+                  </div>
                   <label for ="userId">E-mail</label>
-                  <input type="text" className="userEmail" />
+                  <div className="userEmail account-data-container" >
+                  <span className='account-data'>{userEmail}</span>    
+                  </div>
                 </div>
             </div>
           </div>

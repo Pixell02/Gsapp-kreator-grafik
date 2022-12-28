@@ -3,9 +3,11 @@ import MainFooter from "../../../components/MainFooter";
 import Title from "../../../components/main-content-elements/Title";
 import "./MainContentOffer.css";
 import BuyFormContainer from "./BuyFormContainer";
+import { useState } from "react";
 function MainContentOffer() {
 
-    // let rangeValue = document.querySelector(".rangeValue").value;
+    const [month, setMonth] = useState(1);
+    
 
     return (
         <div className="main-content">
@@ -13,11 +15,11 @@ function MainContentOffer() {
             <Title title = "Kup dostęp" />
             <div className="range-container">
               <div className="range-item">
-                <input type="range" min="1" max="12" className="rangeValue" />
+                <input type="range" min="1" max="12" defaultValue="1" value={month} className="rangeValue" onChange={(e) => setMonth(e.target.value)} />
               </div>
-              <span>Liczba miesięcy: 12</span>
+              <span>Liczba miesięcy: {month}</span>
             </div>
-            <BuyFormContainer />  
+            <BuyFormContainer price = {month} />  
           </div>
           <MainFooter />
         </div>

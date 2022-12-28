@@ -46,7 +46,7 @@ select {
     
 }
 .upper-canvas {
-    cursor: pointer;
+    cursor: default !important;
 }
 .save {
     margin-top: 40px;
@@ -56,4 +56,13 @@ select {
     bottom: 0;
     position: absolute;
     display: flex;
+    flex: 1;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.sponsor-image {
+    
+    margin-left: 20px;
+    height: 50px;
 }

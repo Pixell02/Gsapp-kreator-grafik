@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {BrowserRouter, Link , Route, Routes, Navigate} from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import Header from "./components/Header";
@@ -17,9 +17,13 @@ import Offer from "./pages/Offer/Offer";
 import Account from "./pages/Account/Account";
 import "./App.css"
 import Creator from "./pages/Creator/Creator";
+import { useLogout } from './hooks/useLogout'
+import { auth } from "./firebase/config";
+import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 function App() {
   const {user, authIsReady} = useAuthContext()
-
+  
   return (
     <BrowserRouter>
     {authIsReady && (

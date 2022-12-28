@@ -7,7 +7,9 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
   GoogleAuthProvider,
-  onAuthStateChanged
+  onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence
 } from "firebase/auth"
 import { auth } from "../../firebase/config"
 import { UserAuth } from "../../context/AuthContext";
@@ -25,6 +27,7 @@ function LoginPage(props) {
   const [user, setUser] = useState({});
   const { dispatch } = useAuthContext()
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     login(email, password);
@@ -37,7 +40,6 @@ function LoginPage(props) {
         await signInWithPopup(auth, provider)
         .then((res) => {
           dispatch({type: 'LOGIN', payload: res.user});
-          console.log(res.user);
           navigate('/YourTeams');
         })
       } catch (err) {
@@ -46,7 +48,7 @@ function LoginPage(props) {
   };
 
   const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider()
+    const provider =  new GoogleAuthProvider()
     try {
       await signInWithPopup(auth,provider)
       .then((res) => {

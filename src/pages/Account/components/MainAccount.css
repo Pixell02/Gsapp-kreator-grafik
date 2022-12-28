@@ -17,3 +17,12 @@
     
     
 }
+.account-data-container {
+    height: 50px;
+    background-color: rgba(255, 255 , 204, 0.5);
+    display: flex;
+    align-items: center;
+}
+.account-data {
+    margin-left: 30px;
+}

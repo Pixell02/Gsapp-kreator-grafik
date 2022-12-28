@@ -1,6 +1,11 @@
 import { db } from "../../firebase/config";
 import { useState, useRef, useEffect } from "react";
 import { doc, deleteDoc } from "firebase/firestore";
+import useEditModal from "../../hooks/useEditModal";
+import { useLocation } from 'react-router-dom'
+import EditPlayerWindow from "../../pages/Players/components/EditPlayerWindow";
+import EditSponsorWindow from "../../pages/Sponsors/components/EditSponsorWindow";
+import EditOpponentWindow from "../../pages/Opponents/components/EditOpponentWindow";
 
 // Styling
 import * as Icon from "react-bootstrap-icons";
@@ -9,6 +14,15 @@ import "./ItemBlock.css";
 import Options from "./Options";
 
 export default function ItemBlock({ items }) {
+  const { isEditModal, openEditModal, closeEditModal } = useEditModal();
+  const location = useLocation();
+  const goodLocation = location.pathname.split("/")[2];
+  const handleDeleteClick = async (id) => {
+    const ref = doc(db, "Players", id);
+    await deleteDoc(ref);
+  };
+
+  const [data, setData] = useState();
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
 
@@ -26,8 +40,13 @@ export default function ItemBlock({ items }) {
   }, [setItemToEdit]);
 
   const handleClick = (e, item) => {
+    
     setItemToEdit(item);
   };
+  const editClick = (e, item) => {
+    setData(item)
+    openEditModal()
+  }
 
   return (
     <div ref={hideElement} className="catalog-container">
@@ -45,17 +64,54 @@ export default function ItemBlock({ items }) {
                   handleClick(e, item);
                 }}
               >
-                <Icon.ThreeDotsVertical style={{ margin: "5px 0 0 0" }} />
+                <Icon.ThreeDotsVertical
+                  style={{ margin: "5px 0 0 0", zIndex: "-1" }}
+                />
               </button>
-              {itemToEdit === item && <Options team={item} />}
+              {itemToEdit === item && (
+                <div className="show-list">
+                  <div className="edit-element">
+                    <button key={item.id} onClick={(e) => editClick(e, item)}>
+                      Edytuj
+                    </button>
+                  </div>
+                  <div className="delete-element">
+                    <button
+                      key={item.id}
+                      onClick={() => handleDeleteClick(item.id)}
+                    >
+                      Usuń
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            
           </div>
           <div className="image-content">
             <img src={item.img} alt={item.firstName + " " + item.secondName} />
           </div>
+          
         </div>
       ))}
+      { itemToEdit === data  && isEditModal && goodLocation === "players" &&
+            <EditPlayerWindow
+              player={data}
+              open={isEditModal}
+              onClose={closeEditModal}
+            />
+          }
+          {itemToEdit === data  && isEditModal && goodLocation === "opponents" &&
+            <EditOpponentWindow
+              player={data}
+              open={isEditModal}
+              onClose={closeEditModal}
+            />}
+            {itemToEdit === data  && isEditModal && goodLocation === "sponsors" &&
+            <EditSponsorWindow
+              player={data}
+              open={isEditModal}
+              onClose={closeEditModal}
+            />}
     </div>
   );
 }

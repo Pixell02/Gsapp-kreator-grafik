@@ -1,10 +1,11 @@
 import React from "react";
 import "./ItemContainer.css";
 import Block from "./CatalogBlock";
-function ItemContainer(props) {
+function ItemContainer({children}) {
+  
   return (
     <div className="Item-container">
-      {props.element}
+      {children}
     </div>
   );
 }

@@ -27,7 +27,9 @@ function SponsorsMainContent() {
           <div className="ml-5">
             <Title title = "Sponsorzy" />
             <button className="btn primary-btn" onClick={() => setOpenModal(true)}>Dodaj sponosora</button>
-            <ItemContainer element = {Sponsors && <ItemBlock items = {Sponsors} />} />
+            <ItemContainer >
+              {Sponsors && <ItemBlock items = {Sponsors} />}
+              </ItemContainer>
           </div>
           <MainFooter />
         </div>

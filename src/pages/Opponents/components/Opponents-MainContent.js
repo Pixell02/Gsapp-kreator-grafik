@@ -25,7 +25,9 @@ function OpponentsMainContent() {
             <div className="ml-5">
               <Title title = "Przeciwnicy" />
               <button onClick={() => setOpenModal(true)} className="btn primary-btn" >Dodaj drużynę</button>
-              <ItemContainer element={Opponents && <ItemBlock items={Opponents} />} />
+              <ItemContainer  >
+                {Opponents && <ItemBlock items={Opponents} />}
+              </ItemContainer>
             </div>
           <MainFooter />
         </div>

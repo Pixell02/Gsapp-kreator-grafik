@@ -8,40 +8,39 @@ import { useParams } from "react-router-dom";
 import { doc, updateDoc  } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
 
-function EditPlayerWindow({ player, open, onClose }) {
-  const [firstPlayerName, setFirstPlayerName] = useState(player.firstName);
-  const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
-  const [number, setNumber] = useState(player.number);
-  const [image, setImage] = useState(player.img);
-  const [preview, setPreview] = useState(player.img);
+function EditPlayerWindow({ yourTeam, open, onClose }) {
+  const { id } = useParams();
+  const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
+  const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
+  const [image, setImage] = useState(yourTeam.img);
+  const [preview, setPreview] = useState(yourTeam.img);
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstPlayerName || !secondPlayerName) {
+    if (!firstTeamName) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
     }
-      else if (!number) {
-        alert("brak numeru")
+      else if (!secondTeamName) {
+        alert("puste pole")
       }
      else {
-      const docRef = doc(db, "Players", player.id)
+      const docRef = doc(db, "Teams", id)
       updateDoc(docRef,{
-        firstName: firstPlayerName,
-        lastName: secondPlayerName,
-        number: number,
-        img: image
+        firstName: firstTeamName,
+        secondName: secondTeamName,
+        img: preview
       })
       onClose();
-      setFirstPlayerName("");
-      setSecondPlayerName("");
-      setNumber(null);
+      setFirstTeamName("");
+      setSecondTeamName(null);
       setImage(null);
     }
     
@@ -50,25 +49,19 @@ function EditPlayerWindow({ player, open, onClose }) {
   return (
     <div className={open ? "active-modal" : "modal"}>
       <div className="add-window">
-        <label>Imię</label>
+        <label>Pierwsza część nazwy drużyny</label>
         <input
           type="text"
-          onChange={(e) => setFirstPlayerName(e.target.value)}
-          value={firstPlayerName}
+          onChange={(e) => setFirstTeamName(e.target.value)}
+          value={firstTeamName}
           className="firstPlayerName"
         />
-        <label>Nazwisko</label>
+        
+        <label>Druga część nazwy drużyny</label>
         <input
           type="text"
-          onChange={(e) => setSecondPlayerName(e.target.value)}
-          value={secondPlayerName}
-          className="secondPlayerName"
-        />
-        <label>Numer zawodnika</label>
-        <input
-          type="number"
-          onChange={(e) => setNumber(e.target.value)}
-          value={number}
+          onChange={(e) => setSecondTeamName(e.target.value)}
+          value={secondTeamName}
           className="Number"
         />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
@@ -81,10 +74,22 @@ function EditPlayerWindow({ player, open, onClose }) {
           accept="image/png"
           onChange={(e) => {
             const file = e.target.files[0];
-            if (file) {
+            if(file) {
               setImage(file);
-            } else {
-              setImage(null);
+              if(image){
+              if (Math.round(image.size/1024) < 150) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                setPreview(reader.result);
+                }
+              reader.readAsDataURL(image); 
+              } else {
+                setPreview(null);
+                alert("maksymalny rozmiar obrazu to 150KB")
+                }
+              } else {
+                setPreview(null);
+              }
             }
           }}
         />
@@ -98,8 +103,8 @@ function EditPlayerWindow({ player, open, onClose }) {
           <button
             onClick={() => {
               onClose();
-              setFirstPlayerName("");
-              setSecondPlayerName("");
+              setFirstTeamName("");
+              setSecondTeamName("");
               setImage(null);
             }}
             className="btn primary-btn"

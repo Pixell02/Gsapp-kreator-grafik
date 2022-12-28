@@ -23,7 +23,9 @@ export default function MainYourTeams () {
           <div className="ml-5">
             <Title title = "Twoje drużyny" />
             <button onClick={() => setOpenModal(true)} className="btn primary-btn" >Dodaj drużynę</button>
-            <ItemContainer element={Teams && <YourTeamBlock items={Teams} />}  />
+            <ItemContainer >
+              {Teams && <YourTeamBlock items={Teams} />}
+            </ItemContainer>
           </div>
           
         </div>

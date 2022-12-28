@@ -9,9 +9,8 @@ import { doc, updateDoc  } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
 
 function EditPlayerWindow({ player, open, onClose }) {
-  const [firstPlayerName, setFirstPlayerName] = useState(player.firstName);
-  const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
-  const [number, setNumber] = useState(player.number);
+  const [firstOpponentName, setFirstOpponentName] = useState(player.firstName);
+  const [secondOpponentName, setSecondOpponentName] = useState(player.secondName);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
   const { user } = useAuthContext();
@@ -22,26 +21,21 @@ function EditPlayerWindow({ player, open, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstPlayerName || !secondPlayerName) {
+    if (!firstOpponentName || !secondOpponentName) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
     }
-      else if (!number) {
-        alert("brak numeru")
-      }
      else {
-      const docRef = doc(db, "Players", player.id)
+      const docRef = doc(db, "Opponents", player.id)
       updateDoc(docRef,{
-        firstName: firstPlayerName,
-        lastName: secondPlayerName,
-        number: number,
+        firstName: firstOpponentName,
+        lastName: secondOpponentName,
         img: image
       })
       onClose();
-      setFirstPlayerName("");
-      setSecondPlayerName("");
-      setNumber(null);
+      setFirstOpponentName("");
+      setSecondOpponentName("");
       setImage(null);
     }
     
@@ -50,27 +44,21 @@ function EditPlayerWindow({ player, open, onClose }) {
   return (
     <div className={open ? "active-modal" : "modal"}>
       <div className="add-window">
-        <label>Imię</label>
+        <label>Pierwsza część nazwy przeciwnika</label>
         <input
           type="text"
-          onChange={(e) => setFirstPlayerName(e.target.value)}
-          value={firstPlayerName}
+          onChange={(e) => setFirstOpponentName(e.target.value)}
+          value={firstOpponentName}
           className="firstPlayerName"
         />
-        <label>Nazwisko</label>
+        <label>Druga część nazwy przeciwnika</label>
         <input
           type="text"
-          onChange={(e) => setSecondPlayerName(e.target.value)}
-          value={secondPlayerName}
+          onChange={(e) => setSecondOpponentName(e.target.value)}
+          value={secondOpponentName}
           className="secondPlayerName"
         />
-        <label>Numer zawodnika</label>
-        <input
-          type="number"
-          onChange={(e) => setNumber(e.target.value)}
-          value={number}
-          className="Number"
-        />
+        
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj Zdjęcie
         </button>
@@ -98,8 +86,8 @@ function EditPlayerWindow({ player, open, onClose }) {
           <button
             onClick={() => {
               onClose();
-              setFirstPlayerName("");
-              setSecondPlayerName("");
+              setFirstOpponentName("");
+              setSecondOpponentName("");
               setImage(null);
             }}
             className="btn primary-btn"

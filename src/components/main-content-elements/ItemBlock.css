@@ -42,7 +42,10 @@
     border: 0;
     background: none;
 }
-
+.icon-item {
+    position: fixed;
+    margin: 5px 0 20px 170px;
+}
 
 .show-list {
     position: fixed;

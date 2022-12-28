@@ -95,9 +95,9 @@ function AddTeamWindow({open, onClose})  {
             <div className='buttons-container'>
               <button onClick={() => {
                 onClose()
-                firstTeamName('')
-                secondTeamName('')
-                image(null)
+                setFirstTeamName('')
+                setSecondTeamName('')
+                setImage(null)
               }
                 } className='btn primary-btn'>Anuluj</button>
               <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>

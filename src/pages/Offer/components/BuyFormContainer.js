@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BuyFormContainer() {
+function BuyFormContainer({price}) {
 
     return (
         <div className='form-container'>
@@ -8,7 +8,7 @@ function BuyFormContainer() {
                 <span className='logo'>LOGO</span>
             </div>
             <div className='price-container'>
-              <h1>50zł</h1>
+              <h1>{50*price}zł</h1>
             </div>
             <div className='form'>
                 <input type='text' className='name' placeholder='Imię' />

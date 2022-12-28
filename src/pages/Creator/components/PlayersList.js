@@ -9,7 +9,6 @@ function PlayersOption({players}) {
       
       setPlayer(e.target.value);
       const selectedPlayer = players.filter((player) => player.img === e.target.value)[0]
-      console.log(selectedPlayer);
       
     }
     return (

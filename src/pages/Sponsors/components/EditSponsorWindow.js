@@ -9,8 +9,7 @@ import { doc, updateDoc  } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
 
 function EditPlayerWindow({ player, open, onClose }) {
-  const [firstPlayerName, setFirstPlayerName] = useState(player.firstName);
-  const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
+  const [SponsorsName, setSponsorsName] = useState(player.firstName);
   const [number, setNumber] = useState(player.number);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
@@ -22,7 +21,7 @@ function EditPlayerWindow({ player, open, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstPlayerName || !secondPlayerName) {
+    if (!SponsorsName) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
@@ -31,16 +30,14 @@ function EditPlayerWindow({ player, open, onClose }) {
         alert("brak numeru")
       }
      else {
-      const docRef = doc(db, "Players", player.id)
+      const docRef = doc(db, "Sponsors", player.id)
       updateDoc(docRef,{
-        firstName: firstPlayerName,
-        lastName: secondPlayerName,
+        firstName: SponsorsName,
         number: number,
         img: image
       })
       onClose();
-      setFirstPlayerName("");
-      setSecondPlayerName("");
+      setSponsorsName("");
       setNumber(null);
       setImage(null);
     }
@@ -53,18 +50,12 @@ function EditPlayerWindow({ player, open, onClose }) {
         <label>Imię</label>
         <input
           type="text"
-          onChange={(e) => setFirstPlayerName(e.target.value)}
-          value={firstPlayerName}
+          onChange={(e) => setSponsorsName(e.target.value)}
+          value={SponsorsName}
           className="firstPlayerName"
         />
-        <label>Nazwisko</label>
-        <input
-          type="text"
-          onChange={(e) => setSecondPlayerName(e.target.value)}
-          value={secondPlayerName}
-          className="secondPlayerName"
-        />
-        <label>Numer zawodnika</label>
+        
+        <label>Kolejność na plakacie</label>
         <input
           type="number"
           onChange={(e) => setNumber(e.target.value)}
@@ -98,8 +89,7 @@ function EditPlayerWindow({ player, open, onClose }) {
           <button
             onClick={() => {
               onClose();
-              setFirstPlayerName("");
-              setSecondPlayerName("");
+              setSponsorsName("");
               setImage(null);
             }}
             className="btn primary-btn"

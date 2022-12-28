@@ -51,6 +51,7 @@ function AddPlayerWindow({open, onClose})  {
         firstName: firstPlayerName,
         secondName: secondPlayerName,
         img: preview,
+        number: number,
         uid: id
       })
       onClose(true)
@@ -92,10 +93,10 @@ function AddPlayerWindow({open, onClose})  {
                />
             <div className='add-logo-window'>
               <div className='image-container'>
-               {preview && <img src={preview} className="image" onClick= {() => setPreview(null)} />}
+               {preview && <img src={preview} className="image" />}
               </div>
               <div className='bin-container'>
-               {preview && <img src={bin} />}
+               {preview && <img src={bin} onClick= {() => setPreview(null) }/>}
               </div>
             </div>
             <div className='buttons-container'>
