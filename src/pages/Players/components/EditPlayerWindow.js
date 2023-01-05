@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
-import "../../YourTeams/components/addTeamWindow.css";
+import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
-import { doc, updateDoc  } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
 
 function EditPlayerWindow({ player, open, onClose }) {
@@ -20,31 +20,41 @@ function EditPlayerWindow({ player, open, onClose }) {
     fileInputRef.current.click();
   };
 
+  const handleEdit = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 1000000) {
+      alert("Maksymalny rozmiar obrazu to 1MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!firstPlayerName || !secondPlayerName) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
-    }
-      else if (!number) {
-        alert("brak numeru")
-      }
-     else {
-      const docRef = doc(db, "Players", player.id)
-      updateDoc(docRef,{
+    } else if (!number) {
+      alert("brak numeru");
+    } else {
+      const docRef = doc(db, "Players", player.id);
+      updateDoc(docRef, {
         firstName: firstPlayerName,
         lastName: secondPlayerName,
         number: number,
-        img: image
-      })
+        img: preview,
+      });
       onClose();
       setFirstPlayerName("");
       setSecondPlayerName("");
       setNumber(null);
       setImage(null);
     }
-    
   };
 
   return (
@@ -80,19 +90,16 @@ function EditPlayerWindow({ player, open, onClose }) {
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              setImage(file);
-            } else {
-              setImage(null);
-            }
+            handleEdit(e);
           }}
         />
         <div className="add-logo-window">
           <div className="image-container">
             {preview && <img src={preview} />}
           </div>
-          <div className="bin-container">{preview && <img src={bin} onClick= {() => setPreview(null) } />}</div>
+          <div className="bin-container">
+            {preview && <img src={bin} onClick={() => setPreview(null)} />}
+          </div>
         </div>
         <div className="buttons-container">
           <button

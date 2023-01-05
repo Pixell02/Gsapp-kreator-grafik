@@ -9,7 +9,6 @@ function Catalog () {
     return (
         <div className="page-container">
       <div className='content-wrap'>
-        <Header />
         <LeftBar />
         <MainCatalog />
       </div>

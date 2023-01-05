@@ -1,26 +1,32 @@
+import { useState } from "react";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import "./Block.css";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import "../../../components/main-content-elements/Block.css";
+import catalog from './catalog.json';
 
 function Catalog({ posters }) {
   const { user } = useAuthContext()
   const { id } = useParams()
+  const [images, setImages] = useState([]);
+ 
   return (
     <div className="catalog-container">
-      {posters.map((poster) => (
+      {catalog.map((poster) => (
         <div key={poster.id} className="item-window">
-          <Link to={`/${id}/creator/${poster.id}`}>
+          <Link to={`/catalog/${poster.category}`}>
             <div className="name-content">
               <span key={poster.id} className="name-content">
-                {poster.title}
+                {poster.name}
               </span>
             </div>
             <div className="image-content">
-              <img src={poster.img} alt={poster.title} />
+              {poster.name}
             </div>
           </Link>
         </div>
       ))}
+     
     </div>
   );
 }

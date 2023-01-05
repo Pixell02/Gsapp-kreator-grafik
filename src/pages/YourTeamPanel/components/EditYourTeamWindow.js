@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import "../../YourTeams/components/addTeamWindow.css";
+import "./addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -10,6 +10,7 @@ import updatePlayer from "../../../hooks/UpdatePlayer";
 
 function EditPlayerWindow({ yourTeam, open, onClose }) {
   const { id } = useParams();
+  
   const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
   const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
   const [image, setImage] = useState(yourTeam.img);
@@ -23,8 +24,8 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
 
   const handleEdit = (e) => {
     const file = e.target.files[0];
-    if( file.size > 150000) {
-      alert("Maksymalny rozmiar obrazu to 150KB")
+    if( file.size > 1000000) {
+      alert("Maksymalny rozmiar obrazu to 1MB")
       return;
     }
     const reader = new FileReader();
@@ -45,7 +46,7 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
         alert("puste pole")
       }
      else {
-      const docRef = doc(db, "Teams", id)
+      const docRef = doc(db, "Teams", yourTeam.id)
       updateDoc(docRef,{
         firstName: firstTeamName,
         secondName: secondTeamName,

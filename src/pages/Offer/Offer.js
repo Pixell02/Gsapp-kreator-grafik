@@ -8,7 +8,7 @@ function Offer () {
     return (
       <div className="page-container">
         <div className='content-wrap'>
-          <Header />
+          
           <LeftBar />
           <MainContentOffer />
         </div>

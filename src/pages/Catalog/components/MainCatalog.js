@@ -1,8 +1,9 @@
 import Title from '../../../components/main-content-elements/Title';
 import Footer from '../../../components/MainFooter';
-import Catalog from '../../../components/main-content-elements/CatalogBlock';
+import Catalog from './CatalogBlock';
 import '../../../components/main-content-elements/Main.css';
 import { useCollection } from '../../../hooks/useCollection';
+
 
 function MainCatalog() {
 
@@ -16,7 +17,6 @@ function MainCatalog() {
                   {posters && <Catalog posters = {posters} />}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

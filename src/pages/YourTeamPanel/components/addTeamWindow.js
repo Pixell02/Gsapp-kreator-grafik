@@ -21,7 +21,7 @@ function AddTeamWindow({open, onClose})  {
   
   useEffect (() => {
     if(image) {
-      if(Math.round(image.size/1024) < 150) {
+      if(Math.round(image.size/1024) < 1000) {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result);
@@ -101,7 +101,7 @@ function AddTeamWindow({open, onClose})  {
                 } className='btn primary-btn'>Anuluj</button>
               <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>
             </div>
-          {/* </form> */}
+          
         </div>
       </div>
     )

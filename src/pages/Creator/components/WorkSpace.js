@@ -9,9 +9,9 @@ import { db } from "../../../firebase/config";
 import html2canvas from "html2canvas";
 import Select from "react-select";
 import FabricCanvas from "./Canvas";
+import background from '../../../img/back.png'
 
 function WorkSpace() {
-  const { id } = useParams();
   const { poster } = useParams();
   const { user } = useAuthContext();
 
@@ -23,21 +23,17 @@ function WorkSpace() {
     .then((canvas) => {
       const link = document.createElement("a");
       
-      link.download = "image.png"
+      link.download = "image.jpg"
       link.href = canvas.toDataURL();
       link.click();
     });
   }
 
-  const { documents: Players } = useCollection("Players", ["uid", "==", id]);
-
-  const { documents: Sponsors } = useCollection("Sponsors", [
-    "uid",
-    "==",
-    id
-  ]); 
-
-  const { documents: Opponent } = useCollection("Opponents", ["uid", "==", id]);
+  
+  const {documents: Logo} = useCollection("Teams", ["uid", "==", user.uid]);
+  
+  const { documents: Opponent } = useCollection("Opponents", ["uid", "==", user.uid]);
+  
   let options;
   if (Opponent) {
     options = Opponent.map((opponent) => ({
@@ -47,24 +43,26 @@ function WorkSpace() {
   }
   const [opponent, setOpponent] = useState();
   const [opponentName, setOpponentName] = useState();
-  const [yourLogo, setYourLogo] = useState([]);
-  useEffect(() => {
-    const addYourLogo = async () => {
-    const docRef = doc(db, "Teams", id)
-    await getDoc(docRef)
-     .then((doc) => {
-      const result = doc.data();
-      setYourLogo(result)
-     })
-  }
-  addYourLogo()
-  },[])
   
-  const { documents: Posters } = useCollection("piecesOfPoster", [
-    "uid",
-    "==",
-    poster,
-  ]);
+  const [posters, setPosters] = useState();
+
+  useEffect(() => {
+    const addBackground = () => {
+      
+      const docRef = doc(db, "piecesOfPoster", poster)
+      getDoc(docRef)
+       .then((doc) => {
+        const result = doc.data();
+        
+        setPosters(result)
+       })
+    }
+    addBackground();
+  },[])
+
+const [yourLogo, setYourLogo] = useState();
+ 
+
 
   const setOpponentLogo = (option) => {
     
@@ -73,25 +71,30 @@ function WorkSpace() {
   };
 
   const [typeDate, setTypeDate] = useState('');
-
+ 
   const date = (e) => {
     setTypeDate(e.target.value)
-    console.log(typeDate)
-  }
+    }
 
+    
   return (
     <div className="workspace-container">
       <div className="preview-container">
-        { Posters   &&  <FabricCanvas poster={Posters} opponent={opponent} yourLogo={yourLogo} date={typeDate} opponentName={opponentName} Sponsors={Sponsors} />}
+        { posters && Logo &&  <FabricCanvas poster={posters} opponent={opponent} yourLogo={Logo} date={typeDate} opponentName={opponentName} />}
       </div>
       <div className="tools-container">
+        <div className="workspace-title">
+        <span className="workspace-title-container">Kreator</span>
+        </div>
         <div className="ms-5 me-5 mt-3">
           <label>Data i miejsce</label>
-          <input type="text" onChange={date}/>
+          <input type="text"  onChange={date} value={typeDate}  className="date-type"/>
           <label>Przeciwnicy</label>
           {Opponent && <Select options={options} onChange={setOpponentLogo} />}
           <button className="btn primary-btn save" onClick={() => exportImg()}>Zapisz</button>
+          
         </div>
+        <img src={background} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { db } from "../../firebase/config";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useState } from "react";
-import AddTeamWindow from "../../pages/YourTeams/components/addTeamWindow";
+import AddTeamWindow from "../../pages/YourTeamPanel/components/addTeamWindow";
 import { useParams } from "react-router-dom";
 import EditPlayerWindow from "../../pages/Players/components/EditPlayerWindow";
 import useEditModal from "../../hooks/useEditModal";

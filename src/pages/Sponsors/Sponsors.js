@@ -9,7 +9,6 @@ function Sponsors () {
     return (
         <div className="page-container">
           <div className='content-wrap'>
-          <Header />
           <LeftBar />
           <SponsorsMainContent />
           </div>

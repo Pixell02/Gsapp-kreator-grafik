@@ -15,13 +15,12 @@ function MainContentOffer() {
             <Title title = "Kup dostęp" />
             <div className="range-container">
               <div className="range-item">
-                <input type="range" min="1" max="12" defaultValue="1" value={month} className="rangeValue" onChange={(e) => setMonth(e.target.value)} />
+                <input type="range" min="1" max="12"  value={month} className="rangeValue" onChange={(e) => setMonth(e.target.value)} />
               </div>
               <span>Liczba miesięcy: {month}</span>
             </div>
             <BuyFormContainer price = {month} />  
           </div>
-          <MainFooter />
         </div>
     );
 }

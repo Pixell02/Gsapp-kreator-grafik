@@ -8,7 +8,6 @@ function YourTeamPanel () {
     return (
         <div className="page-container">
       <div className='content-wrap'>
-        <Header />
         <LeftBar />
         <MainYourTeamPanel />
       </div>

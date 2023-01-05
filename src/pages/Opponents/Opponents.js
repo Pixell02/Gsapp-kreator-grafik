@@ -9,7 +9,7 @@ function Opponents () {
     return (
       <div className="page-container">
         <div className='content-wrap'>
-          <Header />
+          
           <LeftBar />
           <OpponentsMainContent />        
         </div>

@@ -1,5 +1,5 @@
 import { useRef ,useState, useEffect } from 'react'
-import '../../YourTeams/components/addTeamWindow.css'
+import '../../YourTeamPanel/components/addTeamWindow.css'
 import bin from '../../../img/binIcon.png'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../../../firebase/config'
@@ -25,7 +25,7 @@ function AddOpponentWindow({open, onClose})  {
   
   useEffect (() => {
     if(image) {
-      if(Math.round(image.size/1024) < 150) {
+      if(Math.round(image.size/1024) < 1000) {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result);
@@ -51,7 +51,7 @@ function AddOpponentWindow({open, onClose})  {
         firstName: firstOpponentName,
         secondName: secondOpponentName,
         img: preview,
-        uid: id
+        uid: user.uid
       })
       onClose(true)
       setFirstOpponentName('')
@@ -63,9 +63,9 @@ function AddOpponentWindow({open, onClose})  {
       <div className={open ? "active-modal" : "modal"} >
         <div className='add-window' >
           
-            <label for = "firstOpponentName">Pierwsza część nazwy przeciwnika</label>
+            <label >Pierwsza część nazwy przeciwnika</label>
             <input type='text' onChange={(e) => setFirstOpponentName(e.target.value)} value={firstOpponentName} className = 'firstOpponentName' required/>
-            <label for = "SecondOpponentName">Druga część nazwy przeciwnika</label>
+            <label >Druga część nazwy przeciwnika</label>
             <input type='text' onChange={(e) => setSecondOpponentName(e.target.value)} value={secondOpponentName} className = 'secondOpponentName' required/>
             <button 
               onClick={onButtonClick}

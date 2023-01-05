@@ -36,7 +36,7 @@ export default function RegisterForm(props) {
       await signInWithPopup(auth,provider)
       .then((res) => {
         dispatch({type: 'LOGIN', payload: res.user })
-        navigate('/YourTeams');
+        navigate('/yourTeamPanel');
       })
     } catch (err) {
       console.log(err);
@@ -49,8 +49,7 @@ export default function RegisterForm(props) {
         await signInWithPopup(auth, provider)
         .then((res) => {
           dispatch({type: 'LOGIN', payload: res.user});
-          console.log(res.user);
-          navigate('/YourTeams');
+          navigate('/yourTeamPanel');
         })
       } catch (err) {
         console.log(err);

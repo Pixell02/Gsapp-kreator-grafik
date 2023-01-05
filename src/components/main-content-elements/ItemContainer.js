@@ -1,6 +1,6 @@
 import React from "react";
 import "./ItemContainer.css";
-import Block from "./CatalogBlock";
+import Block from "../../pages/Catalog/components/CatalogBlock";
 function ItemContainer({children}) {
   
   return (

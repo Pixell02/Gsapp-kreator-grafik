@@ -9,7 +9,7 @@ function Players () {
     return (
       <div className="page-container">
         <div className='content-wrap'>
-          <Header />
+          
           <LeftBar />
           <PlayerMainContent />
         </div>

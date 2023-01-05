@@ -9,7 +9,6 @@ function Login() {
     return (
       <div className="page-container">
         <div className="content-wrap">
-        <Header />
         <div className="form-align-center">
           <LoginPage name = "Zaloguj się" footer = {
           <span>Nie masz jeszcze konta? 
@@ -17,7 +16,6 @@ function Login() {
           </span>}/>
         </div>
        </div>
-       <Footer />
       </div>
     );
 }

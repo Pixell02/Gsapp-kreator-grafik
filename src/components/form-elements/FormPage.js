@@ -40,7 +40,6 @@ function LoginPage(props) {
         await signInWithPopup(auth, provider)
         .then((res) => {
           dispatch({type: 'LOGIN', payload: res.user});
-          navigate('/YourTeams');
         })
       } catch (err) {
         console.log(err);
@@ -53,7 +52,7 @@ function LoginPage(props) {
       await signInWithPopup(auth,provider)
       .then((res) => {
         dispatch({type: 'LOGIN', payload: res.user })
-        navigate('/YourTeams');
+        
       })
     } catch (err) {
       console.log(err);

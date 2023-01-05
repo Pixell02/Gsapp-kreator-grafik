@@ -34,12 +34,11 @@ export default function YourTeamsBlock({ items }) {
     <div ref={hideElement} className="catalog-container">
       {items.map((item) => (
         <div key={item.id} className="item-window">
-          <Link key={item.id} to={`/${item.id}/generator`}>
+          
             <div className="name-content">
               <span key={item.id} className="name-content">
                 {item.firstName + " " + item.secondName}
               </span>
-              
             </div>
             <div className="image-content">
               <img
@@ -47,7 +46,7 @@ export default function YourTeamsBlock({ items }) {
                 alt={item.firstName + " " + item.secondName}
               />
             </div>
-          </Link>
+          
         </div>
       ))}
     </div>

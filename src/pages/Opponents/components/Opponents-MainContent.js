@@ -15,13 +15,13 @@ function OpponentsMainContent() {
 
   const {documents: Opponents} = useCollection(
     'Opponents',
-    ['uid', '==', id]
+    ['uid', '==', user.uid]
     )
 
   const [openModal, setOpenModal] = useState(false)
     return (
         <div className="main-content">
-          <AddOpponentWindow open={openModal} onClose={() => setOpenModal(false)} />
+          {openModal && <AddOpponentWindow open={openModal} onClose={() => setOpenModal(false)} />}
             <div className="ml-5">
               <Title title = "Przeciwnicy" />
               <button onClick={() => setOpenModal(true)} className="btn primary-btn" >Dodaj drużynę</button>
@@ -29,7 +29,6 @@ function OpponentsMainContent() {
                 {Opponents && <ItemBlock items={Opponents} />}
               </ItemContainer>
             </div>
-          <MainFooter />
         </div>
     );
 }

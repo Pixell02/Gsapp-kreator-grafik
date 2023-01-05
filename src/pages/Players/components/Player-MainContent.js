@@ -19,11 +19,10 @@ function PlayerMainContent() {
 
   
   const { user } = useAuthContext();
-  const { id } = useParams();
+  
   const { documents: Players } = useCollection("Players", 
-  ["uid","==",id]);
+  ["uid","==",user.uid]);
   const [openModal, setOpenModal] = useState(false);
-
   return (
     <div className="main-content">
       
@@ -34,10 +33,9 @@ function PlayerMainContent() {
           Dodaj zawodnika
         </button>
         <ItemContainer>
-          {Players && < ItemBlock items={Players}  />}
+          {Players && < ItemBlock items={Players}   /> }
         </ItemContainer>
       </div>
-      <MainFooter />
       
     </div>
   );

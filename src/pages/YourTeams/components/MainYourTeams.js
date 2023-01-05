@@ -3,7 +3,7 @@ import MainFooter from "../../../components/MainFooter";
 import Title from "../../../components/main-content-elements/Title";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import YourTeamBlock from "./YourTeamsBlock";
-import AddTeamWindow from "./addTeamWindow";
+// import AddTeamWindow from "./addTeamWindow";
 import { useCollection } from '../../../hooks/useCollection';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import "../../../App.css";
@@ -19,7 +19,7 @@ export default function MainYourTeams () {
 
     return (
         <div className="main-content">
-          <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} />
+          {/* <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} /> */}
           <div className="ml-5">
             <Title title = "Twoje drużyny" />
             <button onClick={() => setOpenModal(true)} className="btn primary-btn" >Dodaj drużynę</button>

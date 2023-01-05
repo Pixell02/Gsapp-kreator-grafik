@@ -1,54 +1,61 @@
+import '../../../fonts/Russo_One.ttf';
+import '../../../fonts/Poppins-BoldItalic.ttf';
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
-
 import { getDoc, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useParams } from "react-router-dom";
 import { useCollection } from "../../../hooks/useCollection";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
-function FabricCanvas({
-  poster,
-  selectedPlayer,
-  opponent,
-  yourLogo,
-  date,
-  opponentName,
-  Sponsors,
-}) {
-  const [isPoster, setIsPoster] = useState();
+function FabricCanvas({poster,selectedPlayer,opponent,yourLogo,date,opponentName}) {
+  
+  const [isPoster, setIsPoster] = useState(null);
   const backImg = new Image();
-  backImg.src = poster[0].background;
-
-  const { id } = useParams();
+  backImg.src = poster.background;
+  const [yourTeamLogo, setYourTeamLogo] = useState(yourLogo)
+  const { user } = useAuthContext();
   const canvasRef = useRef();
   const fabricRef = useRef();
-  const [width, setWidth] = useState(backImg.width);
-  const [height, setHeight] = useState(backImg.height);
+  
   const [logo, setLogo] = useState([]);
   const [sponsors, setSponsors] = useState([]);
-  useEffect(() => {});
+  
 
   const typeDate = () => {
-    if (date) {
-      console.log(date);
+    if (fabricRef.current && date === "") {
       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className == "typeDate") {
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
-      const typeDate = new fabric.Textbox(date, {
+    }
+    if (date) {
+      
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className == "typeDate") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+      const typeDate = new fabric.Text(date, {
         selectable: false,
-        width: 50,
+        charSpacing: 200,
+        height: 50,
         textAlign: "center",
-        top: 235,
-        left: 295,
+        top: 238,
+        left: 305,
+        width: 450,
         className: "typeDate",
         fontSize: 20,
         fill: "white",
         originX: "center",
         originY: "center",
+        fontFamily: "Poppins-italic"
       });
-
+      
+      if(typeDate.width > 450) {
+        typeDate.scaleToWidth(450)
+      }
       fabricRef.current.add(typeDate);
     }
   };
@@ -63,17 +70,21 @@ function FabricCanvas({
       const opponentImg = new Image();
       opponentImg.src = opponent;
       opponentImg.onload = () => {
-        const opponentImage = new fabric.Image(opponentImg, {
+        fabric.Image.fromURL(opponentImg.src, function(img) {
+          img.set({
           selectable: false,
           top: 460,
-          left: 450,
+          left: 470,
           className: "opponentImage",
           originX: "center",
           originY: "center",
+          })
+          
+          img.scaleToHeight(150);
+          
+        fabricRef.current.add(img);
         });
-        opponentImage.scaleToHeight(100);
-
-        fabricRef.current.add(opponentImage);
+        
       };
     }
   };
@@ -84,15 +95,20 @@ function FabricCanvas({
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
-      const opponentsName = new fabric.Textbox(opponentName, {
+      const opponentsName = new fabric.Text(opponentName, {
         selectable: false,
-        top: 470,
-        left: 120,
-        width: 200,
+        top: 483,
+        left: 90,
+        originY: "center",
+        originX: "left",
         fontSize: 30,
-        fill: "yellow",
+        width: 200,
+        fill: "#d1a75f",
         className: "opponentsName",
+        fontFamily: "Poppins-italic"
       });
+      
+      opponentsName.scaleToWidth(140);
       fabricRef.current.add(opponentsName);
     }
   };
@@ -101,9 +117,9 @@ function FabricCanvas({
     const initFabric = () => {
       fabricRef.current = new fabric.Canvas("canvas", {
         selection: false,
-        width: width,
+        width: backImg.width,
+        height: backImg.height
       });
-      poster.map((poster) => {
         const img = new Image();
         img.src = poster.background;
         img.onload = () => {
@@ -114,8 +130,6 @@ function FabricCanvas({
               fabricRef.current.renderAll.bind(fabricRef.current)
             );
           });
-
-          fabricRef.current.width = img.width;
 
           setIsPoster(newImg);
           document.querySelector(".lower-canvas").style.width =
@@ -134,79 +148,86 @@ function FabricCanvas({
             img.width + "px";
           document.querySelector(".canvas-container").style.height =
             img.height + "px";
-        };
-        fabricRef.current.width = img.width;
-        fabricRef.current.height = img.height;
-        const canvasBlock = document.querySelector(".canvas-container");
-        const sponsorBlock = document.createElement("div");
-        sponsorBlock.className = "sponsor-container";
-        sponsorBlock.style.width = img.width + "px";
-        canvasBlock.appendChild(sponsorBlock);
-        Sponsors.forEach((sponsor) => {
-          let img = document.createElement("img");
-          img.className = "sponsor-image";
-          img.src = sponsor.img;
-          sponsorBlock.appendChild(img);
-        });
-      });
+        }
+        const secondImg = new Image();
+        secondImg.src = yourTeamLogo[0].img;
+        secondImg.onload = () => {
+          fabric.Image.fromURL(secondImg.src, function(img) {
+            img.set({
+            selectable: false,
+            top: 460,
+            left: 330,
+            originX: "center",
+            originY: "center",
+            })
+            img.scaleToHeight(150);
+          fabricRef.current.add(img);
+          fabricRef.current.renderAll();
+          });
+          
+        }
+        const thirdImg = new Image();
+        thirdImg.src = yourTeamLogo[0].img;
+        thirdImg.onload = () => {
+          fabric.Image.fromURL(thirdImg.src, function(img) {
+            img.set({
+              selectable: false,
+              originX: "center",
+              originY: "center",
+              top: 50,
+              left: 50
+            })
+            img.scaleToHeight(70);
+            fabricRef.current.add(img);
+          fabricRef.current.renderAll();
+          })
+        }
+        
     };
     initFabric();
   }, []);
-
-  useEffect(() => {
-    const docRef = doc(db, "Teams", id);
-    getDoc(docRef).then((doc) => {
-      let result = doc.data();
-      setLogo(result.img);
-
-      const yourLogo = new Image();
-      yourLogo.src = result.img;
-      yourLogo.onload = () => {
-        const fabricImage = new fabric.Image(yourLogo, {
-          selectable: false,
-          top: 460,
-          left: 330,
-          originX: "center",
-          originY: "center",
-        });
-        fabricImage.scaleToWidth(100);
-        fabricRef.current.add(fabricImage);
-      };
-    });
-  }, [isPoster]);
+  
+  
   useEffect(() => {
     const teamName = () => {
-      const name = new fabric.Textbox(yourLogo.firstName, {
-        selectable: false,
-        top: 400,
-        left: 50,
-        fill: "white",
-        fontSize: 55,
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className == "yourLogo") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
       });
+      
+      const name = new fabric.Text(yourLogo[0].firstName, {
+        selectable: false,
+        originX: "left",
+        originY: "center",
+        top: 440,
+        left: 30,
+        fill: "white",
+        fontFamily: "Poppins-italic",
+        className:"yourLogo"
+      });
+      console.log(name)
+      // if(fabricRef.current.item(0).className == "yourLogo") {
+      //   fabricRef.current.remove(fabricRef.current.item(0));
+      // }
+      
+      name.scaleToWidth(150);
       fabricRef.current.add(name);
+      
     };
-    teamName();
+    setTimeout(() => {
+      teamName();
+    },100)
+    
   }, [isPoster]);
 
-  useEffect(() => {
-    const vs = () => {
-      const vs = new fabric.Text("VS", {
-        selectable: false,
-        top: 470,
-        left: 50,
-        fill: "yellow",
-      });
-      fabricRef.current.add(vs);
-    };
-    vs();
-  }, [isPoster]);
+ 
 
   opponentLogo();
   opponentsName();
   typeDate();
-
   return (
-    <canvas id="canvas" ref={fabricRef} width={width} height={height}></canvas>
+    <canvas id="canvas" ref={fabricRef} width={backImg.width} height={backImg.height}></canvas>
   );
 }
 

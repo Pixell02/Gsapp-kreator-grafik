@@ -9,7 +9,7 @@ function Register() {
     return (
       <div className="page-container">
         <div className="content-wrap">
-          <Header />
+          
           <div className="form-align-center">
           <RegisterForm
           name = "Zarejestruj się" footer = {

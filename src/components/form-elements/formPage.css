@@ -1,9 +1,16 @@
+body {
+    font-family: Poppins !important;
+}
+button {
+    
+}
 .form {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }
 
 .form-group {

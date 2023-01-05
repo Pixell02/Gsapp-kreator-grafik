@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import "../../YourTeams/components/addTeamWindow.css";
+import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -18,6 +18,18 @@ function EditPlayerWindow({ player, open, onClose }) {
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
+  const handleEdit = (e) => {
+    const file = e.target.files[0];
+    if(file.size > 1000000) {
+      alert("Maksymalny rozmiar obrazu to 1MB")
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreview(reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +43,7 @@ function EditPlayerWindow({ player, open, onClose }) {
       updateDoc(docRef,{
         firstName: firstOpponentName,
         lastName: secondOpponentName,
-        img: image
+        img: preview
       })
       onClose();
       setFirstOpponentName("");
@@ -68,12 +80,7 @@ function EditPlayerWindow({ player, open, onClose }) {
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              setImage(file);
-            } else {
-              setImage(null);
-            }
+            handleEdit(e)
           }}
         />
         <div className="add-logo-window">

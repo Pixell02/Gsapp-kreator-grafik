@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
 }
 .range-container .range-item {
     display: flex;
@@ -30,6 +31,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }
 .form-container .form {
     box-shadow: none;

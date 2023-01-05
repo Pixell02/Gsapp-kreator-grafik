@@ -8,7 +8,6 @@ function Account () {
     return (
         <div className="page-container">
       <div className='content-wrap'>
-        <Header />
         <LeftBar />
         <MainAccount />
       </div>

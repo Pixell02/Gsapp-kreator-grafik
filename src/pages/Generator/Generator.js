@@ -9,7 +9,7 @@ function Generator () {
     return (
     <div className="page-container">
       <div className='content-wrap'>
-        <Header />
+        
         <LeftBar />
         <Main />
       </div>

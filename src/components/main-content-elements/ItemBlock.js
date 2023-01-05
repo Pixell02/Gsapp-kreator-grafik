@@ -2,7 +2,7 @@ import { db } from "../../firebase/config";
 import { useState, useRef, useEffect } from "react";
 import { doc, deleteDoc } from "firebase/firestore";
 import useEditModal from "../../hooks/useEditModal";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 import EditPlayerWindow from "../../pages/Players/components/EditPlayerWindow";
 import EditSponsorWindow from "../../pages/Sponsors/components/EditSponsorWindow";
 import EditOpponentWindow from "../../pages/Opponents/components/EditOpponentWindow";
@@ -16,10 +16,15 @@ import Options from "./Options";
 export default function ItemBlock({ items }) {
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const location = useLocation();
-  const goodLocation = location.pathname.split("/")[2];
+  const goodLocation = location.pathname.split("/")[1];
   const handleDeleteClick = async (id) => {
-    const ref = doc(db, "Players", id);
-    await deleteDoc(ref);
+    if(goodLocation == "players") {
+      const ref = doc(db, "Players", id);
+      await deleteDoc(ref);
+    } else if (goodLocation == "opponents") {
+      const ref = doc(db, "Opponents", id);
+      await deleteDoc(ref);
+    }
   };
 
   const [data, setData] = useState();
@@ -33,20 +38,19 @@ export default function ItemBlock({ items }) {
   };
   useEffect(() => {
     document.body.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.body.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setItemToEdit]);
 
   const handleClick = (e, item) => {
-    
     setItemToEdit(item);
   };
   const editClick = (e, item) => {
-    setData(item)
-    openEditModal()
-  }
+    setData(item);
+    openEditModal();
+    setItemToEdit(null);
+  };
 
   return (
     <div ref={hideElement} className="catalog-container">
@@ -59,6 +63,7 @@ export default function ItemBlock({ items }) {
             </span>
             <div className="option-container">
               <button
+                className="button"
                 key={item.id}
                 onClick={(e) => {
                   handleClick(e, item);
@@ -71,7 +76,12 @@ export default function ItemBlock({ items }) {
               {itemToEdit === item && (
                 <div className="show-list">
                   <div className="edit-element">
-                    <button key={item.id} onClick={(e) => editClick(e, item)}>
+                    <button
+                      key={item.id}
+                      onClick={(e) => {
+                        editClick(e, item);
+                      }}
+                    >
                       Edytuj
                     </button>
                   </div>
@@ -90,28 +100,29 @@ export default function ItemBlock({ items }) {
           <div className="image-content">
             <img src={item.img} alt={item.firstName + " " + item.secondName} />
           </div>
-          
         </div>
       ))}
-      { itemToEdit === data  && isEditModal && goodLocation === "players" &&
-            <EditPlayerWindow
-              player={data}
-              open={isEditModal}
-              onClose={closeEditModal}
-            />
-          }
-          {itemToEdit === data  && isEditModal && goodLocation === "opponents" &&
-            <EditOpponentWindow
-              player={data}
-              open={isEditModal}
-              onClose={closeEditModal}
-            />}
-            {itemToEdit === data  && isEditModal && goodLocation === "sponsors" &&
-            <EditSponsorWindow
-              player={data}
-              open={isEditModal}
-              onClose={closeEditModal}
-            />}
+      {data && isEditModal && goodLocation === "players" && (
+        <EditPlayerWindow
+          player={data}
+          open={isEditModal}
+          onClose={closeEditModal}
+        />
+      )}
+      {data && isEditModal && goodLocation === "opponents" && (
+        <EditOpponentWindow
+          player={data}
+          open={isEditModal}
+          onClose={closeEditModal}
+        />
+      )}
+      {data && isEditModal && goodLocation === "sponsors" && (
+        <EditSponsorWindow
+          player={data}
+          open={isEditModal}
+          onClose={closeEditModal}
+        />
+      )}
     </div>
   );
 }

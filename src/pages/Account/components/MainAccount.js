@@ -26,7 +26,6 @@ function MainAccount() {
                 </div>
             </div>
           </div>
-          <MainFooter />
         </div>
     );
 }

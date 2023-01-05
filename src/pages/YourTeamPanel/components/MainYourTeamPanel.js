@@ -6,60 +6,42 @@ import { useCollection } from "../../../hooks/useCollection";
 import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 import EditYourTeamWindow from "./EditYourTeamWindow";
+import AddTeamWindow from "./addTeamWindow";
+import YourTeamBlock from "./YourTeamBlock";
 // Styles
 
-import "./MainYourTeamPanel.css"
+import "./MainYourTeamPanel.css";
 import * as Icon from "react-bootstrap-icons";
 
 function MainYourTeamPanel() {
   const [openEditYourTeam, setOpenEditYourTeam] = useState(false);
-  const [yourTeam, setYourTeam] = useState([]);
+  
+  const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
-  const teamLogo = async () => {
-    const docRef = doc(db, "Teams", id);
-    await getDoc(docRef).then((doc) => {
-      setYourTeam(doc.data());
-    });
-  };
+  const { user } = useAuthContext();
+  const { documents: Team } = useCollection("Teams", ["uid", "==", user.uid]);
   
-    teamLogo();
- 
-
-  // const {document : Team} = useCollection('Teams',[])
-  // console.log(Team)
-  
-  
-
+  let checkTeam;
+  if(Array.isArray(Team)) {
+    if(Team.length == 0) {
+      checkTeam = null;
+    } else {
+      checkTeam = true;
+    }
+  } 
   return (
     <div className="main-content">
       <div className="ml-5">
         <Title title="Panel drużyny" />
         <ItemContainer>
-          <div className="catalog-container">
-            <div key={yourTeam.uid} className="team-window">
-              <div className="team-name-content">
-                <span key={yourTeam.uid}>
-                  {yourTeam.firstName + " "}
-                  {yourTeam.secondName ? yourTeam.secondName : null}
-                </span>
-              </div>
-              <div className="image-content">
-                <img
-                  src={yourTeam.img}
-                  alt={yourTeam.firstName + " " + yourTeam.secondName}
-                />
-              </div>
-              <div className="icon-item" onClick={(e) => setOpenEditYourTeam(true)}>
-                <Icon.PencilFill style={{color: "black"}}/>
-              </div>
-            </div>
-            {openEditYourTeam && <EditYourTeamWindow yourTeam={yourTeam} open={openEditYourTeam} onClose={(e) => setOpenEditYourTeam(false)} /> }
-          </div>
+            {checkTeam != null  ? <YourTeamBlock Team={Team} /> : (<button className="btn primary-btn" onClick={() => setOpenModal(true)} >Dodaj logo</button>)  }
+          {openModal && <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} />}
         </ItemContainer>
-       
+        
       </div>
-      <MainFooter />
+      
     </div>
   );
 }

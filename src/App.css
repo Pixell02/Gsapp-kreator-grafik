@@ -1,5 +1,20 @@
 
+@font-face {
+  font-family: Russo_One;
+  src: url(./fonts/Russo_One.ttf);
+}
+@font-face {
+  font-family: "Poppins";
+  src: url(./fonts/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: "Poppins-italic";
+  src: url(./fonts/Poppins-BoldItalic.ttf);
+}
 
+body {
+  background-color: rgb(245, 245, 245);
+}
 .page-container {
   display: flex;
   position: absolute;
@@ -27,6 +42,7 @@
 }
 .ml-5 button {
   margin-left: 25px;
+  
 }
 .option-container {
   z-index: 50;
@@ -37,4 +53,14 @@
 .image-container .image {
   max-height: 120px;
   max-width: 200px;
+}
+.btn {
+  background-color: rgb(68, 68, 68);
+}
+.btn:hover {
+  background-color: rgb(26, 26, 26);
+  color: white;
+}
+.btn:focus {
+  background-color: rgb(68, 68, 68);
 }

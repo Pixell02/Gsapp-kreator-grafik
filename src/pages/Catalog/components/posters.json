@@ -1,0 +1,62 @@
+[
+    {
+        "id":"63b5fb36a490e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "MATCH-DAY"
+    },
+    {
+        "id":"63b5fb36a490e8f93bsdae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "TOMMOROW-MATCH"
+    },
+    {
+        "id":"63b5fb36a490e8f93breae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "MATCH-POSTER"
+    },
+    {
+        "id":"63b5fb36a560e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "STARTING-SQUAD"
+    },
+    {
+        "id":"63b5fb36a490f8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "RESULT"
+    },
+    {
+        "id":"63bcfb36a490e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "TIMETABLE"
+    },
+    {
+        "id":"63b5fbsda490e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "TICKET"
+    },
+    {
+        "id":"63b5fbasa490e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "MONTHLY SUMMARY"
+    },
+    {
+        "id":"63b5fb36a4wee8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "GOOOOL"
+    },
+    {
+        "id":"63b5fb36a421e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "EVENT-ANNOUNCEMENT"
+    },
+    {
+        "id":"6215fb36a490e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "COMPETITOR-PRESENTATION"
+    },
+    {
+        "id":"24b5fb36a490e8f93beeae34",
+        "src":"./posters/1_Stal-Gorzyce_dzień_meczowy.png",
+        "category": "TRAINERS"
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "GOOOOL",
+        "category": "GOOOOL"
+    },
+    {
+        "id": 2,
+        "name": "dzień meczowy",
+        "category": "MATCH-DAY"
+    },
+    {
+        "id": 3,
+        "name": "jutro mecz",
+        "category": "TOMMOROW-MATCH"
+    },
+    {
+        "id": 4,
+        "name": "plakat meczowy",
+        "category": "MATCH-POSTER"
+    },
+    {
+        "id": 5,
+        "name": "skład wyjściowy",
+        "category": "STARTING-SQUAD"
+    },
+    {
+        "id": 6,
+        "name": "wynik",
+        "category": "RESULT"
+    },
+    {
+        "id": 7,
+        "name": "terminarz",
+        "category": "TIMETABLE"
+    },
+    {
+        "id": 8,
+        "name": "bilet",
+        "category": "TICKET"
+    },
+    {
+        "id": 9,
+        "name": "podsumowanie miesiąca",
+        "category": "MONTHLY SUMMARY"
+    },
+    {
+        "id": 10,
+        "name": "trenerzy",
+        "category": "TRAINERS"
+    },
+    {
+        "id": 11,
+        "name": "zapowiedź wydarzenia",
+        "category": "EVENT-ANNOUNCEMENT"
+    },
+    {
+        "id": 12,
+        "name": "prezentacja zawodnika",
+        "category": "COMPETITOR-PRESENTATION"
+    }
+]
