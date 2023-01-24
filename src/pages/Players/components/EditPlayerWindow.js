@@ -37,8 +37,6 @@ function EditPlayerWindow({ player, open, onClose }) {
     e.preventDefault();
     if (!firstPlayerName || !secondPlayerName) {
       alert("puste pole");
-    } else if (!preview) {
-      alert("brak zdjecia");
     } else if (!number) {
       alert("brak numeru");
     } else {
@@ -58,7 +56,7 @@ function EditPlayerWindow({ player, open, onClose }) {
   };
 
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className={open ? "active-modal m-edit" : "modal"}>
       <div className="add-window">
         <label>Imię</label>
         <input

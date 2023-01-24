@@ -13,16 +13,18 @@ import Players from "./pages/Players/Players";
 import Opponents from "./pages/Opponents/Opponents";
 import Sponsors from "./pages/Sponsors/Sponsors";
 import YourTeams from "./pages/YourTeams/YourTeams";
+import YourCatalog from "./pages/YourCatalog/YourCatalog";
 import Offer from "./pages/Offer/Offer";
 import Account from "./pages/Account/Account";
 import "./App.css"
-import Creator from "./pages/Creator/Creator";
+import Creator from "./pages/Catalog/components/Creator";
 import { useLogout } from './hooks/useLogout'
 import { auth } from "./firebase/config";
 import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 function App() {
   const {user, authIsReady} = useAuthContext()
+  
   
   return (
     <BrowserRouter>
@@ -31,7 +33,7 @@ function App() {
       <Route path="/" element = {<Navigate to="/login" />} />
       <Route path="/login" element = {!user ? <Login /> : <Navigate to="/yourTeamPanel" />} />
       <Route path="/register" element = {!user ? <Register /> : <Navigate to="yourTeamPanel" />} />
-      
+      <Route path="/yourCatalog" element = {user ? <YourCatalog /> : <Navigate to="/login" /> } />
       <Route path="/catalog" element = {user ? <Catalog /> : <Navigate to="/login" />} />
       <Route path="/yourTeamPanel" element = {user ? <YourTeamPanel /> : <Navigate to="/login" />} />
       <Route path="/players" element = {user ? <Players /> : <Navigate to="/login" />} />
@@ -41,7 +43,8 @@ function App() {
       <Route path="/offer" element = {user ? <Offer /> : <Navigate to="/login" />} />
       <Route path="/account" element = {user ? <Account /> : <Navigate to="/login" />} />
       <Route path="/creator/:poster" element = {user ? <Creator /> : <Navigate to="/login" />} />
-      <Route path="/catalog/:type" element = {user ? <Catalog /> : <Navigate to="/login" /> } />
+      <Route path="/catalog/*" element = {user ? <Catalog /> : <Navigate to="/login" /> } />
+      
       <Route path="/*" element = {<Navigate to="/login" />} />
     </Routes>
     )}

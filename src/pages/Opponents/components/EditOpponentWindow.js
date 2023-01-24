@@ -54,7 +54,7 @@ function EditPlayerWindow({ player, open, onClose }) {
   };
 
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className={open ? "active-modal m-edit" : "modal"}>
       <div className="add-window">
         <label>Pierwsza część nazwy przeciwnika</label>
         <input

@@ -1,62 +1,32 @@
 [
     {
         "id": 1,
-        "name": "GOOOOL",
-        "category": "GOOOOL"
+        "name": "motyw 1",
+        "theme": "motyw 1"
     },
     {
         "id": 2,
-        "name": "dzień meczowy",
-        "category": "MATCH-DAY"
+        "name": "motyw 2",
+        "theme": "motyw 2"
     },
     {
         "id": 3,
-        "name": "jutro mecz",
-        "category": "TOMMOROW-MATCH"
+        "name": "motyw 3",
+        "theme": "motyw 3"
     },
     {
         "id": 4,
-        "name": "plakat meczowy",
-        "category": "MATCH-POSTER"
+        "name": "motyw 4",
+        "theme": "motyw 4"
     },
     {
         "id": 5,
-        "name": "skład wyjściowy",
-        "category": "STARTING-SQUAD"
+        "name": "motyw 5",
+        "theme": "motyw 5"
     },
     {
         "id": 6,
-        "name": "wynik",
-        "category": "RESULT"
-    },
-    {
-        "id": 7,
-        "name": "terminarz",
-        "category": "TIMETABLE"
-    },
-    {
-        "id": 8,
-        "name": "bilet",
-        "category": "TICKET"
-    },
-    {
-        "id": 9,
-        "name": "podsumowanie miesiąca",
-        "category": "MONTHLY SUMMARY"
-    },
-    {
-        "id": 10,
-        "name": "trenerzy",
-        "category": "TRAINERS"
-    },
-    {
-        "id": 11,
-        "name": "zapowiedź wydarzenia",
-        "category": "EVENT-ANNOUNCEMENT"
-    },
-    {
-        "id": 12,
-        "name": "prezentacja zawodnika",
-        "category": "COMPETITOR-PRESENTATION"
+        "name": "motyw 6",
+        "theme": "motyw 6"
     }
 ]

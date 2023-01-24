@@ -7,7 +7,7 @@ import "../../App.css";
 
 function Register() {
     return (
-      <div className="page-container">
+      <div className="page-container login-container">
         <div className="content-wrap">
           
           <div className="form-align-center">
@@ -19,7 +19,6 @@ function Register() {
         } />
         </div>
         </div>
-        <Footer />
       </div>
     );
 }

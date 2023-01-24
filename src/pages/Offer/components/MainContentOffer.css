@@ -43,16 +43,52 @@
     height: 40px;
     margin: 10px 0 10px 0;
 }
+.form-container .form .buy-btn {
+    margin-top: 40px !important;
+}
 .logo-container {
     font-size: 50px;
     margin: 40px 0 40px 0;
     display: flex;
-    
     justify-content: center;
     width: 100%;
 }
-.logo-container span {
-    text-align: center;
+ .logo-block {
+    margin: 20px 0 0 0;
+}
+.logo-image {
+    width: 200px;
+    height: 200px;
+}
+.fullName-content {
+    display: flex;
     width: 100%;
+    justify-content: space-between;
+}
+.fullName-content .name {
+    width: 90% !important;
+}
+.fullName-content .surName {
+    width: 90% !important;
+}
+.label-content {
+    width: 100%;
+}
+.inner-label-containers {
+    width: 100%;
+}
+.radio-container {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+.radio-container label {
+    width: 50%;
+}
+.payment-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
 }
 

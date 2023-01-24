@@ -41,9 +41,7 @@ function AddPlayerWindow({ open, onClose }) {
     e.preventDefault();
     if (!firstPlayerName || !secondPlayerName) {
       alert("puste pole");
-    } else if (!preview) {
-      alert("brak zdjecia");
-    } else {
+    }  else {
       await addDoc(collection(db, "Players"), {
         firstName: firstPlayerName,
         secondName: secondPlayerName,

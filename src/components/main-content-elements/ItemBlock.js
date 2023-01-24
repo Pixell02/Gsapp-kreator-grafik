@@ -18,10 +18,10 @@ export default function ItemBlock({ items }) {
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[1];
   const handleDeleteClick = async (id) => {
-    if(goodLocation == "players") {
+    if(goodLocation === "players") {
       const ref = doc(db, "Players", id);
       await deleteDoc(ref);
-    } else if (goodLocation == "opponents") {
+    } else if (goodLocation === "opponents") {
       const ref = doc(db, "Opponents", id);
       await deleteDoc(ref);
     }
@@ -98,7 +98,7 @@ export default function ItemBlock({ items }) {
             </div>
           </div>
           <div className="image-content">
-            <img src={item.img} alt={item.firstName + " " + item.secondName} />
+           {item.img !== null && <img src={item.img} alt={item.firstName + " " + item.secondName} />}
           </div>
         </div>
       ))}

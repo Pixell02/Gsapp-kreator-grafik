@@ -25,8 +25,8 @@ function PlayerMainContent() {
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="main-content">
-      
       <AddPlayerWindow open={openModal} onClose={() => setOpenModal(false)} />
+      
       <div className="ml-5">
         <Title title="Zawodnicy" />
         <button className="btn primary-btn" onClick={() => setOpenModal(true)}>
@@ -35,6 +35,7 @@ function PlayerMainContent() {
         <ItemContainer>
           {Players && < ItemBlock items={Players}   /> }
         </ItemContainer>
+        
       </div>
       
     </div>
