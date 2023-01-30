@@ -6,12 +6,12 @@ import * as Icon from "react-bootstrap-icons";
 
 export default function YourTeamBlock({ Team }) {
   const [openEditYourTeam, setOpenEditYourTeam] = useState(false);
-  const [team, setTeam] = useState(Team);
+  
   
   return (
     <div className="your-team-catalog-container">
      
-      {team.map((team) => (
+      {Team.map((team) => (
         
         <div key={team.uid} className="your-team-window" id="yourTeamWindow">
           <div className="your-team-name-content">

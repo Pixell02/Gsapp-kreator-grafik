@@ -60,6 +60,7 @@
     width: 100%;
     
 }
+
 .nav-container {
     display: flex;
     flex-direction: column;
@@ -68,23 +69,42 @@
     cursor: pointer;
     
 }
-.nav-window {
+.theme-name-container {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    flex-direction: row;
+}
+.theme-name-container .favorite-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-window, .nav-window-dark {
     width: 100%;
     height: 60px;
     background-color: white;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    transition: 0.5s ease-in-out;
     
+    
+}
+.nav-window-dark {
+    background-color: rgb(233, 233, 233);
+    transition: 0.5s ease-in-out;
 }
 .mg-container {
     margin-top: 20px;
+    
     margin-bottom: 0;
     width: 95%;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
     background-color: white;
 }
-.nav-window span {
+.nav-window span,
+.nav-window-dark span {
     margin-left: 20px;
     width: 120px;
 }
@@ -112,6 +132,13 @@
 .empty-container {
     width: 80%;
 }
+.theme-name {
+    width: 100%;
+    margin: 0 0 0 40px;
+    display: flex;
+    align-items: center;
+    
+}
 
  .poster-container-open {
     transition: height 0.2s ease-in-out;
@@ -119,7 +146,8 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     flex-direction: row;
-    height: 400px;
+    overflow: auto;
+    height: auto;
     width: 95%;
     background-color: white;
     overflow: hidden;
@@ -128,7 +156,7 @@
     
     display: flex;
     justify-content: flex-end;
-    margin-right: 20px;
+    
     cursor: default;
 }
 
@@ -220,24 +248,3 @@
     z-index: 0;
 }
 
-@media only screen and (min-width: 1789px) {
-    .poster-container-open {
-        height: 200px;
-    }
-}
-@media only screen and (max-width: 1347px) {
-    .poster-container-open {
-        height: 600px;
-    }
-}
-@media only screen and (max-width: 1150px) {
-    .poster-container-open {
-        height: 800px;
-    }
-}
-@media only screen and (max-width: 837px) {
-    .poster-container-open {
-        height: 1500px;
-    }
-}
- 

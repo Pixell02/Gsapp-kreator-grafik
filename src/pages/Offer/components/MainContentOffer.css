@@ -1,29 +1,4 @@
-.range-container {
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-    height: 100px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white;
-}
-.range-container .range-item {
-    display: flex;
-    justify-content: center;
-}
-.range-container .range-item input {
-    width: 90%;
-}
-.range-container span {
-    margin-top: 5px;
-    margin-left: 55px;
-    font-size: 20px;
-    font-weight: 600;
-    height: 10%;
-}
+
 .form-container {
     margin: 100px auto 100px auto;
     width: 95%;
@@ -63,6 +38,7 @@
 .fullName-content {
     display: flex;
     width: 100%;
+    margin-left: 50px;
     justify-content: space-between;
 }
 .fullName-content .name {
@@ -74,6 +50,13 @@
 .label-content {
     width: 100%;
 }
+.data-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px ;
+    width: 100%;
+}
+
 .inner-label-containers {
     width: 100%;
 }

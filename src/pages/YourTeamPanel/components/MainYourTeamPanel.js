@@ -32,8 +32,6 @@ function MainYourTeamPanel() {
   const { user } = useAuthContext();
   const { documents: Team } = useCollection("Teams", ["uid", "==", user.uid]);
 
- 
-
   useEffect(() => {
     const docRef = collection(db, "user");
     getDocs(docRef).then((snapshot) => {
@@ -78,7 +76,7 @@ function MainYourTeamPanel() {
 
   let checkTeam;
   if (Array.isArray(Team)) {
-    if (Team.length == 0) {
+    if (Team.length === 0) {
       checkTeam = null;
     } else {
       checkTeam = true;
@@ -90,7 +88,7 @@ function MainYourTeamPanel() {
         <Title title="Panel drużyny" />
         <ItemContainer>
           {checkTeam != null ? (
-            <YourTeamBlock Team={Team} />
+           <YourTeamBlock Team={Team} />
           ) : (
             <button
               className="btn primary-btn"

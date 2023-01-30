@@ -14,63 +14,75 @@ import { useEffect } from "react";
 function MainAccount() {
   const { user } = useAuthContext();
   const [userId, setUserId] = useState(user.uid);
-  const { documents: userData } = useCollection("userData",["uid", "==", user.uid]);
+  const { documents: userData } = useCollection("userData", [
+    "uid",
+    "==",
+    user.uid,
+  ]);
   const [userEmail, setUserEmail] = useState(user.email);
   const [isChecked, setIsChecked] = useState(false);
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
-
+  
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
-  const [address, setAddress]= useState();
+  const [address, setAddress] = useState();
   const [postCode, setPostCode] = useState();
+  const [country, setCountry] = useState("Afghanistan");
   const [city, setCity] = useState();
   const [nip, setNip] = useState();
   const [companyName, setCompanyName] = useState();
 
   useEffect(() => {
-    if(userData.lenght > 0) {
+    if (!userData) {
+      setFirstName("");
+      setLastName("");
+      setAddress("");
+      setPostCode("");
+      setCity("");
+      setNip("");
+      setCompanyName("");
+    } else {
+      
       setFirstName(userData[0].firstName);
       setLastName(userData[0].lastName);
       setAddress(userData[0].address);
       setPostCode(userData[0].postCode);
       setCity(userData[0].city);
-      setNip(userData[0].nip);
-      setCompanyName(userData[0].companyName)
+      setCountry(userData[0].country);
+      if(userData[0].NIP) {
+        setIsChecked(true);
+       setNip(userData[0].NIP);
+      setCompanyName(userData[0].companyName); 
+      } else {
+        setNip("")
+        setCompanyName("")
+      }
+      
     }
-  },[userData])
+  }, [userData]);
 
   const handleChange = (e) => {
-    if(e.target.name = "firstName") {
-      setFirstName(e.target.value)
-    } else if(e.target.name = "lastName") {
-      setLastName(e.target.value)
-    } else if(e.target.name = "adress") {
-      setAddress(e.target.value)
-    } else if(e.target.name = "post-code") {
-      setPostCode(e.target.value)
-    } else if(e.target.name = "city") {
-      setCity(e.target.value)
-    } else if(e.target.name = "nip") {
-      setNip(e.target.value)
-    } else if(e.target.name = "company-name") {
-      setCompanyName(e.target.value)
+    if (e.target.name === "firstName") {
+      setFirstName(e.target.value);
+    } else if (e.target.name === "lastName") {
+      setLastName(e.target.value);
+    } else if (e.target.name === "adress") {
+      setAddress(e.target.value);
+    } else if (e.target.name === "post-code") {
+      setPostCode(e.target.value);
+    } else if (e.target.name === "city") {
+      setCity(e.target.value);
+    } else if (e.target.name === "nip") {
+      setNip(e.target.value);
+    } else if (e.target.name === "company-name") {
+      setCompanyName(e.target.value);
     }
   };
-  
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!nip) {
-      const userRef = doc(db, 'userData', user.uid)
-    await setDoc(userRef, {
-      uid: user.uid,
-      firstName: firstName,
-      lastName: lastName,
-      address: address,
-      postCode: postCode,
-      city: city,
-    })
-    } else {
-      const userRef = doc(db, 'userData', user.uid)
+    if (!nip) {
+      const userRef = doc(db, "userData", user.uid);
       await setDoc(userRef, {
         uid: user.uid,
         firstName: firstName,
@@ -78,13 +90,23 @@ function MainAccount() {
         address: address,
         postCode: postCode,
         city: city,
+        country: country
+      });
+    } else {
+      const userRef = doc(db, "userData", user.uid);
+      await setDoc(userRef, {
+        country: country,
+        uid: user.uid,
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        postCode: postCode,
+        city: city,
         NIP: nip,
-        companyName: companyName
-      })
+        companyName: companyName,
+      });
     }
-    
-
-  }
+  };
 
   return (
     <div className="main-content">
@@ -127,11 +149,21 @@ function MainAccount() {
                 <p style={{ marginLeft: "20px" }}>Licencja</p>
                 <div className="license-type">
                   <label>Typ licencji</label>
-                  <input type="text" className="license-content" value="UNLIMITED" disabled />
+                  <input
+                    type="text"
+                    className="license-content"
+                    value="UNLIMITED"
+                    disabled
+                  />
                 </div>
                 <div className="license-type">
                   <label>Data wygaśnięcia</label>
-                  <input type="text" className="license-content" value={License[0].expireDate}  disabled />
+                  <input
+                    type="text"
+                    className="license-content"
+                    value={License[0].expireDate}
+                    disabled
+                  />
                 </div>
               </div>
             )}
@@ -139,12 +171,16 @@ function MainAccount() {
               <p className="form-title">Dane do faktury</p>
               <div className="inner-content-country-label">
                 <div className="label-content">
-                  <label className="country">Państwo<span style={{ color: "red" }}>*</span></label>
+                  <label className="country">
+                    Państwo<span style={{ color: "red" }}>*</span>
+                  </label>
 
                   <select
                     id="country"
                     name="country"
                     className="form-control"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
                     required
                   >
                     <option value="Afghanistan">Afghanistan</option>
@@ -475,8 +511,10 @@ function MainAccount() {
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
+                    value={firstName}
                     type="text"
                     className="name"
+                    name="firstName"
                     placeholder=" Imię"
                     onChange={handleChange}
                     required
@@ -488,8 +526,10 @@ function MainAccount() {
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
+                    value={lastName}
                     type="text"
                     className="surName"
+                    name="lastName"
                     placeholder=" Nazwisko"
                     onChange={handleChange}
                     required
@@ -504,7 +544,9 @@ function MainAccount() {
                   </div>
                   <input
                     type="text"
+                    value={address}
                     className="adress"
+                    name="adress"
                     placeholder=" Adres"
                     onChange={handleChange}
                     required
@@ -517,7 +559,9 @@ function MainAccount() {
                   </div>
                   <input
                     type="text"
+                    value={postCode}
                     className="post-code"
+                    name="post-code"
                     placeholder=" Kod pocztowy"
                     onChange={handleChange}
                     required
@@ -531,7 +575,9 @@ function MainAccount() {
                   <input
                     type="text"
                     className="city"
+                    value={city}
                     placeholder=" Miasto"
+                    name="city"
                     onChange={handleChange}
                     required
                   />
@@ -560,6 +606,8 @@ function MainAccount() {
                     <input
                       type="text"
                       className="nip"
+                      value={nip}
+                      name="nip"
                       placeholder=" NIP"
                       onChange={handleChange}
                       required
@@ -572,7 +620,9 @@ function MainAccount() {
                     </div>
                     <input
                       type="text"
+                      value={companyName}
                       className="company-name"
+                      name="company-name"
                       placeholder=" Nazwa Firmy"
                       onChange={handleChange}
                       required
@@ -581,11 +631,7 @@ function MainAccount() {
                 </div>
               )}
               <div className="btn-container">
-                <button
-                  className="btn btn-primary save-btn"
-                  type="submit"
-                  
-                >
+                <button className="btn btn-primary save-btn" type="submit">
                   Zapisz{" "}
                 </button>
               </div>

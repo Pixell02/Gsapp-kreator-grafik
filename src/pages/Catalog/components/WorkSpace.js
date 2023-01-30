@@ -9,6 +9,9 @@ import {
   onSnapshot,
   updateDoc,
   deleteField,
+  collection,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import html2canvas from "html2canvas";
@@ -27,20 +30,46 @@ import EventAnnouncement from "./EventAnnouncement";
 
 function WorkSpace() {
   const { poster } = useParams();
+
   const { user } = useAuthContext();
   const { documents: Licenses } = useCollection("user", [
     "uid",
     "==",
     user.uid,
   ]);
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = document.querySelector("#canvas");
+    if (canvas) {
+      if (width > 1250) {
+        canvas.style.opacity = "1";
+      } else {
+        canvas.style.opacity = "0";
+      }
+    }
+  }, [width]);
   const exportImg = () => {
     const image = document.querySelector(".canvas-container");
+    const canvasRes = document.querySelector("#canvas");
+    canvasRes.style.opacity = "1";
+
     html2canvas(image, { scale: 1.25 }).then((canvas) => {
       const dataURL = canvas.toDataURL("image/jpeg", 1.0);
+      canvasRes.style.opacity = "0";
+
       const link = document.createElement("a");
       link.download = "image.jpg";
       link.href = dataURL;
       link.click();
+
       const docRef = doc(db, "user", Licenses[0].id);
       updateDoc(docRef, {
         numberOfFreeUse: Licenses[0].numberOfFreeUse - 1,
@@ -49,14 +78,13 @@ function WorkSpace() {
       const colRef = doc(db, "user", Licenses[0].id);
       getDoc(colRef).then((doc) => {
         checkLicense.push(doc.data());
-        if(checkLicense[0].license == "free-trial") {
+        if (checkLicense[0].license == "free-trial") {
           if (checkLicense[0].numberOfFreeUse < 1) {
-          updateDoc(docRef, {
-            license: "no-license",
-            numberOfFreeUse: deleteField(),
-          });
-        }
-        
+            updateDoc(docRef, {
+              license: "no-license",
+              numberOfFreeUse: deleteField(),
+            });
+          }
         }
       });
     });
@@ -99,9 +127,32 @@ function WorkSpace() {
   const [opponentName, setOpponentName] = useState();
 
   const [posters, setPosters] = useState();
+  // const { documents: Themes } = useCollection("piecesOfPoster", ["uuid","==",poster])
+
+  const [themeOption, setThemeOption] = useState([]);
+  const [selectThemes, setSelectThemes] = useState();
+
+  // themeOption = Themes.map(item => ({value: item.src, label: item.color}));
+
+  useEffect(() => {
+    const colRef = collection(db, "piecesOfPoster");
+    const q = query(colRef, where("uuid", "==", poster));
+
+    onSnapshot(q, (snapshot) => {
+      let posters = [];
+      snapshot.docs.forEach((doc) => {
+        posters.push({ ...doc.data(), id: doc.id });
+      });
+      setThemeOption(
+        posters.map((item) => ({ value: item.src, label: item.color }))
+      );
+    });
+  }, []);
+  useEffect(() => {
+    setSelectThemes(themeOption[0]);
+  }, [themeOption]);
 
   // Getting background
-
   useEffect(() => {
     const addBackground = () => {
       const docRef = doc(db, "piecesOfPoster", poster);
@@ -109,7 +160,6 @@ function WorkSpace() {
         setPosters(doc.data());
       });
     };
-
     addBackground();
   }, []);
 
@@ -127,6 +177,10 @@ function WorkSpace() {
   const setOpponentLogo = (option) => {
     setOpponent(option.value);
     setOpponentName(option.label);
+  };
+
+  const setThemeBackground = (option) => {
+    setSelectThemes(option);
   };
   const [typeDate, setTypeDate] = useState("");
 
@@ -249,6 +303,16 @@ function WorkSpace() {
     setReserveSeven(options.value);
   };
 
+  const [goalKeeper, setGoalKeeper] = useState();
+  const [capitan, setCapitan] = useState();
+
+  const getGoalKeeper = (options) => {
+    setGoalKeeper(options.value);
+  };
+  const getCapitan = (options) => {
+    setCapitan(options.value);
+  };
+
   // Monthly
 
   const [dateOne, setDateOne] = useState();
@@ -354,6 +418,8 @@ function WorkSpace() {
     setLeague(e.target.value);
   };
 
+  const [radioChecked, setRadioChecked] = useState("radio1");
+
   return (
     <>
       {Licenses && Licenses[0].license == "no-license" && (
@@ -366,7 +432,7 @@ function WorkSpace() {
       {Licenses && Licenses[0].license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            {poster && poster == "63b5fb36a490e8f93beeae34" && Logo && (
+            {poster && poster === "63b5fb36a490e8f93beeae34" && Logo && (
               <MatchPoster
                 id={posters}
                 posterBackGround={posters}
@@ -383,6 +449,7 @@ function WorkSpace() {
                 posterBackGround={posters}
                 coords={coords}
                 yourPlayer={yourPlayer}
+                themeOption={selectThemes}
               />
             )}
             {posters && posters.type === "MATCH-DAY" && Logo && (
@@ -419,6 +486,8 @@ function WorkSpace() {
                 date={typeDate}
                 place={typePlace}
                 opponentName={opponentName}
+                radioChecked={radioChecked}
+                themeOption={selectThemes}
               />
             )}
 
@@ -449,6 +518,10 @@ function WorkSpace() {
                 reserveFive={reserveFive}
                 reserveSix={reserveSix}
                 reserveSeven={reserveSeven}
+                radioChecked={radioChecked}
+                themeOption={selectThemes}
+                goalKeeper={goalKeeper}
+                capitan={capitan}
               />
             )}
             {posters && posters.type === "RESULT" && Logo && (
@@ -462,6 +535,8 @@ function WorkSpace() {
                 opponentName={opponentName}
                 yourTeamResult={yourTeamResult}
                 yourOpponentResult={yourOpponentResult}
+                radioChecked={radioChecked}
+                themeOption={selectThemes}
               />
             )}
             {posters && posters.type === "TIMETABLE" && Logo && (
@@ -593,6 +668,49 @@ function WorkSpace() {
 
               {posters && posters.type === "MATCH-POSTER" && (
                 <>
+                  <div className="option-container">
+                    <div className="input-container">
+                      <label className="label-container">
+                        <input
+                          type="radio"
+                          value="radio1"
+                          onChange={(e) => setRadioChecked(e.target.value)}
+                          checked={radioChecked === "radio1"}
+                        />
+                        <span>Gospodarz</span>
+                      </label>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        <input
+                          type="radio"
+                          value="radio2"
+                          onChange={(e) => setRadioChecked(e.target.value)}
+                          checked={radioChecked === "radio2"}
+                        />
+                        <span className="guest">Gość</span>
+                      </label>
+                    </div>
+                    <br />
+                    <label
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        width: "100%",
+                      }}
+                    >
+                      Motywy (po kliknięciu należy chwilę odczekać)
+                    </label>
+                    {themeOption && (
+                      <Select
+                        value={selectThemes}
+                        options={themeOption}
+                        onChange={setThemeBackground}
+                        className="select-option"
+                      />
+                    )}
+                    <br />
+                  </div>
                   <label>Miejsce</label>
                   <input type="text" value={typePlace} onChange={place} />
                   <label>Data i godzina</label>
@@ -639,6 +757,23 @@ function WorkSpace() {
               )}
               {posters && posters.type == "GOOOOL" && (
                 <>
+                <label
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        width: "100%",
+                      }}
+                    >
+                      Motywy (po kliknięciu należy chwilę odczekać)
+                    </label>
+                    {themeOption && (
+                      <Select
+                        value={selectThemes}
+                        options={themeOption}
+                        onChange={setThemeBackground}
+                        className="select-option"
+                      />
+                    )}
                   {Players && (
                     <>
                       <label>Zawodnik</label>
@@ -656,10 +791,53 @@ function WorkSpace() {
                   </button>
                 </>
               )}
-              {posters && posters.type == "RESULT" && (
+              {posters && posters.type === "RESULT" && (
                 <>
-                  {posters.uid !== "YfwG3U5L7RLVLndyqjXu" && posters.uid !== "1wlpmf0KyPSGbmzxY8hK" && (
+                  <div className="option-container">
+                    <div className="input-container">
+                      <label className="label-container">
+                        <input
+                          type="radio"
+                          value="radio1"
+                          onChange={(e) => setRadioChecked(e.target.value)}
+                          checked={radioChecked === "radio1"}
+                        />
+                        <span>Gospodarz</span>
+                      </label>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        <input
+                          type="radio"
+                          value="radio2"
+                          onChange={(e) => setRadioChecked(e.target.value)}
+                          checked={radioChecked === "radio2"}
+                        />
+                        <span className="guest">Gość</span>
+                      </label>
+                    </div>
+                    <br />
+                    <label
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        width: "100%",
+                      }}
+                    >
+                      Motywy (po kliknięciu należy chwilę odczekać)
+                    </label>
+                    {themeOption && (
+                      <Select
+                        value={selectThemes}
+                        options={themeOption}
+                        onChange={setThemeBackground}
+                        className="select-option"
+                      />
+                    )}
+                  </div>
+                  {posters.type2 === "RESULT2" && (
                     <>
+                      
                       <label>Data i miejsce</label>
                       <input
                         type="text"
@@ -701,6 +879,49 @@ function WorkSpace() {
               )}
               {posters && posters.type == "STARTING-SQUAD" && (
                 <>
+                <div className="option-container">
+                    <div className="input-container">
+                      <label className="label-container">
+                        <input
+                          type="radio"
+                          value="radio1"
+                          onChange={(e) => setRadioChecked(e.target.value)}
+                          checked={radioChecked === "radio1"}
+                        />
+                        <span>Gospodarz</span>
+                      </label>
+                    </div>
+                    <div className="input-container">
+                      <label>
+                        <input
+                          type="radio"
+                          value="radio2"
+                          onChange={(e) => setRadioChecked(e.target.value)}
+                          checked={radioChecked === "radio2"}
+                        />
+                        <span className="guest">Gość</span>
+                      </label>
+                    </div>
+                  </div>
+                  <br />
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      width: "100%",
+                    }}
+                  >
+                    Motywy (po kliknięciu należy chwilę poczekać)
+                  </label>
+                  {themeOption && (
+                    <Select
+                      value={selectThemes}
+                      options={themeOption}
+                      onChange={setThemeBackground}
+                      className="select-option"
+                    />
+                  )}
+                  
                   <label>Data i miejsce</label>
                   <input
                     type="text"
@@ -779,6 +1000,10 @@ function WorkSpace() {
                       />
                     </>
                   )}
+                  <label>Bramkarz</label>
+                  <Select options={playerOptions} onChange={getGoalKeeper} />
+                  <label>Kapitan</label>
+                  <Select options={playerOptions} onChange={getCapitan} />
                   <button
                     className="btn primary-btn save"
                     onClick={() => exportImg()}
@@ -1281,7 +1506,7 @@ function WorkSpace() {
                 </span>
               </div>
             )}
-            
+
             <div className="empty-field"></div>
             <div className="background-image">
               <img src={background} />

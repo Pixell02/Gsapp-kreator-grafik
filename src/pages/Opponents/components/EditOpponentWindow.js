@@ -42,7 +42,7 @@ function EditPlayerWindow({ player, open, onClose }) {
       const docRef = doc(db, "Opponents", player.id)
       updateDoc(docRef,{
         firstName: firstOpponentName,
-        lastName: secondOpponentName,
+        secondName: secondOpponentName,
         img: preview
       })
       onClose();

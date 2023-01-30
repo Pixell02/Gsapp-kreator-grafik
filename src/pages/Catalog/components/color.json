@@ -1,0 +1,85 @@
+[
+    {
+        "id": "1",
+        "theme": "motyw 1",
+        "color": "granatowo-czerwony"
+    },
+    {
+        "id": "2",
+        "theme": "motyw 1",
+        "color": "biało-czerwono-zielony"
+    },
+    {
+        "id": "3",
+        "theme": "motyw 1",
+        "color": "czarno-biały"
+    },
+    {
+        "id": "4",
+        "theme": "motyw 1",
+        "color": "żółto-czarny"
+    },
+    {
+        "id": "5",
+        "theme": "motyw 1",
+        "color": "zielono-biały"
+    },
+    {
+        "id": "6",
+        "theme": "motyw 1",
+        "color": "szaro-biały"
+    },
+    {
+        "id": "7",
+        "theme": "motyw 1",
+        "color": "niebiesko-biały"
+    },
+    {
+        "id": "8",
+        "theme": "motyw 1",
+        "color": "jasno niebiesko-biały"
+    },
+    {
+        "id": "9",
+        "theme": "motyw 1",
+        "color": "czerwono-czarny"
+    },
+    {
+        "id": "10",
+        "theme": "motyw 1",
+        "color": "czarno-czerwony"
+    },
+    
+    {
+        "id": "11",
+        "theme": "motyw 1",
+        "color": "biało-niebieski"
+    },
+   
+    {
+        "id": "12",
+        "theme": "motyw 2",
+        "color": "czerwono-granatowy"
+    },
+    {
+        "id": "13",
+        "theme": "motyw 2",
+        "color": "czarno-biały"
+    },
+    {
+        "id": "14",
+        "theme": "motyw 2",
+        "color": "niebieski"
+    },
+    {
+        "id": "15",
+        "theme": "motyw 2",
+        "color": "zielony"
+    },
+    {
+        "id": "16",
+        "theme": "motyw 2",
+        "color": "żółto-czarny"
+    }
+
+]

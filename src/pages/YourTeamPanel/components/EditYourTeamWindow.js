@@ -7,12 +7,14 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
 import { doc, updateDoc  } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
+import Select from "react-select";
 
 function EditPlayerWindow({ yourTeam, open, onClose }) {
   const { id } = useParams();
   
   const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
   const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
+  const [sport, setSport] = useState(yourTeam.sport);
   const [image, setImage] = useState(yourTeam.img);
   const [preview, setPreview] = useState(yourTeam.img);
   const { user } = useAuthContext();
@@ -50,7 +52,8 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
       updateDoc(docRef,{
         firstName: firstTeamName,
         secondName: secondTeamName,
-        img: preview
+        img: preview,
+        sport: sport
       })
       onClose();
       setFirstTeamName("");
@@ -58,7 +61,14 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
       setImage(null);
     }
     
+    
   };
+  const getSport = (option) => {
+      setSport(option.value)
+    }
+  const options = [
+    {label: "piłka nożna", value:"piłka nożna"}
+  ]
 
   return (
     <div className={open ? "active-modal mg-edit" : "modal"}>
@@ -78,6 +88,8 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
           value={secondTeamName}
           className="Number"
         />
+        <label>Dyscyplina</label>
+        <Select options={options} onChange={getSport} defaultInputValue={sport} />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj Zdjęcie
         </button>

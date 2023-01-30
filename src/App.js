@@ -41,6 +41,7 @@ function App() {
       {/* <Route path="/sponsors" element = {user ? <Sponsors /> : <Navigate to="/login" />} /> */}
       
       <Route path="/offer" element = {user ? <Offer /> : <Navigate to="/login" />} />
+      
       <Route path="/account" element = {user ? <Account /> : <Navigate to="/login" />} />
       <Route path="/creator/:poster" element = {user ? <Creator /> : <Navigate to="/login" />} />
       <Route path="/catalog/*" element = {user ? <Catalog /> : <Navigate to="/login" /> } />

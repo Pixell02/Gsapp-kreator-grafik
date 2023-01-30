@@ -3,9 +3,11 @@ import "../../../fonts/Poppins-BoldItalic.ttf";
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
+import { useParams } from "react-router-dom";
 
-export default function GoalPoster({ posterBackGround, yourPlayer, coords }) {
+export default function GoalPoster({ posterBackGround, yourPlayer, coords,themeOption }) {
   const [isPoster, setIsPoster] = useState(null);
+  const { poster } = useParams();
   const backImg = new Image();
   backImg.src = posterBackGround.src;
   const fabricRef = useRef();
@@ -18,7 +20,12 @@ export default function GoalPoster({ posterBackGround, yourPlayer, coords }) {
         height: backImg.height,
       });
       const img = new Image();
-      img.src = posterBackGround.src;
+      if(themeOption){
+        img.src = themeOption.value;
+      } else {
+        img.src = posterBackGround.src;
+      }
+      
       img.onload = () => {
         const newImg = new fabric.Image.fromURL(img.src, function (img) {
           fabricRef.current.setBackgroundImage(
@@ -46,7 +53,7 @@ export default function GoalPoster({ posterBackGround, yourPlayer, coords }) {
     };
 
     initFabric();
-  }, []);
+  }, [themeOption]);
   const yourPlayerFullName = () => {
     if (yourPlayer) {
       fabricRef.current._objects.forEach((image, i) => {
@@ -71,11 +78,23 @@ export default function GoalPoster({ posterBackGround, yourPlayer, coords }) {
       if (playerName.width > coords.playerWidth) {
         playerName.scaleToWidth(coords.playerScaleToWidth)
       }
+      if(poster === "lZP9mhRklsifxKLUvzTd" && themeOption.label.split("-")[0]==="żółto") {
+        playerName.set({
+          fill:"black"
+        })
+      } else {
+        playerName.set({
+          fill:"white"
+        });
+      }
       fabricRef.current.add(playerName);
       });
     }
   };
-  yourPlayerFullName();
+  useEffect(() => {
+    yourPlayerFullName();
+  },[yourPlayer,themeOption])
+  
 
   return <canvas id="canvas" ref={fabricRef}></canvas>;
 }
