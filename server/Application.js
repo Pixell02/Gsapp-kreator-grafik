@@ -14,20 +14,71 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.post('/hash', async (req,res) => {
- 
- const paymentData = req.body;
- console.log(paymentData)
- const paymentString = JSON.stringify(paymentData);
- try {
-  const response = await axios.post("https://secure.payu.com/api/v2_1/orders", paymentString);
+app.post('/api/v2_1/orders', async (req,res) => {
+
+  const customerIp = encodeURIComponent(req.body.customerIp);
+  const merchantPosId = encodeURIComponent(req.body.merchantPosId);
+  const description = encodeURIComponent(req.body.description);
+  console.log(req.body.description);
+  let totalAmount = encodeURIComponent(req.body.totalAmount);
+  const currencyCode = encodeURIComponent(req.body.currencyCode);
+  const productName = encodeURIComponent(req.body.productName);
+  const productUnitPrice = encodeURIComponent(req.body.unitPrice);
+  let quantity = encodeURIComponent(req.body.quantity); 
+  const notifyUrl = encodeURIComponent(req.body.notifyUrl);
+  const continueUrl = encodeURIComponent(req.body.continueUrl);
+
+  const sortedData = `continueUrl=${continueUrl}&currencyCode=${currencyCode}&customerIp=${customerIp}&description=Opis+zam%C3%B3wienia&merchantPosId=${merchantPosId}&notifyUrl=${notifyUrl}&products[0].name=${productName}&products[0].quantity=${quantity}&products[0].unitPrice=${productUnitPrice}&totalAmount=${totalAmount}&13a980d4f851f3d9a1cfc792fb1f5e50`;
+  const decoded = sortedData.replace(/%20/g, '+');
+  console.log(decoded);
+  const hash = crypto.createHash('sha256').update(decoded).digest('hex');
+  console.log(hash)
+  // var data = {
+  //   continueUrl: "http://shop.url/continue",
+  //   currencyCode: "PLN",
+  //   customerIp: "123.123.123.123",
+  //   description: "Opis zamówienia",
+  //   merchantPosId: 145227,
+  //   notifyUrl: "http://shop.url/notify",
+  //   products: [
+  //     {
+  //       name: "Produkt 1",
+  //       quantity: 1,
+  //       unitPrice: 1000
+  //     }
+  //   ],
+  //   totalAmount: 1000,
+    
+  // };
   
-  const redirectUri = response.data;
-  console.log(redirectUri);
-  return res.json({redirectUri})
- } catch (err) {
-  return res.status(500).json({error: err.message});
- }
+  // let encodedData = "";
+  // for (let key in data) {
+  //   if (data.hasOwnProperty(key)) {
+  //     encodedData += key + "=" + encodeURIComponent(data[key]) + "&";
+      
+  //   }
+  // }
+  // encodedData += "13a980d4f851f3d9a1cfc792fb1f5e50";
+  // console.log(encodedData);
+
+
+
+
+  let openSignature = `sender=145227;algorithm=SHA-256;signature=${hash}`;
+  console.log(openSignature);
+  return res.json({openSignature});
+//  const paymentData = req.body;
+//  console.log(paymentData)
+//  const paymentString = JSON.stringify(paymentData);
+//  try {
+//   const response = await axios.post("https://secure.payu.com/api/v2_1/orders", paymentString);
+  
+//   const redirectUri = response.data;
+//   console.log(redirectUri);
+//   return res.json({redirectUri})
+//  } catch (err) {
+//   return res.status(500).json({error: err.message});
+//  }
 
 })
 

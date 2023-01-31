@@ -19,10 +19,10 @@ function BuyFormContainer() {
   ]);
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
 
-  const [customerIp] = useState("127.0.0.1");
-  const [merchantPosId, setMerchantPosId] = useState("4283004");
+  const [customerIp] = useState("123.123.123.123");
+  const [merchantPosId, setMerchantPosId] = useState("145227");
   const [description, setDescription] = useState("Opis zamówienia");
-  const [amount, setAmount] = useState("1000");
+  const [totalAmount, setTotalAmount] = useState("1000");
   const [txnid, setTxnid] = useState(
     "txn" + Math.round(Math.random(1000, 5000) * 10000)
   );
@@ -45,6 +45,7 @@ function BuyFormContainer() {
   const [md5Key, setMd5Key] = useState("bcdb18e54a3fd3946efc561ff7d84f4e");
   const [hash, setHash] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [openPayuSignature, setOpenPayuSignature] = useState();
   const [formData, setFormData] = useState({
     customerIp: customerIp,
     merchantPosId: merchantPosId,
@@ -85,19 +86,30 @@ function BuyFormContainer() {
     }
   };
   const [redirectUri, setRedirectUri] = useState(null);
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5000/hash", formData);
-      console.log(response.data.redirectUri)
-      window.location.href = response.data.redirectUri;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/api/v2_1/orders", {
+        customerIp,
+        merchantPosId,
+        description,
+        totalAmount,
+        currencyCode,
+        productName,
+        unitPrice,
+        quantity,
+        continueUrl,
+        notifyUrl
+      })
+      .then((res) => {
+        console.log(res.data.openSignature);
+        setOpenPayuSignature(res.data.openSignature);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [firstName]);
+
   return (
     <div className="form-container">
       <div className="logo-block">
@@ -107,12 +119,17 @@ function BuyFormContainer() {
         <h1>{50 * price}zł</h1>
       </div>
 
-      <form onSubmit={handleSubmit}  method="post" className="form-container">
+      <form
+        action="https://secure.payu.com/api/v2_1/orders"
+        method="post"
+        className="form-container"
+      >
         <p className="form-title">Dane do faktury</p>
         <div className="inner-content-country-label">
           <div className="label-content"></div>
         </div>
-        <div className="fullName-content">
+        <input type="text" onChange={(e) => setFirstName(e.target.value)} />
+        {/* <div className="fullName-content">
           <div className="inner-label-containers">
             <div className="label-content">
               <label>Imię</label>
@@ -263,7 +280,21 @@ function BuyFormContainer() {
             name="exOrderId"
             value="4ootjspnkgky966mg88viu"
           />
-        </div>
+        </div> */}
+<input type="hidden"name="customerIp" value={customerIp} />
+<input type="hidden"name="merchantPosId" value={merchantPosId} />
+<input type="hidden"name="description" value={description} />
+<input type="hidden"name="totalAmount" value={totalAmount} />
+<input type="hidden"name="currencyCode" value={currencyCode} />
+<input type="hidden"name="products[0].name" value={productName} />
+<input type="hidden"name="products[0].unitPrice" value={unitPrice} />
+<input type="hidden"name="products[0].quantity" value={quantity} />
+<input type="hidden"name="notifyUrl" value={notifyUrl} /> 
+<input type="hidden"name="continueUrl" value={continueUrl} />
+<input name="OpenPayu-Signature" value={openPayuSignature} />
+
+
+
         <div className="checkbox-container" style={{ marginBottom: "20px" }}>
           <label>
             <input
