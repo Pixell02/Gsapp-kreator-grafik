@@ -19,7 +19,7 @@ app.post('/api/v2_1/orders', async (req,res) => {
   const customerIp = encodeURIComponent(req.body.customerIp);
   const merchantPosId = encodeURIComponent(req.body.merchantPosId);
   const description = encodeURIComponent(req.body.description);
-  console.log(req.body.description);
+  const md5Key = encodeURIComponent("94c26aa12c41e5c2b2d820ec3bcd77a1")
   let totalAmount = encodeURIComponent(req.body.totalAmount);
   const currencyCode = encodeURIComponent(req.body.currencyCode);
   const productName = encodeURIComponent(req.body.productName);
