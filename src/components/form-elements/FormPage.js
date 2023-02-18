@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom"
-import { useState, useRouter } from "react"
-import { useLogin } from "../../hooks/useLogin"
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useRouter } from "react";
+import { useLogin } from "../../hooks/useLogin";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import {
   signInWithPopup,
@@ -9,9 +9,9 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   setPersistence,
-  browserSessionPersistence
-} from "firebase/auth"
-import { auth } from "../../firebase/config"
+  browserSessionPersistence,
+} from "firebase/auth";
+import { auth } from "../../firebase/config";
 import { UserAuth } from "../../context/AuthContext";
 
 // import styles and images
@@ -25,35 +25,31 @@ function LoginPage(props) {
   const [password, setPassword] = useState("");
   const { error, login } = useLogin();
   const [user, setUser] = useState({});
-  const { dispatch } = useAuthContext()
+  const { dispatch } = useAuthContext();
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     login(email, password);
   };
   const navigate = useNavigate();
 
-  const signInWithFacebook = async() => {
+  const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider();
-      try {
-        await signInWithPopup(auth, provider)
-        .then((res) => {
-          dispatch({type: 'LOGIN', payload: res.user});
-        })
-      } catch (err) {
-        console.log(err);
-      }
+    try {
+      await signInWithPopup(auth, provider).then((res) => {
+        dispatch({ type: "LOGIN", payload: res.user });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const signInWithGoogle = async () => {
-    const provider =  new GoogleAuthProvider()
+    const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth,provider)
-      .then((res) => {
-        dispatch({type: 'LOGIN', payload: res.user })
-        
-      })
+      await signInWithPopup(auth, provider).then((res) => {
+        dispatch({ type: "LOGIN", payload: res.user });
+      });
     } catch (err) {
       console.log(err);
     }
@@ -65,7 +61,7 @@ function LoginPage(props) {
           <p className="login">{props.name}</p>
         </div>
         <div className="google-btn">
-          <button onClick={ signInWithGoogle }>
+          <button onClick={signInWithGoogle}>
             <div className="logo-container">
               <img src={google} alt="google_logo" className="logo" />
             </div>
@@ -75,7 +71,7 @@ function LoginPage(props) {
           </button>
         </div>
         <div className="facebook-btn">
-          <button onClick={ signInWithFacebook }>
+          <button onClick={signInWithFacebook}>
             <div className="logo-container">
               <img src={facebook} alt="facebook_logo" className="logo" />
             </div>
@@ -103,8 +99,14 @@ function LoginPage(props) {
         <div className="email-container">
           <button className="btn btn-dark button">Zaloguj się</button>
         </div>
-        
+       
         <div className="text-left register-container">{props.footer}</div>
+        <div className="text-left register-container ml-5 mt-0">
+          Nie pamiętasz hasła?{" "}
+          <Link style={{ color: "darkBlue" }} to="/resetPassword">
+            Zresetuj hasło
+          </Link>
+        </div>
       </div>
     </form>
   );

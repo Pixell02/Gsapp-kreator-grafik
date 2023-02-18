@@ -1,0 +1,110 @@
+.licenseCount-container {
+  display: flex;
+  flex-direction: column;
+  
+}
+.licenseCount-container .licenseType-container {
+  width: 200px;
+  display: flex;
+}
+.licenseCount-container .licenseType-container .licenseName {
+  margin: 5px 0 5px 0;
+  width: 150px;
+}
+.licenseCount-container .licenseType-container .count-container {
+  display: flex;
+  align-items: center;
+}
+.usersPosters-container .users-poster-container .users-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.upper-container {
+  justify-content: space-around;
+}
+
+.favorite-users-posters {
+  border-left: 1px solid rgb(185, 185, 185);
+  padding-left: 30px;
+  border-right: 1px solid rgb(185, 185, 185);
+  padding-right: 30px;
+}
+.dimension {
+  width: 200px;
+}
+
+.users-poster-container {
+  overflow: auto;
+  height: 400px;
+  
+}
+.team-name-container {
+  display: flex;
+  justify-content: center;
+}
+.profile-image-container {
+  width: 200px ;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.profile-image-container .profile-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-image-container .profile-image img {
+  width: 100px;
+  max-width: 100px;
+  height: auto;
+  max-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+.users-content-container {
+  height: 400px;
+  overflow: auto;
+}
+
+.cos-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+    width: 100%;
+    height: auto;
+}
+.users-posters {
+    display: flex;
+    flex-wrap: wrap;
+}
+.users-id {
+    margin-left: 40px;
+}
+
+.item-category-window {
+    display: flex;
+    flex-direction: column ;
+    
+}
+.orders {
+    background-color: gray;
+    height: 100px;
+}
+
+.order-btn {
+  background-color: black !important;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 10px !important; 
+}

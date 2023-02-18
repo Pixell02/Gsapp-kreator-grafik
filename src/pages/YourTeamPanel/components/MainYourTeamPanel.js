@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -31,7 +32,17 @@ function MainYourTeamPanel() {
   const { id } = useParams();
   const { user } = useAuthContext();
   const { documents: Team } = useCollection("Teams", ["uid", "==", user.uid]);
+  const {documents: Transactions} = useCollection("transaction", ["uid", "==", user.uid]);
+  
 
+  useEffect(() => {
+    if(Transactions){
+    if(Transactions.length > 0) {
+      const ref = doc(db, "transaction", Transactions[0].id)
+      deleteDoc(ref)
+    }
+  }
+  },[Transactions])
   useEffect(() => {
     const docRef = collection(db, "user");
     getDocs(docRef).then((snapshot) => {
@@ -41,15 +52,16 @@ function MainYourTeamPanel() {
       });
       let licensed = [];
       users.forEach((users) => {
-        if (users.uid == user.uid) {
+        if (users.uid === user.uid) {
           licensed.push(users);
         }
+       
       });
-      if (licensed.length == 0) {
+      if (licensed.length === 0) {
         addDoc(docRef, {
           uid: user.uid,
           license: "free-trial",
-          numberOfFreeUse: 10,
+          numberOfFreeUse: 5,
         });
       } else {
 

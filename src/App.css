@@ -30,6 +30,36 @@
   font-family: "Goldman-Regular";
   src: url(./fonts/Goldman-Regular.ttf);
 }
+@font-face {
+  font-family: "kenyan coffee";
+  src: url(./fonts/kenyan\ coffee\ rg.otf);
+}
+@font-face {
+  font-family: "Made Outer Sans Black";
+  src: url(./fonts/MADE\ Outer\ Sans\ Black\ PERSONAL\ USE.otf);
+}
+@font-face {
+  font-family: "Made Outer Sans Regular";
+  src: url(./fonts/MADE\ Outer\ Sans\ Regular\ PERSONAL\ USE.otf);
+}
+@font-face {
+  font-family: "Made Outer Sans Thin";
+  src: url(./fonts/MADE\ Outer\ Sans\ Thin\ PERSONAL\ USE.otf);
+}
+@font-face {
+  font-family: "helvetica";
+  src: url(./fonts/unicode.helvetic.ttf);
+}
+@font-face {
+  font-family: "Now Black";
+  src: url(./fonts/Now-Black.otf);
+}
+@font-face {
+  font-family: "Now Thin";
+  src: url(./fonts/Now-Thin.otf);
+}
+
+
 
 body {
   background-color: rgb(245, 245, 245);
@@ -94,6 +124,9 @@ body {
 }
 .btn:focus {
   background-color: rgb(68, 68, 68);
+}
+.upper-container {
+  width: 100%;
 }
 @media only screen and (max-width: 1250px) {
   .content-wrap .main-content {

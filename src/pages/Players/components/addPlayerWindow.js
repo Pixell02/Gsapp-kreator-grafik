@@ -66,6 +66,7 @@ function AddPlayerWindow({ open, onClose }) {
           value={firstPlayerName}
           className="firstPlayerName"
         />
+        
         <label>Nazwisko</label>
         <input
           type="text"

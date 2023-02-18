@@ -20,5 +20,5 @@ const firebaseConfig = {
   
   
   const auth = getAuth();
-  setPersistence(auth, inMemoryPersistence)
+  setPersistence(auth, browserSessionPersistence)
   export { db, auth };

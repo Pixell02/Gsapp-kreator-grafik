@@ -25,7 +25,7 @@ export default function RegisterForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(email, password);
+    signup(email, password)
   };
   const navigate = useNavigate();
 
@@ -93,11 +93,13 @@ export default function RegisterForm(props) {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
+        {error && <span>hasło musi mieć conajmniej 6 znaków, bądź użytkownik już istnieje</span>}
         <div className="email-container">
           <button className="btn btn-dark button">{props.name}</button>
         </div>
         <div className="text-left register-container">{props.footer}</div>
       </div>
+      
     </form>
   );
 }

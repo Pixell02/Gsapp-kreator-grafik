@@ -35,9 +35,6 @@ function Catalog() {
     getDocs(favRef).then((snapshot) => {
       snapshot.docs.forEach((doc) => {});
     });
-    setTimeout(() => {
-      setIsLoaded(false);
-    }, 3000);
   }, []);
 
   const handleCategory = (i) => {
@@ -49,79 +46,67 @@ function Catalog() {
 
   return (
     <>
-      {isLoaded && (
-        <LoadingScreen
-          loading={true}
-          bgColor="#f1f1f1"
-          spinnerColor="black"
-          textColor="#676767"
-        />
-      )}
-      {!isLoaded && (
-        <div className="catalog-container">
-          {isOpen.map((category, i) => (
-            <div className="mg-container">
-              <div className="nav-container" onClick={() => handleCategory(i)}>
-                <div
-                  className={
-                    category.expanded ? "nav-window" : "nav-window-dark"
-                  }
-                >
-                  <div className="category-icon-container">
-                    <Icon.ChevronCompactDown
-                      className={
-                        category.expanded
-                          ? "extend-icon-open"
-                          : "extend-icon-close"
-                      }
-                      style={{ marginLeft: "20px" }}
-                    />
-                  </div>
-                  <span>{category.name} </span>
-                  <div className="empty-container"></div>
-                </div>
-              </div>
-
+      <div className="catalog-container">
+        {isOpen.map((category, i) => (
+          <div className="mg-container">
+            <div className="nav-container" onClick={() => handleCategory(i)}>
               <div
-                className={
-                  category.expanded
-                    ? "poster-container-close"
-                    : "poster-container-open"
-                }
+                className={category.expanded ? "nav-window" : "nav-window-dark"}
               >
-                <>
-                  {posters &&
-                    posters
-                      .filter((poster) => poster.theme === category.theme)
-                      .map((poster) => (
-                        <>
-                          <div className="item-category-window">
-                            <Link to={`/creator/${poster.uid}`}>
-                              <div className="name-content">
-                                <span className="name-content">
-                                  {poster.name}
-                                </span>
-                              </div>
-                              <div className="image-category-content">
-                                {poster.src && (
-                                  <img
-                                    src={poster.src}
-                                    alt={
-                                      poster.firstName + " " + poster.secondName
-                                    }
-                                  />
-                                )}
-                              </div>
-                            </Link>
-                          </div>
-                        </>
-                      ))}
-                </>
+                <div className="category-icon-container">
+                  <Icon.ChevronCompactDown
+                    className={
+                      category.expanded
+                        ? "extend-icon-open"
+                        : "extend-icon-close"
+                    }
+                    style={{ marginLeft: "20px" }}
+                  />
+                </div>
+                <span>{category.name} </span>
+                <div className="empty-container"></div>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+
+            <div
+              className={
+                category.expanded
+                  ? "poster-container-close"
+                  : "poster-container-open"
+              }
+            >
+              <>
+                {posters &&
+                  posters
+                    .filter((poster) => poster.theme === category.theme)
+                    .map((poster) => (
+                      <>
+                        <div className="item-category-window">
+                          <Link to={`/creator/${poster.uid}`}>
+                            <div className="name-content">
+                              <span className="name-content">
+                                {poster.name}
+                              </span>
+                            </div>
+                            <div className="image-category-content">
+                              {poster.src && (
+                                <img
+                                  src={poster.src}
+                                  alt={
+                                    poster.firstName + " " + poster.secondName
+                                  }
+                                />
+                              )}
+                            </div>
+                          </Link>
+                        </div>
+                      </>
+                    ))}
+              </>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

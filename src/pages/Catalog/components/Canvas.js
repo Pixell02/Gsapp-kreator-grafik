@@ -25,11 +25,13 @@ function MatchPoster({
   yourOpponentResult,
   radioChecked,
   themeOption,
+  league,
+  kolejka,
 }) {
   const [isPoster, setIsPoster] = useState(null);
   const { poster } = useParams();
   const backImg = new Image();
-  backImg.src = posterBackGround.src;
+  backImg.src = posterBackGround;
   const [yourTeamLogo, setYourTeamLogo] = useState(yourLogo);
   const { user } = useAuthContext();
   const canvasRef = useRef();
@@ -37,6 +39,117 @@ function MatchPoster({
 
   const [logo, setLogo] = useState([]);
   const [sponsors, setSponsors] = useState([]);
+
+  const yourKolejka = () => {
+    if (kolejka) {
+      if (fabricRef.current && kolejka === "") {
+        fabricRef.current._objects.forEach((image, i) => {
+          if (fabricRef.current.item(i).className == "yourKolejka") {
+            fabricRef.current.remove(fabricRef.current.item(i));
+          }
+        });
+      }
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className === "yourKolejka") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+      const font = new FontFaceObserver(coords.yourKolejkaFontFamily);
+      font.load().then(() => {
+        if (poster === "wsAn3pPtaand0xDdNZ5S") {
+          kolejka = kolejka.toUpperCase();
+        }
+        const yourKolejka = new fabric.Text(kolejka, {
+          top: coords.yourKolejkaTop,
+          left: coords.yourKolejkaLeft,
+          fontFamily: coords.yourKolejkaFontFamily,
+          selectable: false,
+          fill: coords.yourKolejkaFill,
+          className: "yourKolejka",
+          originX: coords.yourKolejkaOriginX,
+          originY: coords.yourKolejkaOriginY,
+        });
+        if (coords.yourKolejkaCharSpacing) {
+          yourKolejka.set({
+            charSpacing: coords.yourKolejkaCharSpacing,
+          });
+        }
+
+        if (coords.yourKolejkaWidth) {
+          yourKolejka.set({
+            width: coords.yourKolejkaWidth,
+          });
+        }
+        if (coords.yourKolejkaScaleToHeight) {
+          yourKolejka.scaleToHeight(coords.yourKolejkaScaleToHeight);
+        }
+        if (coords.yourKolejkaFontSize) {
+          yourKolejka.set({
+            fontSize: coords.yourKolejkaFontSize,
+          });
+        }
+        if (yourKolejka.width > coords.yourKolejkaScaleToWidth) {
+          yourKolejka.scaleToWidth(coords.yourKolejkaScaleToWidth);
+        }
+        fabricRef.current.add(yourKolejka);
+      });
+    }
+  };
+  yourKolejka();
+  const yourLeague = () => {
+    if (league) {
+      if (fabricRef.current && league === "") {
+        fabricRef.current._objects.forEach((image, i) => {
+          if (fabricRef.current.item(i).className == "yourLeague") {
+            fabricRef.current.remove(fabricRef.current.item(i));
+          }
+        });
+      }
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className === "yourLeague") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+
+      const font = new FontFaceObserver(coords.yourLeagueFontFamily);
+      font.load().then(() => {
+        if (poster === "mvzttPwmXvDWCz4vJefn") {
+          league = league.toUpperCase();
+        }
+        const yourLeague = new fabric.Text(league, {
+          top: coords.yourLeagueTop,
+          left: coords.yourLeagueLeft,
+          fontFamily: coords.yourLeagueFontFamily,
+          selectable: false,
+          fill: coords.yourLeagueFill,
+          className: "yourLeague",
+          originX: coords.yourLeagueOriginX,
+          originY: coords.yourLeagueOriginY,
+        });
+
+        if (coords.yourLeagueWidth) {
+          yourLeague.set({
+            width: coords.yourLeagueWidth,
+          });
+        }
+        if (coords.yourLeagueScaleToHeight) {
+          yourLeague.scaleToHeight(coords.yourLeagueScaleToHeight);
+        }
+        if (coords.yourLeagueFontSize) {
+          yourLeague.set({
+            fontSize: coords.yourLeagueFontSize,
+          });
+        }
+        if (yourLeague.width > coords.yourLeagueScaleToWidth) {
+          yourLeague.scaleToWidth(coords.yourLeagueScaleToWidth);
+        }
+        fabricRef.current.add(yourLeague);
+      });
+    }
+  };
+  useEffect(() => {
+    yourLeague();
+  }, [league, themeOption]);
 
   const yourResult = () => {
     if (yourTeamResult) {
@@ -59,20 +172,40 @@ function MatchPoster({
             originY: coords.yourTeamResultOriginY,
           });
           result.scaleToHeight(coords.yourTeamResultScaleToHeight);
-
-          if (
-            themeOption.label.split("-")[0] === "biało" ||
-            themeOption.label.split("-")[0] === "żółto" ||
-            themeOption.label === "biały"
-          ) {
-            result.set({
-              fill: "black",
-            });
-          }
-          if(poster === "PmoRESwg91LxFAGFObbZ") {
-            result.set({
-              fill: "white"
-            })
+          if (themeOption) {
+            if (
+              themeOption.label.split("-")[0] === "biało" ||
+              themeOption.label.split("-")[0] === "żółto" ||
+              themeOption.label === "biały"
+            ) {
+              result.set({
+                fill: "black",
+              });
+            }
+            if (
+              poster === "PmoRESwg91LxFAGFObbZ" ||
+              themeOption.label === "biało-czerwono-niebiesko-zielony"
+            ) {
+              result.set({
+                fill: "white",
+              });
+            }
+            if (
+              id.theme === "motyw 3" &&
+              themeOption.label === "biało-niebieski"
+            ) {
+              result.set({
+                fill: "white",
+              });
+            }
+            if (
+              id.theme === "motyw 3" &&
+              themeOption.label === "żółto-czarny"
+            ) {
+              result.set({
+                fill: "white",
+              });
+            }
           }
 
           fabricRef.current.add(result);
@@ -96,22 +229,41 @@ function MatchPoster({
             originY: coords.yourOpponentResultOriginY,
           });
           result.scaleToHeight(coords.yourOpponentResultScaleToHeight);
-
-          if (
-            themeOption.label.split("-")[0] === "biało" ||
-            themeOption.label.split("-")[0] === "żółto" ||
-            themeOption.label === "biały"
-          ) {
-            result.set({
-              fill: "black",
-            });
+          if (themeOption) {
+            if (
+              themeOption.label.split("-")[0] === "biało" ||
+              themeOption.label.split("-")[0] === "żółto" ||
+              themeOption.label === "biały"
+            ) {
+              result.set({
+                fill: "black",
+              });
+            }
+            if (
+              poster === "PmoRESwg91LxFAGFObbZ" ||
+              themeOption.label === "biało-czerwono-niebiesko-zielony"
+            ) {
+              result.set({
+                fill: "white",
+              });
+            }
+            if (
+              id.theme === "motyw 3" &&
+              themeOption.label === "biało-niebieski"
+            ) {
+              result.set({
+                fill: "white",
+              });
+            }
+            if (
+              id.theme === "motyw 3" &&
+              themeOption.label === "żółto-czarny"
+            ) {
+              result.set({
+                fill: "white",
+              });
+            }
           }
-          if(poster === "PmoRESwg91LxFAGFObbZ") {
-            result.set({
-              fill: "white"
-            })
-          }
-
           fabricRef.current.add(result);
         });
       }
@@ -136,20 +288,37 @@ function MatchPoster({
           originY: coords.yourOpponentResultOriginY,
         });
         result.scaleToHeight(coords.yourOpponentResultScaleToHeight);
-
-        if (
-          themeOption.label.split("-")[0] === "biało" ||
-          themeOption.label.split("-")[0] === "żółto" ||
-          themeOption.label === "biały"
-        ) {
-          result.set({
-            fill: "black",
-          });
-        }
-        if(poster === "PmoRESwg91LxFAGFObbZ") {
-          result.set({
-            fill: "white"
-          })
+        if (themeOption) {
+          if (
+            themeOption.label.split("-")[0] === "biało" ||
+            themeOption.label.split("-")[0] === "żółto" ||
+            themeOption.label === "biały"
+          ) {
+            result.set({
+              fill: "black",
+            });
+          }
+          if (
+            poster === "PmoRESwg91LxFAGFObbZ" ||
+            themeOption.label === "biało-czerwono-niebiesko-zielony"
+          ) {
+            result.set({
+              fill: "white",
+            });
+          }
+          if (
+            id.theme === "motyw 3" &&
+            themeOption.label === "biało-niebieski"
+          ) {
+            result.set({
+              fill: "white",
+            });
+          }
+          if (id.theme === "motyw 3" && themeOption.label === "żółto-czarny") {
+            result.set({
+              fill: "white",
+            });
+          }
         }
 
         fabricRef.current.add(result);
@@ -170,20 +339,37 @@ function MatchPoster({
           originY: coords.yourTeamResultOriginY,
         });
         result.scaleToHeight(coords.yourTeamResultScaleToHeight);
-
-        if (
-          themeOption.label.split("-")[0] === "biało" ||
-          themeOption.label.split("-")[0] === "żółto" ||
-          themeOption.label === "biały"
-        ) {
-          result.set({
-            fill: "black",
-          });
-        }
-        if(poster === "PmoRESwg91LxFAGFObbZ") {
-          result.set({
-            fill: "white"
-          })
+        if (themeOption) {
+          if (
+            themeOption.label.split("-")[0] === "biało" ||
+            themeOption.label.split("-")[0] === "żółto" ||
+            themeOption.label === "biały"
+          ) {
+            result.set({
+              fill: "black",
+            });
+          }
+          if (
+            poster === "PmoRESwg91LxFAGFObbZ" ||
+            themeOption.label === "biało-czerwono-niebiesko-zielony"
+          ) {
+            result.set({
+              fill: "white",
+            });
+          }
+          if (
+            id.theme === "motyw 3" &&
+            themeOption.label === "biało-niebieski"
+          ) {
+            result.set({
+              fill: "white",
+            });
+          }
+          if (id.theme === "motyw 3" && themeOption.label === "żółto-czarny") {
+            result.set({
+              fill: "white",
+            });
+          }
         }
 
         fabricRef.current.add(result);
@@ -192,21 +378,22 @@ function MatchPoster({
   };
 
   const typePlace = () => {
-    if (fabricRef.current && place === "") {
-      fabricRef.current._objects.forEach((image, i) => {
-        if (fabricRef.current.item(i).className == "typePlace") {
-          fabricRef.current.remove(fabricRef.current.item(i));
-        }
-      });
-    }
     if (place) {
+      if (fabricRef.current && place === "") {
+        fabricRef.current._objects.forEach((image, i) => {
+          if (fabricRef.current.item(i).className == "typePlace") {
+            fabricRef.current.remove(fabricRef.current.item(i));
+          }
+        });
+      }
+
       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className == "typePlace") {
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
 
-      const typePlace = new fabric.Text(place, {
+      const typePlace = new fabric.Text(place.toUpperCase(), {
         selectable: false,
         charSpacing: coords.typePlaceCharSpacing,
         height: coords.typePlaceHeight,
@@ -221,18 +408,62 @@ function MatchPoster({
         originY: coords.typePlaceOriginY,
         fontFamily: coords.typePlaceFontFamily,
       });
+      if (coords.typePlaceScaleToHeight) {
+        typePlace.scaleToHeight(coords.typePlaceScaleToHeight);
+      }
 
-      if (typePlace.width > coords.typePlaceWidth) {
+      if (typePlace.width >= coords.typePlaceScaleToWidth) {
         typePlace.scaleToWidth(coords.typePlaceScaleToWidth);
       }
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
-        typePlace.set({
-          fill: "black",
-        });
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          typePlace.set({
+            fill: "black",
+          });
+        } else {
+          typePlace.set({
+            fill: coords.typePlaceFill,
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          typePlace.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3") {
+          typePlace.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "żółto-czarny") {
+          typePlace.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+          typePlace.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+          typePlace.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+          typePlace.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "biało-niebieski") {
+          typePlace.set({
+            fill: "white",
+          });
+        }
       }
       fabricRef.current.add(typePlace);
     }
@@ -257,7 +488,6 @@ function MatchPoster({
         height: coords.typeDataHeight,
         top: coords.typeDataTop,
         left: coords.typeDataLeft,
-        width: coords.typeDataWidth,
         className: "typeDate",
         fontSize: coords.typeDataFontSize,
         fill: coords.typeDataFill,
@@ -267,17 +497,59 @@ function MatchPoster({
         charSpacing: coords.typeDataCharSpacing,
       });
 
-      if (typeDate.width > coords.typeDataWidth) {
+      if (typeDate.width >= coords.typeDataWidth) {
         typeDate.scaleToWidth(coords.typeDataScaleToWidth);
       }
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
-        typeDate.set({
-          fill: "black",
-        });
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          typeDate.set({
+            fill: "black",
+          });
+        } else {
+          typeDate.set({
+            fill: coords.typeDataFill,
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
+
+        if (id.theme === "motyw 4" && themeOption.label === "żółto-czarny") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "biało-niebieski") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
       }
 
       fabricRef.current.add(typeDate);
@@ -328,9 +600,7 @@ function MatchPoster({
               originX: "center",
               originY: "center",
             });
-
             img.scaleToHeight(coords.yourTeamLogoScaleToHeight);
-
             fabricRef.current.add(img);
           });
         };
@@ -373,103 +643,123 @@ function MatchPoster({
               className: "opponentsFirstName",
               fontFamily: coords.opponentFirstNameFontFamily,
             });
-
-            firstName.scaleToHeight(coords.opponentFirstNameScaleToHeight);
+            if (coords.opponentFirstNameScaleToWidth) {
+              firstName.scaleToWidth(coords.opponentFirstNameScaleToWidth);
+            }
+            if (coords.opponentFirstNameScaleToHeight) {
+              firstName.scaleToHeight(coords.opponentFirstNameScaleToHeight);
+            }
             if (firstName.width > coords.opponentFirstNameWidth) {
               firstName.scaleToWidth(coords.opponentFirstNameScaleToWidth);
             }
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              firstName.set({
-                fill: "black",
-              });
+            if (themeOption) {
+              if (
+                themeOption.label.split("-")[0] === "biało" ||
+                themeOption.label.split("-")[0] === "żółto" ||
+                themeOption.label === "biały"
+              ) {
+                firstName.set({
+                  fill: "black",
+                });
+              }
             }
-
             fabricRef.current.add(firstName);
           });
           const fontTwo = new FontFaceObserver(
             coords.opponentSecondNameFontFamily
           );
           fontTwo.load().then(() => {
-            const secondName = new fabric.Text(
-              opponentSecondName.toUpperCase(),
-              {
-                selectable: false,
-                top: coords.opponentSecondNameTop,
-                left: coords.opponentSecondNameLeft,
-                originY: coords.opponentSecondNameOriginY,
-                originX: coords.opponentSecondNameOriginX,
-                fontSize: coords.opponentSecondNameFontSize,
-                width: coords.opponentSecondNameWidth,
-                fill: coords.opponentSecondNameFill,
-                className: "opponentsSecondName",
-                fontFamily: coords.opponentSecondNameFontFamily,
+            if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+              const secondName = new fabric.Text(
+                opponentSecondName.toUpperCase(),
+                {
+                  selectable: false,
+                  top: coords.opponentSecondNameTop,
+                  left: coords.opponentSecondNameLeft,
+                  originY: coords.opponentSecondNameOriginY,
+                  originX: coords.opponentSecondNameOriginX,
+                  fontSize: coords.opponentSecondNameFontSize,
+                  width: coords.opponentSecondNameWidth,
+                  fill: coords.opponentSecondNameFill,
+                  className: "opponentsSecondName",
+                  fontFamily: coords.opponentSecondNameFontFamily,
+                }
+              );
+
+              secondName.scaleToHeight(coords.opponentSecondNameScaleToHeight);
+              if (secondName.width > coords.opponentSecondNameWidth) {
+                secondName.scaleToWidth(coords.opponentSecondNameScaleToWidth);
               }
-            );
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  secondName.set({
+                    fill: "black",
+                  });
+                }
+              }
 
-            secondName.scaleToHeight(coords.opponentSecondNameScaleToHeight);
-            if (secondName.width > coords.opponentSecondNameWidth) {
-              secondName.scaleToWidth(coords.opponentSecondNameScaleToWidth);
+              fabricRef.current.add(secondName);
             }
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              secondName.set({
-                fill: "black",
-              });
-            }
-
-            fabricRef.current.add(secondName);
           });
         } else {
           const fontOpponent = new FontFaceObserver(
             coords.opponentNameFontFamily
           );
-          if(poster === "qyCYooseTtFZ4WnXNcxf") {
+          if (poster === "qyCYooseTtFZ4WnXNcxf") {
             opponentName = opponentName.toUpperCase();
           }
 
           fontOpponent.load().then(() => {
-            const opponentsName = new fabric.Text(opponentName, {
-              selectable: false,
-              top: coords.opponentNameTop,
-              left: coords.opponentNameLeft,
-              originY: coords.opponentNameOriginY,
-              originX: coords.opponentNameOriginX,
-              fontSize: coords.opponentNameFontSize,
-              width: coords.opponentNameWidth,
-              fill: coords.opponentNameFill,
-              className: "opponentsName",
-              fontFamily: coords.opponentNameFontFamily,
-            });
-
-            if (opponentsName.width > coords.opponentNameScaleToWidth) {
-              opponentsName.scaleToWidth(coords.opponentNameScaleToWidth);
-            }
-
             if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
+              poster === "mvzttPwmXvDWCz4vJefn" ||
+              poster === "wsAn3pPtaand0xDdNZ5S"
             ) {
-              opponentsName.set({
-                fill: "black",
-              });
-              if (poster === "FkbRjeu4p2PvRryL8byB" || poster === "PmoRESwg91LxFAGFObbZ" || themeOption.label === "żółto-czarny") {
-                opponentsName.set({
-                  fill: "white",
-                });
-              }
+              opponentName = opponentName.toUpperCase();
             }
+            if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+              const opponentsName = new fabric.Text(opponentName, {
+                selectable: false,
+                top: coords.opponentNameTop,
+                left: coords.opponentNameLeft,
+                originY: coords.opponentNameOriginY,
+                originX: coords.opponentNameOriginX,
+                fontSize: coords.opponentNameFontSize,
+                width: coords.opponentNameWidth,
+                fill: coords.opponentNameFill,
+                className: "opponentsName",
+                fontFamily: coords.opponentNameFontFamily,
+              });
+              if (opponentsName.width > coords.opponentNameScaleToWidth) {
+                opponentsName.scaleToWidth(coords.opponentNameScaleToWidth);
+              }
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  opponentsName.set({
+                    fill: "black",
+                  });
 
-            fabricRef.current.add(opponentsName);
+                  if (
+                    poster === "FkbRjeu4p2PvRryL8byB" ||
+                    poster === "PmoRESwg91LxFAGFObbZ" ||
+                    themeOption.label === "żółto-czarny"
+                  ) {
+                    opponentsName.set({
+                      fill: "white",
+                    });
+                  }
+                }
+              }
+
+              fabricRef.current.add(opponentsName);
+            }
           });
         }
       } else if (radioChecked === "radio2") {
@@ -505,65 +795,80 @@ function MatchPoster({
             className: "opponentsFirstName",
             fontFamily: coords.yourTeamFirstNameFontFamily,
           });
-          firstName.scaleToHeight(coords.yourTeamFirstNameScaleToHeight);
+
+          if (coords.yourTeamFirstNameScaleToWidth) {
+            firstName.scaleToWidth(coords.yourTeamFirstNameScaleToWidth);
+          }
+          if (coords.yourTeamFirstNameScaleToHeight) {
+            firstName.scaleToHeight(coords.yourTeamFirstNameScaleToHeight);
+          }
           if (firstName.width > coords.yourTeamFirstNameWidth) {
             firstName.scaleToWidth(coords.yourTeamFirstNameScaleToWidth);
           }
-          if (
-            themeOption.label.split("-")[0] === "biało" ||
-            themeOption.label.split("-")[0] === "żółto" ||
-            themeOption.label === "biały"
-          ) {
-            firstName.set({
-              fill: "black",
-            });
-          }
-
-          fabricRef.current.add(firstName);
-
-          const fontTwo = new FontFaceObserver(
-            coords.yourTeamSecondNameFontFamily
-          );
-          fontTwo.load().then(() => {
-            const secondName = new fabric.Text(
-              opponentSecondName.toUpperCase(),
-              {
-                selectable: false,
-                top: coords.yourTeamSecondNameTop,
-                left: coords.yourTeamSecondNameLeft,
-                originY: coords.yourTeamSecondNameOriginY,
-                originX: coords.yourTeamSecondNameOriginX,
-                fontSize: coords.yourTeamSecondNameFontSize,
-                width: coords.yourTeamSecondNameWidth,
-                fill: coords.yourTeamSecondNameFill,
-                className: "opponentsSecondName",
-                fontFamily: coords.yourTeamSecondNameFontFamily,
-              }
-            );
-
-            secondName.scaleToHeight(coords.yourTeamSecondNameScaleToHeight);
-            if (secondName.width > coords.yourTeamSecondNameWidth) {
-              secondName.scaleToWidth(coords.yourTeamSecondNameScaleToWidth);
-            }
+          if (themeOption) {
             if (
               themeOption.label.split("-")[0] === "biało" ||
               themeOption.label.split("-")[0] === "żółto" ||
               themeOption.label === "biały"
             ) {
-              secondName.set({
+              firstName.set({
                 fill: "black",
               });
             }
+          }
+          fabricRef.current.add(firstName);
 
-            fabricRef.current.add(secondName);
-          });
+          if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+            const fontTwo = new FontFaceObserver(
+              coords.yourTeamSecondNameFontFamily
+            );
+
+            fontTwo.load().then(() => {
+              const secondName = new fabric.Text(
+                opponentSecondName.toUpperCase(),
+                {
+                  selectable: false,
+                  top: coords.yourTeamSecondNameTop,
+                  left: coords.yourTeamSecondNameLeft,
+                  originY: coords.yourTeamSecondNameOriginY,
+                  originX: coords.yourTeamSecondNameOriginX,
+                  fontSize: coords.yourTeamSecondNameFontSize,
+                  width: coords.yourTeamSecondNameWidth,
+                  fill: coords.yourTeamSecondNameFill,
+                  className: "opponentsSecondName",
+                  fontFamily: coords.yourTeamSecondNameFontFamily,
+                }
+              );
+
+              secondName.scaleToHeight(coords.yourTeamSecondNameScaleToHeight);
+              if (secondName.width > coords.yourTeamSecondNameWidth) {
+                secondName.scaleToWidth(coords.yourTeamSecondNameScaleToWidth);
+              }
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  secondName.set({
+                    fill: "black",
+                  });
+                }
+              }
+
+              fabricRef.current.add(secondName);
+            });
+          }
         } else {
           const fontOpponent = new FontFaceObserver(
             coords.opponentNameFontFamily
           );
-            if(poster === "qyCYooseTtFZ4WnXNcxf") {
-              opponentName = opponentName.toUpperCase();
-            }
+          if (poster === "qyCYooseTtFZ4WnXNcxf") {
+            opponentName = opponentName.toUpperCase();
+          }
+          if (poster === "mvzttPwmXvDWCz4vJefn") {
+            opponentName = opponentName.toUpperCase();
+          }
           fontOpponent.load().then(() => {
             const opponentsName = new fabric.Text(opponentName, {
               selectable: false,
@@ -581,19 +886,24 @@ function MatchPoster({
             if (opponentsName.width > coords.yourTeamNameScaleToWidth) {
               opponentsName.scaleToWidth(coords.yourTeamNameScaleToWidth);
             }
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              opponentsName.set({
-                fill: "black",
-              });
-            }
-            if (poster === "FkbRjeu4p2PvRryL8byB" || poster === "PmoRESwg91LxFAGFObbZ" || themeOption.label === "żółto-czarny") {
-              opponentsName.set({
-                fill: "white",
-              });
+            if (themeOption) {
+              if (
+                themeOption.label.split("-")[0] === "biało" ||
+                themeOption.label.split("-")[0] === "żółto" ||
+                themeOption.label === "biały"
+              ) {
+                opponentsName.set({
+                  fill: "black",
+                });
+              }
+              if (
+                id.theme === "motyw 2" &&
+                themeOption.label === "żółto-czarny"
+              ) {
+                opponentsName.set({
+                  fill: "white",
+                });
+              }
             }
 
             fabricRef.current.add(opponentsName);
@@ -610,16 +920,20 @@ function MatchPoster({
         height: backImg.height,
       });
       const img = new Image();
-      if (themeOption) {
-        img.src = themeOption.value;
-      } else {
-        img.src = posterBackGround.src;
-      }
+      img.crossOrigin = "Anonymous";
+
+      img.src = posterBackGround;
+
       img.onload = () => {
         const newImg = new fabric.Image.fromURL(img.src, function (img) {
+          img.set({
+            crossOrigin: "anonymous",
+          });
           fabricRef.current.setBackgroundImage(
             img,
-            fabricRef.current.renderAll.bind(fabricRef.current)
+            fabricRef.current.renderAll.bind(fabricRef.current, {
+              crossOrigin: "anonymous",
+            })
           );
         });
 
@@ -642,9 +956,9 @@ function MatchPoster({
     };
 
     initFabric();
-  }, [themeOption]);
+  }, [posterBackGround]);
   const teamLogo = () => {
-    if (yourTeamLogo[0].img) {
+    if (yourTeamLogo[0].img && coords.yourTeamLogoTop) {
       if (radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "teamLogo") {
@@ -696,281 +1010,344 @@ function MatchPoster({
   };
   useEffect(() => {
     teamLogo();
-  }, [radioChecked, themeOption]);
+  }, [radioChecked, posterBackGround]);
+  const secondTeamLogo = () => {
+    if (yourTeamLogo[0].img && coords.yourTeamSecondLogoTop) {
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className === "teamSecondLogo") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+      const secondImg = new Image();
+      secondImg.src = yourTeamLogo[0].img;
+      secondImg.onload = () => {
+        fabric.Image.fromURL(secondImg.src, function (img) {
+          img.set({
+            selectable: false,
+            top: coords.yourTeamSecondLogoTop,
+            left: coords.yourTeamSecondLogoLeft,
+            originX: "center",
+            originY: "center",
+            className: "teamSecondLogo",
+          });
+          img.scaleToHeight(coords.yourTeamSecondLogoScaleToHeight);
+          fabricRef.current.add(img);
+          fabricRef.current.renderAll();
+        });
+      };
+    }
+  };
+  useEffect(() => {
+    secondTeamLogo();
+  }, [posterBackGround]);
 
   const teamName = () => {
     if (yourTeamLogo[0].firstName) {
-      if (radioChecked === "radio1") {
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "yourName") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "yourFirstName") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "yourSecondName") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        let yourTeamName;
-        if (poster === "23b5ff36a490e8f93breae34") {
-          yourTeamName = yourTeamLogo[0].firstName;
-        } else if (poster === "PmoRESwg91LxFAGFObbZ") {
-          yourTeamName =
-            yourTeamLogo[0].firstName + " " + yourTeamLogo[0].secondName;
-        } else {
-          yourTeamName =
-            yourTeamLogo[0].firstName.toUpperCase() +
-            " " +
-            yourTeamLogo[0].secondName.toUpperCase();
-        }
-        if (coords.yourTeamFirstNameFontFamily) {
-          const firstTeamName = yourTeamLogo[0].firstName.toUpperCase();
-
-          const secondTeamName = yourTeamLogo[0].secondName.toUpperCase();
-          const firstFont = new FontFaceObserver(
-            coords.yourTeamFirstNameFontFamily
-          );
-          firstFont.load().then(() => {
-            const firstName = new fabric.Text(firstTeamName, {
-              selectable: false,
-
-              top: coords.yourTeamFirstNameTop,
-              left: coords.yourTeamFirstNameLeft,
-              width: coords.yourTeamFirstNameWidth,
-              fill: coords.yourTeamFirstNameFill,
-              fontFamily: coords.yourTeamFirstNameFontFamily,
-              originX: coords.yourTeamFirstNameOriginX,
-              originY: coords.yourTeamFirstNameOriginY,
-              className: "yourFirstName",
-            });
-            firstName.scaleToHeight(coords.yourTeamFirstNameScaleToHeight);
-            if (firstName.width > coords.yourTeamFirstNameWidth) {
-              firstName.scaleToWidth(coords.yourTeamFirstNameScaleToWidth);
+      if (
+        coords.yourTeamFirstNameTop ||
+        coords.yourTeamNameTop ||
+        coords.yourTeamSecondNameTop
+      ) {
+        if (radioChecked === "radio1") {
+          fabricRef.current._objects.forEach((image, i) => {
+            if (fabricRef.current.item(i).className === "yourName") {
+              fabricRef.current.remove(fabricRef.current.item(i));
             }
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              firstName.set({
-                fill: "black",
-              });
-            }
-            
-
-            fabricRef.current.add(firstName);
           });
-          const secondFont = new FontFaceObserver(
-            coords.yourTeamSecondNameFontFamily
-          );
-          secondFont.load().then(() => {
-            const secondName = new fabric.Text(secondTeamName, {
-              selectable: false,
-              originX: coords.yourTeamSecondNameOriginX,
-              originY: coords.yourTeamSecondNameOriginY,
-              top: coords.yourTeamSecondNameTop,
-              width: coords.yourTeamSecondNameWidth,
-              left: coords.yourTeamSecondNameLeft,
-              fill: coords.yourTeamSecondNameFill,
-              fontFamily: coords.yourTeamSecondNameFontFamily,
-              className: "yourSecondName",
-            });
-            secondName.scaleToHeight(coords.yourTeamSecondNameScaleToHeight);
-            if (secondName.width > coords.yourTeamSecondNameWidth) {
-              secondName.scaleToWidth(coords.yourTeamSecondNameScaleToWidth);
+          fabricRef.current._objects.forEach((image, i) => {
+            if (fabricRef.current.item(i).className === "yourFirstName") {
+              fabricRef.current.remove(fabricRef.current.item(i));
             }
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              secondName.set({
-                fill: "black",
-              });
-            }
-
-            fabricRef.current.add(secondName);
           });
-        } else {
-          const font = new FontFaceObserver(coords.yourTeamNameFontFamily);
-          font.load().then(() => {
-            const name = new fabric.Text(yourTeamName, {
-              selectable: false,
-              originX: coords.yourTeamNameOriginX,
-              originY: coords.yourTeamNameOriginY,
-              top: coords.yourTeamNameTop,
-              left: coords.yourTeamNameLeft,
-              fill: coords.yourTeamNameFill,
-              fontFamily: coords.yourTeamNameFontFamily,
-              className: "yourName",
-            });
-            if (coords.yourTeamNameCharSpacing) {
-              name.charSpacing = coords.yourTeamNameCharSpacing;
+          fabricRef.current._objects.forEach((image, i) => {
+            if (fabricRef.current.item(i).className === "yourSecondName") {
+              fabricRef.current.remove(fabricRef.current.item(i));
             }
-            if (coords.yourTeamNameWidth) {
-              name.width = coords.yourTeamNameWidth;
-            }
-
-            name.scaleToWidth(coords.yourTeamNameScaleToWidth);
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              name.set({
-                fill: "black",
-              });
-            }
-            if (poster === "FkbRjeu4p2PvRryL8byB" || poster === "PmoRESwg91LxFAGFObbZ" || themeOption.label === "żółto-czarny") {
-              name.set({
-                fill: "white",
-              });
-            }
-
-            fabricRef.current.add(name);
           });
-        }
-      } else if (radioChecked === "radio2") {
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "yourName") {
-            fabricRef.current.remove(fabricRef.current.item(i));
+          let yourTeamName;
+          if (poster === "23b5ff36a490e8f93breae34") {
+            yourTeamName = yourTeamLogo[0].firstName;
+          } else if (poster === "PmoRESwg91LxFAGFObbZ") {
+            yourTeamName =
+              yourTeamLogo[0].firstName + " " + yourTeamLogo[0].secondName;
+          } else {
+            yourTeamName =
+              yourTeamLogo[0].firstName.toUpperCase() +
+              " " +
+              yourTeamLogo[0].secondName.toUpperCase();
           }
-        });
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "yourFirstName") {
-            fabricRef.current.remove(fabricRef.current.item(i));
+          if (coords.yourTeamFirstNameFontFamily) {
+            const firstTeamName = yourTeamLogo[0].firstName.toUpperCase();
+
+            const secondTeamName = yourTeamLogo[0].secondName.toUpperCase();
+            const firstFont = new FontFaceObserver(
+              coords.yourTeamFirstNameFontFamily
+            );
+            firstFont.load().then(() => {
+              const firstName = new fabric.Text(firstTeamName, {
+                selectable: false,
+                top: coords.yourTeamFirstNameTop,
+                left: coords.yourTeamFirstNameLeft,
+                width: coords.yourTeamFirstNameWidth,
+                fill: coords.yourTeamFirstNameFill,
+                fontFamily: coords.yourTeamFirstNameFontFamily,
+                originX: coords.yourTeamFirstNameOriginX,
+                originY: coords.yourTeamFirstNameOriginY,
+                className: "yourFirstName",
+              });
+              if (coords.yourTeamFirstNameScaleToWidth) {
+                firstName.scaleToWidth(coords.yourTeamFirstNameScaleToWidth);
+              }
+              if (coords.yourTeamFirstNameScaleToHeight) {
+                firstName.scaleToHeight(coords.yourTeamFirstNameScaleToHeight);
+              }
+              if (firstName.width > coords.yourTeamFirstNameWidth) {
+                firstName.scaleToWidth(coords.yourTeamFirstNameScaleToWidth);
+              }
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  firstName.set({
+                    fill: "black",
+                  });
+                }
+              }
+              fabricRef.current.add(firstName);
+            });
+            if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+              const secondFont = new FontFaceObserver(
+                coords.yourTeamSecondNameFontFamily
+              );
+              secondFont.load().then(() => {
+                const secondName = new fabric.Text(secondTeamName, {
+                  selectable: false,
+                  originX: coords.yourTeamSecondNameOriginX,
+                  originY: coords.yourTeamSecondNameOriginY,
+                  top: coords.yourTeamSecondNameTop,
+                  width: coords.yourTeamSecondNameWidth,
+                  left: coords.yourTeamSecondNameLeft,
+                  fill: coords.yourTeamSecondNameFill,
+                  fontFamily: coords.yourTeamSecondNameFontFamily,
+                  className: "yourSecondName",
+                });
+                if (coords.yourTeamSecondNameScaleToHeight) {
+                  secondName.scaleToHeight(
+                    coords.yourTeamSecondNameScaleToHeight
+                  );
+                }
+                if (secondName.width > coords.yourTeamSecondNameWidth) {
+                  secondName.scaleToWidth(
+                    coords.yourTeamSecondNameScaleToWidth
+                  );
+                }
+                if (themeOption) {
+                  if (
+                    themeOption.label.split("-")[0] === "biało" ||
+                    themeOption.label.split("-")[0] === "żółto" ||
+                    themeOption.label === "biały"
+                  ) {
+                    secondName.set({
+                      fill: "black",
+                    });
+                  }
+                }
+
+                fabricRef.current.add(secondName);
+              });
+            }
+          } else {
+            const font = new FontFaceObserver(coords.yourTeamNameFontFamily);
+            font.load().then(() => {
+              const name = new fabric.Text(yourTeamName, {
+                selectable: false,
+                originX: coords.yourTeamNameOriginX,
+                originY: coords.yourTeamNameOriginY,
+                top: coords.yourTeamNameTop,
+                left: coords.yourTeamNameLeft,
+                fill: coords.yourTeamNameFill,
+                fontFamily: coords.yourTeamNameFontFamily,
+                className: "yourName",
+              });
+              if (coords.yourTeamNameCharSpacing) {
+                name.charSpacing = coords.yourTeamNameCharSpacing;
+              }
+              if (coords.yourTeamNameWidth) {
+                name.width = coords.yourTeamNameWidth;
+              }
+
+              name.scaleToWidth(coords.yourTeamNameScaleToWidth);
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  name.set({
+                    fill: "black",
+                  });
+                }
+                if (
+                  poster === "FkbRjeu4p2PvRryL8byB" ||
+                  poster === "PmoRESwg91LxFAGFObbZ" ||
+                  themeOption.label === "żółto-czarny"
+                ) {
+                  name.set({
+                    fill: "white",
+                  });
+                }
+              }
+              fabricRef.current.add(name);
+            });
           }
-        });
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "yourSecondName") {
-            fabricRef.current.remove(fabricRef.current.item(i));
+        } else if (radioChecked === "radio2") {
+          fabricRef.current._objects.forEach((image, i) => {
+            if (fabricRef.current.item(i).className === "yourName") {
+              fabricRef.current.remove(fabricRef.current.item(i));
+            }
+          });
+          fabricRef.current._objects.forEach((image, i) => {
+            if (fabricRef.current.item(i).className === "yourFirstName") {
+              fabricRef.current.remove(fabricRef.current.item(i));
+            }
+          });
+          fabricRef.current._objects.forEach((image, i) => {
+            if (fabricRef.current.item(i).className === "yourSecondName") {
+              fabricRef.current.remove(fabricRef.current.item(i));
+            }
+          });
+          let yourTeamName;
+          if (poster === "23b5ff36a490e8f93breae34") {
+            yourTeamName = yourTeamLogo[0].firstName;
+          } else if (poster === "PmoRESwg91LxFAGFObbZ") {
+            yourTeamName =
+              yourTeamLogo[0].firstName + " " + yourTeamLogo[0].secondName;
+          } else {
+            yourTeamName =
+              yourTeamLogo[0].firstName.toUpperCase() +
+              " " +
+              yourTeamLogo[0].secondName.toUpperCase();
           }
-        });
-        let yourTeamName;
-        if (poster === "23b5ff36a490e8f93breae34") {
-          yourTeamName = yourTeamLogo[0].firstName;
-        } else if (poster === "PmoRESwg91LxFAGFObbZ") {
-          yourTeamName = opponentName;
-        } else {
-          yourTeamName =
-            yourTeamLogo[0].firstName.toUpperCase() +
-            " " +
-            yourTeamLogo[0].secondName.toUpperCase();
-        }
+          if (coords.yourTeamFirstNameFontFamily) {
+            const firstTeamName = yourTeamLogo[0].firstName.toUpperCase();
 
-        if (coords.yourTeamFirstNameFontFamily) {
-          const firstTeamName = yourTeamLogo[0].firstName.toUpperCase();
+            const secondTeamName = yourTeamLogo[0].secondName.toUpperCase();
+            const font = new FontFaceObserver(
+              coords.yourTeamFirstNameFontFamily
+            );
+            font.load().then(() => {
+              const firstName = new fabric.Text(firstTeamName, {
+                selectable: false,
+                originX: coords.opponentFirstNameOriginX,
+                originY: coords.opponentFirstNameOriginY,
+                top: coords.opponentFirstNameTop,
+                left: coords.opponentFirstNameLeft,
+                width: coords.opponentFirstNameWidth,
+                fill: coords.opponentFirstNameFill,
+                fontFamily: coords.opponentFirstNameFontFamily,
+                className: "yourFirstName",
+              });
+              if (coords.opponentFirstNameScaleToWidth) {
+                firstName.scaleToWidth(coords.opponentFirstNameScaleToWidth);
+              }
+              if (coords.opponentFirstNameScaleToHeight) {
+                firstName.scaleToHeight(coords.opponentFirstNameScaleToHeight);
+              }
 
-          const secondTeamName = yourTeamLogo[0].secondName.toUpperCase();
-          const font = new FontFaceObserver(coords.yourTeamFirstNameFontFamily);
-          font.load().then(() => {
-            const firstName = new fabric.Text(firstTeamName, {
-              selectable: false,
-              originX: coords.opponentFirstNameOriginX,
-              originY: coords.opponentFirstNameOriginY,
-              top: coords.opponentFirstNameTop,
-              left: coords.opponentFirstNameLeft,
-              width: coords.opponentFirstNameWidth,
-              fill: coords.opponentFirstNameFill,
-              fontFamily: coords.opponentFirstNameFontFamily,
-              className: "yourFirstName",
+              if (firstName.width > coords.opponentFirstNameWidth) {
+                firstName.scaleToWidth(coords.opponentFirstNameScaleToWidth);
+              }
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  firstName.set({
+                    fill: "black",
+                  });
+                }
+              }
+              fabricRef.current.add(firstName);
             });
-            firstName.scaleToHeight(coords.yourTeamFirstNameScaleToHeight);
-            if (firstName.width > coords.yourTeamFirstNameWidth) {
-              firstName.scaleToWidth(coords.yourTeamFirstNameScaleToWidth);
-            }
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              firstName.set({
-                fill: "black",
+            const secondFont = new FontFaceObserver(
+              coords.yourTeamSecondNameFontFamily
+            );
+            secondFont.load().then(() => {
+              const secondName = new fabric.Text(secondTeamName, {
+                selectable: false,
+                originX: coords.opponentSecondNameOriginX,
+                originY: coords.opponentSecondNameOriginY,
+                top: coords.opponentSecondNameTop,
+                width: coords.opponentSecondNameWidth,
+                left: coords.opponentSecondNameLeft,
+                fill: coords.opponentSecondNameFill,
+                fontFamily: coords.opponentSecondNameFontFamily,
+                className: "yourSecondName",
               });
-            }
+              secondName.scaleToHeight(coords.opponentSecondNameScaleToHeight);
+              if (secondName.width > coords.opponentSecondNameWidth) {
+                secondName.scaleToWidth(coords.opponentSecondNameScaleToWidth);
+              }
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  secondName.set({
+                    fill: "black",
+                  });
+                }
+              }
 
-            fabricRef.current.add(firstName);
-          });
-          const secondFont = new FontFaceObserver(
-            coords.yourTeamSecondNameFontFamily
-          );
-          secondFont.load().then(() => {
-            const secondName = new fabric.Text(secondTeamName, {
-              selectable: false,
-              originX: coords.opponentSecondNameOriginX,
-              originY: coords.opponentSecondNameOriginY,
-              top: coords.opponentSecondNameTop,
-              width: coords.opponentSecondNameWidth,
-              left: coords.opponentSecondNameLeft,
-              fill: coords.opponentSecondNameFill,
-              fontFamily: coords.opponentSecondNameFontFamily,
-              className: "yourSecondName",
+              fabricRef.current.add(secondName);
             });
-            secondName.scaleToHeight(coords.opponentSecondNameScaleToHeight);
-            if (secondName.width > coords.opponentSecondNameWidth) {
-              secondName.scaleToWidth(coords.opponentSecondNameScaleToWidth);
-            }
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              secondName.set({
-                fill: "black",
+          } else {
+            const font = new FontFaceObserver(coords.yourTeamNameFontFamily);
+            font.load().then(() => {
+              const name = new fabric.Text(yourTeamName, {
+                selectable: false,
+                originX: coords.opponentNameOriginX,
+                originY: coords.opponentNameOriginY,
+                top: coords.opponentNameTop,
+                left: coords.opponentNameLeft,
+                fill: coords.opponentNameFill,
+                fontFamily: coords.opponentNameFontFamily,
+                className: "yourName",
               });
-            }
+              if (coords.opponentNameCharSpacing) {
+                name.charSpacing = coords.opponentNameCharSpacing;
+              }
+              if (coords.opponentNameWidth) {
+                name.width = coords.opponentNameWidth;
+              }
 
-            fabricRef.current.add(secondName);
-          });
-        } else {
-          const font = new FontFaceObserver(coords.yourTeamNameFontFamily);
-          font.load().then(() => {
-            const name = new fabric.Text(yourTeamName, {
-              selectable: false,
-              originX: coords.opponentNameOriginX,
-              originY: coords.opponentNameOriginY,
-              top: coords.opponentNameTop,
-              left: coords.opponentNameLeft,
-              fill: coords.opponentNameFill,
-              fontFamily: coords.opponentNameFontFamily,
-              className: "yourName",
+              name.scaleToWidth(coords.opponentNameScaleToWidth);
+              if (themeOption) {
+                if (
+                  themeOption.label.split("-")[0] === "biało" ||
+                  themeOption.label.split("-")[0] === "żółto" ||
+                  themeOption.label === "biały"
+                ) {
+                  name.set({
+                    fill: "black",
+                  });
+                }
+                if (
+                  poster === "FkbRjeu4p2PvRryL8byB" ||
+                  themeOption.label === "żółto-czarny"
+                ) {
+                  name.set({
+                    fill: "white",
+                  });
+                }
+              }
+              fabricRef.current.add(name);
             });
-            if (coords.opponentNameCharSpacing) {
-              name.charSpacing = coords.opponentNameCharSpacing;
-            }
-            if (coords.opponentNameWidth) {
-              name.width = coords.opponentNameWidth;
-            }
-
-            name.scaleToWidth(coords.opponentNameScaleToWidth);
-
-            if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
-            ) {
-              name.set({
-                fill: "black",
-              });
-            }
-            if (poster === "FkbRjeu4p2PvRryL8byB" || themeOption.label === "żółto-czarny" ) {
-              name.set({
-                fill: "white",
-              });
-            }
-
-            fabricRef.current.add(name);
-          });
+          }
         }
       }
     }
@@ -979,19 +1356,27 @@ function MatchPoster({
     setTimeout(() => {
       teamName();
     }, [1]);
-  }, [radioChecked, themeOption]);
+  }, [radioChecked, themeOption, posterBackGround]);
 
   opponentLogo();
 
   opponentsName();
   typeDate();
-  typePlace();
+  useEffect(() => {
+    typePlace();
+  }, [place, posterBackGround]);
+
   yourResult();
   opponentResult();
 
   return (
     <>
-      <canvas id="canvas" className="resposive-canvas" ref={fabricRef} />
+      <canvas
+        id="canvas"
+        className="resposive-canvas"
+        crossOrigin="anonymous"
+        ref={fabricRef}
+      />
       <button className="preview-button">Podgląd</button>
     </>
   );

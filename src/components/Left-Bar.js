@@ -110,11 +110,48 @@ function LeftBar() {
             <span className={isHover === 8 ? "extended-text" : "slide-text"}>Konto</span>
             {isActive ? <span className="extended-text">Konto</span> : <span className="slide-text">Konto</span>}
           </Link>
-          <Link key="9"  onClick={logout} className="icon text-white link-content" onMouseEnter={() => setIsHover(9)} onMouseLeave={() => setIsHover(null)} >
+          {user && user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && (
+            <>
+            <Link key="9" to={`/stats`} className="icon text-white link-content" onMouseEnter={() => setIsHover(9)} onMouseLeave={() => setIsHover(null)} >
+            <li>
+              <Icon.BarChartFill className="icon-element" />
+            </li>
+            <span className={isHover === 9 ? "extended-text" : "slide-text"}>Statystyki</span>
+            {isActive ? <span className="extended-text">Statystyki</span> : <span className="slide-text">Statystyki</span>}
+          </Link>
+          <Link key="10" to={`/posterCreator`} className="icon text-white link-content" onMouseEnter={() => setIsHover(10)} onMouseLeave={() => setIsHover(null)} >
+            <li>
+              <Icon.BoundingBoxCircles className="icon-element" />
+            </li>
+            <span className={isHover === 10 ? "extended-text" : "slide-text"}>Kreator</span>
+            {isActive ? <span className="extended-text">Kreator</span> : <span className="slide-text">Kreator</span>}
+          </Link>
+          </>
+          )}
+          {user && user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2" && (
+            <>
+            <Link key="9" to={`/stats`} className="icon text-white link-content" onMouseEnter={() => setIsHover(9)} onMouseLeave={() => setIsHover(null)} >
+            <li>
+              <Icon.BarChartFill className="icon-element" />
+            </li>
+            <span className={isHover === 9 ? "extended-text" : "slide-text"}>Statystyki</span>
+            {isActive ? <span className="extended-text">Statystyki</span> : <span className="slide-text">Statystyki</span>}
+          </Link>
+          <Link key="10" to={`/posterCreator`} className="icon text-white link-content" onMouseEnter={() => setIsHover(10)} onMouseLeave={() => setIsHover(null)} >
+            <li>
+              <Icon.BoundingBoxCircles className="icon-element" />
+            </li>
+            <span className={isHover === 10 ? "extended-text" : "slide-text"}>Kreator</span>
+            {isActive ? <span className="extended-text">Kreator</span> : <span className="slide-text">Kreator</span>}
+          </Link>
+          </>
+          )}
+          
+          <Link key="11"  onClick={logout} className="icon text-white link-content" onMouseEnter={() => setIsHover(11)} onMouseLeave={() => setIsHover(null)} >
             <li >
               <Icon.BoxArrowRight className="icon-element" />
             </li>
-            <span className={isHover === 9 ? "extended-text" : "slide-text"}>Wyloguj się</span>
+            <span className={isHover === 11 ? "extended-text" : "slide-text"}>Wyloguj się</span>
             {isActive ? <span className="extended-text">Wyloguj się</span> : <span className="slide-text">Wyloguj się</span>}
           </Link>
         </ul>

@@ -61,33 +61,40 @@ function WorkSpace() {
     const canvasRes = document.querySelector("#canvas");
     canvasRes.style.opacity = "1";
 
-    html2canvas(image, { scale: 1.25 }).then((canvas) => {
-      const dataURL = canvas.toDataURL("image/jpeg", 1.0);
-      canvasRes.style.opacity = "0";
+    html2canvas(image, { scale: 1.25, useCORS: true, allowTaint: true }).then(
+      (canvas) => {
+        const dataURL = canvas.toDataURL("image/jpeg", 1.0);
 
-      const link = document.createElement("a");
-      link.download = "image.jpg";
-      link.href = dataURL;
-      link.click();
-
-      const docRef = doc(db, "user", Licenses[0].id);
-      updateDoc(docRef, {
-        numberOfFreeUse: Licenses[0].numberOfFreeUse - 1,
-      });
-      let checkLicense = [];
-      const colRef = doc(db, "user", Licenses[0].id);
-      getDoc(colRef).then((doc) => {
-        checkLicense.push(doc.data());
-        if (checkLicense[0].license == "free-trial") {
-          if (checkLicense[0].numberOfFreeUse < 1) {
-            updateDoc(docRef, {
-              license: "no-license",
-              numberOfFreeUse: deleteField(),
-            });
-          }
+        if (width > 1250) {
+          canvasRes.style.opacity = "1";
+        } else {
+          canvasRes.style.opacity = "0";
         }
-      });
-    });
+
+        const link = document.createElement("a");
+        link.download = "image.jpg";
+        link.href = dataURL;
+        link.click();
+
+        const docRef = doc(db, "user", Licenses[0].id);
+        updateDoc(docRef, {
+          numberOfFreeUse: Licenses[0].numberOfFreeUse - 1,
+        });
+        let checkLicense = [];
+        const colRef = doc(db, "user", Licenses[0].id);
+        getDoc(colRef).then((doc) => {
+          checkLicense.push(doc.data());
+          if (checkLicense[0].license === "free-trial") {
+            if (checkLicense[0].numberOfFreeUse < 1) {
+              updateDoc(docRef, {
+                license: "no-license",
+                numberOfFreeUse: deleteField(),
+              });
+            }
+          }
+        });
+      }
+    );
   };
 
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
@@ -112,14 +119,30 @@ function WorkSpace() {
     }));
   }
   let playerOptions;
+  let playerOptions2;
   let reserveOptions;
+  let reserveOptions2;
   if (Players) {
     playerOptions = Players.map((player) => ({
       value: player.number + " " + player.secondName,
       label: player.number + " " + player.firstName + " " + player.secondName,
     }));
+    playerOptions2 = Players.map((player) => ({
+      value:
+        player.number +" "+player.firstName.toUpperCase() + " " + player.secondName.toUpperCase(),
+      label: player.number + " " + player.firstName + " " + player.secondName,
+    }));
     reserveOptions = Players.map((player) => ({
       value: player.secondName,
+      label: player.number + " " + player.firstName + " " + player.secondName,
+    }));
+    reserveOptions2 = Players.map((player) => ({
+      value:
+        player.number +
+        "." +
+        player.firstName[0].toUpperCase() +
+        " " +
+        player.secondName,
       label: player.number + " " + player.firstName + " " + player.secondName,
     }));
   }
@@ -131,7 +154,7 @@ function WorkSpace() {
 
   const [themeOption, setThemeOption] = useState([]);
   const [selectThemes, setSelectThemes] = useState();
-
+  const [selectPlayerTheme, setSelectPlayerThemes] = useState([]);
   // themeOption = Themes.map(item => ({value: item.src, label: item.color}));
 
   useEffect(() => {
@@ -147,12 +170,37 @@ function WorkSpace() {
         posters.map((item) => ({ value: item.src, label: item.color }))
       );
     });
+    if(poster === "4123XABIebkl34m496f4") {
+      const docRef = collection(db, "yourCatalog");
+      const q2 = query(docRef, where("uuid", "==", poster));
+
+      onSnapshot(q2, (snapshot) => {
+        let posters = [];
+        snapshot.docs.forEach((doc) => {
+          posters.push({ ...doc.data(), id: doc.id});
+        });
+        if(posters.length > 1){
+        setSelectPlayerThemes(posters.map((item, i) => ({ value: item.src, label: item.color })))
+      }})
+    }
+   
   }, []);
+   
+  
+ 
   useEffect(() => {
     setSelectThemes(themeOption[0]);
   }, [themeOption]);
-
+  
+useEffect(() => {
+  if(themeOption.length === 0 && selectPlayerTheme.length > 1){
+    setSelectThemes(selectPlayerTheme[0])
+    
+  }
+  },[selectPlayerTheme])
+  
   // Getting background
+
   useEffect(() => {
     const addBackground = () => {
       const docRef = doc(db, "piecesOfPoster", poster);
@@ -160,8 +208,75 @@ function WorkSpace() {
         setPosters(doc.data());
       });
     };
-    addBackground();
-  }, []);
+    
+    const addYourBackground = () => {
+      const docRef = doc(db, "yourCatalog", poster);
+      getDoc(docRef).then((doc) => {
+        setPosters(doc.data());
+      });
+    };
+    if (!posters && themeOption.length === 0) {
+      addYourBackground();
+    } else if (!posters && themeOption.length > 0) {
+      addBackground();
+    }
+  }, [themeOption]);
+
+  const [dataURL, setDataURL] = useState(null);
+
+  useEffect(() => {
+    if (selectThemes) {
+      fetch(`${selectThemes.value}`)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            setDataURL(reader.result);
+          };
+        })
+        .catch((error) => {
+          console.error(error);
+          setDataURL(null);
+        });
+    } else {
+      if (posters) {
+        fetch(`${posters.src}`)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+              setDataURL(reader.result);
+            };
+          })
+          .catch((error) => {
+            console.error(error);
+            setDataURL(null);
+          });
+      }
+      // if(selectPlayerTheme) {
+      //   fetch(`${selectPlayerTheme.src}`)
+      //   .then((res) => res.blob())
+      //   .then((blob) => {
+      //     const reader = new FileReader();
+      //     reader.readAsDataURL(blob);
+      //     reader.onloadend = () => {
+      //       setDataURL(reader.result);
+      //     };
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //     setDataURL(null);
+      //   });
+      // }
+    }
+  }, [selectThemes, posters]);
+
+  const playerSelectTheme = (option) => {
+    setSelectThemes(option)
+  };
+
 
   const [coords, setCoords] = useState();
   useEffect(() => {
@@ -191,6 +306,11 @@ function WorkSpace() {
   const place = (e) => {
     setTypePlace(e.target.value);
   };
+  const [typeKolejka, setTypeKolejka] = useState("");
+  const kolejka = (e) => {
+    
+    setTypeKolejka(e.target.value);
+  } 
 
   // GOOOL
 
@@ -444,12 +564,15 @@ function WorkSpace() {
                 opponentName={opponentName}
               />
             )}
-            {posters && posters.type == "GOOOOL" && Logo && (
+            {posters && posters.type === "GOOOOL" && Logo && (
               <GoalPoster
-                posterBackGround={posters}
+                posterBackGround={dataURL}
                 coords={coords}
                 yourPlayer={yourPlayer}
                 themeOption={selectThemes}
+                yourTeamResult={yourTeamResult}
+                yourOpponentResult={yourOpponentResult}
+                id={posters}
               />
             )}
             {posters && posters.type === "MATCH-DAY" && Logo && (
@@ -479,7 +602,7 @@ function WorkSpace() {
             {posters && posters.type === "MATCH-POSTER" && Logo && (
               <MatchPoster
                 id={posters}
-                posterBackGround={posters}
+                posterBackGround={dataURL}
                 opponent={opponent}
                 yourLogo={Logo}
                 coords={coords}
@@ -488,12 +611,14 @@ function WorkSpace() {
                 opponentName={opponentName}
                 radioChecked={radioChecked}
                 themeOption={selectThemes}
+                league={league}
+                kolejka={typeKolejka}
               />
             )}
 
             {posters && posters.type === "STARTING-SQUAD" && Logo && (
               <StartingSquad
-                posterBackGround={posters}
+                posterBackGround={dataURL}
                 opponent={opponent}
                 yourLogo={Logo}
                 coords={coords}
@@ -522,13 +647,15 @@ function WorkSpace() {
                 themeOption={selectThemes}
                 goalKeeper={goalKeeper}
                 capitan={capitan}
+                id={posters}
               />
             )}
             {posters && posters.type === "RESULT" && Logo && (
               <MatchPoster
-                posterBackGround={posters}
+                posterBackGround={dataURL}
                 opponent={opponent}
                 yourLogo={Logo}
+                id={posters}
                 coords={coords}
                 date={typeDate}
                 place={typePlace}
@@ -537,6 +664,7 @@ function WorkSpace() {
                 yourOpponentResult={yourOpponentResult}
                 radioChecked={radioChecked}
                 themeOption={selectThemes}
+                league={league}
               />
             )}
             {posters && posters.type === "TIMETABLE" && Logo && (
@@ -692,28 +820,79 @@ function WorkSpace() {
                       </label>
                     </div>
                     <br />
-                    <label
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        width: "100%",
-                      }}
-                    >
-                      Motywy (po kliknięciu należy chwilę odczekać)
-                    </label>
-                    {themeOption && (
-                      <Select
-                        value={selectThemes}
-                        options={themeOption}
-                        onChange={setThemeBackground}
-                        className="select-option"
-                      />
+                    {selectPlayerTheme && selectPlayerTheme.length > 1 && (
+                      <>
+                        <label
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          Motywy
+                        </label>
+
+                        <Select
+                          value={selectThemes}
+                          options={selectPlayerTheme}
+                          onChange={setThemeBackground}
+                          className="select-option"
+                        />
+                      </>
                     )}
-                    <br />
+                    {themeOption && themeOption.length > 1 && (
+                      <>
+                        <label
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          Motywy
+                        </label>
+
+                        <Select
+                          value={selectThemes}
+                          options={themeOption}
+                          onChange={setThemeBackground}
+                          className="select-option"
+                        />
+                      </>
+                    )}
                   </div>
-                  <label>Miejsce</label>
+                  {poster === "8hTNRCBbwqv8UXB12fjZ" && (
+                    <>
+                      <label>Kolejka</label>
+                      <input type="text" value={league} onChange={getLeague} />
+                    </>
+                  )}
+                  {poster === "wsAn3pPtaand0xDdNZ5S" && (
+                    <>
+                      <label>Klasa</label>
+                      <input type="text" value={league} onChange={getLeague} />
+                      
+                    </>
+                  )}
+                  {poster === "wsAn3pPtaand0xDdNZ5S" && (
+                    <>
+                      <label>Kolejka</label>
+                      <input type="text" value={typeKolejka} onChange={kolejka} />
+                      
+                    </>
+                  )}
+                  {poster === "K1iRaLYzkSdrg3vBRyDL" && (
+                    <label>Kolejka</label>
+                  )}
+                  {poster !== "K1iRaLYzkSdrg3vBRyDL" && (
+                    <label>Miejsce</label>
+                  )}
+                  
                   <input type="text" value={typePlace} onChange={place} />
-                  <label>Data i godzina</label>
+                  {poster !== "EvaTvUZBFtGIBG5NqlLJ" && (
+                    <label>Data i godzina</label>
+                  )}
+                  {poster === "EvaTvUZBFtGIBG5NqlLJ" && <label>Kolejka</label>}
                   <input
                     type="text"
                     onChange={date}
@@ -733,7 +912,7 @@ function WorkSpace() {
                   </button>
                 </>
               )}
-              {posters && posters.type == "TOMMOROW-MATCH" && (
+              {posters && posters.type === "TOMMOROW-MATCH" && (
                 <>
                   <label>Data i miejsce</label>
                   <input
@@ -757,23 +936,23 @@ function WorkSpace() {
               )}
               {posters && posters.type == "GOOOOL" && (
                 <>
-                <label
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        width: "100%",
-                      }}
-                    >
-                      Motywy (po kliknięciu należy chwilę odczekać)
-                    </label>
-                    {themeOption && (
-                      <Select
-                        value={selectThemes}
-                        options={themeOption}
-                        onChange={setThemeBackground}
-                        className="select-option"
-                      />
-                    )}
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      width: "100%",
+                    }}
+                  >
+                    Motywy
+                  </label>
+                  {themeOption && (
+                    <Select
+                      value={selectThemes}
+                      options={themeOption}
+                      onChange={setThemeBackground}
+                      className="select-option"
+                    />
+                  )}
                   {Players && (
                     <>
                       <label>Zawodnik</label>
@@ -781,6 +960,50 @@ function WorkSpace() {
                         options={playerOptions}
                         onChange={getYourPlayer}
                       />
+                    </>
+                  )}
+                  {posters.theme === "motyw 3" && (
+                    <>
+                      <input
+                        type="number"
+                        onChange={yourResult}
+                        value={yourTeamResult}
+                        style={{ width: "50px", textAlign: "center" }}
+                        min="0"
+                        max="99"
+                      />
+                      -
+                      <input
+                        type="number"
+                        onChange={opponentResult}
+                        value={yourOpponentResult}
+                        style={{ width: "50px", textAlign: "center" }}
+                        min="0"
+                        max="99"
+                      />
+                      <br />
+                    </>
+                  )}
+                  {posters.theme === "motyw 4" && (
+                    <>
+                      <input
+                        type="number"
+                        onChange={yourResult}
+                        value={yourTeamResult}
+                        style={{ width: "50px", textAlign: "center" }}
+                        min="0"
+                        max="99"
+                      />
+                      -
+                      <input
+                        type="number"
+                        onChange={opponentResult}
+                        value={yourOpponentResult}
+                        style={{ width: "50px", textAlign: "center" }}
+                        min="0"
+                        max="99"
+                      />
+                      <br />
                     </>
                   )}
                   <button
@@ -817,27 +1040,54 @@ function WorkSpace() {
                       </label>
                     </div>
                     <br />
-                    <label
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        width: "100%",
-                      }}
-                    >
-                      Motywy (po kliknięciu należy chwilę odczekać)
-                    </label>
-                    {themeOption && (
-                      <Select
-                        value={selectThemes}
-                        options={themeOption}
-                        onChange={setThemeBackground}
-                        className="select-option"
-                      />
+                    {themeOption && themeOption.length > 1 && (
+                      <>
+                        <label
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          Motywy
+                        </label>
+
+                        <Select
+                          value={selectThemes}
+                          options={themeOption}
+                          onChange={setThemeBackground}
+                          className="select-option"
+                        />
+                      </>
                     )}
                   </div>
+                  {poster === "mvzttPwmXvDWCz4vJefn" && (
+                    <>
+                      <label>Data i miejsce</label>
+                      <input
+                        type="text"
+                        onChange={date}
+                        value={typeDate}
+                        className="date-type"
+                      />
+                      <label>Kolejka</label>
+                      <input
+                        type="text"
+                        onChange={place}
+                        value={typePlace}
+                        className="date-type"
+                      />
+                      <label>Klasa</label>
+                      <input
+                        type="text"
+                        onChange={getLeague}
+                        value={league}
+                        className="date-type"
+                      />
+                    </>
+                  )}
                   {posters.type2 === "RESULT2" && (
                     <>
-                      
                       <label>Data i miejsce</label>
                       <input
                         type="text"
@@ -877,63 +1127,88 @@ function WorkSpace() {
                   </button>
                 </>
               )}
-              {posters && posters.type == "STARTING-SQUAD" && (
+              {posters && posters.type === "STARTING-SQUAD" && (
                 <>
-                <div className="option-container">
-                    <div className="input-container">
-                      <label className="label-container">
-                        <input
-                          type="radio"
-                          value="radio1"
-                          onChange={(e) => setRadioChecked(e.target.value)}
-                          checked={radioChecked === "radio1"}
-                        />
-                        <span>Gospodarz</span>
-                      </label>
-                    </div>
-                    <div className="input-container">
-                      <label>
-                        <input
-                          type="radio"
-                          value="radio2"
-                          onChange={(e) => setRadioChecked(e.target.value)}
-                          checked={radioChecked === "radio2"}
-                        />
-                        <span className="guest">Gość</span>
-                      </label>
-                    </div>
-                  </div>
-                  <br />
-                  <label
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      width: "100%",
-                    }}
-                  >
-                    Motywy (po kliknięciu należy chwilę poczekać)
-                  </label>
-                  {themeOption && (
-                    <Select
-                      value={selectThemes}
-                      options={themeOption}
-                      onChange={setThemeBackground}
-                      className="select-option"
-                    />
+                  {poster !== "6JftCRHQYUItjEz55Rn1" && (
+                    <>
+                      <div className="option-container">
+                        <div className="input-container">
+                          <label className="label-container">
+                            <input
+                              type="radio"
+                              value="radio1"
+                              onChange={(e) => setRadioChecked(e.target.value)}
+                              checked={radioChecked === "radio1"}
+                            />
+                            <span>Gospodarz</span>
+                          </label>
+                        </div>
+                        <div className="input-container">
+                          <label>
+                            <input
+                              type="radio"
+                              value="radio2"
+                              onChange={(e) => setRadioChecked(e.target.value)}
+                              checked={radioChecked === "radio2"}
+                            />
+                            <span className="guest">Gość</span>
+                          </label>
+                        </div>
+                      </div>
+                      <br />
+                    </>
                   )}
-                  
-                  <label>Data i miejsce</label>
-                  <input
-                    type="text"
-                    onChange={date}
-                    value={typeDate}
-                    className="date-type"
-                  />
-                  <label>Przeciwnicy</label>
-                  {Opponent && (
-                    <Select options={options} onChange={setOpponentLogo} />
+                  {themeOption && themeOption.length > 1 && (
+                    <>
+                      <label
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          width: "100%",
+                        }}
+                      >
+                        Motywy
+                      </label>
+
+                      <Select
+                        value={selectThemes}
+                        options={themeOption}
+                        onChange={setThemeBackground}
+                        className="select-option"
+                      />
+                    </>
                   )}
-                  {Players && (
+                  {poster !== "6JftCRHQYUItjEz55Rn1" && (
+                    <>
+                      {poster !== "IxOg6DyMuo9gTvv8BJK9" && (
+                        <label>Data i miejsce</label>
+                      )}
+                      {poster === "IxOg6DyMuo9gTvv8BJK9" && (
+                        <label>Kolejka</label>
+                      )}
+                      <input
+                        type="text"
+                        onChange={date}
+                        value={typeDate}
+                        className="date-type"
+                      />
+                      {poster === "IxOg6DyMuo9gTvv8BJK9" && (
+                        <>
+                          <label>Klasa</label>
+                          <input
+                            type="text"
+                            value={typePlace}
+                            onChange={place}
+                          />
+                        </>
+                      )}
+                      <label>Przeciwnicy</label>
+                      {Opponent && (
+                        <Select options={options} onChange={setOpponentLogo} />
+                      )}
+                    </>
+                  )}
+                  {Players && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
                     <>
                       <p style={{ marginTop: "20px" }}>Zawodnicy</p>
                       <label>Zawodnik 1</label>
@@ -960,50 +1235,118 @@ function WorkSpace() {
                       <Select options={playerOptions} onChange={playerEleven} />
                     </>
                   )}
-                  {Players && (
+                  {Players && poster === "IxOg6DyMuo9gTvv8BJK9" && (
                     <>
-                      <p style={{ marginTop: "20px" }}>Rezerwowi</p>
-                      <label>Rezerwowy 1</label>
+                      <p style={{ marginTop: "20px" }}>Zawodnicy</p>
+                      <label>Zawodnik 1</label>
+                      <Select options={playerOptions2} onChange={playerOne} />
+                      <label>Zawodnik 2</label>
+                      <Select options={playerOptions2} onChange={playerTwo} />
+                      <label>Zawodnik 3</label>
+                      <Select options={playerOptions2} onChange={playerThree} />
+                      <label>Zawodnik 4</label>
+                      <Select options={playerOptions2} onChange={playerFour} />
+                      <label>Zawodnik 5</label>
+                      <Select options={playerOptions2} onChange={playerFive} />
+                      <label>Zawodnik 6</label>
+                      <Select options={playerOptions2} onChange={playerSix} />
+                      <label>Zawodnik 7</label>
+                      <Select options={playerOptions2} onChange={playerSeven} />
+                      <label>Zawodnik 8</label>
+                      <Select options={playerOptions2} onChange={playerEight} />
+                      <label>Zawodnik 9</label>
+                      <Select options={playerOptions2} onChange={playerNine} />
+                      <label>Zawodnik 10</label>
+                      <Select options={playerOptions2} onChange={playerTen} />
+                      <label>Zawodnik 11</label>
                       <Select
-                        options={reserveOptions}
-                        onChange={getReserveOne}
-                      />
-                      <label>Rezerwowy 2</label>
-                      <Select
-                        options={reserveOptions}
-                        onChange={getReserveTwo}
-                      />
-                      <label>Rezerwowy 3</label>
-                      <Select
-                        options={reserveOptions}
-                        onChange={getReserveThree}
-                      />
-                      <label>Rezerwowy 4</label>
-                      <Select
-                        options={reserveOptions}
-                        onChange={getReserveFour}
-                      />
-                      <label>Rezerwowy 5</label>
-                      <Select
-                        options={reserveOptions}
-                        onChange={getReserveFive}
-                      />
-                      <label>Rezerwowy 6</label>
-                      <Select
-                        options={reserveOptions}
-                        onChange={getReserveSix}
-                      />
-                      <label>Rezerwowy 7</label>
-                      <Select
-                        options={reserveOptions}
-                        onChange={getReserveSeven}
+                        options={playerOptions2}
+                        onChange={playerEleven}
                       />
                     </>
                   )}
+                  {Players && (
+                    <>
+                      <p style={{ marginTop: "20px" }}>Rezerwowi</p>
+                      {poster === "6JftCRHQYUItjEz55Rn1" && (
+                        <>
+                          <label>Rezerwowy 1</label>
+                          <Select
+                            options={reserveOptions2}
+                            onChange={getReserveOne}
+                          />
+                          <label>Rezerwowy 2</label>
+                          <Select
+                            options={reserveOptions2}
+                            onChange={getReserveTwo}
+                          />
+                          <label>Rezerwowy 3</label>
+                          <Select
+                            options={reserveOptions2}
+                            onChange={getReserveSix}
+                          />
+                          <label>Rezerwowy 4</label>
+                          <Select
+                            options={reserveOptions2}
+                            onChange={getReserveSeven}
+                          />
+                        </>
+                      )}
+                      {poster !== "6JftCRHQYUItjEz55Rn1" && (
+                        <>
+                          <label>Rezerwowy 1</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveOne}
+                          />
+                          <label>Rezerwowy 2</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveTwo}
+                          />
+                          <label>Rezerwowy 3</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveThree}
+                          />
+                          <label>Rezerwowy 4</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveFour}
+                          />
+                          <label>Rezerwowy 5</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveFive}
+                          />
+                          <label>Rezerwowy 6</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveSix}
+                          />
+                          <label>Rezerwowy 7</label>
+                          <Select
+                            options={reserveOptions}
+                            onChange={getReserveSeven}
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
                   <label>Bramkarz</label>
-                  <Select options={playerOptions} onChange={getGoalKeeper} />
+                  {poster && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
+                    <Select options={playerOptions} onChange={getGoalKeeper} />
+                  )}
+                  {poster && poster === "IxOg6DyMuo9gTvv8BJK9" && (
+                     <Select options={playerOptions2} onChange={getGoalKeeper} />
+                  )}
                   <label>Kapitan</label>
-                  <Select options={playerOptions} onChange={getCapitan} />
+                  {poster && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
+                    <Select options={playerOptions} onChange={getCapitan} />
+                  )}
+                  {poster && poster === "IxOg6DyMuo9gTvv8BJK9" && (
+                    <Select options={playerOptions2} onChange={getCapitan} />
+                  )}
                   <button
                     className="btn primary-btn save"
                     onClick={() => exportImg()}

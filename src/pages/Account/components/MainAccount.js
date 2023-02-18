@@ -9,8 +9,12 @@ import discard from "../../../img/discard.png";
 import { Link } from "react-router-dom";
 import CountryOption from "../../Offer/components/countryOption";
 import { db } from "../../../firebase/config";
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
+
+const zipCodeRegex = /^\d{2}-\d{3}$/;
+const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
+
 function MainAccount() {
   const { user } = useAuthContext();
   const [userId, setUserId] = useState(user.uid);
@@ -22,18 +26,70 @@ function MainAccount() {
   const [userEmail, setUserEmail] = useState(user.email);
   const [isChecked, setIsChecked] = useState(false);
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
-  
+
+  const { documents: Transactions } = useCollection("transaction", [
+    "uid",
+    "==",
+    user.uid,
+  ]);
+
+  useEffect(() => {
+    if (Transactions) {
+      if (Transactions.length > 0) {
+        const ref = doc(db, "transaction", Transactions[0].id);
+        deleteDoc(ref);
+      }
+    }
+  }, [Transactions]);
+
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [address, setAddress] = useState();
   const [postCode, setPostCode] = useState();
   const [country, setCountry] = useState("Afghanistan");
+  const [countryCode, setCountryCode] = useState("AF");
   const [city, setCity] = useState();
   const [nip, setNip] = useState();
   const [companyName, setCompanyName] = useState();
+  const [postCodeError, setPostCodeError] = useState("");
+  const [nipError, setNipError] = useState("");
+
+  const validatePostCode = (postCode) => {
+    if (!zipCodeRegex.test(postCode)) {
+      setPostCodeError("Niepoprawny kod pocztowy");
+      return false;
+    }
+    setPostCodeError("");
+    return true;
+  };
+  const validateNip = (nip) => {
+    if (!nipRegex.test(nip)) {
+      setNipError("Niepoprawny nip");
+      return false;
+    }
+    setNipError("");
+    return true;
+  };
 
   useEffect(() => {
-    if (!userData) {
+    if (userData) {
+      if (userData.length > 0) {
+        setFirstName(userData[0].firstName);
+        setLastName(userData[0].lastName);
+        setAddress(userData[0].address);
+        setPostCode(userData[0].postCode);
+        setCity(userData[0].city);
+        setCountry(userData[0].country);
+        if (userData[0].NIP) {
+          setIsChecked(true);
+          setNip(userData[0].NIP);
+          setCompanyName(userData[0].companyName);
+        } else {
+          setNip("");
+          setCompanyName("");
+        }
+      }
+    } else {
       setFirstName("");
       setLastName("");
       setAddress("");
@@ -41,23 +97,6 @@ function MainAccount() {
       setCity("");
       setNip("");
       setCompanyName("");
-    } else {
-      
-      setFirstName(userData[0].firstName);
-      setLastName(userData[0].lastName);
-      setAddress(userData[0].address);
-      setPostCode(userData[0].postCode);
-      setCity(userData[0].city);
-      setCountry(userData[0].country);
-      if(userData[0].NIP) {
-        setIsChecked(true);
-       setNip(userData[0].NIP);
-      setCompanyName(userData[0].companyName); 
-      } else {
-        setNip("")
-        setCompanyName("")
-      }
-      
     }
   }, [userData]);
 
@@ -90,7 +129,7 @@ function MainAccount() {
         address: address,
         postCode: postCode,
         city: city,
-        country: country
+        country: country,
       });
     } else {
       const userRef = doc(db, "userData", user.uid);
@@ -129,19 +168,23 @@ function MainAccount() {
 
             {License && License[0].license == "free-trial" && (
               <div className="license-container">
-                <img src={verified} className="icon-verified" />{" "}
-                <span>
-                  Masz jeszcze {License[0].numberOfFreeUse} darmowych użyć
-                </span>
+                <div className="license-content">
+                  <img src={verified} className="icon-verified" />{" "}
+                  <span>
+                    Masz jeszcze {License[0].numberOfFreeUse} darmowych użyć
+                  </span>
+                </div>
               </div>
             )}
             {License && License[0].license == "no-license" && (
               <div className="license-container">
-                <img src={discard} className="icon-verified" />{" "}
-                <span>
-                  Twoja licencja skończyła się{" "}
-                  <Link to="/offer">Kup dostęp</Link>
-                </span>
+                <div className="license-content">
+                  <img src={discard} className="icon-verified" />{" "}
+                  <span>
+                    Twoja licencja skończyła się{" "}
+                    <Link to="/offer">Kup dostęp</Link>
+                  </span>
+                </div>
               </div>
             )}
             {License && License[0].license === "full-license" && (
@@ -165,6 +208,7 @@ function MainAccount() {
                     disabled
                   />
                 </div>
+                <label>Format MM-DD-YYYY</label>
               </div>
             )}
             <form onSubmit={handleSubmit} className="fax-container">

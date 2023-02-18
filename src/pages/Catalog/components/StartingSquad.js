@@ -46,12 +46,13 @@ function StartingSquad({
   capitan,
   themeOption,
   radioChecked,
+  id,
 }) {
   const [isPoster, setIsPoster] = useState(null);
   const { poster } = useParams();
   const backImg = new Image();
 
-  backImg.src = posterBackGround.src;
+  backImg.src = posterBackGround;
   const [yourTeamLogo, setYourTeamLogo] = useState(yourLogo);
   const { user } = useAuthContext();
   const canvasRef = useRef();
@@ -77,7 +78,6 @@ function StartingSquad({
       const showPlayer = new fabric.Text(playerOne, {
         selectable: false,
         top: coords.playerOneTop,
-        left: coords.playerOneLeft,
         originY: coords.playerOneOriginY,
         originX: coords.playerOneOriginX,
         fontSize: coords.playerOneFontSize,
@@ -86,16 +86,51 @@ function StartingSquad({
         className: "playerOne",
         fontFamily: coords.playerOneFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+      }
+      if (coords.playerOneLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerOneLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerOneWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerOneWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -125,16 +160,50 @@ function StartingSquad({
         className: "playerTwo",
         fontFamily: coords.playerTwoFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+      }
+      if (coords.playerTwoLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerTwoLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerTwoWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerTwoWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -165,16 +234,49 @@ function StartingSquad({
         className: "playerThree",
         fontFamily: coords.playerThreeFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+      }
+      if (coords.playerThreeLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerThreeLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerThreeWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerThreeWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -195,7 +297,6 @@ function StartingSquad({
       const showPlayer = new fabric.Text(playerFour, {
         selectable: false,
         top: coords.playerFourTop,
-        left: coords.playerFourLeft,
         originY: coords.playerFourOriginY,
         originX: coords.playerFourOriginX,
         fontSize: coords.playerFourFontSize,
@@ -204,16 +305,49 @@ function StartingSquad({
         className: "playerFour",
         fontFamily: coords.playerFourFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+      }
+      if (coords.playerFourLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerFourLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerFourWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerFourWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -234,7 +368,6 @@ function StartingSquad({
       const showPlayer = new fabric.Text(playerFive, {
         selectable: false,
         top: coords.playerFiveTop,
-        left: coords.playerFiveLeft,
         originY: coords.playerFiveOriginY,
         originX: coords.playerFiveOriginX,
         fontSize: coords.playerFiveFontSize,
@@ -243,16 +376,49 @@ function StartingSquad({
         className: "playerFive",
         fontFamily: coords.playerFiveFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+      }
+      if (coords.playerFiveLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerFiveLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerFiveWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerFiveWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -283,16 +449,49 @@ function StartingSquad({
         className: "playerSix",
         fontFamily: coords.playerSixFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+      }
+      if (coords.playerSixLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerSixLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerSixWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerSixWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -322,16 +521,49 @@ function StartingSquad({
         className: "playerSeven",
         fontFamily: coords.playerSevenFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
-        showPlayer.set({
-          fill: "black",
-        });
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (coords.playerSevenLeft) {
+          showPlayer.set({
+            left: coords.playerSevenLeft,
+          });
+        } else {
+          showPlayer.set({
+            left: coords.playerSevenWidth / 2,
+          });
+        }
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerSevenWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -361,16 +593,49 @@ function StartingSquad({
         className: "playerEight",
         fontFamily: coords.playerEightFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+      }
+      if (coords.playerEightLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerEightLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerEightWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerEightWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -401,16 +666,50 @@ function StartingSquad({
         className: "playerNine",
         fontFamily: coords.playerNineFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+      }
+
+      if (coords.playerNineLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerNineLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerNineWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerNineWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -440,16 +739,49 @@ function StartingSquad({
         className: "playerTen",
         fontFamily: coords.playerTenFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+      }
+      if (coords.playerTenLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerTenLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerTenWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerTenWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -480,16 +812,49 @@ function StartingSquad({
         className: "playerEleven",
         fontFamily: coords.playerElevenFontFamily,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "czarno-biały") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "zielony") {
+          showPlayer.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({
+            fill: "white",
+          });
+        }
+      }
+      if (coords.playerElevenLeft) {
         showPlayer.set({
-          fill: "black",
+          left: coords.playerElevenLeft,
+        });
+      } else {
+        showPlayer.set({
+          left: coords.playerElevenWidth / 2,
         });
       }
-      showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      if (coords.playersScaleToHeight) {
+        showPlayer.scaleToHeight(coords.playersScaleToHeight);
+      }
+      if (coords.playersScaleToWidth) {
+        if (showPlayer.width >= coords.playerElevenWidth) {
+          showPlayer.scaleToWidth(coords.playersScaleToWidth);
+        }
+      }
       fabricRef.current.add(showPlayer);
     }
   };
@@ -507,38 +872,72 @@ function StartingSquad({
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
-      if (!reserveOne) {
-        reserveOne = " ";
+      let text;
+      if (poster != "6JftCRHQYUItjEz55Rn1") {
+        if (!reserveOne) {
+          reserveOne = " ";
+        } else {
+          reserveOne = reserveOne;
+        }
+        if (!reserveTwo) {
+          reserveTwo = " ";
+        } else {
+          reserveTwo = " | " + reserveTwo;
+        }
+        if (!reserveThree) {
+          reserveThree = " ";
+        } else {
+          reserveThree = " | " + reserveThree;
+        }
+        if (!reserveFour) {
+          reserveFour = " ";
+        } else {
+          reserveFour = " | " + reserveFour;
+        }
+        if (!reserveFive) {
+          reserveFive = " ";
+        } else {
+          reserveFive = " | " + reserveFive;
+        }
+        if (!reserveSix) {
+          reserveSix = " ";
+        } else {
+          reserveSix = " | " + reserveSix;
+        }
+        if (!reserveSeven) {
+          reserveSeven = " ";
+        } else {
+          reserveSeven = " | " + reserveSeven;
+        }
+        if(poster === "IxOg6DyMuo9gTvv8BJK9") {
+          text = `${reserveOne}  ${reserveTwo} ${reserveThree} ${reserveFour}  ${reserveFive} ${reserveSix} ${reserveSeven}`
+        } else {
+        text = `${reserveOne}  ${reserveTwo} ${reserveThree} ${reserveFour}  ${reserveFive}`;
+      }
       } else {
-        reserveOne += " |";
+        if (!reserveOne) {
+          reserveOne = " ";
+        } else {
+          reserveOne = reserveOne;
+        }
+        if (!reserveTwo) {
+          reserveTwo = " ";
+        } else {
+          reserveTwo = ", " + reserveTwo;
+        }
+        if (!reserveThree) {
+          reserveThree = " ";
+        } else {
+          reserveThree = " | " + reserveThree;
+        }
+        if (!reserveFour) {
+          reserveFour = " ";
+        } else {
+          reserveFour = " | " + reserveFour;
+        }
+        text = `${reserveOne}  ${reserveTwo} `;
       }
-      if (!reserveTwo) {
-        reserveTwo = " ";
-      } else {
-        reserveTwo += " |";
-      }
-      if (!reserveThree) {
-        reserveThree = " ";
-      } else {
-        reserveThree += " |";
-      }
-      if (!reserveFour) {
-        reserveFour = " ";
-      } else {
-        reserveFour += " |";
-      }
-      if (!reserveFive) {
-        reserveFive = " ";
-      } else {
-        reserveFive += "  ";
-      }
-      if (!reserveSix) {
-        reserveSix = " ";
-      }
-      if (!reserveSeven) {
-        reserveSeven = " ";
-      }
-      const text = `${reserveOne}  ${reserveTwo} ${reserveThree} ${reserveFour}  ${reserveFive}`;
+
       const showReserve = new fabric.Text(text, {
         selectable: false,
         className: "reserve",
@@ -549,16 +948,47 @@ function StartingSquad({
         fontFamily: coords.reserveOneFontFamily,
         fill: coords.reserveOneFill,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
-        showReserve.set({
-          fill: "black",
-        });
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showReserve.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showReserve.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "żółto-czarny") {
+          showReserve.set({
+            fill: "white",
+          });
+        }
       }
       showReserve.scaleToHeight(20);
+      
+      if (coords.reserveOneScaleToWidth) {
+        if (showReserve.width >= coords.reserveOneScaleToWidth) {
+          showReserve.scaleToWidth(coords.reserveOneScaleToWidth);
+        }
+      }
+      if (
+        id.theme === "motyw 3" &&
+        themeOption.label === "biało-czerwono-niebiesko-zielony"
+      ) {
+        showReserve.set({
+          fill: "white",
+        });
+      }
+      if (id.theme === "motyw 3" && themeOption.label === "biało-niebieski") {
+        showReserve.set({
+          fill: "white",
+        });
+      }
       fabricRef.current.add(showReserve);
     }
   };
@@ -571,18 +1001,36 @@ function StartingSquad({
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
-      if (!reserveSix || reserveSix == " ") {
-        reserveSix = " ";
+      let text;
+      if (poster !== "6JftCRHQYUItjEz55Rn1") {
+        if (!reserveSix || reserveSix === " ") {
+          reserveSix = " ";
+        } else {
+          reserveSix = reserveSix;
+        }
+        if (!reserveSeven || reserveSix === " ") {
+          reserveSeven = " ";
+        } else {
+          reserveSeven = "| " + reserveSeven;
+        }
+        text = `${reserveSix} ${reserveSeven}`;
       } else {
-        reserveSix += " |";
+        if (!reserveSix || reserveSix === " ") {
+          reserveSix = " ";
+        } else {
+          reserveSix += ",";
+        }
+        if (!reserveSeven || reserveSix === " ") {
+          reserveSeven = " ";
+        } else {
+          reserveSeven += "";
+        }
       }
-      if (!reserveSeven || reserveSix == " ") {
-        reserveSeven = " ";
-      } else {
-        reserveSeven += "";
-      }
-      const text = `${reserveSix} ${reserveSeven}`;
-
+      if(poster !== "IxOg6DyMuo9gTvv8BJK9"){
+          text = `${reserveSix} ${reserveSeven}`;
+        } else {
+          text = "";
+        }
       const showReserve = new fabric.Text(text, {
         selectable: false,
         className: "reserveTwo",
@@ -593,21 +1041,98 @@ function StartingSquad({
         fontFamily: coords.reserveSixFontFamily,
         fill: coords.reserveSixFill,
       });
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
-        showReserve.set({
-          fill: "black",
-        });
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          showReserve.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          showReserve.set({
+            fill: "white",
+          });
+        }
+        if (
+          id.theme === "motyw 3" &&
+          themeOption.label === "biało-czerwono-niebiesko-zielony"
+        ) {
+          showReserve.set({
+            fill: "white",
+          });
+        }
+
+        if (id.theme === "motyw 3" && themeOption.label === "żółto-czarny") {
+          showReserve.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 3" && themeOption.label === "biało-niebieski") {
+          showReserve.set({
+            fill: "white",
+          });
+        }
       }
       showReserve.scaleToHeight(20);
+      if (coords.reserveSixScaleToHeight) {
+        showReserve.scaleToHeight(coords.reserveSixScaleToHeight);
+      }
+      if (coords.reserveSixScaleToWidth) {
+        if (showReserve.width >= coords.reserveSixScaleToWidth) {
+          showReserve.scaleToWidth(coords.reserveSixScaleToWidth);
+        }
+      }
       fabricRef.current.add(showReserve);
     }
   };
 
   showReserveSecond();
+  const typePlace = () => {
+    if (place) {
+    if (fabricRef.current && place === "") {
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className == "typePlace") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+    }
+    
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className == "typePlace") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+
+      const typePlace = new fabric.Text(place, {
+        selectable: false,
+        charSpacing: coords.typePlaceCharSpacing,
+        height: coords.typePlaceHeight,
+        textAlign: "center",
+        top: coords.typePlaceTop,
+        left: coords.typePlaceLeft,
+        width: coords.typePlaceWidth,
+        className: "typePlace",
+        fontSize: coords.typePlaceFontSize,
+        fill: coords.typePlaceFill,
+        originX: coords.typePlaceOriginX,
+        originY: coords.typePlaceOriginY,
+        fontFamily: coords.typePlaceFontFamily,
+      });
+      if (coords.typePlaceScaleToHeight) {
+        typePlace.scaleToHeight(coords.typePlaceScaleToHeight);
+      }
+
+      if (typePlace.width >= coords.typePlaceScaleToWidth) {
+        typePlace.scaleToWidth(coords.typePlaceScaleToWidth);
+      }
+     
+      fabricRef.current.add(typePlace);
+    }
+  };
+  typePlace();
 
   const typeDate = () => {
     if (fabricRef.current && date === "") {
@@ -623,6 +1148,9 @@ function StartingSquad({
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
+      if(poster === "IxOg6DyMuo9gTvv8BJK9") {
+        date = date.toUpperCase();
+      }
       const typeDate = new fabric.Text(date, {
         selectable: false,
         height: coords.typeDataHeight,
@@ -640,14 +1168,49 @@ function StartingSquad({
       if (typeDate.width > coords.typeDataWidth) {
         typeDate.scaleToWidth(coords.typeDataScaleToWidth);
       }
-      if (
-        themeOption.label.split("-")[0] === "biało" ||
-        themeOption.label.split("-")[0] === "żółto" ||
-        themeOption.label === "biały"
-      ) {
-        typeDate.set({
-          fill: "black",
-        });
+      if(coords.typeDataCharSpacing) {
+        typeDate.charSpacing = coords.typeDataCharSpacing
+      }
+      if (themeOption) {
+        if (
+          themeOption.label.split("-")[0] === "biało" ||
+          themeOption.label.split("-")[0] === "żółto" ||
+          themeOption.label === "biały"
+        ) {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+          typeDate.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "żółto-czarny") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "biało-niebieski") {
+          typeDate.set({
+            fill: "white",
+          });
+        }
       }
       fabricRef.current.add(typeDate);
     }
@@ -657,7 +1220,7 @@ function StartingSquad({
     if (opponent) {
       if (radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className == "opponentImage") {
+          if (fabricRef.current.item(i).className === "opponentImage") {
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
@@ -708,6 +1271,7 @@ function StartingSquad({
   };
   const opponentsName = () => {
     if (opponentName) {
+      if(coords.opponentNameTop){
       if (radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className == "opponentsName") {
@@ -720,21 +1284,65 @@ function StartingSquad({
           left: coords.opponentNameLeft,
           originY: coords.opponentNameOriginY,
           originX: coords.opponentNameOriginX,
-          fontSize: coords.opponentNameFontSize,
           width: coords.opponentNameWidth,
           fill: coords.opponentNameFill,
           className: "opponentsName",
           fontFamily: coords.opponentNameFontFamily,
         });
-        opponentsName.scaleToWidth(coords.opponentNameScaleToWidth);
-        if (
-          themeOption.label.split("-")[0] === "biało" ||
-          themeOption.label.split("-")[0] === "żółto" ||
-          themeOption.label === "biały"
-        ) {
+        if (coords.opponentNameScaleToHeight) {
+          opponentsName.scaleToHeight(coords.opponentNameScaleToHeight);
+        }
+        if (coords.opponentNameFontSize) {
           opponentsName.set({
-            fill: "black",
+            fontSize: coords.opponentNameFontSize,
           });
+        }
+        if (opponentsName.width >= coords.opponentNameScaleToWidth) {
+          opponentsName.scaleToWidth(coords.opponentNameScaleToWidth);
+        }
+        if (themeOption) {
+          if (
+            themeOption.label.split("-")[0] === "biało" ||
+            themeOption.label.split("-")[0] === "żółto" ||
+            themeOption.label === "biały"
+          ) {
+            opponentsName.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+            opponentsName.set({
+              fill: "white",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+            opponentsName.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+            opponentsName.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+            opponentsName.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "żółto-czarny") {
+            opponentsName.set({
+              fill: "white",
+            });
+          }
+          if (
+            id.theme === "motyw 4" &&
+            themeOption.label === "biało-niebieski"
+          ) {
+            opponentsName.set({
+              fill: "white",
+            });
+          }
         }
         fabricRef.current.add(opponentsName);
       } else {
@@ -749,15 +1357,25 @@ function StartingSquad({
           left: coords.yourTeamNameLeft,
           originY: coords.yourTeamNameOriginY,
           originX: coords.yourTeamNameOriginX,
-          fontSize: coords.yourTeamNameFontSize,
           width: coords.yourTeamNameWidth,
           fill: coords.yourTeamNameFill,
           className: "opponentsName",
           fontFamily: coords.yourTeamNameFontFamily,
         });
-        
-        opponentsName.scaleToWidth(coords.yourTeamNameScaleToWidth);
-        
+        if (coords.yourTeamNameScaleToHeight) {
+          opponentsName.scaleToHeight(coords.yourTeamNameScaleToHeight);
+        }
+        if (coords.yourTeamNameFontSize) {
+          opponentsName.set({
+            fontSize: coords.yourTeamNameFontSize,
+          });
+        }
+        if (coords.yourTeamNameScaleToWidth) {
+          if (opponentsName.width >= coords.yourTeamNameScaleToWidth) {
+            opponentsName.scaleToWidth(coords.yourTeamNameScaleToWidth);
+          }
+        }
+
         if (
           themeOption.label.split("-")[0] === "biało" ||
           themeOption.label.split("-")[0] === "żółto" ||
@@ -767,9 +1385,40 @@ function StartingSquad({
             fill: "black",
           });
         }
+        if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+          opponentsName.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+          opponentsName.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+          opponentsName.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+          opponentsName.set({
+            fill: "black",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "żółto-czarny") {
+          opponentsName.set({
+            fill: "white",
+          });
+        }
+        if (id.theme === "motyw 4" && themeOption.label === "biało-niebieski") {
+          opponentsName.set({
+            fill: "white",
+          });
+        }
         fabricRef.current.add(opponentsName);
       }
     }
+  }
   };
 
   const initFabric = () => {
@@ -779,11 +1428,8 @@ function StartingSquad({
       height: backImg.height,
     });
     const img = new Image();
-    if (themeOption) {
-      img.src = themeOption.value;
-    } else {
-      img.src = posterBackGround.src;
-    }
+
+    img.src = posterBackGround;
 
     img.onload = () => {
       const newImg = new fabric.Image.fromURL(img.src, function (img) {
@@ -810,9 +1456,12 @@ function StartingSquad({
   };
   useEffect(() => {
     initFabric();
-  }, [themeOption]);
+  }, [posterBackGround]);
 
   const teamLogo = () => {
+    if (poster === "6JftCRHQYUItjEz55Rn1") {
+      radioChecked = "radio1";
+    }
     if (yourTeamLogo[0].img) {
       if (radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
@@ -864,9 +1513,12 @@ function StartingSquad({
     }
   };
   useEffect(() => {
-    teamLogo();
-  }, [radioChecked, themeOption]);
-
+    setTimeout(() => {
+      teamLogo();
+    },1)
+    
+  }, [radioChecked, isPoster, posterBackGround, yourLogo]);
+  
   const teamName = () => {
     if (yourTeamLogo[0].firstName) {
       if (radioChecked === "radio1") {
@@ -901,15 +1553,64 @@ function StartingSquad({
             name.width = coords.yourTeamNameWidth;
           }
 
-          name.scaleToWidth(coords.yourTeamNameScaleToWidth);
-          if (
-            themeOption.label.split("-")[0] === "biało" ||
-            themeOption.label.split("-")[0] === "żółto" ||
-            themeOption.label === "biały"
-          ) {
-            name.set({
-              fill: "black",
-            });
+          if (coords.yourTeamNameScaleToWidth) {
+            name.scaleToWidth(coords.yourTeamNameScaleToWidth);
+          }
+          if (coords.yourTeamNameFontSize) {
+            name.fontSize = coords.yourTeamNameFontSize;
+          }
+          if (themeOption != null) {
+            if (
+              themeOption.label.split("-")[0] === "biało" ||
+              themeOption.label.split("-")[0] === "żółto" ||
+              themeOption.label === "biały"
+            ) {
+              name.set({
+                fill: "black",
+              });
+            }
+            if (
+              id.theme === "motyw 2" &&
+              themeOption.label === "żółto-czarny"
+            ) {
+              name.set({
+                fill: "white",
+              });
+            }
+            if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+              name.set({
+                fill: "black",
+              });
+            }
+            if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+              name.set({
+                fill: "black",
+              });
+            }
+            if (
+              id.theme === "motyw 4" &&
+              themeOption.label === "czarno-biały"
+            ) {
+              name.set({
+                fill: "black",
+              });
+            }
+            if (
+              id.theme === "motyw 4" &&
+              themeOption.label === "żółto-czarny"
+            ) {
+              name.set({
+                fill: "white",
+              });
+            }
+            if (
+              id.theme === "motyw 4" &&
+              themeOption.label === "biało-niebieski"
+            ) {
+              name.set({
+                fill: "white",
+              });
+            }
           }
           fabricRef.current.add(name);
         });
@@ -944,8 +1645,15 @@ function StartingSquad({
           if (coords.opponentNameWidth) {
             name.width = coords.opponentNameWidth;
           }
+          if (coords.opponentNameFontSize) {
+            name.set({
+              fontSize: coords.opponentNameFontSize,
+            });
+          }
+          if (coords.opponentNameScaleToWidth) {
+            name.scaleToWidth(coords.opponentNameScaleToWidth);
+          }
 
-          name.scaleToWidth(coords.opponentNameScaleToWidth);
           if (
             themeOption.label.split("-")[0] === "biało" ||
             themeOption.label.split("-")[0] === "żółto" ||
@@ -955,6 +1663,40 @@ function StartingSquad({
               fill: "black",
             });
           }
+          if (id.theme === "motyw 2" && themeOption.label === "żółto-czarny") {
+            name.set({
+              fill: "white",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+            name.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+            name.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+            name.set({
+              fill: "black",
+            });
+          }
+          if (id.theme === "motyw 4" && themeOption.label === "żółto-czarny") {
+            name.set({
+              fill: "white",
+            });
+          }
+          if (
+            id.theme === "motyw 4" &&
+            themeOption.label === "biało-niebieski"
+          ) {
+            name.set({
+              fill: "white",
+            });
+          }
+
           fabricRef.current.add(name);
         });
       }
@@ -962,13 +1704,13 @@ function StartingSquad({
   };
   useEffect(() => {
     teamName();
-  }, [themeOption, radioChecked]);
+  }, [themeOption, radioChecked, posterBackGround]);
 
   useEffect(() => {
-   
-  }, [themeOption, radioChecked]);
-  opponentLogo();
-    opponentsName(); 
+    opponentLogo();
+  }, [themeOption, radioChecked, opponentLogo]);
+  
+  opponentsName();
   showPlayerOne();
   showPlayerTwo();
   showPlayerThree();

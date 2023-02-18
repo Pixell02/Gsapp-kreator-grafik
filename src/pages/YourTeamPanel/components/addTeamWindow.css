@@ -76,3 +76,10 @@
 .add-window .add-img {
     margin-left: 0;
 }
+
+@media only screen and (max-height: 768px) {
+
+    .add-window {
+        margin-top: 0px;
+    }
+}

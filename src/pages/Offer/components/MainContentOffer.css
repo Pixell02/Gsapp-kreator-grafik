@@ -38,23 +38,31 @@
 .fullName-content {
     display: flex;
     width: 100%;
-    margin-left: 50px;
+   
     justify-content: space-between;
 }
-.fullName-content .name {
+.fullName-content .fullName {
     width: 90% !important;
 }
-.fullName-content .surName {
-    width: 90% !important;
-}
+
 .label-content {
     width: 100%;
 }
 .data-content {
     display: flex;
     flex-direction: column;
-    margin-left: 40px ;
+    
     width: 100%;
+}
+
+.inner-content-label .label-content .fullName {
+    width: 50%;
+}
+.inner-content-country-label {
+    width: 100%;
+}
+.inner-content-country-label .form-control {
+    width: 98%;
 }
 
 .inner-label-containers {
@@ -75,3 +83,8 @@
     justify-content: flex-start;
 }
 
+@media only screen and (max-width: 1250px) {
+    .main-content {
+        width: 100%;
+    }
+}

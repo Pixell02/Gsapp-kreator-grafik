@@ -3,14 +3,18 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
+  "headers": [{
+    "source": "**/*.jpg",
+    "headers": [
+      {
+      "key" : "Access-Control-Allow-Origin",
+      "value" : "*"
+    }
+  ]
+  }],
+  
   "hosting": {
-    "headers": [{
-      "source": "**/*",
-      "headers": [{
-        "key" : "Access-Control-Allow-Origin",
-        "value" : "*"
-      }]
-    }],
+    
     "public": "build",
     "ignore": [
       "firebase.json",
@@ -24,4 +28,5 @@
       }
     ]
   }
+  
 }

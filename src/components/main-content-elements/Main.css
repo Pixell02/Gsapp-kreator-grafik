@@ -1,19 +1,18 @@
 .main-content {
-    
-    margin-left: 180px;
+  margin-left: 180px;
 }
-.ml-5 {
-    margin-left: 10px ;
-    min-height: 80vh;
-}
+/* .ml-5 {
+  margin-left: 10px;
+  min-height: 80vh;
+} */
 .title-container {
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .item-container {
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 50vh;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 50vh;
 }
