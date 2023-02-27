@@ -70,44 +70,12 @@ function WorkSpace() {
             }
           }
         });
-        let array = [];
-
-const fetchPosterInfo = (poster) => {
-  return new Promise((resolve, reject) => {
-    const posterRef = doc(db, "piecesOfPoster", poster);
-    getDoc(posterRef).then((doc) => {
-      if (doc.exists()) {
-        resolve([doc.data()]);
-      } else {
-        const posterRef = doc(db, "yourCatalog", poster);
-        getDoc(posterRef).then((doc) => {
-          if (doc.exists()) {
-            resolve([doc.data()]);
-          } else {
-            resolve([]);
-          }
-        }).catch((error) => {
-          reject(error);
-        });
-      }
-    }).catch((error) => {
-      reject(error);
-    });
-  });
-};
-
-fetchPosterInfo(poster).then((posterInfo) => {
-  addDoc(collection(db, "generated"), {
-    name: posterInfo[0].name || null,
-    theme: posterInfo[0].theme || null,
-    date: Date.now(),
-    color: posterInfo[0].color || null,
-    posterId: posterInfo[0].uuid,
-    uid: user.uid,
-  });
-}).catch((error) => {
-  console.log(error);
-});
+        
+        posters.createdDate = Date.now();
+        posters.user = user.uid;
+    const generatorRef = collection(db, "generated")
+      addDoc(generatorRef, posters)
+    
       }
     );
   };
@@ -189,26 +157,6 @@ fetchPosterInfo(poster).then((posterInfo) => {
   const [selectPlayerTheme, setSelectPlayerThemes] = useState([]);
   const [posterInfo, setPosterInfo] = useState({});
 
-  // useEffect(() => {
-  //   if (poster) {
-  //     const posterRef = doc(db, "piecesOfPoster", poster);
-  //     getDoc(posterRef).then((doc) => {
-  //       setPosterInfo(doc.data(), doc.id);
-  //     });
-  //   }
-  // }, [poster]);
-
-  // useEffect(() => {
-  //   const fetchPosterInfo = async () => {
-  //     if (!posterInfo) {
-  //       const posterRef = doc(db, "yourCatalog", poster);
-  //       await getDoc(posterRef).then((doc) => {
-  //         setPosterInfo(doc.data(), doc.id);
-  //       });
-  //     }
-  //   };
-  //   fetchPosterInfo();
-  // }, [posterInfo]);
 
   useEffect(() => {
     const colRef = collection(db, "piecesOfPoster");
@@ -395,100 +343,100 @@ fetchPosterInfo(poster).then((posterInfo) => {
 
   const playerOne = (option) => {
     setPlayerNameOne(option.value);
-    let filtered = fullPlayers.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = fullPlayers.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameTwo, setPlayerNameTwo] = useState();
 
   const playerTwo = (option) => {
     setPlayerNameTwo(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameThree, setPlayerNameThree] = useState();
 
   const playerThree = (option) => {
     setPlayerNameThree(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameFour, setPlayerNameFour] = useState();
 
   const playerFour = (option) => {
     setPlayerNameFour(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameFive, setPlayerNameFive] = useState();
 
   const playerFive = (option) => {
     setPlayerNameFive(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameSix, setPlayerNameSix] = useState();
 
   const playerSix = (option) => {
     setPlayerNameSix(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameSeven, setPlayerNameSeven] = useState();
 
   const playerSeven = (option) => {
     setPlayerNameSeven(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameEight, setPlayerNameEight] = useState();
 
   const playerEight = (option) => {
     setPlayerNameEight(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameNine, setPlayerNameNine] = useState();
 
   const playerNine = (option) => {
     setPlayerNameNine(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameTen, setPlayerNameTen] = useState();
 
   const playerTen = (option) => {
     setPlayerNameTen(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
   const [playerNameEleven, setPlayerNameEleven] = useState();
 
   const playerEleven = (option) => {
     setPlayerNameEleven(option.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== option.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== option.value
+    // );
+    // setPlayerOption(filtered);
   };
 
   // Result
@@ -546,52 +494,52 @@ fetchPosterInfo(poster).then((posterInfo) => {
 
   const getReserveOne = (options) => {
     setReserveOne(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
   const getReserveTwo = (options) => {
     setReserveTwo(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
   const getReserveThree = (options) => {
     setReserveThree(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
   const getReserveFour = (options) => {
     setReserveFour(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
   const getReserveFive = (options) => {
     setReserveFive(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
   const getReserveSix = (options) => {
     setReserveSix(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
   const getReserveSeven = (options) => {
     setReserveSeven(options.value);
-    let filtered = playerOptions.filter(
-      (player) => player.value !== options.value
-    );
-    setPlayerOption(filtered);
+    // let filtered = playerOptions.filter(
+    //   (player) => player.value !== options.value
+    // );
+    // setPlayerOption(filtered);
   };
 
   const [goalKeeper, setGoalKeeper] = useState();
