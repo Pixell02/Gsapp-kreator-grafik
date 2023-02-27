@@ -28,6 +28,7 @@ import TimeTable from "./TimeTable";
 import verified from "../../../img/verified.png";
 import discard from "../../../img/discard.png";
 import EventAnnouncement from "./EventAnnouncement";
+import watermarkImg from "../../../img/2.svg"
 
 function WorkSpace() {
   const { poster } = useParams();
@@ -38,11 +39,20 @@ function WorkSpace() {
     "==",
     user.uid,
   ]);
-
+  
   const exportImg = () => {
-    const image = document.querySelector(".canvas-container");
+    const image = document.querySelector(".canvas-container");  
     const canvasRes = document.querySelector("#canvas");
-    canvasRes.style.opacity = "1";
+    if(Licenses[0].license === "free-trial"){
+      const watermarkPlace = document.querySelectorAll(".canvas-container")[0];  
+    const watermark = document.createElement("img");
+    watermark.className = "watermark-img"
+      watermark.src = watermarkImg;
+      image.appendChild(watermark);
+    
+    }
+    
+    // canvasRes.style.opacity = "1";
 
     html2canvas(image, { scale: 1.25, useCORS: true, allowTaint: true }).then(
       (canvas) => {
@@ -54,9 +64,11 @@ function WorkSpace() {
         link.click();
 
         const docRef = doc(db, "user", Licenses[0].id);
+        if(Licenses[0].license ==="free-trial"){
         updateDoc(docRef, {
           numberOfFreeUse: Licenses[0].numberOfFreeUse - 1,
         });
+      } 
         let checkLicense = [];
         const colRef = doc(db, "user", Licenses[0].id);
         getDoc(colRef).then((doc) => {
@@ -70,7 +82,9 @@ function WorkSpace() {
             }
           }
         });
-        
+        if(Licenses[0].license === "free-trial"){
+          document.querySelector(".watermark-img").remove();
+        }
         posters.createdDate = Date.now();
         posters.user = user.uid;
     const generatorRef = collection(db, "generated")
@@ -467,6 +481,15 @@ function WorkSpace() {
     setYourPlayerFiveGoal(option.value);
   };
   const [yourPlayerSixGoal, setYourPlayerSixGoal] = useState();
+// useEffect(() => {
+//     const image = document.querySelectorAll(".canvas-container")[0];  
+//     if(image){
+//     const watermark = document.createElement("img");
+//     watermark.className = "watermark-img"
+//       watermark.src = watermarkImg;
+//       image.appendChild(watermark);
+//     }
+//   },[watermarkImg, dataURL, yourLogo])
 
   const getYourPlayerSixGoal = (option) => {
     setYourPlayerSixGoal(option.value);

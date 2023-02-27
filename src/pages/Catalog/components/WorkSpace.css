@@ -81,6 +81,21 @@
     width: 20px;
     height: 20px;
 }
+.preview-container .watermark-img {
+    position: absolute ;
+    
+    opacity: 0.2;
+    width: 40%;
+    height: auto;
+    z-index: 100;
+}
+.canvas-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .responsive-canvas {
     
