@@ -11,18 +11,19 @@ export default function AdministratorPanel() {
   const { documents: license } = useCollection("user");
   const { documents: users } = useCollection("Teams");
   const { documents: history } = useCollection("history");
+  const { documents: email } = useCollection("email");
   return (
     <div className="main-content">
       <div className="ml-5 mt-5">
         <p>Tutaj jeżeli będzie za dużo rzeczy to będą zakładki</p>
-        <div className="d-flex flex-row h-100 upper-container">
+        <div className="d-flex flex-row  upper-container">
           <LicenseStats license={license} />
           <FavoriteTheme />
           <UsersCountry />
         </div>
         <Orders history={history} user={users} />
         <UsersPosters />
-        <Users users={users} license={license} />
+        <Users users={users} license={license} email={email} />
       </div>
     </div>
   );

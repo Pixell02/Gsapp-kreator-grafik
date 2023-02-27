@@ -8,9 +8,10 @@ import verified from "../../../img/verified.png";
 import discard from "../../../img/discard.png";
 import { Link } from "react-router-dom";
 import CountryOption from "../../Offer/components/countryOption";
-import { db } from "../../../firebase/config";
+import { auth, db } from "../../../firebase/config";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import useUserInformation from "../../../hooks/useUserInformation";
 
 const zipCodeRegex = /^\d{2}-\d{3}$/;
 const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
@@ -18,6 +19,7 @@ const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
 function MainAccount() {
   const { user } = useAuthContext();
   const [userId, setUserId] = useState(user.uid);
+  const { usersEmail, userCreatedAt } = useUserInformation(user.uid);
   const { documents: userData } = useCollection("userData", [
     "uid",
     "==",
@@ -70,7 +72,6 @@ function MainAccount() {
     setNipError("");
     return true;
   };
-
   useEffect(() => {
     if (userData) {
       if (userData.length > 0) {
@@ -165,6 +166,10 @@ function MainAccount() {
                 </div>
               </>
             )}
+            <label>Data utworzenia konta</label>
+            <div className="userId account-data-container">
+              <span className="account-data">{userCreatedAt} </span>
+            </div>
 
             {License && License[0].license == "free-trial" && (
               <div className="license-container">

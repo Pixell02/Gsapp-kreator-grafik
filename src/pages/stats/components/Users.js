@@ -3,7 +3,7 @@ import Title from "../../../components/main-content-elements/Title";
 import "../Stats.css";
 import UserButton from "./subComponents/UserButton";
 export default function Users(props) {
-  console.log(props.license);
+  console.log(props.email);
   return (
     <div className="ml-5 mt-5 users-content-container bg-light">
       <div className="pt-2">
@@ -19,10 +19,16 @@ export default function Users(props) {
           <th className="dimension">Szczegóły</th>
         </tr>
         {props.license &&
-          props.license.map((license) => (
+          props.license.map((license, i) => (
             <>
               <tr>
-                <td className="dimension">{license.uid}</td>
+                <td className="dimension">
+                  {props.email &&
+                    props.email
+                      .filter((email) => email.uid === license.uid)
+                      .map((email) => <>{email.email}</>)}
+                  <p style={{ fontSize: "10px" }}>({license.uid})</p>
+                </td>
                 {props.users &&
                   props.users
                     .filter((user) => user.uid === license.uid)
@@ -39,7 +45,6 @@ export default function Users(props) {
                           {user.firstName + " " + user.secondName}
                         </td>
                         <td className="dimension">{user.sport}</td>
-                        
                       </>
                     ))}
                 <td className="dimension">{license.license}</td>
