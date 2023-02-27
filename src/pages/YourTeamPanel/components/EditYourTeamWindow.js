@@ -5,37 +5,50 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
-import { doc, updateDoc  } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
 import Select from "react-select";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
+const options = [
+  { value: "piłka nożna", label: "piłka nożna" },
+  { value: "siatkówka", label: "siatkówka" },
+  { value: "koszykówka", label: "koszykówka" },
+  { value: "piłka ręczna", label: "piłka ręczna" },
+  { value: "hokej", label: "hokej" },
+];
 function EditPlayerWindow({ yourTeam, open, onClose }) {
   const { id } = useParams();
-  
+  const { user } = useAuthContext();
   const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
   const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
+
   const [sport, setSport] = useState(yourTeam.sport);
   const [image, setImage] = useState(yourTeam.img);
   const [preview, setPreview] = useState(yourTeam.img);
-  const { user } = useAuthContext();
+ 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
-  
-
   const handleEdit = (e) => {
     const file = e.target.files[0];
-    if( file.size > 1000000) {
-      alert("Maksymalny rozmiar obrazu to 1MB")
+    if (file.size > 1000000) {
+      alert("Maksymalny rozmiar obrazu to 1MB");
       return;
     }
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result);
-    } 
+    };
     reader.readAsDataURL(file);
-  }
+    setImage(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,32 +56,62 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
-    }
-      else if (!secondTeamName) {
-        alert("puste pole")
-      }
-     else {
-      const docRef = doc(db, "Teams", yourTeam.id)
-      updateDoc(docRef,{
-        firstName: firstTeamName,
-        secondName: secondTeamName,
-        img: preview,
-        sport: sport
-      })
+    } else if (!secondTeamName) {
+      alert("puste pole");
+    } else {
+      const storage = getStorage();
+      const metadata = {
+        contentType: "image/png",
+      };
+      const player = ref(
+        storage,
+        `${user.uid}/herb/${firstTeamName}_${secondTeamName}`
+      );
+       
+      const uploadTask = uploadBytesResumable(player, image, metadata);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        async () => {
+          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            const docRef = doc(db, "Teams", yourTeam.id);
+            updateDoc(docRef, {
+              firstName: firstTeamName,
+              secondName: secondTeamName,
+              img: downloadURL,
+              sport: sport,
+              uid: user.uid,
+            });
+          });
+        }
+      );
       onClose();
       setFirstTeamName("");
       setSecondTeamName(null);
       setImage(null);
     }
-    
-    
   };
+
   const getSport = (option) => {
-      setSport(option.value)
-    }
-  const options = [
-    {label: "piłka nożna", value:"piłka nożna"}
-  ]
+    console.log(option.value);
+    setSport(option.value);
+  };
 
   return (
     <div className={open ? "active-modal mg-edit" : "modal"}>
@@ -80,7 +123,7 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
           value={firstTeamName}
           className="firstPlayerName"
         />
-        
+
         <label>Druga część nazwy drużyny</label>
         <input
           type="text"
@@ -89,7 +132,19 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
           className="Number"
         />
         <label>Dyscyplina</label>
-        <Select options={options} onChange={getSport} defaultInputValue={sport} />
+
+        <select
+          name="country"
+          className="form-control"
+          value={sport}
+          onChange={(e) => setSport(e.target.value)}
+          required
+        >
+          {options.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
+        </select>
+
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj Zdjęcie
         </button>
@@ -99,14 +154,16 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
-            handleEdit(e)
+            handleEdit(e);
           }}
         />
         <div className="add-logo-window">
           <div className="image-container">
             {preview && <img src={preview} />}
           </div>
-          <div className="bin-container">{preview && <img src={bin} onClick= {() => setPreview(null) } />}</div>
+          <div className="bin-container">
+            {preview && <img src={bin} onClick={() => setPreview(null)} />}
+          </div>
         </div>
         <div className="buttons-container">
           <button

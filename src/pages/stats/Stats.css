@@ -23,6 +23,11 @@
 .upper-container {
   justify-content: space-around;
 }
+.table-container {
+  height: 500px;
+  overflow-y: scroll;
+  
+}
 
 .favorite-users-posters {
   border-left: 1px solid rgb(185, 185, 185);

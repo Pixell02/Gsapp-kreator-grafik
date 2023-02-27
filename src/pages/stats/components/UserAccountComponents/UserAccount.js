@@ -7,6 +7,7 @@ import UserProfile from "./UserProfile";
 export default function UserAccount() {
   const params = useParams();
   const { documents: user } = useCollection("Teams", ["uid", "==", params.id]);
+  const {documents: email} = useCollection("email", ["uid", "==", params.id]);
   const { documents: players } = useCollection("Players", [
     "uid",
     "==",
@@ -31,6 +32,7 @@ export default function UserAccount() {
           players={players}
           opponents={opponents}
           yourPosters={yourCatalog}
+          email={email}
         />
       </div>
     </div>

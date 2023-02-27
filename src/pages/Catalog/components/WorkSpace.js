@@ -12,6 +12,7 @@ import {
   collection,
   query,
   where,
+  addDoc,
 } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import html2canvas from "html2canvas";
@@ -37,25 +38,7 @@ function WorkSpace() {
     "==",
     user.uid,
   ]);
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
-  useEffect(() => {
-    const canvas = document.querySelector("#canvas");
-    if (canvas) {
-      if (width > 1250) {
-        canvas.style.opacity = "1";
-      } else {
-        canvas.style.opacity = "0";
-      }
-    }
-  }, [width]);
   const exportImg = () => {
     const image = document.querySelector(".canvas-container");
     const canvasRes = document.querySelector("#canvas");
@@ -64,12 +47,6 @@ function WorkSpace() {
     html2canvas(image, { scale: 1.25, useCORS: true, allowTaint: true }).then(
       (canvas) => {
         const dataURL = canvas.toDataURL("image/jpeg", 1.0);
-
-        if (width > 1250) {
-          canvasRes.style.opacity = "1";
-        } else {
-          canvasRes.style.opacity = "0";
-        }
 
         const link = document.createElement("a");
         link.download = "image.jpg";
@@ -93,6 +70,44 @@ function WorkSpace() {
             }
           }
         });
+        let array = [];
+
+const fetchPosterInfo = (poster) => {
+  return new Promise((resolve, reject) => {
+    const posterRef = doc(db, "piecesOfPoster", poster);
+    getDoc(posterRef).then((doc) => {
+      if (doc.exists()) {
+        resolve([doc.data()]);
+      } else {
+        const posterRef = doc(db, "yourCatalog", poster);
+        getDoc(posterRef).then((doc) => {
+          if (doc.exists()) {
+            resolve([doc.data()]);
+          } else {
+            resolve([]);
+          }
+        }).catch((error) => {
+          reject(error);
+        });
+      }
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+};
+
+fetchPosterInfo(poster).then((posterInfo) => {
+  addDoc(collection(db, "generated"), {
+    name: posterInfo[0].name || null,
+    theme: posterInfo[0].theme || null,
+    date: Date.now(),
+    color: posterInfo[0].color || null,
+    posterId: posterInfo[0].uuid,
+    uid: user.uid,
+  });
+}).catch((error) => {
+  console.log(error);
+});
       }
     );
   };
@@ -118,89 +133,128 @@ function WorkSpace() {
       label: opponent.firstName + " " + opponent.secondName,
     }));
   }
-  let playerOptions;
-  let playerOptions2;
+  const [playerOptions, setPlayerOption] = useState([]);
+  const [fullPlayers, setFullPlayers] = useState([]);
+  const [playerOptions2, setPlayerOption2] = useState([]);
+  const [specialPlayerOptions, setSpecialPlayerOption] = useState([]);
+  const [specialPlayerOptions2, setSpecialPlayerOption2] = useState([]);
+  const [reserveTwoOptions, setReserveTwoOptions] = useState([]);
+  let playerOption;
+  let playerOption2;
   let reserveOptions;
   let reserveOptions2;
-  if (Players) {
-    playerOptions = Players.map((player) => ({
-      value: player.number + " " + player.secondName,
-      label: player.number + " " + player.firstName + " " + player.secondName,
-    }));
-    playerOptions2 = Players.map((player) => ({
-      value:
-        player.number +" "+player.firstName.toUpperCase() + " " + player.secondName.toUpperCase(),
-      label: player.number + " " + player.firstName + " " + player.secondName,
-    }));
-    reserveOptions = Players.map((player) => ({
-      value: player.secondName,
-      label: player.number + " " + player.firstName + " " + player.secondName,
-    }));
-    reserveOptions2 = Players.map((player) => ({
-      value:
-        player.number +
-        "." +
-        player.firstName[0].toUpperCase() +
-        " " +
-        player.secondName,
-      label: player.number + " " + player.firstName + " " + player.secondName,
-    }));
-  }
+  useEffect(() => {
+    if (Players) {
+      playerOption = Players.map((player) => ({
+        value: player.number + " " + player.secondName,
+        label: player.number + " " + player.firstName + " " + player.secondName,
+      }));
+      setFullPlayers(playerOption);
+      setPlayerOption(playerOption);
+      setSpecialPlayerOption(playerOption);
+      playerOption2 = Players.map((player) => ({
+        value:
+          player.number +
+          " " +
+          player.firstName.toUpperCase() +
+          " " +
+          player.secondName.toUpperCase(),
+        label: player.number + " " + player.firstName + " " + player.secondName,
+      }));
+      setPlayerOption2(playerOption2);
+      reserveOptions = Players.map((player) => ({
+        value: player.secondName,
+        label: player.number + " " + player.firstName + " " + player.secondName,
+      }));
+      reserveOptions2 = Players.map((player) => ({
+        value:
+          player.number +
+          "." +
+          player.firstName[0].toUpperCase() +
+          " " +
+          player.secondName,
+        label: player.number + " " + player.firstName + " " + player.secondName,
+      }));
+
+      setReserveTwoOptions(reserveOptions2);
+    }
+  }, [Players]);
   const [opponent, setOpponent] = useState();
   const [opponentName, setOpponentName] = useState();
 
   const [posters, setPosters] = useState();
-  // const { documents: Themes } = useCollection("piecesOfPoster", ["uuid","==",poster])
 
   const [themeOption, setThemeOption] = useState([]);
   const [selectThemes, setSelectThemes] = useState();
   const [selectPlayerTheme, setSelectPlayerThemes] = useState([]);
-  // themeOption = Themes.map(item => ({value: item.src, label: item.color}));
+  const [posterInfo, setPosterInfo] = useState({});
+
+  // useEffect(() => {
+  //   if (poster) {
+  //     const posterRef = doc(db, "piecesOfPoster", poster);
+  //     getDoc(posterRef).then((doc) => {
+  //       setPosterInfo(doc.data(), doc.id);
+  //     });
+  //   }
+  // }, [poster]);
+
+  // useEffect(() => {
+  //   const fetchPosterInfo = async () => {
+  //     if (!posterInfo) {
+  //       const posterRef = doc(db, "yourCatalog", poster);
+  //       await getDoc(posterRef).then((doc) => {
+  //         setPosterInfo(doc.data(), doc.id);
+  //       });
+  //     }
+  //   };
+  //   fetchPosterInfo();
+  // }, [posterInfo]);
 
   useEffect(() => {
     const colRef = collection(db, "piecesOfPoster");
     const q = query(colRef, where("uuid", "==", poster));
 
     onSnapshot(q, (snapshot) => {
-      let posters = [];
+      let postersarray = [];
       snapshot.docs.forEach((doc) => {
-        posters.push({ ...doc.data(), id: doc.id });
+        postersarray.push({ ...doc.data(), id: doc.id });
       });
       setThemeOption(
-        posters.map((item) => ({ value: item.src, label: item.color }))
+        postersarray.map((item) => ({ value: item.src, label: item.color }))
       );
     });
-    if(poster === "4123XABIebkl34m496f4") {
+    if (poster === "4123XABIebkl34m496f4") {
       const docRef = collection(db, "yourCatalog");
       const q2 = query(docRef, where("uuid", "==", poster));
 
       onSnapshot(q2, (snapshot) => {
-        let posters = [];
+        let postersarray = [];
         snapshot.docs.forEach((doc) => {
-          posters.push({ ...doc.data(), id: doc.id});
+          postersarray.push({ ...doc.data(), id: doc.id });
         });
-        if(posters.length > 1){
-        setSelectPlayerThemes(posters.map((item, i) => ({ value: item.src, label: item.color })))
-      }})
+        if (postersarray.length > 1) {
+          setSelectPlayerThemes(
+            postersarray.map((item, i) => ({
+              value: item.src,
+              label: item.color,
+            }))
+          );
+        }
+      });
     }
-   
   }, []);
-   
-  
- 
+
   useEffect(() => {
     setSelectThemes(themeOption[0]);
   }, [themeOption]);
-  
-useEffect(() => {
-  if(themeOption.length === 0 && selectPlayerTheme.length > 1){
-    setSelectThemes(selectPlayerTheme[0])
-    
-  }
-  },[selectPlayerTheme])
-  
-  // Getting background
 
+  useEffect(() => {
+    if (themeOption.length === 0 && selectPlayerTheme.length > 1) {
+      setSelectThemes(selectPlayerTheme[0]);
+    }
+  }, [selectPlayerTheme]);
+
+  // Getting background
   useEffect(() => {
     const addBackground = () => {
       const docRef = doc(db, "piecesOfPoster", poster);
@@ -208,7 +262,7 @@ useEffect(() => {
         setPosters(doc.data());
       });
     };
-    
+
     const addYourBackground = () => {
       const docRef = doc(db, "yourCatalog", poster);
       getDoc(docRef).then((doc) => {
@@ -222,7 +276,7 @@ useEffect(() => {
     }
   }, [themeOption]);
 
-  const [dataURL, setDataURL] = useState(null);
+  const [dataURL, setDataURL] = useState();
 
   useEffect(() => {
     if (selectThemes) {
@@ -255,33 +309,19 @@ useEffect(() => {
             setDataURL(null);
           });
       }
-      // if(selectPlayerTheme) {
-      //   fetch(`${selectPlayerTheme.src}`)
-      //   .then((res) => res.blob())
-      //   .then((blob) => {
-      //     const reader = new FileReader();
-      //     reader.readAsDataURL(blob);
-      //     reader.onloadend = () => {
-      //       setDataURL(reader.result);
-      //     };
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //     setDataURL(null);
-      //   });
-      // }
     }
   }, [selectThemes, posters]);
 
-  const playerSelectTheme = (option) => {
-    setSelectThemes(option)
-  };
+  const [selectedOption, setSelectedOption] = useState(null);
 
+  const playerSelectTheme = (option) => {
+    setSelectThemes(option);
+  };
 
   const [coords, setCoords] = useState();
   useEffect(() => {
     posterCoords.map((postersCoords) => {
-      if (postersCoords.id == poster) {
+      if (postersCoords.id === poster) {
         setCoords(postersCoords);
       }
     });
@@ -289,8 +329,33 @@ useEffect(() => {
 
   const [yourLogo, setYourLogo] = useState();
 
+  useEffect(() => {
+    if (Logo) {
+      if (Logo.length > 0) {
+        fetch(`${Logo[0].img}`)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+              setYourLogo(reader.result);
+            };
+          });
+      }
+    }
+  }, [Logo, yourLogo]);
+
   const setOpponentLogo = (option) => {
-    setOpponent(option.value);
+    fetch(`${option.value}`)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          setOpponent(reader.result);
+        };
+      });
+
     setOpponentName(option.label);
   };
 
@@ -306,11 +371,14 @@ useEffect(() => {
   const place = (e) => {
     setTypePlace(e.target.value);
   };
+
   const [typeKolejka, setTypeKolejka] = useState("");
+
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   const kolejka = (e) => {
-    
     setTypeKolejka(e.target.value);
-  } 
+  };
 
   // GOOOL
 
@@ -327,59 +395,134 @@ useEffect(() => {
 
   const playerOne = (option) => {
     setPlayerNameOne(option.value);
+    let filtered = fullPlayers.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameTwo, setPlayerNameTwo] = useState();
 
   const playerTwo = (option) => {
     setPlayerNameTwo(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameThree, setPlayerNameThree] = useState();
 
   const playerThree = (option) => {
     setPlayerNameThree(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameFour, setPlayerNameFour] = useState();
 
   const playerFour = (option) => {
     setPlayerNameFour(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameFive, setPlayerNameFive] = useState();
 
   const playerFive = (option) => {
     setPlayerNameFive(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameSix, setPlayerNameSix] = useState();
 
   const playerSix = (option) => {
     setPlayerNameSix(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameSeven, setPlayerNameSeven] = useState();
 
   const playerSeven = (option) => {
     setPlayerNameSeven(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameEight, setPlayerNameEight] = useState();
 
   const playerEight = (option) => {
     setPlayerNameEight(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameNine, setPlayerNameNine] = useState();
 
   const playerNine = (option) => {
     setPlayerNameNine(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameTen, setPlayerNameTen] = useState();
 
   const playerTen = (option) => {
     setPlayerNameTen(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
   const [playerNameEleven, setPlayerNameEleven] = useState();
 
   const playerEleven = (option) => {
     setPlayerNameEleven(option.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== option.value
+    );
+    setPlayerOption(filtered);
   };
 
   // Result
+
+  const [yourPlayerOneGoal, setYourPlayerOneGoal] = useState();
+
+  const getYourPlayerOneGoal = (option) => {
+    setYourPlayerOneGoal(option.value);
+  };
+  const [yourPlayerTwoGoal, setYourPlayerTwoGoal] = useState();
+
+  const getYourPlayerTwoGoal = (option) => {
+    setYourPlayerTwoGoal(option.value);
+  };
+  const [yourPlayerThreeGoal, setYourPlayerThreeGoal] = useState();
+
+  const getYourPlayerThreeGoal = (option) => {
+    setYourPlayerThreeGoal(option.value);
+  };
+  const [yourPlayerFourGoal, setYourPlayerFourGoal] = useState();
+
+  const getYourPlayerFourGoal = (option) => {
+    setYourPlayerFourGoal(option.value);
+  };
+  const [yourPlayerFiveGoal, setYourPlayerFiveGoal] = useState();
+
+  const getYourPlayerFiveGoal = (option) => {
+    setYourPlayerFiveGoal(option.value);
+  };
+  const [yourPlayerSixGoal, setYourPlayerSixGoal] = useState();
+
+  const getYourPlayerSixGoal = (option) => {
+    setYourPlayerSixGoal(option.value);
+  };
 
   const [yourTeamResult, setYourTeamResult] = useState();
 
@@ -403,24 +546,52 @@ useEffect(() => {
 
   const getReserveOne = (options) => {
     setReserveOne(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
   const getReserveTwo = (options) => {
     setReserveTwo(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
   const getReserveThree = (options) => {
     setReserveThree(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
   const getReserveFour = (options) => {
     setReserveFour(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
   const getReserveFive = (options) => {
     setReserveFive(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
   const getReserveSix = (options) => {
     setReserveSix(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
   const getReserveSeven = (options) => {
     setReserveSeven(options.value);
+    let filtered = playerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setPlayerOption(filtered);
   };
 
   const [goalKeeper, setGoalKeeper] = useState();
@@ -428,110 +599,49 @@ useEffect(() => {
 
   const getGoalKeeper = (options) => {
     setGoalKeeper(options.value);
+    let filtered = specialPlayerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setSpecialPlayerOption(filtered);
   };
   const getCapitan = (options) => {
     setCapitan(options.value);
+    let filtered = specialPlayerOptions.filter(
+      (player) => player.value !== options.value
+    );
+    setSpecialPlayerOption(filtered);
   };
 
   // Monthly
 
-  const [dateOne, setDateOne] = useState();
-  const [hourOne, setHourOne] = useState();
-  const [opponentOne, setOpponentOne] = useState();
-  const [yourResultOne, setYourResultOne] = useState();
-  const [opponentResultOne, setOpponentResultOne] = useState();
+  
 
-  const getDateOne = (e) => {
-    setDateOne(e.target.value);
-  };
-  const getHourOne = (e) => {
-    setHourOne(e.target.value);
-  };
-  const getOpponentOne = (options) => {
-    setOpponentOne(options.label);
-  };
-  const getYourResultOne = (e) => {
-    setYourResultOne(e.target.value);
-  };
-  const getOpponentResultOne = (e) => {
-    setOpponentResultOne(e.target.value);
-  };
+  const [opponentGoalOneName, setOpponentGoalOneName] = useState();
+  const [opponentGoalTwoName, setOpponentGoalTwoName] = useState();
+  const [opponentGoalThreeName, setOpponentGoalThreeName] = useState();
+  const [opponentGoalFourName, setOpponentGoalFourName] = useState();
+  const [opponentGoalFiveName, setOpponentGoalFiveName] = useState();
+  const [opponentGoalSixName, setOpponentGoalSixName] = useState();
 
-  const [dateTwo, setDateTwo] = useState();
-  const [hourTwo, setHourTwo] = useState();
-  const [opponentTwo, setOpponentTwo] = useState();
-  const [yourResultTwo, setYourResultTwo] = useState();
-  const [opponentResultTwo, setOpponentResultTwo] = useState();
-
-  const getDateTwo = (e) => {
-    setDateTwo(e.target.value);
+  const getOpponentGoalOne = (e) => {
+    setOpponentGoalOneName(e.target.value);
   };
-  const getHourTwo = (e) => {
-    setHourTwo(e.target.value);
+  const getOpponentGoalTwo = (e) => {
+    setOpponentGoalTwoName(e.target.value);
   };
-  const getOpponentTwo = (options) => {
-    setOpponentTwo(options.label);
+  const getOpponentGoalThree = (e) => {
+    setOpponentGoalThreeName(e.target.value);
   };
-  const getYourResultTwo = (e) => {
-    setYourResultTwo(e.target.value);
+  const getOpponentGoalFour = (e) => {
+    setOpponentGoalFourName(e.target.value);
   };
-  const getOpponentResultTwo = (e) => {
-    setOpponentResultTwo(e.target.value);
+  const getOpponentGoalFive = (e) => {
+    setOpponentGoalFiveName(e.target.value);
+  };
+  const getOpponentGoalSix = (e) => {
+    setOpponentGoalSixName(e.target.value);
   };
 
-  const [dateThree, setDateThree] = useState();
-  const [hourThree, setHourThree] = useState();
-  const [opponentThree, setOpponentThree] = useState();
-  const [yourResultThree, setYourResultThree] = useState();
-  const [opponentResultThree, setOpponentResultThree] = useState();
-
-  const getDateThree = (e) => {
-    setDateThree(e.target.value);
-  };
-  const getHourThree = (e) => {
-    setHourThree(e.target.value);
-  };
-  const getOpponentThree = (options) => {
-    setOpponentThree(options.label);
-  };
-  const getYourResultThree = (e) => {
-    setYourResultThree(e.target.value);
-  };
-  const getOpponentResultThree = (e) => {
-    setOpponentResultThree(e.target.value);
-  };
-  const [dateFour, setDateFour] = useState();
-  const [hourFour, setHourFour] = useState();
-  const [opponentFour, setOpponentFour] = useState();
-  const [yourResultFour, setYourResultFour] = useState();
-  const [opponentResultFour, setOpponentResultFour] = useState();
-
-  const getDateFour = (e) => {
-    setDateFour(e.target.value);
-  };
-  const getHourFour = (e) => {
-    setHourFour(e.target.value);
-  };
-  const getOpponentFour = (options) => {
-    setOpponentFour(options.label);
-  };
-  const getYourResultFour = (e) => {
-    setYourResultFour(e.target.value);
-  };
-  const getOpponentResultFour = (e) => {
-    setOpponentResultFour(e.target.value);
-  };
-
-  const [radioOne, setRadioOne] = useState("gospodarz");
-  const [radioTwo, setRadioTwo] = useState("gospodarz");
-  const [radioThree, setRadioThree] = useState("gospodarz");
-  const [radioFour, setRadioFour] = useState("gospodarz");
-
-  const [month, setMonth] = useState();
-
-  const getMonth = (options) => {
-    setMonth(options.label);
-  };
   const [league, setLeague] = useState();
 
   const getLeague = (e) => {
@@ -542,7 +652,7 @@ useEffect(() => {
 
   return (
     <>
-      {Licenses && Licenses[0].license == "no-license" && (
+      {Licenses && Licenses[0].license === "no-license" && (
         <div className="license-content">
           <p>
             Brak licencji <Link to="/offer">Kup dostęp</Link>
@@ -552,58 +662,28 @@ useEffect(() => {
       {Licenses && Licenses[0].license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            {poster && poster === "63b5fb36a490e8f93beeae34" && Logo && (
-              <MatchPoster
-                id={posters}
-                posterBackGround={posters}
-                opponent={opponent}
-                yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-              />
-            )}
-            {posters && posters.type === "GOOOOL" && Logo && (
+            {posters && posters.type === "GOOOOL" && yourLogo && (
               <GoalPoster
                 posterBackGround={dataURL}
                 coords={coords}
                 yourPlayer={yourPlayer}
+                yourTeamImage={yourLogo}
                 themeOption={selectThemes}
                 yourTeamResult={yourTeamResult}
                 yourOpponentResult={yourOpponentResult}
-                id={posters}
-              />
-            )}
-            {posters && posters.type === "MATCH-DAY" && Logo && (
-              <MatchPoster
-                id={posters}
-                posterBackGround={posters}
-                opponent={opponent}
                 yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
+                opponent={opponent}
+                radioChecked={radioChecked}
+                id={posters}
               />
             )}
 
-            {posters && posters.type === "TOMMOROW-MATCH" && Logo && (
-              <MatchPoster
-                posterBackGround={posters}
-                opponent={opponent}
-                yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-              />
-            )}
-            {posters && posters.type === "MATCH-POSTER" && Logo && (
+            {posters && posters.type === "MATCH-POSTER" && yourLogo && (
               <MatchPoster
                 id={posters}
                 posterBackGround={dataURL}
                 opponent={opponent}
+                yourTeamImage={yourLogo}
                 yourLogo={Logo}
                 coords={coords}
                 date={typeDate}
@@ -613,17 +693,21 @@ useEffect(() => {
                 themeOption={selectThemes}
                 league={league}
                 kolejka={typeKolejka}
+                yourTeamResult={yourTeamResult}
+                yourOpponentResult={yourOpponentResult}
               />
             )}
 
-            {posters && posters.type === "STARTING-SQUAD" && Logo && (
+            {posters && posters.type === "STARTING-SQUAD" && yourLogo && (
               <StartingSquad
                 posterBackGround={dataURL}
                 opponent={opponent}
                 yourLogo={Logo}
+                yourTeamImage={yourLogo}
                 coords={coords}
                 date={typeDate}
                 place={typePlace}
+                kolejka={typeKolejka}
                 opponentName={opponentName}
                 playerOne={playerNameOne}
                 playerTwo={playerNameTwo}
@@ -647,123 +731,38 @@ useEffect(() => {
                 themeOption={selectThemes}
                 goalKeeper={goalKeeper}
                 capitan={capitan}
+                league={league}
                 id={posters}
               />
             )}
-            {posters && posters.type === "RESULT" && Logo && (
+            {posters && posters.type === "RESULT" && yourLogo && (
               <MatchPoster
                 posterBackGround={dataURL}
                 opponent={opponent}
                 yourLogo={Logo}
+                yourTeamImage={yourLogo}
                 id={posters}
                 coords={coords}
                 date={typeDate}
                 place={typePlace}
                 opponentName={opponentName}
-                yourTeamResult={yourTeamResult}
-                yourOpponentResult={yourOpponentResult}
                 radioChecked={radioChecked}
                 themeOption={selectThemes}
                 league={league}
-              />
-            )}
-            {posters && posters.type === "TIMETABLE" && Logo && (
-              <TimeTable
-                posterBackGround={posters}
-                opponent={opponent}
-                yourTeamName={Logo}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-                dateOne={dateOne}
-                dateTwo={dateTwo}
-                dateThree={dateThree}
-                dateFour={dateFour}
-                hourOne={hourOne}
-                hourTwo={hourTwo}
-                hourThree={hourThree}
-                hourFour={hourFour}
-                opponentOne={opponentOne}
-                opponentTwo={opponentTwo}
-                opponentThree={opponentThree}
-                opponentFour={opponentFour}
-              />
-            )}
-            {posters && posters.type === "TICKET" && Logo && (
-              <MatchPoster
-                posterBackGround={posters}
-                opponent={opponent}
-                yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-              />
-            )}
-            {posters && posters.type === "MONTHLY-SUMMARY" && Logo && (
-              <MonthlySummary
-                posterBackGround={posters}
-                coords={coords}
-                dateOne={dateOne}
-                dateTwo={dateTwo}
-                dateThree={dateThree}
-                dateFour={dateFour}
-                hourOne={hourOne}
-                hourTwo={hourTwo}
-                hourThree={hourThree}
-                hourFour={hourFour}
-                opponentOne={opponentOne}
-                opponentTwo={opponentTwo}
-                opponentThree={opponentThree}
-                opponentFour={opponentFour}
-                yourResultOne={yourResultOne}
-                yourResultTwo={yourResultTwo}
-                yourResultThree={yourResultThree}
-                yourResultFour={yourResultFour}
-                opponentResultOne={opponentResultOne}
-                opponentResultTwo={opponentResultTwo}
-                opponentResultThree={opponentResultThree}
-                opponentResultFour={opponentResultFour}
-                yourTeamName={Logo}
-                month={month}
-                league={league}
-                radioOne={radioOne}
-                radioTwo={radioTwo}
-                radioThree={radioThree}
-                radioFour={radioFour}
-              />
-            )}
-            {posters && posters.type === "TRAINERS" && Logo && (
-              <MatchPoster
-                posterBackGround={posters}
-                opponent={opponent}
-                yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-              />
-            )}
-            {posters && posters.type === "EVENT-ANNOUNCEMENT" && Logo && (
-              <EventAnnouncement
-                posterBackGround={posters}
-                opponent={opponent}
-                yourLogo={Logo}
-                league={league}
-                place={typePlace}
-                date={typeDate}
-                opponentName={opponentName}
-              />
-            )}
-            {posters && posters.type === "COMPETITOR-PRESENTATION" && Logo && (
-              <MatchPoster
-                posterBackGround={posters}
-                opponent={opponent}
-                yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
+                yourPlayerOneGoal={yourPlayerOneGoal}
+                yourPlayerTwoGoal={yourPlayerTwoGoal}
+                yourPlayerThreeGoal={yourPlayerThreeGoal}
+                yourPlayerFourGoal={yourPlayerFourGoal}
+                yourPlayerFiveGoal={yourPlayerFiveGoal}
+                yourPlayerSixGoal={yourPlayerSixGoal}
+                yourTeamResult={yourTeamResult}
+                yourOpponentResult={yourOpponentResult}
+                opponentGoalOneName={opponentGoalOneName}
+                opponentGoalTwoName={opponentGoalTwoName}
+                opponentGoalThreeName={opponentGoalThreeName}
+                opponentGoalFourName={opponentGoalFourName}
+                opponentGoalFiveName={opponentGoalFiveName}
+                opponentGoalSixName={opponentGoalSixName}
               />
             )}
           </div>
@@ -772,29 +771,11 @@ useEffect(() => {
               <span className="workspace-title-container">Kreator</span>
             </div>
             <div className="ms-5 me-5 mt-3">
-              {posters && posters.type === "MATCH-DAY" && (
-                <>
-                  <label>Data</label>
-                  <input
-                    type="text"
-                    onChange={date}
-                    value={typeDate}
-                    className="date-type"
-                  />
-                  <label>Przeciwnicy</label>
-                  {Opponent && (
-                    <Select options={options} onChange={setOpponentLogo} />
-                  )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
-                </>
-              )}
+              {/* Właściwy workspace */}
 
-              {posters && posters.type === "MATCH-POSTER" && (
+              {/* gospodarz / przeciwnik */}
+
+              {coords.opponentImageTop && (
                 <>
                   <div className="option-container">
                     <div className="input-container">
@@ -819,122 +800,13 @@ useEffect(() => {
                         <span className="guest">Gość</span>
                       </label>
                     </div>
-                    <br />
-                    {selectPlayerTheme && selectPlayerTheme.length > 1 && (
-                      <>
-                        <label
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            width: "100%",
-                          }}
-                        >
-                          Motywy
-                        </label>
-
-                        <Select
-                          value={selectThemes}
-                          options={selectPlayerTheme}
-                          onChange={setThemeBackground}
-                          className="select-option"
-                        />
-                      </>
-                    )}
-                    {themeOption && themeOption.length > 1 && (
-                      <>
-                        <label
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            width: "100%",
-                          }}
-                        >
-                          Motywy
-                        </label>
-
-                        <Select
-                          value={selectThemes}
-                          options={themeOption}
-                          onChange={setThemeBackground}
-                          className="select-option"
-                        />
-                      </>
-                    )}
                   </div>
-                  {poster === "8hTNRCBbwqv8UXB12fjZ" && (
-                    <>
-                      <label>Kolejka</label>
-                      <input type="text" value={league} onChange={getLeague} />
-                    </>
-                  )}
-                  {poster === "wsAn3pPtaand0xDdNZ5S" && (
-                    <>
-                      <label>Klasa</label>
-                      <input type="text" value={league} onChange={getLeague} />
-                      
-                    </>
-                  )}
-                  {poster === "wsAn3pPtaand0xDdNZ5S" && (
-                    <>
-                      <label>Kolejka</label>
-                      <input type="text" value={typeKolejka} onChange={kolejka} />
-                      
-                    </>
-                  )}
-                  {poster === "K1iRaLYzkSdrg3vBRyDL" && (
-                    <label>Kolejka</label>
-                  )}
-                  {poster !== "K1iRaLYzkSdrg3vBRyDL" && (
-                    <label>Miejsce</label>
-                  )}
-                  
-                  <input type="text" value={typePlace} onChange={place} />
-                  {poster !== "EvaTvUZBFtGIBG5NqlLJ" && (
-                    <label>Data i godzina</label>
-                  )}
-                  {poster === "EvaTvUZBFtGIBG5NqlLJ" && <label>Kolejka</label>}
-                  <input
-                    type="text"
-                    onChange={date}
-                    value={typeDate}
-                    className="date-type"
-                  />
-
-                  <label>Przeciwnicy</label>
-                  {Opponent && (
-                    <Select options={options} onChange={setOpponentLogo} />
-                  )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
                 </>
               )}
-              {posters && posters.type === "TOMMOROW-MATCH" && (
-                <>
-                  <label>Data i miejsce</label>
-                  <input
-                    type="text"
-                    onChange={date}
-                    value={typeDate}
-                    className="date-type"
-                  />
 
-                  <label>Przeciwnicy</label>
-                  {Opponent && (
-                    <Select options={options} onChange={setOpponentLogo} />
-                  )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
-                </>
-              )}
-              {posters && posters.type == "GOOOOL" && (
+              {/* Motyw z zawodnikami */}
+
+              {selectPlayerTheme && selectPlayerTheme.length > 1 && (
                 <>
                   <label
                     style={{
@@ -945,162 +817,86 @@ useEffect(() => {
                   >
                     Motywy
                   </label>
-                  {themeOption && (
-                    <Select
-                      value={selectThemes}
-                      options={themeOption}
-                      onChange={setThemeBackground}
-                      className="select-option"
-                    />
-                  )}
-                  {Players && (
-                    <>
-                      <label>Zawodnik</label>
-                      <Select
-                        options={playerOptions}
-                        onChange={getYourPlayer}
-                      />
-                    </>
-                  )}
-                  {posters.theme === "motyw 3" && (
-                    <>
-                      <input
-                        type="number"
-                        onChange={yourResult}
-                        value={yourTeamResult}
-                        style={{ width: "50px", textAlign: "center" }}
-                        min="0"
-                        max="99"
-                      />
-                      -
-                      <input
-                        type="number"
-                        onChange={opponentResult}
-                        value={yourOpponentResult}
-                        style={{ width: "50px", textAlign: "center" }}
-                        min="0"
-                        max="99"
-                      />
-                      <br />
-                    </>
-                  )}
-                  {posters.theme === "motyw 4" && (
-                    <>
-                      <input
-                        type="number"
-                        onChange={yourResult}
-                        value={yourTeamResult}
-                        style={{ width: "50px", textAlign: "center" }}
-                        min="0"
-                        max="99"
-                      />
-                      -
-                      <input
-                        type="number"
-                        onChange={opponentResult}
-                        value={yourOpponentResult}
-                        style={{ width: "50px", textAlign: "center" }}
-                        min="0"
-                        max="99"
-                      />
-                      <br />
-                    </>
-                  )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
+
+                  <Select
+                    value={selectThemes}
+                    options={selectPlayerTheme}
+                    onChange={setThemeBackground}
+                    className="select-option"
+                  />
                 </>
               )}
-              {posters && posters.type === "RESULT" && (
-                <>
-                  <div className="option-container">
-                    <div className="input-container">
-                      <label className="label-container">
-                        <input
-                          type="radio"
-                          value="radio1"
-                          onChange={(e) => setRadioChecked(e.target.value)}
-                          checked={radioChecked === "radio1"}
-                        />
-                        <span>Gospodarz</span>
-                      </label>
-                    </div>
-                    <div className="input-container">
-                      <label>
-                        <input
-                          type="radio"
-                          value="radio2"
-                          onChange={(e) => setRadioChecked(e.target.value)}
-                          checked={radioChecked === "radio2"}
-                        />
-                        <span className="guest">Gość</span>
-                      </label>
-                    </div>
-                    <br />
-                    {themeOption && themeOption.length > 1 && (
-                      <>
-                        <label
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            width: "100%",
-                          }}
-                        >
-                          Motywy
-                        </label>
 
-                        <Select
-                          value={selectThemes}
-                          options={themeOption}
-                          onChange={setThemeBackground}
-                          className="select-option"
-                        />
-                      </>
-                    )}
-                  </div>
-                  {poster === "mvzttPwmXvDWCz4vJefn" && (
-                    <>
-                      <label>Data i miejsce</label>
-                      <input
-                        type="text"
-                        onChange={date}
-                        value={typeDate}
-                        className="date-type"
-                      />
-                      <label>Kolejka</label>
-                      <input
-                        type="text"
-                        onChange={place}
-                        value={typePlace}
-                        className="date-type"
-                      />
-                      <label>Klasa</label>
-                      <input
-                        type="text"
-                        onChange={getLeague}
-                        value={league}
-                        className="date-type"
-                      />
-                    </>
-                  )}
-                  {posters.type2 === "RESULT2" && (
-                    <>
-                      <label>Data i miejsce</label>
-                      <input
-                        type="text"
-                        onChange={date}
-                        value={typeDate}
-                        className="date-type"
-                      />
-                    </>
-                  )}
+              {/* Motywy kolorystczne */}
+
+              {themeOption && themeOption.length > 0 && (
+                <>
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      width: "100%",
+                    }}
+                  >
+                    Motywy
+                  </label>
+
+                  <Select
+                    value={selectThemes}
+                    options={themeOption}
+                    onChange={setThemeBackground}
+                    className="select-option"
+                  />
+                </>
+              )}
+
+              {/* Kolejka */}
+
+              {coords.yourKolejkaTop && (
+                <>
+                  <label>Kolejka</label>
+                  <input type="text" value={typeKolejka} onChange={kolejka} />
+                </>
+              )}
+
+              {/* Klasa / Liga */}
+              {coords.yourLeagueTop && (
+                <>
+                  <label>Klasa</label>
+                  <input type="text" value={league} onChange={getLeague} />
+                </>
+              )}
+              {/* Miejsce */}
+              {coords.typePlaceTop && (
+                <>
+                  <label>Miejsce</label>
+                  <input type="text" value={typePlace} onChange={place} />
+                </>
+              )}
+              {/* Data */}
+              {coords.typeDataTop && (
+                <>
+                  <label>Data i godzina</label>
+                  <input
+                    type="text"
+                    onChange={date}
+                    value={typeDate}
+                    className="date-type"
+                  />
+                </>
+              )}
+              {/* Przeciwnicy */}
+              {coords.opponentImageTop && (
+                <>
                   <label>Przeciwnicy</label>
                   {Opponent && (
                     <Select options={options} onChange={setOpponentLogo} />
                   )}
+                </>
+              )}
+              {/* Wynik*/}
+              {coords.yourTeamResultTop && (
+                <>
                   <input
                     type="number"
                     onChange={yourResult}
@@ -1119,152 +915,196 @@ useEffect(() => {
                     max="99"
                   />
                   <br />
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
                 </>
               )}
+
+              {/* GOL zawodnika */}
+              {coords.playerTop && (
+                <>
+                  <label>Zawodnik</label>
+                  <Select options={playerOptions} onChange={getYourPlayer} />
+                </>
+              )}
+
+              {/* GOLE zawodników */}
+
+              {coords && coords.yourPlayerOneGoalTop && (
+                <>
+                  <p className="mt-2">Gole zawodników</p>
+                  <label>Twój GOL 1</label>
+                  <Select
+                    options={playerOptions}
+                    onChange={getYourPlayerOneGoal}
+                  />
+                </>
+              )}
+              {coords && coords.yourPlayerTwoGoalTop && (
+                <>
+                  <label>Twój GOL 2</label>
+                  <Select
+                    options={playerOptions}
+                    onChange={getYourPlayerTwoGoal}
+                  />
+                </>
+              )}
+              {coords && coords.yourPlayerThreeGoalTop && (
+                <>
+                  <label>Twój GOL 3</label>
+                  <Select
+                    options={playerOptions}
+                    onChange={getYourPlayerThreeGoal}
+                  />
+                </>
+              )}
+              {coords && coords.yourPlayerFourGoalTop && (
+                <>
+                  <label>Twój GOL 4</label>
+                  <Select
+                    options={playerOptions}
+                    onChange={getYourPlayerFourGoal}
+                  />
+                </>
+              )}
+              {coords && coords.yourPlayerFiveGoalTop && (
+                <>
+                  <label>Twój GOL 5</label>
+                  <Select
+                    options={playerOptions}
+                    onChange={getYourPlayerFiveGoal}
+                  />
+                </>
+              )}
+              {coords && coords.yourPlayerSixGoalTop && (
+                <>
+                  <label>Twój GOL 6</label>
+                  <Select
+                    options={playerOptions}
+                    onChange={getYourPlayerSixGoal}
+                  />
+                </>
+              )}
+              {/* Gole przeciwników */}
+
+              {coords && coords.opponentPlayerOneGoalTop && (
+                <>
+                  <p className="mt-2">Gole przeciwników</p>
+                  <label> GOL przeciwnika 1</label>
+                  <input
+                    type="text"
+                    value={opponentGoalOneName}
+                    onChange={getOpponentGoalOne}
+                  />
+                </>
+              )}
+              {coords && coords.opponentPlayerTwoGoalTop && (
+                <>
+                  <label> GOL przeciwnika 2</label>
+                  <input
+                    type="text"
+                    value={opponentGoalTwoName}
+                    onChange={getOpponentGoalTwo}
+                  />
+                </>
+              )}
+              {coords && coords.opponentPlayerThreeGoalTop && (
+                <>
+                  <label> GOL przeciwnika 3</label>
+                  <input
+                    type="text"
+                    value={opponentGoalThreeName}
+                    onChange={getOpponentGoalThree}
+                  />
+                </>
+              )}
+              {coords && coords.opponentPlayerFourGoalTop && (
+                <>
+                  <label> GOL przeciwnika 4</label>
+                  <input
+                    type="text"
+                    value={opponentGoalFourName}
+                    onChange={getOpponentGoalFour}
+                  />
+                </>
+              )}
+              {coords && coords.opponentPlayerFiveGoalTop && (
+                <>
+                  <label> GOL przeciwnika 5</label>
+                  <input
+                    type="text"
+                    value={opponentGoalFiveName}
+                    onChange={getOpponentGoalFive}
+                  />
+                </>
+              )}
+              {coords && coords.opponentPlayerSixGoalTop && (
+                <>
+                  <label> GOL przeciwnika 6</label>
+                  <input
+                    type="text"
+                    value={opponentGoalSixName}
+                    onChange={getOpponentGoalSix}
+                  />
+                </>
+              )}
+
+              {/*  */}
+              {coords.playerOneTop && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
+                <>
+                  <p style={{ marginTop: "20px" }}>Zawodnicy</p>
+                  <label>Zawodnik 1</label>
+                  <Select options={playerOptions} onChange={playerOne} />
+                  <label>Zawodnik 2</label>
+                  <Select options={playerOptions} onChange={playerTwo} />
+                  <label>Zawodnik 3</label>
+                  <Select options={playerOptions} onChange={playerThree} />
+                  <label>Zawodnik 4</label>
+                  <Select options={playerOptions} onChange={playerFour} />
+                  <label>Zawodnik 5</label>
+                  <Select options={playerOptions} onChange={playerFive} />
+                  <label>Zawodnik 6</label>
+                  <Select options={playerOptions} onChange={playerSix} />
+                  <label>Zawodnik 7</label>
+                  <Select options={playerOptions} onChange={playerSeven} />
+                  <label>Zawodnik 8</label>
+                  <Select options={playerOptions} onChange={playerEight} />
+                  <label>Zawodnik 9</label>
+                  <Select options={playerOptions} onChange={playerNine} />
+                  <label>Zawodnik 10</label>
+                  <Select options={playerOptions} onChange={playerTen} />
+                  <label>Zawodnik 11</label>
+                  <Select options={playerOptions} onChange={playerEleven} />
+                </>
+              )}
+              {coords.playerOneTop && poster === "IxOg6DyMuo9gTvv8BJK9" && (
+                <>
+                  <p style={{ marginTop: "20px" }}>Zawodnicy</p>
+                  <label>Zawodnik 1</label>
+                  <Select options={playerOptions2} onChange={playerOne} />
+                  <label>Zawodnik 2</label>
+                  <Select options={playerOptions2} onChange={playerTwo} />
+                  <label>Zawodnik 3</label>
+                  <Select options={playerOptions2} onChange={playerThree} />
+                  <label>Zawodnik 4</label>
+                  <Select options={playerOptions2} onChange={playerFour} />
+                  <label>Zawodnik 5</label>
+                  <Select options={playerOptions2} onChange={playerFive} />
+                  <label>Zawodnik 6</label>
+                  <Select options={playerOptions2} onChange={playerSix} />
+                  <label>Zawodnik 7</label>
+                  <Select options={playerOptions2} onChange={playerSeven} />
+                  <label>Zawodnik 8</label>
+                  <Select options={playerOptions2} onChange={playerEight} />
+                  <label>Zawodnik 9</label>
+                  <Select options={playerOptions2} onChange={playerNine} />
+                  <label>Zawodnik 10</label>
+                  <Select options={playerOptions2} onChange={playerTen} />
+                  <label>Zawodnik 11</label>
+                  <Select options={playerOptions2} onChange={playerEleven} />
+                </>
+              )}
+
               {posters && posters.type === "STARTING-SQUAD" && (
                 <>
-                  {poster !== "6JftCRHQYUItjEz55Rn1" && (
-                    <>
-                      <div className="option-container">
-                        <div className="input-container">
-                          <label className="label-container">
-                            <input
-                              type="radio"
-                              value="radio1"
-                              onChange={(e) => setRadioChecked(e.target.value)}
-                              checked={radioChecked === "radio1"}
-                            />
-                            <span>Gospodarz</span>
-                          </label>
-                        </div>
-                        <div className="input-container">
-                          <label>
-                            <input
-                              type="radio"
-                              value="radio2"
-                              onChange={(e) => setRadioChecked(e.target.value)}
-                              checked={radioChecked === "radio2"}
-                            />
-                            <span className="guest">Gość</span>
-                          </label>
-                        </div>
-                      </div>
-                      <br />
-                    </>
-                  )}
-                  {themeOption && themeOption.length > 1 && (
-                    <>
-                      <label
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          width: "100%",
-                        }}
-                      >
-                        Motywy
-                      </label>
-
-                      <Select
-                        value={selectThemes}
-                        options={themeOption}
-                        onChange={setThemeBackground}
-                        className="select-option"
-                      />
-                    </>
-                  )}
-                  {poster !== "6JftCRHQYUItjEz55Rn1" && (
-                    <>
-                      {poster !== "IxOg6DyMuo9gTvv8BJK9" && (
-                        <label>Data i miejsce</label>
-                      )}
-                      {poster === "IxOg6DyMuo9gTvv8BJK9" && (
-                        <label>Kolejka</label>
-                      )}
-                      <input
-                        type="text"
-                        onChange={date}
-                        value={typeDate}
-                        className="date-type"
-                      />
-                      {poster === "IxOg6DyMuo9gTvv8BJK9" && (
-                        <>
-                          <label>Klasa</label>
-                          <input
-                            type="text"
-                            value={typePlace}
-                            onChange={place}
-                          />
-                        </>
-                      )}
-                      <label>Przeciwnicy</label>
-                      {Opponent && (
-                        <Select options={options} onChange={setOpponentLogo} />
-                      )}
-                    </>
-                  )}
-                  {Players && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
-                    <>
-                      <p style={{ marginTop: "20px" }}>Zawodnicy</p>
-                      <label>Zawodnik 1</label>
-                      <Select options={playerOptions} onChange={playerOne} />
-                      <label>Zawodnik 2</label>
-                      <Select options={playerOptions} onChange={playerTwo} />
-                      <label>Zawodnik 3</label>
-                      <Select options={playerOptions} onChange={playerThree} />
-                      <label>Zawodnik 4</label>
-                      <Select options={playerOptions} onChange={playerFour} />
-                      <label>Zawodnik 5</label>
-                      <Select options={playerOptions} onChange={playerFive} />
-                      <label>Zawodnik 6</label>
-                      <Select options={playerOptions} onChange={playerSix} />
-                      <label>Zawodnik 7</label>
-                      <Select options={playerOptions} onChange={playerSeven} />
-                      <label>Zawodnik 8</label>
-                      <Select options={playerOptions} onChange={playerEight} />
-                      <label>Zawodnik 9</label>
-                      <Select options={playerOptions} onChange={playerNine} />
-                      <label>Zawodnik 10</label>
-                      <Select options={playerOptions} onChange={playerTen} />
-                      <label>Zawodnik 11</label>
-                      <Select options={playerOptions} onChange={playerEleven} />
-                    </>
-                  )}
-                  {Players && poster === "IxOg6DyMuo9gTvv8BJK9" && (
-                    <>
-                      <p style={{ marginTop: "20px" }}>Zawodnicy</p>
-                      <label>Zawodnik 1</label>
-                      <Select options={playerOptions2} onChange={playerOne} />
-                      <label>Zawodnik 2</label>
-                      <Select options={playerOptions2} onChange={playerTwo} />
-                      <label>Zawodnik 3</label>
-                      <Select options={playerOptions2} onChange={playerThree} />
-                      <label>Zawodnik 4</label>
-                      <Select options={playerOptions2} onChange={playerFour} />
-                      <label>Zawodnik 5</label>
-                      <Select options={playerOptions2} onChange={playerFive} />
-                      <label>Zawodnik 6</label>
-                      <Select options={playerOptions2} onChange={playerSix} />
-                      <label>Zawodnik 7</label>
-                      <Select options={playerOptions2} onChange={playerSeven} />
-                      <label>Zawodnik 8</label>
-                      <Select options={playerOptions2} onChange={playerEight} />
-                      <label>Zawodnik 9</label>
-                      <Select options={playerOptions2} onChange={playerNine} />
-                      <label>Zawodnik 10</label>
-                      <Select options={playerOptions2} onChange={playerTen} />
-                      <label>Zawodnik 11</label>
-                      <Select
-                        options={playerOptions2}
-                        onChange={playerEleven}
-                      />
-                    </>
-                  )}
                   {Players && (
                     <>
                       <p style={{ marginTop: "20px" }}>Rezerwowi</p>
@@ -1272,22 +1112,22 @@ useEffect(() => {
                         <>
                           <label>Rezerwowy 1</label>
                           <Select
-                            options={reserveOptions2}
+                            options={reserveTwoOptions}
                             onChange={getReserveOne}
                           />
                           <label>Rezerwowy 2</label>
                           <Select
-                            options={reserveOptions2}
+                            options={reserveTwoOptions}
                             onChange={getReserveTwo}
                           />
                           <label>Rezerwowy 3</label>
                           <Select
-                            options={reserveOptions2}
+                            options={reserveTwoOptions}
                             onChange={getReserveSix}
                           />
                           <label>Rezerwowy 4</label>
                           <Select
-                            options={reserveOptions2}
+                            options={reserveTwoOptions}
                             onChange={getReserveSeven}
                           />
                         </>
@@ -1296,37 +1136,37 @@ useEffect(() => {
                         <>
                           <label>Rezerwowy 1</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveOne}
                           />
                           <label>Rezerwowy 2</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveTwo}
                           />
                           <label>Rezerwowy 3</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveThree}
                           />
                           <label>Rezerwowy 4</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveFour}
                           />
                           <label>Rezerwowy 5</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveFive}
                           />
                           <label>Rezerwowy 6</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveSix}
                           />
                           <label>Rezerwowy 7</label>
                           <Select
-                            options={reserveOptions}
+                            options={playerOptions}
                             onChange={getReserveSeven}
                           />
                         </>
@@ -1335,514 +1175,34 @@ useEffect(() => {
                   )}
                   <label>Bramkarz</label>
                   {poster && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
-                    <Select options={playerOptions} onChange={getGoalKeeper} />
+                    <Select
+                      options={specialPlayerOptions}
+                      onChange={getGoalKeeper}
+                    />
                   )}
                   {poster && poster === "IxOg6DyMuo9gTvv8BJK9" && (
-                     <Select options={playerOptions2} onChange={getGoalKeeper} />
+                    <Select options={playerOptions2} onChange={getGoalKeeper} />
                   )}
                   <label>Kapitan</label>
                   {poster && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
-                    <Select options={playerOptions} onChange={getCapitan} />
+                    <Select
+                      options={specialPlayerOptions}
+                      onChange={getCapitan}
+                    />
                   )}
                   {poster && poster === "IxOg6DyMuo9gTvv8BJK9" && (
                     <Select options={playerOptions2} onChange={getCapitan} />
                   )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
                 </>
               )}
-              {posters && posters.type == "TIMETABLE" && (
-                <>
-                  <p>Nie działa</p>
-                  <label>Miesiąc</label>
-                  <Select
-                    options={[
-                      { label: "styczeń", value: "styczeń" },
-                      { label: "luty", value: "luty" },
-                      { label: "marzec", value: "marzec" },
-                      { label: "kwiecień", value: "kwiecień" },
-                      { label: "maj", value: "maj" },
-                      { label: "czerwiec", value: "czerwiec" },
-                      { label: "lipiec", value: "lipiec" },
-                      { label: "sierpień", value: "sierpień" },
-                      { label: "wrzesień", value: "wrzesień" },
-                      { label: "październik", value: "październik" },
-                      { label: "listopad", value: "listopad" },
-                      { label: "grudzień", value: "grudzień" },
-                    ]}
-                    onChange={getMonth}
-                  />
-                  <div className="match-container">
-                    <label>
-                      <span>Mecz 1</span>
-                      <br />
-                      <input
-                        name="group1"
-                        type="radio"
-                        value="gospodarz"
-                        onChange={setRadioOne}
-                        checked={radioOne == "gospodarz"}
-                      />
-                      <span>Gospodarz</span>
-                      <input
-                        name="group1"
-                        type="radio"
-                        value="gosc"
-                        onChange={setRadioOne}
-                        checked={radioOne == "gosc"}
-                      />
-                      <span>Gość</span>
-                      <br />
-                      <br />
-                      <span>Dzień i miesiąc</span>
-                      <input type="text" />
-                      <span>Godzina</span>
-                      <input type="text" />
-                      <span>Przeciwnik</span>
-                      {Opponent && (
-                        <Select options={options} onChange={setOpponentLogo} />
-                      )}
-                    </label>
-                  </div>
-                  <div className="match-container">
-                    <label>
-                      <span>Mecz 2</span>
-                      <br />
-                      <input
-                        type="radio"
-                        name="group2"
-                        value="gospodarz"
-                        onChange={setRadioTwo}
-                        checked={radioTwo == "gospodarz"}
-                      />
-                      <span>Gospodarz</span>
-                      <input
-                        type="radio"
-                        name="group2"
-                        value="gosc"
-                        onChange={setRadioTwo}
-                        checked={radioTwo == "gosc"}
-                      />
-                      <span>Gość</span>
-                      <br />
-                      <br />
-                      <span>Dzień i miesiąc</span>
-                      <input type="text" />
-                      <span>Godzina</span>
-                      <input type="text" />
-                      <span>Przeciwnik</span>
-                      {Opponent && (
-                        <Select options={options} onChange={setOpponentLogo} />
-                      )}
-                    </label>
-                  </div>
-                  <div className="match-container">
-                    <label>
-                      <span>Mecz 3</span>
-                      <br />
-                      <input
-                        type="radio"
-                        name="group3"
-                        value="gospodarz"
-                        onChange={setRadioThree}
-                        checked={radioThree == "gospodarz"}
-                      />
-                      <span>Gospodarz</span>
-                      <input
-                        type="radio"
-                        name="group3"
-                        value="gosc"
-                        onChange={setRadioThree}
-                        checked={radioThree == "gosc"}
-                      />
-                      <span>Gość</span>
-                      <br />
-                      <br />
-                      <span>Dzień i miesiąc</span>
-                      <input type="text" />
-                      <span>Godzina</span>
-                      <input type="text" />
-                      <span>Przeciwnik</span>
-                      {Opponent && (
-                        <Select options={options} onChange={setOpponentLogo} />
-                      )}
-                    </label>
-                  </div>
-                  <div className="match-container">
-                    <label>
-                      <span>Mecz 4</span>
-                      <br />
-                      <input
-                        type="radio"
-                        name="group4"
-                        value="gospodarz"
-                        onChange={setRadioFour}
-                        checked={radioFour == "gospodarz"}
-                      />
-                      <span>Gospodarz</span>
-                      <input
-                        type="radio"
-                        name="group4"
-                        value="gospodarz"
-                        onChange={setRadioFour}
-                        checked={radioFour == "gosc"}
-                      />
-                      <span>Gość</span>
-                      <br />
-                      <br />
-                      <span>Dzień i miesiąc</span>
-                      <input type="text" />
-                      <span>Godzina</span>
-                      <input type="text" />
-                      <span>Przeciwnik</span>
-                      {Opponent && (
-                        <Select options={options} onChange={setOpponentLogo} />
-                      )}
-                    </label>
-                    <button
-                      className="btn primary-btn save"
-                      onClick={() => exportImg()}
-                    >
-                      Zapisz
-                    </button>
-                  </div>
-                </>
-              )}
-              {posters && posters.type == "TICKET" && (
-                <>
-                  VV nie działa jeszcze <br></br>
-                  <label>liga</label>
-                  <input type="text" />
-                  <label>Data i godzina</label>
-                  <input type="text" />
-                  <label>Miejsce</label>
-                  <input type="text" />
-                  <label>Rodzaj biletu oraz cena</label>
-                  <input type="text" />
-                  {Opponent && (
-                    <Select options={options} onChange={setOpponentLogo} />
-                  )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
-                </>
-              )}
-              {posters && posters.type == "MONTHLY-SUMMARY" && (
-                <>
-                  <label>Liga</label>
-                  <input type="text" onChange={getLeague} />
-                  <label>Miesiąc</label>
-                  <Select
-                    options={[
-                      { label: "styczeń", value: "styczeń" },
-                      { label: "luty", value: "luty" },
-                      { label: "marzec", value: "marzec" },
-                      { label: "kwiecień", value: "kwiecień" },
-                      { label: "maj", value: "maj" },
-                      { label: "czerwiec", value: "czerwiec" },
-                      { label: "lipiec", value: "lipiec" },
-                      { label: "sierpień", value: "sierpień" },
-                      { label: "wrzesień", value: "wrzesień" },
-                      { label: "październik", value: "październik" },
-                      { label: "listopad", value: "listopad" },
-                      { label: "grudzień", value: "grudzień" },
-                    ]}
-                    onChange={getMonth}
-                  />
-                  <p style={{ marginTop: "20px" }}>Mecz 1</p>
-                  <label>Data</label>
-                  <input
-                    type="text"
-                    value={dateOne}
-                    onChange={getDateOne}
-                    maxLength="5"
-                  />
-                  <label>Godzina</label>
-                  <input
-                    type="text"
-                    value={hourOne}
-                    onChange={getHourOne}
-                    maxLength="5"
-                  />
-                  <label>Przeciwnik</label>
-                  {Opponent && (
-                    <Select options={options} onChange={getOpponentOne} />
-                  )}
-                  <label>Wynik</label>
-                  <br />
-                  <input
-                    type="number"
-                    value={yourResultOne}
-                    onChange={getYourResultOne}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />{" "}
-                  -{" "}
-                  <input
-                    type="number"
-                    value={opponentResultOne}
-                    onChange={getOpponentResultOne}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />
-                  <label>
-                    <input
-                      name="group1"
-                      type="radio"
-                      value="gospodarz"
-                      checked={radioOne === "gospodarz"}
-                      onChange={(e) => setRadioOne(e.target.value)}
-                    />
-                    <span>Gospodarz</span>
-                  </label>
-                  <label>
-                    <input
-                      name="group1"
-                      type="radio"
-                      value="gosc"
-                      checked={radioOne === "gosc"}
-                      onChange={(e) => setRadioOne(e.target.value)}
-                    />
-                    <span>Gość</span>
-                  </label>
-                  <br />
-                  <br />
-                  <p>Mecz 2</p>
-                  <label>Data</label>
-                  <input
-                    type="text"
-                    value={dateTwo}
-                    onChange={getDateTwo}
-                    maxLength="5"
-                  />
-                  <label>Godzina</label>
-                  <input
-                    type="text"
-                    value={hourTwo}
-                    onChange={getHourTwo}
-                    maxLength="5"
-                  />
-                  <label>Przeciwnik</label>
-                  {Opponent && (
-                    <Select options={options} onChange={getOpponentTwo} />
-                  )}
-                  <label>Wynik</label>
-                  <br />
-                  <input
-                    type="number"
-                    value={yourResultTwo}
-                    onChange={getYourResultTwo}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />{" "}
-                  -{" "}
-                  <input
-                    type="number"
-                    value={opponentResultTwo}
-                    onChange={getOpponentResultTwo}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />
-                  <label>
-                    <input
-                      name="group2"
-                      type="radio"
-                      value="gospodarz"
-                      onChange={() => setRadioTwo("gospodarz")}
-                      checked={radioTwo === "gospodarz"}
-                    />
-                    <span>Gospodarz</span>
-                  </label>
-                  <label>
-                    <input
-                      name="group2"
-                      type="radio"
-                      value="gosc"
-                      onChange={() => setRadioTwo("gosc")}
-                      checked={radioTwo === "gosc"}
-                    />
-                    <span>Gość</span>
-                  </label>
-                  <br />
-                  <br />
-                  <p>Mecz 3</p>
-                  <label>Data</label>
-                  <input
-                    type="text"
-                    value={dateThree}
-                    onChange={getDateThree}
-                    maxLength="5"
-                  />
-                  <label>Godzina</label>
-                  <input
-                    type="text"
-                    value={hourThree}
-                    onChange={getHourThree}
-                    maxLength="5"
-                  />
-                  <label>Przeciwnik</label>
-                  {Opponent && (
-                    <Select options={options} onChange={getOpponentThree} />
-                  )}
-                  <label>Wynik</label>
-                  <br />
-                  <input
-                    type="number"
-                    value={yourResultThree}
-                    onChange={getYourResultThree}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />{" "}
-                  -{" "}
-                  <input
-                    type="number"
-                    value={opponentResultThree}
-                    onChange={getOpponentResultThree}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />
-                  <label>
-                    <input
-                      name="group3"
-                      type="radio"
-                      value="gosc"
-                      onChange={() => setRadioThree("gospodarz")}
-                      checked={radioThree === "gospodarz"}
-                    />
-                    <span>Gospodarz</span>
-                  </label>
-                  <label>
-                    <input
-                      name="group3"
-                      type="radio"
-                      value="gosc"
-                      onChange={() => setRadioThree("gosc")}
-                      checked={radioThree === "gosc"}
-                    />
-                    <span>Gość</span>
-                  </label>
-                  <br />
-                  <br />
-                  <p>Mecz 4</p>
-                  <label>Data</label>
-                  <input
-                    type="text"
-                    value={dateFour}
-                    onChange={getDateFour}
-                    maxLength="5"
-                  />
-                  <label>Godzina</label>
-                  <input
-                    type="text"
-                    value={hourFour}
-                    onChange={getHourFour}
-                    maxLength="5"
-                  />
-                  <label>Przeciwnik</label>
-                  {Opponent && (
-                    <Select options={options} onChange={getOpponentFour} />
-                  )}
-                  <label>Wynik</label>
-                  <br />
-                  <input
-                    type="number"
-                    value={yourResultFour}
-                    onChange={getYourResultFour}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />{" "}
-                  -{" "}
-                  <input
-                    type="number"
-                    value={opponentResultFour}
-                    onChange={getOpponentResultFour}
-                    style={{ width: "50px" }}
-                    min="0"
-                    max="99"
-                  />
-                  <label>
-                    <input
-                      name="group4"
-                      type="radio"
-                      value="gospodarz"
-                      onChange={() => setRadioFour("gospodarz")}
-                      checked={radioFour === "gospodarz"}
-                    />
-                    <span>Gospodarz</span>
-                  </label>
-                  <label>
-                    <input
-                      name="group4"
-                      type="radio"
-                      value="gosc"
-                      onChange={() => setRadioFour("gosc")}
-                      checked={radioFour === "gosc"}
-                    />
-                    <span>Gość</span>
-                  </label>
-                  <br />
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
-                </>
-              )}
-              {posters && posters.type == "TRAINERS" && (
-                <>
-                  <label>Trener 1</label>
-                  <Select />
-                  <label>Trener 2</label>
-                  <Select />
-                </>
-              )}
-              {posters && posters.type == "EVENT-ANNOUNCEMENT" && (
-                <>
-                  <label>Liga</label>
-                  <input type="text" value={league} onChange={getLeague} />
-                  <label>Data i godzina</label>
-                  <input type="text" value={typeDate} onChange={date} />
-                  <label>Miejsce</label>
-                  <input type="text" value={typePlace} onChange={place} />
-                  <label>Przeciwnicy</label>
-                  {Opponent && (
-                    <Select options={options} onChange={setOpponentLogo} />
-                  )}
-                  <button
-                    className="btn primary-btn save"
-                    onClick={() => exportImg()}
-                  >
-                    Zapisz
-                  </button>
-                </>
-              )}
-              {posters && posters.type == "COMPETITOR-PRESENTATION" && (
-                <>
-                  {Players && (
-                    <>
-                      <label>Zawodnik</label>
-                      <Select options={playerOptions} />
-                    </>
-                  )}
-                </>
-              )}
+              <button
+                className="btn primary-btn save"
+                onClick={() => exportImg()}
+              >
+                Zapisz
+              </button>
             </div>
-            {Licenses && Licenses[0].license == "free-trial" && (
+            {Licenses && Licenses[0].license === "free-trial" && (
               <div className="license-place">
                 <span className="license-content">
                   Masz jeszcze {Licenses[0].numberOfFreeUse} darmowych użyć

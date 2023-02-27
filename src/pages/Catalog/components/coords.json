@@ -11,17 +11,17 @@
         "typeDataScaleToWidth": 450,
         "typeDataFill":"white",
 
-        "typePlaceCharSpacing": 0,
-        "typePlaceHeight": 50,
-        "typePlaceWidth": 190,
-        "typePlaceTop": 400,
-        "typePlaceLeft": 35,
-        "typePlaceFontSize": 20,
-        "typePlaceFontFamily": "Poppins-italic",
-        "typePlaceScaleToWidth": 190,
-        "typePlaceFill":"white",
-        "typePlaceOriginX": "left",
-        "typePlaceOriginY": "center",
+        "yourKolejkaCharSpacing": 0,
+        "yourKolejkaHeight": 50,
+        "yourKolejkaWidth": 190,
+        "yourKolejkaTop": 400,
+        "yourKolejkaLeft": 35,
+        "yourKolejkaFontSize": 20,
+        "yourKolejkaFontFamily": "Poppins-italic",
+        "yourKolejkaScaleToWidth": 190,
+        "yourKolejkaFill":"white",
+        "yourKolejkaOriginX": "left",
+        "yourKolejkaOriginY": "center",
 
 
         "opponentImageTop": 460,
@@ -219,10 +219,10 @@
     {
         "id": "1wlpmf0KyPSGbmzxY8hK",
         "yourTeamResultTop": 530,
-        "yourTeamResultLeft": 530,
+        "yourTeamResultLeft": 570,
         "yourTeamResultFontFamily": "Goldman-Regular",
         "yourTeamResultFill": "white",
-        "yourTeamResultOriginX": "center",
+        "yourTeamResultOriginX": "right",
         "yourTeamResultOriginY": "center",
         "yourTeamResultScaleToHeight": 100,
         "yourTeamResultScaleToWidth": 70,
@@ -257,6 +257,67 @@
         
     },
     {
+        "id": "VZtk0ztSsTrfFNtLpvGY",
+        "yourTeamResultTop": 220,
+        "yourTeamResultLeft": 200,
+        "yourTeamResultWidth": 30,
+        "yourTeamResultFontFamily": "Poppins Bold",
+        "yourTeamResultFill": "white",
+        "yourTeamResultOriginX": "center",
+        "yourTeamResultOriginY": "center",
+        "yourTeamResultScaleToHeight": 150,
+        "yourTeamResultScaleToWidth": 120,
+
+        "yourOpponentResultTop": 220,
+        "yourOpponentResultLeft": 550,
+        "yourOpponentResultWidth":30,
+        "yourOpponentResultFontFamily": "Poppins Bold",
+        "yourOpponentResultFill": "white",
+        "yourOpponentResultOriginX": "left",
+        "yourOpponentResultOriginY": "center",
+        "yourOpponentResultScaleToHeight": 150,
+        "yourOpponentResultScaleToWidth": 70,
+
+        "opponentImageTop": 215,
+        "opponentImageLeft": 470,
+        "opponentImageScaleToHeight": 90,
+
+        "yourTeamLogoTop": 215,
+        "yourTeamLogoLeft": 310,
+        "yourTeamLogoScaleToHeight": 90,
+
+        "yourPlayerOneGoalTop": 420,
+        "yourPlayerOneGoalLeft": 130,
+        "yourPlayerGoalFontFamily":"Poppins Bold",
+        "yourPlayerGoalFontSize":25,
+        "yourPlayerGoalScaleToWidth": 500,
+        "yourPlayerGoalFill": "white",
+        "yourPlayerGoalOriginX": "left",
+        "yourPlayerGoalOriginY": "center",
+
+
+        "yourPlayerTwoGoalTop": 450,
+        "yourPlayerTwoGoalLeft": 130,
+
+
+        "yourPlayerThreeGoalTop": 480,
+        "yourPlayerThreeGoalLeft": 130,
+
+
+        "yourPlayerFourGoalTop": 510,
+        "yourPlayerFourGoalLeft": 130,
+
+        "yourPlayerFiveGoalTop": 540,
+        "yourPlayerFiveGoalLeft": 130,
+
+
+        "yourPlayerSixGoalTop": 570,
+        "yourPlayerSixGoalLeft": 130
+
+
+        
+    },
+    {
         "id": "OquH8Pd6s2TL0LoETJE9",
         "yourTeamResultTop": 210,
         "yourTeamResultLeft": 280,
@@ -280,20 +341,10 @@
         "opponentImageLeft": 390,
         "opponentImageScaleToHeight": 90,
 
-        "opponentNameTop": 1200,
-        "opponentNameLeft": 150,
-        "opponentNameOriginX": "left",
-        "opponentNameOriginY": "center",
-        "opponentNameFontSize": 30,
-        "opponentNameWidth":400,
-        "opponentNameFill": "#003981",
-        "opponentNameFontFamily": "Baron-Neue-Black",
-        "opponentNameScaleToWidth": 100,
 
         "yourTeamLogoTop": 330,
         "yourTeamLogoLeft": 230,
         "yourTeamLogoScaleToHeight": 90
-
         
     },
     {
@@ -336,22 +387,24 @@
         
 
         "yourTeamResultTop": 330,
-        "yourTeamResultLeft": 320,
+        "yourTeamResultLeft": 290,
         "yourTeamResultFontFamily": "Now Black",
+        "yourTeamResultWidth": 25,
         "yourTeamResultFill": "white",
-        "yourTeamResultOriginX": "right",
+        "yourTeamResultOriginX": "center",
         "yourTeamResultOriginY": "center",
-        "yourTeamResultScaleToHeight": 100,
-        "yourTeamResultScaleToWidth": 60,
+        "yourTeamResultScaleToHeight": 80,
+        "yourTeamResultScaleToWidth": 50,
 
         "yourOpponentResultTop": 330,
-        "yourOpponentResultLeft": 350,
+        "yourOpponentResultLeft": 380,
         "yourOpponentResultFontFamily": "Now Black",
+        "yourOpponentResultWidth": 25,
         "yourOpponentResultFill": "white",
-        "yourOpponentResultOriginX": "left",
+        "yourOpponentResultOriginX": "center",
         "yourOpponentResultOriginY": "center",
-        "yourOpponentResultScaleToHeight": 100,
-        "yourOpponentResultScaleToWidth": 60,
+        "yourOpponentResultScaleToHeight": 80,
+        "yourOpponentResultScaleToWidth": 50,
 
         "opponentImageTop": 325,
         "opponentImageLeft": 465,
@@ -379,7 +432,52 @@
         "yourTeamNameWidth":100,
         "yourTeamNameFill": "white",
         "yourTeamNameFontFamily": "Now Black",
-        "yourTeamNameScaleToWidth": 100
+        "yourTeamNameScaleToWidth": 100, 
+
+        "yourPlayerOneGoalTop": 440,
+        "yourPlayerOneGoalLeft": 155,
+        "yourPlayerGoalFontFamily":"Now Black",
+        "yourPlayerGoalFontSize":25,
+        "yourPlayerGoalScaleToWidth": 150,
+        "yourPlayerGoalFill": "white",
+        "yourPlayerGoalOriginX": "left",
+        "yourPlayerGoalOriginY": "center",
+
+        "opponentPlayerOneGoalTop": 440,
+        "opponentPlayerOneGoalLeft": 515,
+        "opponentPlayerGoalOriginX": "right",
+        "opponentPlayerGoalOriginY": "center",
+
+        "yourPlayerTwoGoalTop": 465,
+        "yourPlayerTwoGoalLeft": 155,
+
+        "opponentPlayerTwoGoalTop": 465,
+        "opponentPlayerTwoGoalLeft": 515,
+
+        "yourPlayerThreeGoalTop": 490,
+        "yourPlayerThreeGoalLeft": 155,
+
+        "opponentPlayerThreeGoalTop": 490,
+        "opponentPlayerThreeGoalLeft": 515,
+
+        "yourPlayerFourGoalTop": 515,
+        "yourPlayerFourGoalLeft": 155,
+
+        "opponentPlayerFourGoalTop": 515,
+        "opponentPlayerFourGoalLeft": 515,
+
+        "yourPlayerFiveGoalTop": 540,
+        "yourPlayerFiveGoalLeft": 155,
+
+        "opponentPlayerFiveGoalTop": 540,
+        "opponentPlayerFiveGoalLeft": 515,
+
+        "yourPlayerSixGoalTop": 565,
+        "yourPlayerSixGoalLeft": 155,
+
+
+        "opponentPlayerSixGoalTop": 565,
+        "opponentPlayerSixGoalLeft": 515
 
         
     },
@@ -406,13 +504,56 @@
         
         "playerTop": 395,
         "playerLeft": 270,
-        "playerWidth": 250,
+        "playerWidth": 170,
         "playerFill": "white",
         "playerOriginX": "center",
         "playerOriginY": "center",
         "playerFontFamily": "Kenyan coffee",
         "playerScaleToHeight": 70,
-        "playerScaleToWidth": 250
+        "playerScaleToWidth": 170
+
+        
+    },
+    {
+        "id": "rtZUgjjd4i74jHW0mRPs",
+        "yourTeamResultTop": 480,
+        "yourTeamResultLeft": 600,
+        "yourTeamResultWidth": 30,
+        "yourTeamResultFontFamily": "Poppins bold",
+        "yourTeamResultFill": "white",
+        "yourTeamResultOriginX": "center",
+        "yourTeamResultOriginY": "center",
+        "yourTeamResultScaleToHeight": 70,
+        "yourTeamResultScaleToWidth": 40,
+
+        "yourOpponentResultTop": 610,
+        "yourOpponentResultLeft": 600,
+        "yourOpponentResultWidth": 30,
+        "yourOpponentResultFontFamily": "Poppins bold",
+        "yourOpponentResultFill": "white",
+        "yourOpponentResultOriginX": "center",
+        "yourOpponentResultOriginY": "center",
+        "yourOpponentResultScaleToHeight": 70,
+        "yourOpponentResultScaleToWidth": 40,
+
+        "opponentImageTop": 610,
+        "opponentImageLeft": 660,
+        "opponentImageScaleToHeight": 70,
+        
+         "yourTeamLogoTop": 480,
+        "yourTeamLogoLeft": 660,
+        "yourTeamLogoScaleToHeight": 70,
+
+        
+        "playerTop": 640,
+        "playerLeft": 120,
+        "playerWidth": 350,
+        "playerFill": "white",
+        "playerOriginX": "left",
+        "playerOriginY": "center",
+        "playerFontFamily": "Poppins bold",
+        "playerScaleToHeight": 50,
+        "playerScaleToWidth": 350
 
         
     },
@@ -440,6 +581,10 @@
         "opponentImageLeft": 190,
         "opponentImageScaleToHeight": 90,
 
+         "yourTeamLogoTop": 530,
+        "yourTeamLogoLeft": 100,
+        "yourTeamLogoScaleToHeight": 90,
+
         "opponentNameTop": 1200,
         "opponentNameLeft": 150,
         "opponentNameOriginX": "left",
@@ -450,9 +595,7 @@
         "opponentNameFontFamily": "Baron-Neue-Black",
         "opponentNameScaleToWidth": 100,
 
-        "yourTeamLogoTop": 530,
-        "yourTeamLogoLeft": 100,
-        "yourTeamLogoScaleToHeight": 90,
+       
 
         "yourTeamNameTop": 1090,
         "yourTeamNameLeft": 150,
@@ -1019,14 +1162,14 @@
         "typePlaceOriginX": "center",
         "typePlaceOriginY": "center",
         
-        "yourLeagueTop": 35,
-        "yourLeagueLeft": 50,
-        "yourLeagueFontFamily": "kenyan coffee",
-        "yourLeagueFill": "white",
-        "yourLeagueOriginX": "left",
-        "yourLeagueOriginY": "center",
-        "yourLeagueScaleToWidth": 250,
-        "yourLeagueScaleToHeight": 50,
+        "yourKolejkaTop": 35,
+        "yourKolejkaLeft": 50,
+        "yourKolejkaFontFamily": "kenyan coffee",
+        "yourKolejkaFill": "white",
+        "yourKolejkaOriginX": "left",
+        "yourKolejkaOriginY": "center",
+        "yourKolejkaScaleToWidth": 250,
+        "yourKolejkaScaleToHeight": 50,
         
 
 
@@ -1049,34 +1192,23 @@
         "typeDataTop": 280,
         "typeDataLeft": 590,
         "typeDataFontSize": 25,
-        "typeDataFontFamily": "Russo one",
+        "typeDataFontFamily": "Russo_one",
         "typeDataFill": "#0d4e7a",
         "typeDataScaleToWidth": 350,
         "typeDataOriginX":"right",
         "typeDataOriginY":"center",
 
         "typePlaceCharSpacing": 0,
-        "typePlaceHeight": 150,
         "typePlaceTextAlign": "center",
         "typePlaceTop": 310,
         "typePlaceLeft" : 590,
         "typePlaceWidth": 350,
         "typePlaceFontSize": 25,
         "typePlaceFill": "#0d4e7a",
-        "typePlaceFontFamily": "Russo one",
+        "typePlaceFontFamily": "Russo_one",
         "typePlaceScaleToWidth": 350,
         "typePlaceOriginX": "right",
         "typePlaceOriginY": "center",
-        
-        "yourLeagueTop": 35,
-        "yourLeagueLeft": 50,
-        "yourLeagueFontFamily": "kenyan coffee",
-        "yourLeagueFill": "white",
-        "yourLeagueOriginX": "left",
-        "yourLeagueOriginY": "center",
-        "yourLeagueScaleToWidth": 250,
-        "yourLeagueScaleToHeight": 50,
-        
 
 
         "opponentImageTop": 220,
@@ -2064,17 +2196,7 @@
     },
     {
         "id": "YfwG3U5L7RLVLndyqjXu",
-        "typeDataCharSpacing": 120,
-        "typeDataHeight": 50,
-        "typeDataWidth": 200,
-        "typeDataTop": 375,
-        "typeDataLeft": 150,
-        "typeDataFontSize": 20,
-        "typeDataFontFamily": "Goldman-Bold",
-        "typeDataFill": "white",
-        "typeDataScaleToWidth": 200,
-        "typeDataOriginX":"left",
-        "typeDataOriginY":"center",
+       
 
         "yourTeamResultTop": 390,
         "yourTeamResultLeft": 330,
@@ -2161,17 +2283,6 @@
     },
     {
         "id": "BaOPtW7VEvw2JLRaSRTw",
-        "typeDataCharSpacing": 120,
-        "typeDataHeight": 50,
-        "typeDataWidth": 200,
-        "typeDataTop": 375,
-        "typeDataLeft": 150,
-        "typeDataFontSize": 20,
-        "typeDataFontFamily": "kenyan coffee",
-        "typeDataFill": "white",
-        "typeDataScaleToWidth": 200,
-        "typeDataOriginX":"left",
-        "typeDataOriginY":"center",
 
         "yourTeamResultTop": 430,
         "yourTeamResultLeft": 290,
@@ -2198,9 +2309,51 @@
 
         "yourTeamLogoTop": 285,
         "yourTeamLogoLeft": 170,
-        "yourTeamLogoScaleToHeight": 130
+        "yourTeamLogoScaleToHeight": 130,
 
-       
+        "yourPlayerOneGoalTop": 385,
+        "yourPlayerOneGoalLeft": 110,
+        "yourPlayerGoalFontFamily":"kenyan coffee",
+        "yourPlayerGoalFontSize":15,
+        "yourPlayerGoalScaleToWidth": 100,
+        "yourPlayerGoalFill": "white",
+        "yourPlayerGoalOriginX": "left",
+        "yourPlayerGoalOriginY": "center",
+
+        "opponentPlayerOneGoalTop": 385,
+        "opponentPlayerOneGoalLeft": 510,
+        "opponentPlayerGoalOriginX": "right",
+        "opponentPlayerGoalOriginY": "center",
+
+        "yourPlayerTwoGoalTop": 400,
+        "yourPlayerTwoGoalLeft": 110,
+
+        "opponentPlayerTwoGoalTop": 400,
+        "opponentPlayerTwoGoalLeft": 510,
+
+        "yourPlayerThreeGoalTop": 415,
+        "yourPlayerThreeGoalLeft": 110,
+
+        "opponentPlayerThreeGoalTop": 415,
+        "opponentPlayerThreeGoalLeft": 510,
+
+        "yourPlayerFourGoalTop": 430,
+        "yourPlayerFourGoalLeft": 110,
+
+        "opponentPlayerFourGoalTop": 430,
+        "opponentPlayerFourGoalLeft": 510,
+
+        "yourPlayerFiveGoalTop": 445,
+        "yourPlayerFiveGoalLeft": 110,
+
+        "opponentPlayerFiveGoalTop": 445,
+        "opponentPlayerFiveGoalLeft": 510,
+
+        "yourPlayerSixGoalTop": 460,
+        "yourPlayerSixGoalLeft": 110,
+
+        "opponentPlayerSixGoalTop": 460,
+        "opponentPlayerSixGoalLeft": 510
     },
     {
         "id": "sgz8OeO2ftoEu6IwSi6R",
@@ -3182,19 +3335,17 @@
     {
         "id": "0Gbnsa2c4SCS3SQJLEjR",
         "typeDataCharSpacing": 0,
-        "typeDataHeight": 150,
-        "typeDataWidth": 400,
+        
         "typeDataTop": 355,
         "typeDataLeft": 350,
-        "typeDataFontSize": 80,
+        "typeDataFontSize": 70,
         "typeDataFontFamily": "Goldman-Bold",
         "typeDataFill": "white",
-        "typeDataScaleToWidth": 400,
+        "typeDataScaleToWidth": 450,
         "typeDataOriginX":"center",
         "typeDataOriginY":"center",
 
         "typePlaceCharSpacing": 0,
-        "typePlaceHeight": 150,
         "typePlaceTextAlign": "center",
         "typePlaceTop": 410,
         "typePlaceLeft" : 350,
@@ -3340,6 +3491,8 @@
         "yourTeamSecondNameOriginX": "center",
         "yourTeamSecondNameOriginY": "center"
 
+        
+
     },
     {
         "id": "QwhxCzjvV0yW3kI6ZXy2",
@@ -3424,17 +3577,17 @@
     },
     {
         "id": "EvaTvUZBFtGIBG5NqlLJ",
-        "typeDataCharSpacing": 0,
-        "typeDataHeight": 150,
-        "typeDataWidth": 200,
-        "typeDataTop": 80,
-        "typeDataLeft": 50,
-        "typeDataFontSize":40,
-        "typeDataFontFamily": "kenyan coffee",
-        "typeDataFill": "white",
-        "typeDataScaleToWidth": 200,
-        "typeDataOriginX":"left",
-        "typeDataOriginY":"center",
+        "yourKolejkaCharSpacing": 0,
+        "yourKolejkaHeight": 150,
+        "yourKolejkaWidth": 200,
+        "yourKolejkaTop": 80,
+        "yourKolejkaLeft": 50,
+        "yourKolejkaFontSize":40,
+        "yourKolejkaFontFamily": "kenyan coffee",
+        "yourKolejkaFill": "white",
+        "yourKolejkaScaleToWidth": 200,
+        "yourKolejkaOriginX":"left",
+        "yourKolejkaOriginY":"center",
 
         "typePlaceCharSpacing": 0,
         "typePlaceHeight": 150,
@@ -4375,8 +4528,7 @@
     {
         "id": "PmoRESwg91LxFAGFObbZ",
         "typeDataCharSpacing": 120,
-        "typeDataHeight": 50,
-        "typeDataWidth": 170,
+        "typeDataWidth": 270,
         "typeDataTop": 585,
         "typeDataLeft": 150,
         "typeDataFontSize": 20,
@@ -4388,21 +4540,23 @@
 
         "yourTeamResultTop": 220,
         "yourTeamResultLeft": 425,
+        "yourTeamResultWidth": 30,
         "yourTeamResultFontFamily": "oxanium-Bold",
         "yourTeamResultFill": "white",
         "yourTeamResultOriginX": "center",
         "yourTeamResultOriginY": "center",
         "yourTeamResultScaleToHeight": 150,
-        "yourTeamResultScaleToWidth": 130,
+        "yourTeamResultScaleToWidth": 100,
 
         "yourOpponentResultTop": 390,
         "yourOpponentResultLeft": 425,
+        "yourOpponentResultWidth": 30,
         "yourOpponentResultFontFamily": "oxanium-Bold",
         "yourOpponentResultFill": "white",
         "yourOpponentResultOriginX": "center",
         "yourOpponentResultOriginY": "center",
         "yourOpponentResultScaleToHeight": 150,
-        "yourOpponentResultScaleToWidth": 130,
+        "yourOpponentResultScaleToWidth": 100,
 
         "opponentImageTop": 390,
         "opponentImageLeft": 220,
@@ -4429,9 +4583,42 @@
         "yourTeamNameFontFamily": "oxanium-Bold",
         "yourTeamNameFill" : "white",
         "yourTeamNameFontSize": 30,
-        "yourTeamNameScaleToWidth": 150,
+        "yourTeamNameScaleToWidth": 140,
         "yourTeamNameOriginX": "left",
         "yourTeamNameOriginY": "center"
+    },
+    {
+        "id": "kaxZ2rBlj39ThOsCIFkR",
+       
+        "yourTeamResultTop": 200,
+        "yourTeamResultLeft": 250,
+        "yourTeamResultWidth": 30,
+        "yourTeamResultFontFamily": "MADE Outer Sans Black",
+        "yourTeamResultFill": "#0d4e7a",
+        "yourTeamResultOriginX": "center",
+        "yourTeamResultOriginY": "center",
+        "yourTeamResultScaleToHeight": 150,
+        "yourTeamResultScaleToWidth": 100,
+
+        "yourOpponentResultTop": 370,
+        "yourOpponentResultLeft": 250,
+        "yourOpponentResultWidth": 30,
+        "yourOpponentResultFontFamily": "MADE Outer Sans Black",
+        "yourOpponentResultFill": "#0d4e7a",
+        "yourOpponentResultOriginX": "center",
+        "yourOpponentResultOriginY": "center",
+        "yourOpponentResultScaleToHeight": 150,
+        "yourOpponentResultScaleToWidth": 100,
+
+        "opponentImageTop": 370,
+        "opponentImageLeft": 110,
+        "opponentImageScaleToHeight": 130,
+
+      
+        "yourTeamLogoTop": 200,
+        "yourTeamLogoLeft": 110,
+        "yourTeamLogoScaleToHeight": 130
+
     },
     
     {
@@ -4595,7 +4782,7 @@
         "typeDataFontSize": 20,
         "typeDataFontFamily": "oxanium-regular",
         "typeDataFill": "white",
-        "typeDataScaleToWidth": 160,
+        "typeDataScaleToWidth": 200,
         "typeDataOriginX":"left",
         "typeDataOriginY":"center",
 
@@ -4712,7 +4899,8 @@
         "reserveOneTop": 470,
         "reserveOneLeft": 130,
         "reserveOneFill": "white",
-        "reserveOneScaleToHeight": 15,
+        "reserveOneFontSize": 15,
+        "reserveOneScaleToWidth": 400,
         "reserveOneFontFamily": "oxanium-regular",
         "reserveOneOriginX": "left",
         "reserveOneOriginY": "center",
@@ -4720,28 +4908,31 @@
         "reserveTwoTop": "470",
         "reserveTwoLeft": "160",
         "reserveTwoFill": "white",
-        "reserveTwoScaleToHeight": 15,
+        "reserveTwoFontSize": 15,
         "reserveTwoFontFamily": "oxanium-regular",
+
         "reserveThreeTop": "470",
         "reserveThreeLeft": "160",
         "reserveThreeFill": "white",
-        "reserveThreeScaleToHeight": 15,
+        "reserveThreeFontSize": 15,
         "reserveThreeFontFamily": "oxanium-regular",
+
         "reserveFourTop": "470",
         "reserveFourLeft": "160",
         "reserveFourFill": "white",
-        "reserveFourScaleToHeight": 15,
+        "reserveFourFontSize": 15,
         "reserveFourFontFamily": "oxanium-regular",
+
         "reserveFiveTop": "470",
         "reserveFiveLeft": "160",
         "reserveFiveFill": "white",
-        "reserveFiveScaleToHeight": 15,
+        "reserveFiveFontSize": 15,
         "reserveFiveFontFamily": "oxanium-regular",
 
         "reserveSixTop": 490,
         "reserveSixLeft": 130,
         "reserveSixFill": "white",
-        "reserveSixScaleToHeight": 15,
+        "reserveSixFontSize": 20,
         "reserveSixFontFamily": "oxanium-regular",
         "reserveSixOriginX": "left",
         "reserveSixOriginY": "center",
@@ -4749,7 +4940,7 @@
         "reserveSevenTop": "470",
         "reserveSevenLeft": "160",
         "reserveSevenFill": "white",
-        "reserveSevenScaleToHeight": 15,
+        "reserveSevenFontSize": 15,
         "reserveSevenFontFamily": "oxanium-regular",
 
         "opponentImageTop": 100,
@@ -4779,6 +4970,314 @@
         "yourTeamNameScaleToWidth": 170,
         "yourTeamNameOriginX": "left",
         "yourTeamNameOriginY": "center"
+    },
+    {
+        "id": "sbTp2fakTOhG5B8Tpkon",
+        
+
+        "playerOneTop": 160,
+        "playerOneLeft": 40,
+        "playerOneOriginX": "left",
+        "playerOneOriginY": "center",
+        "playerOneFontSize": 25,
+        "playerOneWidth":400,
+        "playerOneFill": "#004172",
+        "playerOneFontFamily": "Made Outer Sans Black",
+        "playersScaleToWidth": 30,
+
+        "playerTwoTop": 185,
+        "playerTwoLeft": 40,
+        "playerTwoOriginX": "left",
+        "playerTwoOriginY": "center",
+        "playerTwoFontSize": 25,
+        "playerTwoWidth":400,
+        "playerTwoFill": "#004172",
+        "playerTwoFontFamily": "Made Outer Sans Black",
+        "playerTwoScaleToWidth": 180,
+
+        "playerThreeTop": 210,
+        "playerThreeLeft": 40,
+        "playerThreeOriginX": "left",
+        "playerThreeOriginY": "center",
+        "playerThreeFontSize": 25,
+        "playerThreeWidth":400,
+        "playerThreeFill": "#004172",
+        "playerThreeFontFamily": "Made Outer Sans Black",
+        "playerThreeScaleToWidth": 180,
+
+        "playerFourTop": 235,
+        "playerFourLeft": 40,
+        "playerFourOriginX": "left",
+        "playerFourOriginY": "center",
+        "playerFourFontSize": 25,
+        "playerFourWidth":400,
+        "playerFourFill": "#004172",
+        "playerFourFontFamily": "Made Outer Sans Black",
+        "playerFourScaleToWidth": 180,
+
+        "playerFiveTop": 260,
+        "playerFiveLeft": 40,
+        "playerFiveOriginX": "left",
+        "playerFiveOriginY": "center",
+        "playerFiveFontSize": 25,
+        "playerFiveWidth":400,
+        "playerFiveFill": "#004172",
+        "playerFiveFontFamily": "Made Outer Sans Black",
+        "playerFiveScaleToWidth": 180,
+
+        "playerSixTop": 285,
+        "playerSixLeft": 40,
+        "playerSixOriginX": "left",
+        "playerSixOriginY": "center",
+        "playerSixFontSize": 25,
+        "playerSixWidth":400,
+        "playerSixFill": "#004172",
+        "playerSixFontFamily": "Made Outer Sans Black",
+        "playerSixScaleToWidth": 180,
+
+        "playerSevenTop": 310,
+        "playerSevenLeft": 40,
+        "playerSevenOriginX": "left",
+        "playerSevenOriginY": "center",
+        "playerSevenFontSize": 25,
+        "playerSevenWidth":400,
+        "playerSevenFill": "#004172",
+        "playerSevenFontFamily": "Made Outer Sans Black",
+        "playerSevenScaleToWidth": 180,
+
+        "playerEightTop": 335,
+        "playerEightLeft": 40,
+        "playerEightOriginX": "left",
+        "playerEightOriginY": "center",
+        "playerEightFontSize": 25,
+        "playerEightWidth":400,
+        "playerEightFill": "#004172",
+        "playerEightFontFamily": "Made Outer Sans Black",
+        "playerEightScaleToWidth": 180,
+
+        "playerNineTop": 360,
+        "playerNineLeft": 40,
+        "playerNineOriginX": "left",
+        "playerNineOriginY": "center",
+        "playerNineFontSize": 25,
+        "playerNineWidth":400,
+        "playerNineFill": "#004172",
+        "playerNineFontFamily": "Made Outer Sans Black",
+        "playerNineScaleToWidth": 180,
+
+        "playerTenTop": 385,
+        "playerTenLeft": 40,
+        "playerTenOriginX": "left",
+        "playerTenOriginY": "center",
+        "playerTenFontSize": 25,
+        "playerTenWidth":400,
+        "playerTenFill": "#004172",
+        "playerTenFontFamily": "Made Outer Sans Black",
+        "playerTenScaleToWidth": 180,
+
+        "playerElevenTop": 410,
+        "playerElevenLeft": 40,
+        "playerElevenOriginX": "left",
+        "playerElevenOriginY": "center",
+        "playerElevenFontSize": 25,
+        "playerElevenWidth":400,
+        "playerElevenFill": "#004172",
+        "playerElevenFontFamily": "Made Outer Sans Black",
+        "playerElevenScaleToWidth": 180,
+
+        "reserveOneTop": 400,
+        "reserveOneLeft": 420,
+        "reserveOneFill": "white",
+        "reserveOneFontSize": 10,
+        "reserveOneScaleToWidth": 220,
+        "reserveOneFontFamily": "Made Outer Sans Black",
+        "reserveOneOriginX": "left",
+        "reserveOneOriginY": "center",
+
+       
+
+        "reserveSixTop": 415,
+        "reserveSixLeft": 420,
+        "reserveSixFill": "white",
+        "reserveSixFontSize": 20,
+        "reserveSixFontFamily": "Made Outer Sans Black",
+        "reserveSixOriginX": "left",
+        "reserveSixOriginY": "center",
+
+
+        "yourTeamLogoTop": 240,
+        "yourTeamLogoLeft": 530,
+        "yourTeamLogoScaleToHeight": 170
+
+    },
+
+    {
+        "id": "1Ysby1Ba2usHuFTGgKBE",
+        
+
+        "playerOneTop": 240,
+        "playerOneLeft": 150,
+        "playerOneOriginX": "left",
+        "playerOneOriginY": "center",
+        "playerOneFontSize": 30,
+        "playerOneWidth":400,
+        "playerOneFill": "white",
+        "playerOneFontFamily": "poppins",
+        "playersScaleToHeight": 30,
+
+        "playerTwoTop": 270,
+        "playerTwoLeft": 150,
+        "playerTwoOriginX": "left",
+        "playerTwoOriginY": "center",
+        "playerTwoFontSize": 30,
+        "playerTwoWidth":400,
+        "playerTwoFill": "white",
+        "playerTwoFontFamily": "poppins",
+        "playerTwoScaleToWidth": 180,
+
+        "playerThreeTop": 300,
+        "playerThreeLeft": 150,
+        "playerThreeOriginX": "left",
+        "playerThreeOriginY": "center",
+        "playerThreeFontSize": 30,
+        "playerThreeWidth":400,
+        "playerThreeFill": "white",
+        "playerThreeFontFamily": "poppins",
+        "playerThreeScaleToWidth": 180,
+
+        "playerFourTop": 330,
+        "playerFourLeft": 150,
+        "playerFourOriginX": "left",
+        "playerFourOriginY": "center",
+        "playerFourFontSize": 30,
+        "playerFourWidth":400,
+        "playerFourFill": "white",
+        "playerFourFontFamily": "poppins",
+        "playerFourScaleToWidth": 180,
+
+        "playerFiveTop": 360,
+        "playerFiveLeft": 150,
+        "playerFiveOriginX": "left",
+        "playerFiveOriginY": "center",
+        "playerFiveFontSize": 30,
+        "playerFiveWidth":400,
+        "playerFiveFill": "white",
+        "playerFiveFontFamily": "poppins",
+        "playerFiveScaleToWidth": 180,
+
+        "playerSixTop": 390,
+        "playerSixLeft": 150,
+        "playerSixOriginX": "left",
+        "playerSixOriginY": "center",
+        "playerSixFontSize": 30,
+        "playerSixWidth":400,
+        "playerSixFill": "white",
+        "playerSixFontFamily": "poppins",
+        "playerSixScaleToWidth": 180,
+
+        "playerSevenTop": 420,
+        "playerSevenLeft": 150,
+        "playerSevenOriginX": "left",
+        "playerSevenOriginY": "center",
+        "playerSevenFontSize": 30,
+        "playerSevenWidth":400,
+        "playerSevenFill": "white",
+        "playerSevenFontFamily": "poppins",
+        "playerSevenScaleToWidth": 180,
+
+        "playerEightTop": 450,
+        "playerEightLeft": 150,
+        "playerEightOriginX": "left",
+        "playerEightOriginY": "center",
+        "playerEightFontSize": 30,
+        "playerEightWidth":400,
+        "playerEightFill": "white",
+        "playerEightFontFamily": "poppins",
+        "playerEightScaleToWidth": 180,
+
+        "playerNineTop": 480,
+        "playerNineLeft": 150,
+        "playerNineOriginX": "left",
+        "playerNineOriginY": "center",
+        "playerNineFontSize": 30,
+        "playerNineWidth":400,
+        "playerNineFill": "white",
+        "playerNineFontFamily": "poppins",
+        "playerNineScaleToWidth": 180,
+
+        "playerTenTop": 510,
+        "playerTenLeft": 150,
+        "playerTenOriginX": "left",
+        "playerTenOriginY": "center",
+        "playerTenFontSize": 30,
+        "playerTenWidth":400,
+        "playerTenFill": "white",
+        "playerTenFontFamily": "poppins",
+        "playerTenScaleToWidth": 180,
+
+        "playerElevenTop": 540,
+        "playerElevenLeft": 150,
+        "playerElevenOriginX": "left",
+        "playerElevenOriginY": "center",
+        "playerElevenFontSize": 30,
+        "playerElevenWidth":400,
+        "playerElevenFill": "white",
+        "playerElevenFontFamily": "poppins",
+        "playerElevenScaleToWidth": 180,
+
+        "reserveOneTop": 610,
+        "reserveOneLeft": 150,
+        "reserveOneFill": "white",
+        "reserveOneFontSize": 15,
+        "reserveOneScaleToWidth": 400,
+        "reserveOneFontFamily": "poppins",
+        "reserveOneOriginX": "left",
+        "reserveOneOriginY": "center",
+
+        "reserveTwoTop": "470",
+        "reserveTwoLeft": "160",
+        "reserveTwoFill": "white",
+        "reserveTwoFontSize": 15,
+        "reserveTwoFontFamily": "poppins",
+        "reserveThreeTop": "470",
+        "reserveThreeLeft": "160",
+        "reserveThreeFill": "white",
+        "reserveThreeFontSize": 15,
+        "reserveThreeFontFamily": "poppins",
+        "reserveFourTop": "470",
+        "reserveFourLeft": "160",
+        "reserveFourFill": "white",
+        "reserveFourFontSize": 15,
+        "reserveFourFontFamily": "poppins",
+        "reserveFiveTop": "470",
+        "reserveFiveLeft": "160",
+        "reserveFiveFill": "white",
+        "reserveFiveFontSize": 15,
+        "reserveFiveFontFamily": "poppins",
+
+        "reserveSixTop": 630,
+        "reserveSixLeft": 150,
+        "reserveSixFill": "white",
+        "reserveSixFontSize": 15,
+        "reserveSixFontFamily": "poppins",
+        "reserveSixOriginX": "left",
+        "reserveSixOriginY": "center",
+
+        "reserveSevenTop": "470",
+        "reserveSevenLeft": "160",
+        "reserveSevenFill": "white",
+        "reserveSevenFontSize": 15,
+        "reserveSevenFontFamily": "poppins",
+
+        "opponentImageTop": 280,
+        "opponentImageLeft": 660,
+        "opponentImageScaleToHeight": 80,
+
+        "yourTeamLogoTop": 150,
+        "yourTeamLogoLeft": 660,
+        "yourTeamLogoScaleToHeight": 80
+
+    
     },
     {
         "id": "63b5fb36a560e8f93breae34",
@@ -5046,7 +5545,7 @@
         "reserveOneTop": "580",
         "reserveOneLeft": "335",
         "reserveOneFill": "white",
-        "reserveOneScaleToHeight": 15,
+        "reserveOneFontSize": 15,
         "reserveOneFontFamily": "Goldman-Regular",
         "reserveOneOriginX": "center",
         "reserveOneOriginY": "center",
@@ -5075,10 +5574,10 @@
         "reserveFiveScaleToHeight": 15,
         "reserveFiveFontFamily": "Goldman-Regular",
 
-        "reserveSixTop": "605",
-        "reserveSixLeft": "340",
+        "reserveSixTop": 605,
+        "reserveSixLeft": 340,
         "reserveSixFill": "white",
-        "reserveSixScaleToHeight": 15,
+        "reserveSixFontSize": 25,
         "reserveSixFontFamily": "Goldman-Regular",
         "reserveSixOriginX": "center",
         "reserveSixOriginY": "center",
@@ -5119,16 +5618,7 @@
     },
     {
         "id": "AaKfblCd2D2DZTPxVzLN",
-        "typeDataHeight": 50,
-        "typeDataWidth": 220,
-        "typeDataTop": 580,
-        "typeDataLeft": 290,
-        "typeDataFontSize": 20,
-        "typeDataFontFamily": "Made Outer Sans Thin",
-        "typeDataFill": "white",
-        "typeDataScaleToWidth": 220,
-        "typeDataOriginX":"center",
-        "typeDataOriginY":"center",
+        
 
         "playerOneTop": 150,
         "playerOneOriginX": "center",
@@ -5227,11 +5717,14 @@
 
         "reserveOneTop": 450,
         "reserveOneLeft": 304,
+        "reserveOneWidth": 550,
         "reserveOneFill": "white",
-        "reserveOneScaleToHeight": 15,
+        
+        "reserveOneFontSize": 22,
         "reserveOneFontFamily": "Made Outer Sans Regular",
         "reserveOneOriginX": "center",
         "reserveOneOriginY": "center",
+        "reserveOneScaleToWidth": 550,
 
         "reserveTwoTop": "470",
         "reserveTwoLeft": "160",
@@ -5260,7 +5753,7 @@
         "reserveSixTop": 470,
         "reserveSixLeft": 304,
         "reserveSixFill": "white",
-        "reserveSixScaleToHeight": 15,
+        "reserveSixFontSize": 22,
         "reserveSixFontFamily": "Made Outer Sans Regular",
         "reserveSixOriginX": "center",
         "reserveSixOriginY": "center",
@@ -5268,7 +5761,7 @@
         "reserveSevenTop": "470",
         "reserveSevenLeft": "160",
         "reserveSevenFill": "white",
-        "reserveSevenScaleToHeight": 15,
+        "reserveSevenFontSize": 22,
         "reserveSevenFontFamily": "Made Outer Sans Regular",
 
         "opponentImageTop": 560,
@@ -5277,9 +5770,10 @@
 
         "opponentNameTop": 560,
         "opponentNameLeft": 305,
+        "opponentNameWidth": 150,
         "opponentNameOriginX": "center",
         "opponentNameOriginY": "center",
-        "opponentNameScaleToHeight": 25,
+        "opponentNameFontSize": 25,
         "opponentNameFill": "white",
         "opponentNameFontFamily": "Made Outer Sans Regular",
         "opponentNameScaleToWidth": 150,
@@ -5299,30 +5793,30 @@
     },
     {
         "id": "IxOg6DyMuo9gTvv8BJK9",
-        "typeDataCharSpacing": 400,
-        "typeDataHeight": 50,
-        "typeDataWidth": 220,
-        "typeDataTop": 155,
-        "typeDataLeft": 330,
-        "typeDataFontSize": 20,
-        "typeDataFontFamily": "Now black",
-        "typeDataFill": "#1f3a76",
-        "typeDataScaleToWidth": 220,
-        "typeDataOriginX":"center",
-        "typeDataOriginY":"center",
+        "yourKolejkaCharSpacing": 400,
+        "yourKolejkaHeight": 50,
+        "yourKolejkaWidth": 320,
+        "yourKolejkaTop": 155,
+        "yourKolejkaLeft": 330,
+        "yourKolejkaFontSize": 20,
+        "yourKolejkaFontFamily": "Now black",
+        "yourKolejkaFill": "#1f3a76",
+        "yourKolejkaScaleToWidth": 320,
+        "yourKolejkaOriginX":"center",
+        "yourKolejkaOriginY":"center",
 
-        "typePlaceCharSpacing": 100,
-        "typePlaceHeight": 50,
-        "typePlaceTextAlign": "center",
-        "typePlaceTop": 525,
-        "typePlaceLeft" : 160,
-        "typePlaceWidth": 150,
-        "typePlaceFontSize": 15,
-        "typePlaceFill": "white",
-        "typePlaceFontFamily": "Now black",
-        "typePlaceScaleToWidth": 150,
-        "typePlaceOriginX": "left",
-        "typePlaceOriginY": "center",
+        "yourLeagueCharSpacing": 100,
+        "yourLeagueHeight": 50,
+        "yourLeagueTextAlign": "center",
+        "yourLeagueTop": 525,
+        "yourLeagueLeft" : 160,
+        "yourLeagueWidth": 150,
+        "yourLeagueFontSize": 15,
+        "yourLeagueFill": "white",
+        "yourLeagueFontFamily": "Now black",
+        "yourLeagueScaleToWidth": 150,
+        "yourLeagueOriginX": "left",
+        "yourLeagueOriginY": "center",
 
         "playerOneTop": 230,
         "playerOneLeft": 190,
@@ -5433,7 +5927,7 @@
         "reserveOneTop": 480,
         "reserveOneLeft": 180,
         "reserveOneFill": "#00923f",
-        "reserveOneScaleToHeight": 15,
+        "reserveOneFontSize": 15,
         "reserveOneScaleToWidth": 180,
         "reserveOneFontFamily": "Now Thin",
         "reserveOneOriginX": "left",
@@ -5489,16 +5983,7 @@
     },
     {
         "id": "6JftCRHQYUItjEz55Rn1",
-        "typeDataHeight": 50,
-        "typeDataWidth": 140,
-        "typeDataTop": 680,
-        "typeDataLeft": 60,
-        "typeDataFontSize": 20,
-        "typeDataFontFamily": "kenyan coffee",
-        "typeDataFill": "white",
-        "typeDataScaleToWidth": 140,
-        "typeDataOriginX":"left",
-        "typeDataOriginY":"center",
+        
 
         "playerOneTop": 170,
         "playerOneLeft": 100,
@@ -5612,9 +6097,9 @@
         "playerElevenScaleToWidth": 180,
 
         "reserveOneTop": 485,
-        "reserveOneLeft": 530,
+        "reserveOneLeft": 550,
         "reserveOneFill": "white",
-        "reserveOneScaleToHeight": 15,
+        "reserveOneFontSize": 20,
         "reserveOneFontFamily": "kenyan coffee",
         "reserveOneOriginX": "right",
         "reserveOneOriginY": "center",
@@ -5646,24 +6131,29 @@
         "reserveFiveFontFamily": "kenyan coffee",
 
         "reserveSixTop": 510,
-        "reserveSixLeft": 525,
+        "reserveSixLeft": 540,
         "reserveSixFill": "white",
         "reserveSixScaleToHeight": 20,
+        "reserveSixFontSize": 20,
         "reserveSixFontFamily": "kenyan coffee",
         "reserveSixOriginX": "right",
         "reserveSixOriginY": "center",
-        "reserveSixScaleToWidth": 180,
+        "reserveSixWidth": 250,
+        "reserveSixScaleToWidth": 250,
 
-        "reserveSevenTop": "470",
-        "reserveSevenLeft": "160",
+        "reserveSevenTop": 510,
+        "reserveSevenLeft": 570,
         "reserveSevenFill": "white",
-        "reserveSevenScaleToHeight": 15,
+        "reserveSevenScaleToHeight": 20,
         "reserveSevenFontFamily": "kenyan coffee",
+        "reserveSevenOriginX": "right",
+        "reserveSevenOriginY": "center",
+        "reserveSevenScaleToWidth": 180,
 
 
         "yourTeamLogoTop": 290,
         "yourTeamLogoLeft": 420,
-        "yourTeamLogoScaleToHeight": 300
+        "yourTeamLogoScaleToHeight": 280
 
     },
     {
@@ -7602,22 +8092,68 @@
         "playerScaleToWidth": 350,
 
         "yourTeamResultTop": 345,
-        "yourTeamResultLeft": 200,
+        "yourTeamResultLeft": 250,
+        "yourTeamResultWidth": 40,
         "yourTeamResultFontFamily": "MADE Outer Sans Black",
         "yourTeamResultFill": "white",
-        "yourTeamResultOriginX": "center",
+        "yourTeamResultOriginX": "right",
         "yourTeamResultOriginY": "center",
         "yourTeamResultScaleToHeight": 200,
-        "yourTeamResultScaleToWidth": 130,
+        "yourTeamResultScaleToWidth": 200,
 
         "yourOpponentResultTop": 345,
-        "yourOpponentResultLeft": 420,
+        "yourOpponentResultLeft": 350,
+        "yourOpponentResultWidth": 40,
         "yourOpponentResultFontFamily": "MADE Outer Sans Black",
         "yourOpponentResultFill": "white",
-        "yourOpponentResultOriginX": "center",
+        "yourOpponentResultOriginX": "left",
         "yourOpponentResultOriginY": "center",
         "yourOpponentResultScaleToHeight": 200,
-        "yourOpponentResultScaleToWidth": 150
+        "yourOpponentResultScaleToWidth": 200
+    },
+    {
+        "id": "LDFjBmsWJcelDHqa0vrE",
+            "typePlaceCharSpacing": 0,
+            "typePlaceHeight": 50,
+            "typePlaceTextAlign": "center",
+            "typePlaceTop": 670,
+            "typePlaceLeft" : 135,
+            "typePlaceWidth": 430,
+            "typePlaceFontSize": 25,
+            "typePlaceFill": "white",
+            "typePlaceFontFamily": "oxanium-bold",
+            "typePlaceScaleToWidth": 430,
+            "typePlaceOriginX": "left",
+            "typePlaceOriginY": "center",
+    
+            "opponentImageTop": 290,
+            "opponentImageLeft": 640,
+            "opponentImageScaleToHeight": 90,
+    
+            "opponentNameTop": 560,
+            "opponentNameLeft": 135,
+            "opponentNameOriginX": "left",
+            "opponentNameOriginY": "center",
+            "opponentNameFontSize": 30,
+            "opponentNameWidth":500,
+            "opponentNameFill": "white",
+            "opponentNameFontFamily": "Poppins bold",
+            "opponentNameScaleToWidth": 350,
+            "opponentNameScaleToHeight": 45,
+    
+            "yourTeamLogoTop": 150,
+            "yourTeamLogoLeft": 640,
+            "yourTeamLogoScaleToHeight": 90,
+    
+            "yourTeamNameTop": 500,
+            "yourTeamNameLeft": 135,
+            "yourTeamNameWidth": 350,
+            "yourTeamNameFontFamily": "Poppins bold",
+            "yourTeamNameFontSize": 30,
+            "yourTeamNameFill" : "white",
+            "yourTeamNameScaleToWidth": 350,
+            "yourTeamNameOriginX": "left",
+            "yourTeamNameOriginY": "center"
     },
     {
         "id": "FkbRjeu4p2PvRryL8byB",
@@ -7671,6 +8207,51 @@
         "yourTeamNameFill": "white",
         "yourTeamNameFontSize": 30,
         "yourTeamNameScaleToWidth": 280,
+        "yourTeamNameOriginX": "left",
+        "yourTeamNameOriginY": "center"
+    },
+    {
+        "id": "N1gfNvHs9LBeKRBD7nur",
+       
+
+        "typePlaceCharSpacing":0,
+        "typePlaceHeight": 50,
+        "typePlaceWidth": 450,
+        "typePlaceTop": 670,
+        "typePlaceLeft": 130,
+        "typePlaceFontSize": 25,
+        "typePlaceFontFamily": "Poppins Bold",
+        "typePlaceFill": "white",
+        "typePlaceScaleToWidth": 450,
+        "typePlaceOriginX": "left",
+        "typePlaceOriginY": "center",
+
+        "opponentImageTop": 440,
+        "opponentImageLeft": 330,
+        "opponentImageScaleToHeight": 80,
+
+        "opponentNameTop": 570,
+        "opponentNameLeft": 130,
+        "opponentNameFontSize": 35,
+        "opponentNameOriginX": "left",
+        "opponentNameOriginY": "center",
+        "opponentNameWidth":450,
+        "opponentNameFill": "white",
+        "opponentNameFontFamily": "Poppins Bold",
+        "opponentNameScaleToWidth": 450,
+        
+
+        "yourTeamLogoTop": 440,
+        "yourTeamLogoLeft": 190,
+        "yourTeamLogoScaleToHeight": 80,
+        
+
+        "yourTeamNameTop": 520,
+        "yourTeamNameLeft": 130,
+        "yourTeamNameFontFamily": "Poppins Bold",
+        "yourTeamNameFill": "white",
+        "yourTeamNameFontSize": 30,
+        "yourTeamNameScaleToWidth": 450,
         "yourTeamNameOriginX": "left",
         "yourTeamNameOriginY": "center"
     },

@@ -27,6 +27,7 @@ import Stats from "./pages/stats/Stats";
 import PosterCreator from "./pages/posterCreator/PosterCreator";
 import UserAccount from "./pages/stats/components/UserAccountComponents/UserAccount";
 import ResetPassword from "./pages/Login/components/ResetPassword";
+import Guide from "./pages/Guide/Guide";
 function App() {
   const {user, authIsReady} = useAuthContext()
   
@@ -68,7 +69,8 @@ function App() {
       <Route path="/stats/:id" element = {user ? <UserAccount /> : <Navigate to="/login" /> } />
        </>
       )}
-      
+      <Route path="/guide" element = {user ? <Guide /> : <Navigate to="/login" /> } />
+
       <Route path="/*" element = {<Navigate to="/login" />} />
     </Routes>
     )}

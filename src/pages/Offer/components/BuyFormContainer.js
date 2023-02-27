@@ -5,10 +5,11 @@ import { useHistory, useNavigate } from "react-router-dom";
 import { SHA256, enc } from "crypto-js";
 import axios from "axios";
 
-import logo from "../../../img/logo.png";
+import logo from "../../../img/2.png";
+import logo1 from "../../../img/1.svg"
 import PayULogo from "../../../img/PayU.png";
 import "./MainContentOffer.css";
-import { Windows } from "react-bootstrap-icons";
+import { LayoutSplit, Windows } from "react-bootstrap-icons";
 import { decode } from "@firebase/util";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -25,18 +26,20 @@ function BuyFormContainer() {
     "==",
     user.uid,
   ]);
-  const { documents: transactions } = useCollection("transactions", ["uid","==",user.uid]);
+  const { documents: transactions } = useCollection("transactions", [
+    "uid",
+    "==",
+    user.uid,
+  ]);
 
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
 
   const [customerIp] = useState(encodeURIComponent("123.123.123.123"));
   const [merchantPosId, setMerchantPosId] = useState("4283004");
-  const [description, setDescription] = useState("Opis zamówienia");
+  const [description, setDescription] = useState("Licencja");
 
   const [txnid, setTxnid] = useState(Date.now());
-
-
-
+  const [products, setProducts] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [country, setCountry] = useState("Poland");
@@ -51,7 +54,7 @@ function BuyFormContainer() {
   const [currencyCode, setCurrencyCode] = useState("PLN");
   const [productName, setProductName] = useState("Produkt 1");
   const [unitPrice, setUnitPrice] = useState("5000");
-  const [totalAmount, setTotalAmount] = useState('');
+  const [totalAmount, setTotalAmount] = useState(0);
   const [quantity, setQuantity] = useState("1");
   const [continueUrl, setContinueUrl] = useState("https://gsapp.pl/success");
   const [md5Key, setMd5Key] = useState("94c26aa12c41e5c2b2d820ec3bcd77a1");
@@ -61,25 +64,89 @@ function BuyFormContainer() {
   const [additionalDescription, setAdditionalDescription] = useState("");
   const [postCodeError, setPostCodeError] = useState("");
   const [nipError, setNipError] = useState("");
+  const [data, setData] = useState({});
+  const [radioType, setRadioType] = useState("Licencja MAX 1 miesiąc");
+
+  useEffect(() => {
+    const data = {
+      customerIp: "127.0.0.1",
+      merchantPosId: "459912",
+      description: description,
+      currencyCode: "PLN",
+      totalAmount: totalAmount,
+      buyer: {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        language: countryCode
+      },
+      products: products
+    }
+    setData(data);
+  },[description, totalAmount, email, firstName, lastName, countryCode, products])
+  
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios.post("https://us-central1-poster-dd714.cloudfunctions.net/api", data)
+  //   .then((res) => {
+  //     console.log(res.data)
+  //   })
+  //   .catch(err => console.log(err))
+  // }
+
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+
+    if (checked) {
+      if (e.target.name === "Licencja MAX 1 miesiąc") {
+        setProducts((prevProducts) => [
+          { name: e.target.name, unitPrice: e.target.value },
+        ]);
+        setDescription("Licencja")
+      } else {
+        setProducts((prevProducts) =>
+          prevProducts.filter(
+            (product) => product.name !== "Licencja MAX 1 miesiąc"
+          )
+        );
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product.name !== "other")
+        );
+        setDescription("Usługi graficzne")
+        setProducts((prevProducts) => [
+          ...prevProducts,
+          { name, unitPrice: parseFloat(value) },
+        ]);
+      }
+    } else {
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product.name !== name)
+      );
+    }
+    
+  };
+  useEffect(() => {
+    if(products.length === 0) {
+      products.push({ name: "Licencja MAX 1 miesiąc", unitPrice: "5000"})
+    }
+  },[])
+  
+  useEffect(() => {
+    let price = 0;
+
+    products.forEach((product) => {
+      price += Number(product.unitPrice);
+    });
+    setTotalAmount(price);
+  }, [products, radioType]);
+  
 
   const [formFirstName, setFormFirstName] = useState();
   const [formLastName, setFormLastName] = useState();
 
-  const options = [
-    {value: "7000", label: "wzór indywidulany dzień meczowy"},
-    {value: "7000", label: "wzór indywidulany skład wyjścowy"},
-    {value: "7000", label: "wzór indywidulany GOOOOL"},
-    {value: "7000", label: "wzór indywidulany zapowiedź meczu"},
-    {value: "7000", label: "wzór indywidulany wynik"},
-    {value: "5000", label: "wycinanie tła z herbu"},
-    {value: "7000", label: "wycinanie tła "},
-  ]
-
-
   useEffect(() => {
     setTotalAmount(unitPrice);
-  },[unitPrice])
-  
+  }, [unitPrice]);
 
   useEffect(() => {
     if (postCode) {
@@ -105,26 +172,27 @@ function BuyFormContainer() {
   }, []);
   useEffect(() => {
     if (userData) {
-      if(userData.length > 0){
-      setFirstName(userData[0].firstName);
-      setLastName(userData[0].lastName);
-      setAddress(userData[0].address);
-      setPostCode(userData[0].postCode);
-      setCity(userData[0].city);
-      setCountry(userData[0].country);
-      if (userData[0].NIP) {
-        setIsChecked(true);
-        setNip(userData[0].NIP);
-        setCompanyName(userData[0].companyName);
-        setAdditionalDescription("asdasd");
-      }}
+      if (userData.length > 0) {
+        setFirstName(userData[0].firstName);
+        setLastName(userData[0].lastName);
+        setAddress(userData[0].address);
+        setPostCode(userData[0].postCode);
+        setCity(userData[0].city);
+        setCountry(userData[0].country);
+        if (userData[0].NIP) {
+          setIsChecked(true);
+          setNip(userData[0].NIP);
+          setCompanyName(userData[0].companyName);
+          setAdditionalDescription("asdasd");
+        }
+      }
     } else {
-      setFirstName('');
-      setLastName('');
-      setAddress('');
-      setPostCode('');
-      setCity('');
-      setCountry('');
+      setFirstName("");
+      setLastName("");
+      setAddress("");
+      setPostCode("");
+      setCity("");
+      setCountry("");
     }
   }, [userData]);
   useEffect(() => {
@@ -194,18 +262,19 @@ function BuyFormContainer() {
     nip,
     companyName,
     isChecked,
-    email
+    email,
   ]);
   const handleSave = () => {
-    localStorage.setItem("amount", totalAmount)
-    const docRef = collection(db, "transaction")
+    const docRef = collection(db, "transaction");
     addDoc(docRef, {
       uid: user.uid,
       status: "inProgress",
       amount: totalAmount,
-      orderId: txnid
-    })
-  }
+      description: description,
+      products: products,
+      orderId: txnid,
+    });
+  };
 
   useEffect(() => {
     const enContinueUrl = encodeURIComponent(continueUrl);
@@ -252,16 +321,25 @@ function BuyFormContainer() {
     unitPrice,
     totalAmount,
     txnid,
-    continueUrl
+    continueUrl,
   ]);
+  const services = [
+    { id: 1, name: "grafika indywidualna Dzień meczowy", price: "7000" },
+    { id: 2, name: "grafika indywidualna Zapowiedź meczu", price: "7000" },
+    { id: 3, name: "grafika indywidualna GOOOL", price: "7000" },
+    { id: 3, name: "grafika indywidualna Skład wyjściowy", price: "7000" },
+    { id: 4, name: "grafika indywidualna wynik", price: "7000" },
+    { id: 5, name: "wycinanie herbów z tła (cała liga)", price: "5000" },
+    { id: 6, name: "wycinanie zawodników z tła ( do 25 osób)", price: "15000" },
+  ];
 
   return (
     <div className="form-container">
-      <div className="logo-block">
+      <div className="logo-block" >
         <img src={logo} className="logo-image" />
       </div>
       <div className="price-container">
-        <h1>{unitPrice / 100}zł</h1>
+        <h1>{totalAmount / 100}zł</h1>
       </div>
       <div className="package-container">
         <label>
@@ -269,55 +347,61 @@ function BuyFormContainer() {
             type="radio"
             value="5000"
             name="Licencja MAX 1 miesiąc"
-            onChange={(e) => setUnitPrice(e.target.value)}
-            checked={unitPrice === "5000"}
+            onChange={(e) => {
+              handleCheckboxChange(e);
+              setRadioType(e.target.name);
+            }}
+            checked={radioType === "Licencja MAX 1 miesiąc"}
             defaultChecked
           />
           <span>1 miesiąc</span>
         </label>
+
         <label>
           <input
             type="radio"
-            value="15000"
-            name="Licencja MAX 3 miesiące"
-            onChange={(e) => setUnitPrice(e.target.value)}
-            checked={unitPrice === "15000"}
+            value="0"
+            name="other"
+            onChange={(e) => {
+              handleCheckboxChange(e);
+              setUnitPrice(e.target.value);
+              setRadioType(e.target.name);
+            }}
+            checked={radioType === "other"}
           />
-          <span>3 miesiące</span>
+          <span>Usługi</span>
         </label>
-        <label>
-          <input
-            type="radio"
-            value="30000"
-            name="Licencja MAX 6 miesiące"
-            onChange={(e) => setUnitPrice(e.target.value)}
-            checked={unitPrice === "30000"}
-          />
-          <span>6 miesiące</span>
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="60000"
-            name="Licencja MAX 12 miesiący"
-            onChange={(e) => setUnitPrice(e.target.value)}
-            checked={unitPrice === "60000"}
-          />
-          <span>12 miesiący</span>
-        </label>
-        {/* <label>
-          <input
-          type="radio"
-          value="0"
-          name="other"
-          onChange={(e) => setUnitPrice(e.target.value)}
-          checked={unitPrice === "0"}
-          />
-          <span>Inne</span>
-        </label>
-        <Select options={options} /> */}
-            
       </div>
+      <label>
+        <input type="radio" />
+      </label>
+      {radioType && radioType === "other" && (
+        <>
+          <div className="services-container mt-5 d-flex flex-column ">
+            {services.map((service) => (
+              <div className="service-content d-flex flex-row">
+                <div className="checkbox-container">
+                  <label style={{ height: "50px", width: "50px" }}>
+                    <input
+                      type="checkbox"
+                      onChange={handleCheckboxChange}
+                      name={service.name}
+                      value={service.price}
+                    />
+                    <span></span>
+                  </label>
+                </div>
+                <div className="service-name-container">
+                  <div>{service.name}</div>
+                </div>
+                <div className="service-price-container">
+                  <div>{service.price / 100}zł</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       <div className="fax-container">
         <p className="form-title">Dane do faktury</p>
 
@@ -605,20 +689,20 @@ function BuyFormContainer() {
           </div>
         </div>
         <div className="label-content">
-            <div className="inner-label-containers">
-              <label>E-mail</label>
-              <span style={{ color: "red" }}>*</span>
-            </div>
-            <input
-              type="text"
-              name="lastName"
-              placeholder=" email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              className="fullName"
-              required
-            />
+          <div className="inner-label-containers">
+            <label>E-mail</label>
+            <span style={{ color: "red" }}>*</span>
           </div>
+          <input
+            type="text"
+            name="lastName"
+            placeholder=" email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="fullName"
+            required
+          />
+        </div>
         <div className="data-content">
           <div className="label-content">
             <div className="label-name">
@@ -726,11 +810,7 @@ function BuyFormContainer() {
             name="buyer.delivery.countryCode"
             value={countryCode}
           />
-          <input
-            type="hidden"
-            name="buyer.email"
-            value={email}
-          />
+          <input type="hidden" name="buyer.email" value={email} />
           <input type="hidden" name="notifyUrl" value={notifyUrl} />
           <input type="hidden" name="continueUrl" value={continueUrl} />
           <input type="hidden" name="buyer.firstName" value={formFirstName} />
@@ -742,10 +822,10 @@ function BuyFormContainer() {
           />
           <div className="btn-container">
             <button
+              onClick={handleSave}
               type="submit"
               className="btn primary-btn"
               style={{ width: "200px" }}
-              onClick={handleSave}
               disabled={!isActiveButton}
             >
               Kup

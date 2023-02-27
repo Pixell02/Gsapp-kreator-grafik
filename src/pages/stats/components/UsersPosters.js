@@ -10,7 +10,6 @@ import "../Stats.css";
 export default function UsersPosters() {
   const { documents: userPosters } = useCollection("yourCatalog");
   const { documents: Teams } = useCollection("Teams");
-  console.log(Teams);
   const [users, setUsers] = useState("");
   useEffect(() => {
     if (userPosters) {
@@ -30,9 +29,9 @@ export default function UsersPosters() {
               <span className="users-id">
                 {Teams &&
                   Teams.filter((teams) => teams.uid === user).map(
-                    (teams) => teams.firstName + " " + teams.secondName + " "
+                    (teams) => (teams.firstName ? teams.firstName + " " + teams.secondName + " " : null)
                   )}
-                {user !== undefined ?`(${user})`:null}
+                {user !== undefined ?`(${user})`: null}
                 {user === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && (
                   <span>(Moje konto)</span>
                 )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
+import MainFooter from '../../components/MainFooter';
 import PlayerMainContent from './components/Player-MainContent';
 import "../../App.css";
   
@@ -12,6 +13,7 @@ function Players () {
           
           <LeftBar />
           <PlayerMainContent />
+          <MainFooter />
         </div>
       </div>
     );

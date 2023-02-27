@@ -10,6 +10,7 @@ import UsersCountry from "./UsersCountry";
 export default function AdministratorPanel() {
   const { documents: license } = useCollection("user");
   const { documents: users } = useCollection("Teams");
+  const { documents: history } = useCollection("history");
   return (
     <div className="main-content">
       <div className="ml-5 mt-5">
@@ -19,7 +20,7 @@ export default function AdministratorPanel() {
           <FavoriteTheme />
           <UsersCountry />
         </div>
-        <Orders />
+        <Orders history={history} user={users} />
         <UsersPosters />
         <Users users={users} license={license} />
       </div>

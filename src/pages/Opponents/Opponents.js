@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
 import OpponentsMainContent from './components/Opponents-MainContent';
 import "../../App.css";
+import Footer from '../../components/MainFooter';
 
 function Opponents () {
 
@@ -11,7 +12,8 @@ function Opponents () {
         <div className='content-wrap'>
           
           <LeftBar />
-          <OpponentsMainContent />        
+          <OpponentsMainContent />   
+          <Footer />     
         </div>
       </div>
     );

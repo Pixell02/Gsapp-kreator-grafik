@@ -34,6 +34,7 @@ function PlayerMainContent() {
         </button>
         <ItemContainer>
           {Players && < ItemBlock items={Players}   /> }
+          
         </ItemContainer>
         
       </div>

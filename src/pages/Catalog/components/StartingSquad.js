@@ -46,20 +46,135 @@ function StartingSquad({
   capitan,
   themeOption,
   radioChecked,
+  yourTeamImage,
   id,
+  kolejka,
+  league
 }) {
   const [isPoster, setIsPoster] = useState(null);
   const { poster } = useParams();
   const backImg = new Image();
-
   backImg.src = posterBackGround;
   const [yourTeamLogo, setYourTeamLogo] = useState(yourLogo);
+  const [yourTeamImg, setYourTeamImg] = useState(yourTeamImage);
   const { user } = useAuthContext();
   const canvasRef = useRef();
   const fabricRef = useRef();
 
   const [logo, setLogo] = useState([]);
   const [sponsors, setSponsors] = useState([]);
+
+
+  const yourLeague = () => {
+    if (league) {
+      if (fabricRef.current && league === "") {
+        fabricRef.current._objects.forEach((image, i) => {
+          if (fabricRef.current.item(i).className == "yourLeague") {
+            fabricRef.current.remove(fabricRef.current.item(i));
+          }
+        });
+      }
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className === "yourLeague") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+
+      const font = new FontFaceObserver(coords.yourLeagueFontFamily);
+      font.load().then(() => {
+        if (poster === "mvzttPwmXvDWCz4vJefn") {
+          league = league.toUpperCase();
+        }
+        const yourLeague = new fabric.Text(league, {
+          top: coords.yourLeagueTop,
+          left: coords.yourLeagueLeft,
+          fontFamily: coords.yourLeagueFontFamily,
+          selectable: false,
+          fill: coords.yourLeagueFill,
+          className: "yourLeague",
+          originX: coords.yourLeagueOriginX,
+          originY: coords.yourLeagueOriginY,
+        });
+
+        if (coords.yourLeagueWidth) {
+          yourLeague.set({
+            width: coords.yourLeagueWidth,
+          });
+        }
+        if (coords.yourLeagueScaleToHeight) {
+          yourLeague.scaleToHeight(coords.yourLeagueScaleToHeight);
+        }
+        if (coords.yourLeagueFontSize) {
+          yourLeague.set({
+            fontSize: coords.yourLeagueFontSize,
+          });
+        }
+        if (yourLeague.width > coords.yourLeagueScaleToWidth) {
+          yourLeague.scaleToWidth(coords.yourLeagueScaleToWidth);
+        }
+        fabricRef.current.add(yourLeague);
+      });
+    }
+  };
+  useEffect(() => {
+    yourLeague();
+  },[league, themeOption])
+    
+
+  const yourKolejka = () => {
+    if (kolejka) {
+      if (fabricRef.current && kolejka === "") {
+        fabricRef.current._objects.forEach((image, i) => {
+          if (fabricRef.current.item(i).className == "yourKolejka") {
+            fabricRef.current.remove(fabricRef.current.item(i));
+          }
+        });
+      }
+      fabricRef.current._objects.forEach((image, i) => {
+        if (fabricRef.current.item(i).className === "yourKolejka") {
+          fabricRef.current.remove(fabricRef.current.item(i));
+        }
+      });
+      const font = new FontFaceObserver(coords.yourKolejkaFontFamily);
+      font.load().then(() => {
+        
+        const yourKolejka = new fabric.Text(kolejka, {
+          top: coords.yourKolejkaTop,
+          left: coords.yourKolejkaLeft,
+          fontFamily: coords.yourKolejkaFontFamily,
+          selectable: false,
+          fill: coords.yourKolejkaFill,
+          className: "yourKolejka",
+          originX: coords.yourKolejkaOriginX,
+          originY: coords.yourKolejkaOriginY,
+        });
+        if (coords.yourKolejkaCharSpacing) {
+          yourKolejka.set({
+            charSpacing: coords.yourKolejkaCharSpacing,
+          });
+        }
+
+        if (coords.yourKolejkaWidth) {
+          yourKolejka.set({
+            width: coords.yourKolejkaWidth,
+          });
+        }
+        if (coords.yourKolejkaScaleToHeight) {
+          yourKolejka.scaleToHeight(coords.yourKolejkaScaleToHeight);
+        }
+        if (coords.yourKolejkaFontSize) {
+          yourKolejka.set({
+            fontSize: coords.yourKolejkaFontSize,
+          });
+        }
+        if (yourKolejka.width > coords.yourKolejkaScaleToWidth) {
+          yourKolejka.scaleToWidth(coords.yourKolejkaScaleToWidth);
+        }
+        fabricRef.current.add(yourKolejka);
+      });
+    }
+  };
+  yourKolejka();
 
   const showPlayerOne = () => {
     if (playerOne) {
@@ -75,7 +190,9 @@ function StartingSquad({
       } else {
         playerOne = playerOne;
       }
-      const showPlayer = new fabric.Text(playerOne, {
+      const font = new FontFaceObserver(coords.playerOneFontFamily)
+      font.load().then(() => {
+        const showPlayer = new fabric.Text(playerOne, {
         selectable: false,
         top: coords.playerOneTop,
         originY: coords.playerOneOriginY,
@@ -86,6 +203,8 @@ function StartingSquad({
         className: "playerOne",
         fontFamily: coords.playerOneFontFamily,
       });
+      
+      
       if (themeOption) {
         if (
           themeOption.label.split("-")[0] === "biało" ||
@@ -111,6 +230,12 @@ function StartingSquad({
             fill: "white",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerOneLeft) {
         showPlayer.set({
@@ -132,7 +257,7 @@ function StartingSquad({
         }
       }
       fabricRef.current.add(showPlayer);
-    }
+    })}
   };
   const showPlayerTwo = () => {
     if (playerTwo) {
@@ -185,6 +310,12 @@ function StartingSquad({
             fill: "black",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerTwoLeft) {
         showPlayer.set({
@@ -259,6 +390,12 @@ function StartingSquad({
             fill: "white",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerThreeLeft) {
         showPlayer.set({
@@ -330,6 +467,12 @@ function StartingSquad({
             fill: "black",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerFourLeft) {
         showPlayer.set({
@@ -401,6 +544,12 @@ function StartingSquad({
             fill: "white",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerFiveLeft) {
         showPlayer.set({
@@ -474,6 +623,12 @@ function StartingSquad({
             fill: "black",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerSixLeft) {
         showPlayer.set({
@@ -546,7 +701,15 @@ function StartingSquad({
             fill: "black",
           });
         }
-        if (coords.playerSevenLeft) {
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
+        
+      }
+      if (coords.playerSevenLeft) {
           showPlayer.set({
             left: coords.playerSevenLeft,
           });
@@ -555,7 +718,6 @@ function StartingSquad({
             left: coords.playerSevenWidth / 2,
           });
         }
-      }
       if (coords.playersScaleToHeight) {
         showPlayer.scaleToHeight(coords.playersScaleToHeight);
       }
@@ -618,6 +780,12 @@ function StartingSquad({
             fill: "black",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerEightLeft) {
         showPlayer.set({
@@ -691,6 +859,12 @@ function StartingSquad({
             fill: "black",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
 
       if (coords.playerNineLeft) {
@@ -764,6 +938,12 @@ function StartingSquad({
             fill: "white",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
       }
       if (coords.playerTenLeft) {
         showPlayer.set({
@@ -837,6 +1017,13 @@ function StartingSquad({
             fill: "white",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showPlayer.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showPlayer.set({fill:"white"})
+        } 
+      
       }
       if (coords.playerElevenLeft) {
         showPlayer.set({
@@ -860,6 +1047,7 @@ function StartingSquad({
   };
 
   const showReserveFirst = () => {
+    
     if (
       reserveOne ||
       reserveTwo ||
@@ -902,13 +1090,18 @@ function StartingSquad({
         if (!reserveSix) {
           reserveSix = " ";
         } else {
-          reserveSix = " | " + reserveSix;
+          if(poster === "IxOg6DyMuo9gTvv8BJK9"){
+            reserveSix = " | " + reserveSix;
+          } else {
+            reserveSix = reserveSix;
+          }
         }
         if (!reserveSeven) {
           reserveSeven = " ";
         } else {
           reserveSeven = " | " + reserveSeven;
         }
+       
         if(poster === "IxOg6DyMuo9gTvv8BJK9") {
           text = `${reserveOne}  ${reserveTwo} ${reserveThree} ${reserveFour}  ${reserveFive} ${reserveSix} ${reserveSeven}`
         } else {
@@ -937,7 +1130,6 @@ function StartingSquad({
         }
         text = `${reserveOne}  ${reserveTwo} `;
       }
-
       const showReserve = new fabric.Text(text, {
         selectable: false,
         className: "reserve",
@@ -946,8 +1138,15 @@ function StartingSquad({
         originX: coords.reserveOneOriginX,
         originY: coords.reserveOneOriginY,
         fontFamily: coords.reserveOneFontFamily,
+        fontSize: coords.reserveOneFontSize,
         fill: coords.reserveOneFill,
       });
+      const font = new FontFaceObserver(coords.reserveOneFontFamily)
+      font.load().then(() => {
+        showReserve.set({
+          fontFamily: coords.reserveOneFontFamily,
+        })
+      })
       if (themeOption) {
         if (
           themeOption.label.split("-")[0] === "biało" ||
@@ -968,15 +1167,7 @@ function StartingSquad({
             fill: "white",
           });
         }
-      }
-      showReserve.scaleToHeight(20);
-      
-      if (coords.reserveOneScaleToWidth) {
-        if (showReserve.width >= coords.reserveOneScaleToWidth) {
-          showReserve.scaleToWidth(coords.reserveOneScaleToWidth);
-        }
-      }
-      if (
+        if (
         id.theme === "motyw 3" &&
         themeOption.label === "biało-czerwono-niebiesko-zielony"
       ) {
@@ -989,6 +1180,31 @@ function StartingSquad({
           fill: "white",
         });
       }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showReserve.set({fill:"white"})
+        }  
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showReserve.set({fill:"white"})
+        } 
+      
+      }
+      if(coords.reserveOneScaleToHeight) {
+        showReserve.scaleToHeight(coords.reserveOneScaleToHeight);
+      }
+      
+      if(coords.reserveOneFontSize) {
+        showReserve.set({
+          fontSize: coords.reserveOneFontSize
+        })
+      }
+      
+      
+      if (coords.reserveOneScaleToWidth) {
+        if (showReserve.width >= coords.reserveOneScaleToWidth) {
+          showReserve.scaleToWidth(coords.reserveOneScaleToWidth);
+        }
+      }
+      
       fabricRef.current.add(showReserve);
     }
   };
@@ -1011,7 +1227,7 @@ function StartingSquad({
         if (!reserveSeven || reserveSix === " ") {
           reserveSeven = " ";
         } else {
-          reserveSeven = "| " + reserveSeven;
+          reserveSeven = " " + reserveSeven;
         }
         text = `${reserveSix} ${reserveSeven}`;
       } else {
@@ -1038,9 +1254,19 @@ function StartingSquad({
         left: coords.reserveSixLeft,
         originX: coords.reserveSixOriginX,
         originY: coords.reserveSixOriginY,
+        
         fontFamily: coords.reserveSixFontFamily,
         fill: coords.reserveSixFill,
       });
+      const font = new FontFaceObserver(coords.playerOneFontFamily)
+      font.load().then(() => {
+        showReserve.set({
+          fontFamily: coords.reserveSixFontFamily,
+          top: coords.reserveSixTop,
+          fontSize: coords.reserveSixFontSize,
+          left: coords.reserveSixLeft,
+        })
+      })
       if (themeOption) {
         if (
           themeOption.label.split("-")[0] === "biało" ||
@@ -1075,6 +1301,12 @@ function StartingSquad({
             fill: "white",
           });
         }
+        if(id.theme === "motyw 5" && themeOption.label === "biało-niebieski") {
+          showReserve.set({fill:"white"})
+        } 
+        if(id.theme === "motyw 5" && themeOption.label === "żółto-czarny") {
+          showReserve.set({fill:"white"})
+        } 
       }
       showReserve.scaleToHeight(20);
       if (coords.reserveSixScaleToHeight) {
@@ -1278,17 +1510,24 @@ function StartingSquad({
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
-        const opponentsName = new fabric.Text(opponentName, {
+        const font = new FontFaceObserver(coords.opponentNameFontFamily)
+        font.load().then(() => {
+        const opponentsName = new fabric.Text(opponentName.toUpperCase(), {
           selectable: false,
           top: coords.opponentNameTop,
           left: coords.opponentNameLeft,
           originY: coords.opponentNameOriginY,
           originX: coords.opponentNameOriginX,
-          width: coords.opponentNameWidth,
           fill: coords.opponentNameFill,
           className: "opponentsName",
           fontFamily: coords.opponentNameFontFamily,
         });
+        
+        if(coords.opponentNameWidth){
+          opponentsName.set({
+            width: coords.opponentNameWidth
+          });
+        }
         if (coords.opponentNameScaleToHeight) {
           opponentsName.scaleToHeight(coords.opponentNameScaleToHeight);
         }
@@ -1343,15 +1582,17 @@ function StartingSquad({
               fill: "white",
             });
           }
+
         }
         fabricRef.current.add(opponentsName);
+        });
       } else {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "opponentsName") {
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
-        const opponentsName = new fabric.Text(opponentName, {
+        const opponentsName = new fabric.Text(opponentName.toUpperCase(), {
           selectable: false,
           top: coords.yourTeamNameTop,
           left: coords.yourTeamNameLeft,
@@ -1457,12 +1698,12 @@ function StartingSquad({
   useEffect(() => {
     initFabric();
   }, [posterBackGround]);
-
+ 
   const teamLogo = () => {
     if (poster === "6JftCRHQYUItjEz55Rn1") {
       radioChecked = "radio1";
     }
-    if (yourTeamLogo[0].img) {
+    if (yourTeamImg) {
       if (radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "teamLogo") {
@@ -1470,7 +1711,7 @@ function StartingSquad({
           }
         });
         const secondImg = new Image();
-        secondImg.src = yourTeamLogo[0].img;
+        secondImg.src = yourTeamImg;
         secondImg.onload = () => {
           fabric.Image.fromURL(secondImg.src, function (img) {
             img.set({
@@ -1513,11 +1754,8 @@ function StartingSquad({
     }
   };
   useEffect(() => {
-    setTimeout(() => {
       teamLogo();
-    },1)
-    
-  }, [radioChecked, isPoster, posterBackGround, yourLogo]);
+  }, [radioChecked, posterBackGround, themeOption, yourTeamImg]);
   
   const teamName = () => {
     if (yourTeamLogo[0].firstName) {
@@ -1536,7 +1774,7 @@ function StartingSquad({
         }
         const font = new FontFaceObserver(coords.yourTeamNameFontFamily);
         font.load().then(() => {
-          const name = new fabric.Text(yourTeamName, {
+          const name = new fabric.Text(yourTeamName.toUpperCase(), {
             selectable: false,
             originX: coords.yourTeamNameOriginX,
             originY: coords.yourTeamNameOriginY,
@@ -1629,7 +1867,7 @@ function StartingSquad({
         }
         const font = new FontFaceObserver(coords.opponentNameFontFamily);
         font.load().then(() => {
-          const name = new fabric.Text(yourTeamName, {
+          const name = new fabric.Text(yourTeamName.toUpperCase(), {
             selectable: false,
             originX: coords.opponentNameOriginX,
             originY: coords.opponentNameOriginY,
@@ -1706,9 +1944,9 @@ function StartingSquad({
     teamName();
   }, [themeOption, radioChecked, posterBackGround]);
 
-  useEffect(() => {
+
     opponentLogo();
-  }, [themeOption, radioChecked, opponentLogo]);
+ 
   
   opponentsName();
   showPlayerOne();

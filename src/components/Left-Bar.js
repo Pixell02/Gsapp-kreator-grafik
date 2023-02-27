@@ -5,7 +5,7 @@ import { useCollection } from "../hooks/useCollection";
 import { useLogout } from "../hooks/useLogout";
 import * as Icon from "react-bootstrap-icons";
 import "./LeftBar.css";
-import logo from "../img/logo.png";
+import logo from "../img/2.svg";
 import {ReactComponent as Crest} from "../img/crest_2.svg";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -33,7 +33,7 @@ function LeftBar() {
   return (
     <div className="left-bar">
       
-      <div className="logo-item">
+      <div className="logo-item" style={{backgroundColor: "black"}}>
         <img src={logo} className="logo-image" />
       </div>
       <div ref={hideElement} className="links-container">
@@ -86,16 +86,7 @@ function LeftBar() {
             <span className={isHover === 5 ? "extended-text" : "slide-text"}>Przeciwnicy</span>
             {isActive ? <span className="extended-text">Przeciwnicy</span> : <span className="slide-text">Przeciwnicy</span>}
           </Link>
-          <div key="6" className="icon text-white link-content" onMouseEnter={() => setIsHover(6)} onMouseLeave={() => setIsHover(null)}>
-            <li>
-              <Icon.StarFill
-                className="icon-element"
-                style={{ color: "#Dcdcdc" }}
-              />
-            </li>
-            <span className={isHover === 6 ? "extended-text" : "slide-text"} style={{color: "gray"}}>Sponsorzy<Icon.LockFill style={{margin:"0 0 0 5px"}} /></span> 
-            {isActive ? <span className="extended-text" style={{color: "gray"}}>Sponsorzy<Icon.LockFill style={{margin:"0 0 0 5px"}} /></span> : <span className="slide-text" style={{color: "gray"}}>Sponsorzy <Icon.LockFill style={{margin:"0 0 0 5px"}} /></span>}
-          </div>
+          
           <Link key="7" to={`/offer`} className="icon text-white link-content" onMouseEnter={() => setIsHover(7)} onMouseLeave={() => setIsHover(null)}>
             <li>
               <Icon.Cash className="icon-element" />

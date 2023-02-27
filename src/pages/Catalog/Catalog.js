@@ -11,6 +11,7 @@ function Catalog () {
       <div className='content-wrap'>
         <LeftBar />
         <MainCatalog />
+        <Footer />
       </div>
     </div>
     );

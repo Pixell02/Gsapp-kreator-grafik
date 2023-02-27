@@ -1,10 +1,12 @@
-.main-content {
-  margin-left: 180px;
+ .main-content {
+  padding-left: 180px;
+  width: 100%;
+  display: flex;
 }
-/* .ml-5 {
-  margin-left: 10px;
-  min-height: 80vh;
-} */
+.main-content .ml-5 {
+  width: 100%;
+}
+
 .title-container {
   margin-top: 20px;
   margin-left: 20px;
@@ -15,4 +17,9 @@
   display: flex;
   flex-wrap: wrap;
   min-height: 50vh;
+}
+ .empty-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
 }

@@ -1,10 +1,11 @@
 import { useRef ,useState, useEffect } from 'react'
 import '../../YourTeamPanel/components/addTeamWindow.css'
 import bin from '../../../img/binIcon.png'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc } from 'firebase/firestore'
 import { db } from '../../../firebase/config'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useParams } from 'react-router-dom'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 
 
@@ -33,7 +34,7 @@ function AddOpponentWindow({open, onClose})  {
        reader.readAsDataURL(image); 
       } else {
         setPreview(null)
-        alert("maksymalna wielkość obrazu to 150KB")
+        alert("maksymalna wielkość obrazu to 1MB")
       }
     } else {
       setPreview(null)
@@ -47,12 +48,47 @@ function AddOpponentWindow({open, onClose})  {
     }  else if (!preview) {
       alert("brak obrazu")
     } else {
-      await addDoc(collection(db, 'Opponents'), {
-        firstName: firstOpponentName,
-        secondName: secondOpponentName,
-        img: preview,
-        uid: user.uid
-      })
+      const storage = getStorage();
+      const metadata = {
+        contentType: "image/png",
+      };
+      const storageRef = ref(
+        storage,
+        `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`
+      );
+       
+      const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        async () => {
+          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            const docRef = collection(db, "Opponents");
+            addDoc(docRef, {
+              firstName: firstOpponentName,
+              secondName: secondOpponentName,
+              img: downloadURL,
+              uid: user.uid,
+            });
+          });
+        }
+      );
       onClose(true)
       setFirstOpponentName('')
       setSecondOpponentName('')

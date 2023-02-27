@@ -5,6 +5,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 
 function AddPlayerWindow({ open, onClose }) {
   const { id } = useParams();
@@ -22,7 +23,7 @@ function AddPlayerWindow({ open, onClose }) {
 
   useEffect(() => {
     if (image) {
-      if (Math.round(image.size / 1024) < 150) {
+      if (Math.round(image.size / 1024) < 1000) {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result);
@@ -30,7 +31,7 @@ function AddPlayerWindow({ open, onClose }) {
         reader.readAsDataURL(image);
       } else {
         setPreview(null);
-        alert("maksymalna wielkość obrazu to 150KB");
+        alert("maksymalna wielkość obrazu to 1MB");
       }
     } else {
       setPreview(null);
@@ -39,16 +40,56 @@ function AddPlayerWindow({ open, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstPlayerName || !secondPlayerName) {
+    
+    if (!firstPlayerName || !secondPlayerName ) {
       alert("puste pole");
+    } else if (!number) {
+      alert("brak numeru zawodnika")
     }  else {
-      await addDoc(collection(db, "Players"), {
+      if(image){
+      const storage = getStorage();
+      const metadata = {
+        contentType: 'image/png'
+      };
+    const player = ref(storage, `${user.uid}/zawodnicy/${firstPlayerName}_${secondPlayerName}`);
+    
+    const uploadTask = uploadBytesResumable(player, image, metadata)
+    
+    uploadTask.on('state_changed', (snapshot) => {
+      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    }, (error) => {
+      console.log(error);
+    },
+      async() => {
+        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+           addDoc(collection(db, "Players"), {
         firstName: firstPlayerName,
         secondName: secondPlayerName,
-        img: preview,
+        img: downloadURL || "",
         number: number,
         uid: user.uid,
       });
+        });
+      }
+    )
+      } else {
+        addDoc(collection(db, "Players"), {
+          firstName: firstPlayerName,
+          secondName: secondPlayerName,
+          img: "",
+          number: number,
+          uid: user.uid,
+      })
+      }
       onClose(true);
       setFirstPlayerName("");
       setSecondPlayerName("");

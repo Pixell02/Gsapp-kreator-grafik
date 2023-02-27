@@ -14,4 +14,13 @@
     box-shadow: none !important;
 }
 
+.guide-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 40px ;
+
+
+}
+
 

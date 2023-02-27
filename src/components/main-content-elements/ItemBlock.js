@@ -51,6 +51,7 @@ export default function ItemBlock({ items }) {
     openEditModal();
     setItemToEdit(null);
   };
+  
 
   return (
     <div ref={hideElement} className="catalog-container">
@@ -98,7 +99,7 @@ export default function ItemBlock({ items }) {
             </div>
           </div>
           <div className="image-content">
-           {item.img !== null && <img src={item.img} alt={item.firstName + " " + item.secondName} />}
+           {item.img !== null && item.img !== "" && <img src={item.img} alt={item.firstName + " " + item.secondName} />}
           </div>
         </div>
       ))}

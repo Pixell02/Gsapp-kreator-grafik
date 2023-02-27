@@ -16,6 +16,7 @@ function MainCatalog() {
                 <div className='item-container'>
                   {posters && <Catalog posters = {posters} />}
                 </div>
+               
             </div>
         </div>
     );
