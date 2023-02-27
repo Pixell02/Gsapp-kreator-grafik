@@ -5,6 +5,7 @@ import ItemContainer from "../../../../components/main-content-elements/ItemCont
 import Title from "../../../../components/main-content-elements/Title";
 import Licenses from "../../../Account/components/Licenses";
 import "../../../Account/components/MainAccount.css";
+import UserStats from "./UserAccountComponents/UserStats";
 export default function UserProfile(props) {
   
   return (
@@ -64,6 +65,12 @@ export default function UserProfile(props) {
                  </Link>
                </div>
               ))}
+            </ItemContainer>
+          </div>
+          <div className="users-stats">
+            <Title title="Statystyki użytkownika" />
+            <ItemContainer>
+              <UserStats generated={props.generated} />
             </ItemContainer>
           </div>
           <div className="favorite-theme-container">
