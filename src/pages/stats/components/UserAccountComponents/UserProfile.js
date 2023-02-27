@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import ItemBlock from "../../../../components/main-content-elements/ItemBlock";
 import ItemContainer from "../../../../components/main-content-elements/ItemContainer";
 import Title from "../../../../components/main-content-elements/Title";
-
+import Licenses from "../../../Account/components/Licenses";
+import "../../../Account/components/MainAccount.css";
 export default function UserProfile(props) {
   
   return (
@@ -37,6 +38,7 @@ export default function UserProfile(props) {
         </div>
         <div>
           <div className="yourPoster-container">
+            <Licenses License={props.License} />
             <Title title="Motywy użytkownika" />
             <ItemContainer>
               {props.yourPosters && props.yourPosters.map((userPoster) => (

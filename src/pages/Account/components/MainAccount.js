@@ -12,6 +12,7 @@ import { auth, db } from "../../../firebase/config";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
 import useUserInformation from "../../../hooks/useUserInformation";
+import Licenses from "./Licenses";
 
 const zipCodeRegex = /^\d{2}-\d{3}$/;
 const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
@@ -170,8 +171,8 @@ function MainAccount() {
             <div className="userId account-data-container">
               <span className="account-data">{userCreatedAt} </span>
             </div>
-
-            {License && License[0].license == "free-trial" && (
+              <Licenses License={License} />
+            {/* {License && License[0].license == "free-trial" && (
               <div className="license-container">
                 <div className="license-content">
                   <img src={verified} className="icon-verified" />{" "}
@@ -215,7 +216,7 @@ function MainAccount() {
                 </div>
                 <label>Format MM-DD-YYYY</label>
               </div>
-            )}
+            )} */}
             <form onSubmit={handleSubmit} className="fax-container">
               <p className="form-title">Dane do faktury</p>
               <div className="inner-content-country-label">
