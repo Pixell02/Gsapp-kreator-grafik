@@ -28,10 +28,12 @@ export default function UsersPosters() {
             <div className="users-container">
               <span className="users-id">
                 {Teams &&
-                  Teams.filter((teams) => teams.uid === user).map(
-                    (teams) => (teams.firstName ? teams.firstName + " " + teams.secondName + " " : null)
+                  Teams.filter((teams) => teams.uid === user).map((teams) =>
+                    teams.firstName
+                      ? teams.firstName + " " + teams.secondName + " "
+                      : null
                   )}
-                {user !== undefined ?`(${user})`: null}
+                {user !== undefined ? `(${user})` : null}
                 {user === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && (
                   <span>(Moje konto)</span>
                 )}
@@ -43,31 +45,35 @@ export default function UsersPosters() {
                     .filter((userPoster) => userPoster.uid === user)
                     .map((userPoster) => (
                       <>
-                      {userPoster && userPoster.uid !== undefined ? (
-                      <div className="item-category-window">
-                        
-                          <div className="name-content">
-                            <span className="name-content" style={{width:"80%"}}>
-                              {userPoster.name}
-                            </span>
-                            <Icon.ThreeDotsVertical style={{marginTop: "5px"}} />
-                          </div>
-                          <Link to={`/creator/${userPoster.uuid}`}>
-                          <div className="image-category-content">
-                            {userPoster.src && (
-                              <img
-                                src={userPoster.src}
-                                alt={
-                                  userPoster.firstName +
-                                  " " +
-                                  userPoster.secondName
-                                }
+                        {userPoster && userPoster.uid !== undefined ? (
+                          <div className="item-category-window">
+                            <div className="name-content">
+                              <span
+                                className="name-content"
+                                style={{ width: "80%" }}
+                              >
+                                {userPoster.name}
+                              </span>
+                              <Icon.ThreeDotsVertical
+                                style={{ marginTop: "5px" }}
                               />
-                            )}
+                            </div>
+                            <Link to={`/creator/${userPoster.uuid}`}>
+                              <div className="image-category-content">
+                                {userPoster.src && (
+                                  <img
+                                    src={userPoster.src}
+                                    alt={
+                                      userPoster.firstName +
+                                      " " +
+                                      userPoster.secondName
+                                    }
+                                  />
+                                )}
+                              </div>
+                            </Link>
                           </div>
-                        </Link>
-                      </div>
-                      ): null}
+                        ) : null}
                       </>
                     ))}
               </div>

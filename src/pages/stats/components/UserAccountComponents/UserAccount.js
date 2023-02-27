@@ -24,6 +24,7 @@ export default function UserAccount() {
     "==",
     params.id,
   ]);
+  const { documents: generated } = useCollection("generated", ["uid", "==", params.id]);
   return (
     <div className="page-container">
       <div className="content-wrap">
@@ -35,6 +36,7 @@ export default function UserAccount() {
           yourPosters={yourCatalog}
           email={email}
           License={license}
+          generated={generated}
         />
       </div>
     </div>

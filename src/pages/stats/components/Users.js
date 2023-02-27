@@ -3,7 +3,6 @@ import Title from "../../../components/main-content-elements/Title";
 import "../Stats.css";
 import UserButton from "./subComponents/UserButton";
 export default function Users(props) {
-  console.log(props.email);
   return (
     <div className="ml-5 mt-5 users-content-container bg-light">
       <div className="pt-2">

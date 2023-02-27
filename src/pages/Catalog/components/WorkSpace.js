@@ -86,6 +86,7 @@ function WorkSpace() {
           document.querySelector(".watermark-img").remove();
         }
         posters.createdDate = Date.now();
+        posters.posterId = poster;
         posters.user = user.uid;
     const generatorRef = collection(db, "generated")
       addDoc(generatorRef, posters)
