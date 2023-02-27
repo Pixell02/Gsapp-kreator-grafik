@@ -11,9 +11,9 @@ export default function MainYourCatalog() {
   const { documents: yourPoster} = useCollection("yourCatalog",["uid","==", user.uid]);
   
   return (
-    <div className="main-content">
+    <div className="main-content d-flex flex-column">
       <Title title="Twój katalog" />
-      <div className="ml-5">
+      <div className="ml-5 d-flex flex-column">
         <div style={{ fontSize: "25px", marginBottom: "20px" }}>
           Twoje plakaty
         </div>
