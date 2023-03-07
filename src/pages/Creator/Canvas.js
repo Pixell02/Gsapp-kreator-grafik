@@ -27,6 +27,10 @@ function MatchPoster(props) {
     opponentGoals(fabricRef, props);
   },[props.opponentGoal, props.opponentGoalMinute, props.radioChecked, props.themeOption])
 
+  useEffect(() => {
+
+  },[props.yourTeamGoal, props.yourTeamGoalMinute, props.radioChecked, props.themeOption])
+
   const yourPlayerGoalOne = () => {
     if (props.yourPlayerOneGoal) {
       fabricRef.current._objects.forEach((image, i) => {

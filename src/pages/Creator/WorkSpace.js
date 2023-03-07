@@ -3,7 +3,7 @@ import { useCollection } from "../../hooks/useCollection";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { getDoc, doc, onSnapshot, updateDoc, deleteField, collection, query, where, addDoc } from "firebase/firestore";
+import { getDoc, doc, onSnapshot, collection, query, where} from "firebase/firestore";
 
 import { db } from "../../firebase/config";
 import html2canvas from "html2canvas";
@@ -22,17 +22,15 @@ import useCreateOpponentGoals from "./hooks2/useCreateOpponentGoals";
 
 function WorkSpace() {
   const { poster } = useParams();
-
   const { user } = useAuthContext();
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
-
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
-
   const { documents: Opponent } = useCollection("Opponents", ["uid", "==", user.uid]);
   const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
-
   const [teamOption, setTeamOption] = useState([]);
-  const [yourTeamGoal, handleGoalChange] = useCreateYourTeamGoals(Array(6).fill());
+  const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
+    Array(6).fill()
+  );
   const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] =
     useCreateOpponentGoals(Array(6).fill());
   const [reserve, handleReserveChange] = useReservePlayer(Array(7).fill());
@@ -355,31 +353,7 @@ function WorkSpace() {
 
   // Monthly
 
-  const [opponentGoalOneName, setOpponentGoalOneName] = useState();
-  const [opponentGoalTwoName, setOpponentGoalTwoName] = useState();
-  const [opponentGoalThreeName, setOpponentGoalThreeName] = useState();
-  const [opponentGoalFourName, setOpponentGoalFourName] = useState();
-  const [opponentGoalFiveName, setOpponentGoalFiveName] = useState();
-  const [opponentGoalSixName, setOpponentGoalSixName] = useState();
-
-  const getOpponentGoalOne = (e) => {
-    setOpponentGoalOneName(e.target.value);
-  };
-  const getOpponentGoalTwo = (e) => {
-    setOpponentGoalTwoName(e.target.value);
-  };
-  const getOpponentGoalThree = (e) => {
-    setOpponentGoalThreeName(e.target.value);
-  };
-  const getOpponentGoalFour = (e) => {
-    setOpponentGoalFourName(e.target.value);
-  };
-  const getOpponentGoalFive = (e) => {
-    setOpponentGoalFiveName(e.target.value);
-  };
-  const getOpponentGoalSix = (e) => {
-    setOpponentGoalSixName(e.target.value);
-  };
+ 
 
   const [league, setLeague] = useState();
 
@@ -481,6 +455,8 @@ function WorkSpace() {
                 league={league}
                 opponentGoalMinute={opponentGoalMinute}
                 opponentGoal={opponentGoals}
+                yourTeamGoalMinute={yourTeamGoalMinute}
+                yourTeamGoal={yourTeamGoal}
                 yourPlayerOneGoal={yourPlayerOneGoal}
                 yourPlayerTwoGoal={yourPlayerTwoGoal}
                 yourPlayerThreeGoal={yourPlayerThreeGoal}
@@ -489,12 +465,6 @@ function WorkSpace() {
                 yourPlayerSixGoal={yourPlayerSixGoal}
                 yourTeamResult={yourTeamResult}
                 yourOpponentResult={yourOpponentResult}
-                opponentGoalOneName={opponentGoalOneName}
-                opponentGoalTwoName={opponentGoalTwoName}
-                opponentGoalThreeName={opponentGoalThreeName}
-                opponentGoalFourName={opponentGoalFourName}
-                opponentGoalFiveName={opponentGoalFiveName}
-                opponentGoalSixName={opponentGoalSixName}
               />
             )}
           </div>
@@ -662,12 +632,25 @@ function WorkSpace() {
 
               {coords && coords.yourPlayerOneGoalTop && (
                 <>
-                  <p className="mt-2">Gole zawodników</p>
+                  {/* <p className="mt-2">Gole zawodników</p>
                   <label>Twój GOL 1</label>
-                  <Select options={playerOptions} onChange={getYourPlayerOneGoal} />
+                  <Select options={playerOptions} onChange={getYourPlayerOneGoal} /> */}
+                  {yourTeamGoal &&
+                    yourTeamGoal.map((goal, i) => (
+                      <div key={i} className="goal-container">
+                        <div className="minute-container">
+                          <label htmlFor={`input${i}`}>Minuta</label>
+                          <input id={`input${i}`} type="number" onChange={(e) => handleYourTeamMinuteChange(e, i)} />
+                        </div>
+                        <div className="goal-contaienr">
+                          <label htmlFor={`select${i}`}>Twój GOL 1</label>
+                          <Select className="player-select" id={`select${i}`} options={playerOptions} onChange={(e) => handleGoalChange(e, i)} />
+                        </div>
+                      </div>
+                    ))}
                 </>
               )}
-              {coords && coords.yourPlayerTwoGoalTop && (
+              {/* {coords && coords.yourPlayerTwoGoalTop && (
                 <>
                   <label>Twój GOL 2</label>
                   <Select options={playerOptions} onChange={getYourPlayerTwoGoal} />
@@ -696,7 +679,7 @@ function WorkSpace() {
                   <label>Twój GOL 6</label>
                   <Select options={playerOptions} onChange={getYourPlayerSixGoal} />
                 </>
-              )}
+              )} */}
               {/* Gole przeciwników */}
 
               {coords &&
@@ -713,67 +696,7 @@ function WorkSpace() {
                     </div>
                   </div>
                 ))}
-              {/* {coords && coords.opponentPlayerOneGoalTop && (
-                <>
-                  <p className="mt-2">Gole przeciwników</p>
-                  <label> GOL przeciwnika 1</label>
-                  <input
-                    type="text"
-                    value={opponentGoalOneName}
-                    onChange={getOpponentGoalOne}
-                  />
-                </>
-              )}
-              {coords && coords.opponentPlayerTwoGoalTop && (
-                <>
-                  <label> GOL przeciwnika 2</label>
-                  <input
-                    type="text"
-                    value={opponentGoalTwoName}
-                    onChange={getOpponentGoalTwo}
-                  />
-                </>
-              )}
-              {coords && coords.opponentPlayerThreeGoalTop && (
-                <>
-                  <label> GOL przeciwnika 3</label>
-                  <input
-                    type="text"
-                    value={opponentGoalThreeName}
-                    onChange={getOpponentGoalThree}
-                  />
-                </>
-              )}
-              {coords && coords.opponentPlayerFourGoalTop && (
-                <>
-                  <label> GOL przeciwnika 4</label>
-                  <input
-                    type="text"
-                    value={opponentGoalFourName}
-                    onChange={getOpponentGoalFour}
-                  />
-                </>
-              )}
-              {coords && coords.opponentPlayerFiveGoalTop && (
-                <>
-                  <label> GOL przeciwnika 5</label>
-                  <input
-                    type="text"
-                    value={opponentGoalFiveName}
-                    onChange={getOpponentGoalFive}
-                  />
-                </>
-              )}
-              {coords && coords.opponentPlayerSixGoalTop && (
-                <>
-                  <label> GOL przeciwnika 6</label>
-                  <input
-                    type="text"
-                    value={opponentGoalSixName}
-                    onChange={getOpponentGoalSix}
-                  />
-                </>
-              )} */}
+             
 
               {/*  */}
               {coords.playerOneTop && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
@@ -822,43 +745,7 @@ function WorkSpace() {
                       <p style={{ marginTop: "20px" }}>Rezerwowi</p>
 
                       {coords.reserveOneTop && (
-                        // <>
-                        //   <label>Rezerwowy 1</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveOne}
-                        //   />
-                        //   <label>Rezerwowy 2</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveTwo}
-                        //   />
-                        //   <label>Rezerwowy 3</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveThree}
-                        //   />
-                        //   <label>Rezerwowy 4</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveFour}
-                        //   />
-                        //   <label>Rezerwowy 5</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveFive}
-                        //   />
-                        //   <label>Rezerwowy 6</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveSix}
-                        //   />
-                        //   <label>Rezerwowy 7</label>
-                        //   <Select
-                        //     options={playerOptions}
-                        //     onChange={getReserveSeven}
-                        //   />
-                        // </>
+                      
                         <ReservePlayers
                           reserve={reserve}
                           playerOptions={playerOptions}

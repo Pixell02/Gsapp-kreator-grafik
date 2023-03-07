@@ -58,7 +58,7 @@ export default function opponentGoals(fabricRef, props) {
               fabricRef.current.add(showPlayer);
             }
           } else {
-            const showPlayer = new fabric.Text(opponentGoal, {
+            const showPlayer = new fabric.Text(props.opponentGoalMinute[i] + "' " + opponentGoal, {
               top: props.coords.opponentPlayerOneGoalTop + i * props.coords.yourPlayerGoalMargin,
               left: props.coords.yourPlayerOneGoalLeft,
               width: props.coords.opponentPlayerOneGoalWidth,

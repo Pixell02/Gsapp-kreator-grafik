@@ -93,10 +93,11 @@
 .minute-container {
   width: 50px;
   padding-right: 10px;
+  margin-right: 10px;
 }
 
 .goal-container {
-  width: 200px;
+  min-width: 200px;
 }
 
 .preview-container .watermark-img {
