@@ -132,7 +132,7 @@ function MainYourTeamPanel() {
       <div className="ml-5 w-100">
         <div className="d-flex align-items-center">
           <div className="w-100">
-          <Title title="Panel drużyny" />
+            <Title title="Panel drużyny" />
           </div>
           <div className="empty-container"></div>
           <div className="d-flex guide-btn-container">
@@ -144,7 +144,11 @@ function MainYourTeamPanel() {
             </button>
           </div>
         </div>
+        {/* <button className="btn primary-btn" onClick={() => setOpenModal(true)}>
+          Dodaj drużyne
+        </button> */}
         <ItemContainer>
+          
           {checkTeam != null ? (
             <YourTeamBlock Team={Team} />
           ) : (
@@ -162,7 +166,16 @@ function MainYourTeamPanel() {
             />
           )}
         </ItemContainer>
-        
+        {/* <ItemContainer>
+          <YourTeamBlock Team={Team} />
+
+          {openModal && (
+            <AddTeamWindow
+              open={openModal}
+              onClose={() => setOpenModal(false)}
+            />
+          )}
+        </ItemContainer> */}
       </div>
     </div>
   );

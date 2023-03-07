@@ -7,7 +7,6 @@ import Footer from "./components/MainFooter";
 import FormPage from "./components/form-elements/FormPage";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import Generator from "./pages/Generator/Generator";
 import Catalog from "./pages/Catalog/Catalog";
 import YourTeamPanel from "./pages/YourTeamPanel/YourTeamPanel";
 import Players from "./pages/Players/Players";
@@ -18,7 +17,7 @@ import YourCatalog from "./pages/YourCatalog/YourCatalog";
 import Offer from "./pages/Offer/Offer";
 import Account from "./pages/Account/Account";
 import "./App.css"
-import Creator from "./pages/Catalog/components/Creator";
+import Creator from "./pages/Creator/Creator";
 import { useLogout } from './hooks/useLogout'
 import { auth } from "./firebase/config";
 import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";

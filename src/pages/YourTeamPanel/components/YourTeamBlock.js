@@ -6,40 +6,62 @@ import * as Icon from "react-bootstrap-icons";
 
 export default function YourTeamBlock({ Team }) {
   const [openEditYourTeam, setOpenEditYourTeam] = useState(false);
-  
-  
-  return (
-    <div className="your-team-catalog-container">
-     
-      {Team.map((team) => (
-        
-        <div key={team.uid} className="your-team-window" id="yourTeamWindow">
-          <div className="your-team-name-content">
-            <span key={team.uid} className="your-team-name">
-              {team.firstName + " "}
-              {team.secondName ? team.secondName : null}
-            </span>
-            <div
-              className="icon-item"
-              onClick={(e) => setOpenEditYourTeam(true)}
-            >
-              <Icon.ThreeDotsVertical />
-            </div>
-          </div>
+  const [data, setData] = useState();
 
-          <div className="your-team-image-content">
-            <img src={team.img} alt={team.firstName + " " + team.secondName} />
+
+  const editClick = (e, team) => {
+    console.log(team)
+    setOpenEditYourTeam(true)
+    setData(team)
+  };
+
+  return (
+    <div className="your-team-catalog-container d-flex">
+      {Team &&
+        Team.map((team) => (
+          <div key={team.id} className="your-team-window ml-5" id="yourTeamWindow">
+            <div className="your-team-name-content">
+              <span className="your-team-name">
+                {team.firstName + " "}
+                {team.secondName ? team.secondName : null}
+              </span>
+              <div
+                className="icon-item"
+                onClick={(e) => setOpenEditYourTeam(true)}
+              >
+                <div className="option-container">
+              <button
+                className="button"
+                key={team.id}
+                onClick={(e) => {
+                  editClick(e, team);
+                }}
+              >
+                <Icon.ThreeDotsVertical
+                  style={{ margin: "5px 0 0 0", zIndex: "-1" }}
+                />
+              </button>
+              </div>
+                {/* <Icon.ThreeDotsVertical /> */}
+              </div>
+            </div>
+
+            <div className="your-team-image-content">
+              <img
+                src={team.img}
+                alt={team.firstName + " " + team.secondName}
+              />
+            </div>
+            
           </div>
-           {openEditYourTeam && (
-        <EditYourTeamWindow
-          yourTeam={team}
-          open={openEditYourTeam}
-          onClose={(e) => setOpenEditYourTeam(false)}
-        />
-      )}
-        </div>
-      ))}
-      
+        ))}
+        {data && openEditYourTeam && (
+              <EditYourTeamWindow
+                yourTeam={data}
+                open={openEditYourTeam}
+                onClose={(e) => setOpenEditYourTeam(false)}
+              />
+            )}
     </div>
   );
 }

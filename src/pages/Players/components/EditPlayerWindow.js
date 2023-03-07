@@ -18,7 +18,7 @@ function EditPlayerWindow({ player, open, onClose }) {
   const [firstPlayerName, setFirstPlayerName] = useState(player.firstName);
   const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
   const [number, setNumber] = useState(player.number);
-  
+  const [isImage, setIsImage] = useState(true);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
   const { user } = useAuthContext();
@@ -26,8 +26,16 @@ function EditPlayerWindow({ player, open, onClose }) {
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
+  useEffect(() => {
+    if(image) {
+      setIsImage(true);
+    } else {
+      setIsImage(false);
+    }
+  },[])
 
   const handleEdit = (e) => {
+    setIsImage(false);
     const file = e.target.files[0];
     if (file.size > 1000000) {
       alert("Maksymalny rozmiar obrazu to 1MB");
@@ -41,7 +49,7 @@ function EditPlayerWindow({ player, open, onClose }) {
     setImage(file);
   };
   useEffect(() => {
-    console.log(image)
+    
     if(image === null) {
       setImage("");
     }
@@ -54,7 +62,7 @@ function EditPlayerWindow({ player, open, onClose }) {
     } else if (!number) {
       alert("brak numeru");
     } else {
-      if (image !== "") {
+      if (!isImage) {
         const storage = getStorage();
         const metadata = {
           contentType: "image/png",
@@ -63,7 +71,6 @@ function EditPlayerWindow({ player, open, onClose }) {
           storage,
           `${user.uid}/zawodnicy/${firstPlayerName}_${secondPlayerName}`
         );
-        console.log(image);
         const uploadTask = uploadBytesResumable(storageRef, image, metadata);
 
         uploadTask.on(
@@ -85,13 +92,10 @@ function EditPlayerWindow({ player, open, onClose }) {
             console.log(error);
           },
           async () => {
-            console.log(player)
             await getDownloadURL(uploadTask.snapshot.ref)
               .then((downloadURL) => {
-                console.log(downloadURL);
-                
                 const docRef = doc(db, "Players", player.id)
-                setDoc(docRef, {
+                updateDoc(docRef, {
                   firstName: firstPlayerName,
                   secondName: secondPlayerName,
                   img: downloadURL,
@@ -104,10 +108,9 @@ function EditPlayerWindow({ player, open, onClose }) {
         );
       } else {
         const docRef = doc(db, "Players", player.id);
-        setDoc(docRef, {
+        updateDoc(docRef, {
           firstName: firstPlayerName,
           secondName: secondPlayerName,
-          img:image,
           number: number,
           uid: user.uid,
         });

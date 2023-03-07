@@ -16,7 +16,7 @@ import { db } from "../../../firebase/config";
 import Select from "react-select";
 
 const zipCodeRegex = /^\d{2}-\d{3}$/;
-const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
+const nipRegex = /^\d{10}$/;
 
 function BuyFormContainer() {
   const [price, setPrice] = useState(1);

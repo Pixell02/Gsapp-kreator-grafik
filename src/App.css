@@ -62,6 +62,10 @@
   font-family: "Now Thin";
   src: url(./fonts/Now-Thin.otf);
 }
+@font-face {
+  font-family: "Teko-SemiBold";
+  src: url(./fonts/Teko-SemiBold.ttf);
+}
 
 
 

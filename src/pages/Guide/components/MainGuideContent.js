@@ -6,7 +6,7 @@ import "./Description.css";
 export default function MainGuideContent() {
   const navigate = useNavigate()
   return (
-    <div className="main-content">
+    <div className="main-content flex-column">
       <div className="ml-5">
         <Title title="Samouczek" />
         <Description />

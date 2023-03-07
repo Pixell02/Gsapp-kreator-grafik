@@ -14,6 +14,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import useEditModal from "../../../hooks/useEditModal";
 
 const options = [
   { value: "piłka nożna", label: "piłka nożna" },
@@ -25,18 +26,20 @@ const options = [
 function EditPlayerWindow({ yourTeam, open, onClose }) {
   const { id } = useParams();
   const { user } = useAuthContext();
+  const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
   const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
-
+  const [isImage, setIsImage] = useState(true);
   const [sport, setSport] = useState(yourTeam.sport);
   const [image, setImage] = useState(yourTeam.img);
   const [preview, setPreview] = useState(yourTeam.img);
- 
+
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
   const handleEdit = (e) => {
+    setIsImage(false);
     const file = e.target.files[0];
     if (file.size > 1000000) {
       alert("Maksymalny rozmiar obrazu to 1MB");
@@ -59,48 +62,60 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
     } else if (!secondTeamName) {
       alert("puste pole");
     } else {
-      const storage = getStorage();
-      const metadata = {
-        contentType: "image/png",
-      };
-      const player = ref(
-        storage,
-        `${user.uid}/herb/${firstTeamName}_${secondTeamName}`
-      );
-       
-      const uploadTask = uploadBytesResumable(player, image, metadata);
+      if (!isImage) {
+        const storage = getStorage();
+        const metadata = {
+          contentType: "image/png",
+        };
+        const player = ref(
+          storage,
+          `${user.uid}/herb/${firstTeamName}_${secondTeamName}`
+        );
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          let progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
+        const uploadTask = uploadBytesResumable(player, image, metadata);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            let progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              (downloadURL) => {
+                const docRef = doc(db, "Teams", yourTeam.id);
+                updateDoc(docRef, {
+                  firstName: firstTeamName,
+                  secondName: secondTeamName,
+                  img: downloadURL,
+                  sport: sport,
+                  uid: user.uid,
+                });
+              }
+            );
           }
-        },
-        (error) => {
-          console.log(error);
-        },
-        async () => {
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            const docRef = doc(db, "Teams", yourTeam.id);
-            updateDoc(docRef, {
-              firstName: firstTeamName,
-              secondName: secondTeamName,
-              img: downloadURL,
-              sport: sport,
-              uid: user.uid,
-            });
-          });
-        }
-      );
+        );
+      } else {
+        const docRef = doc(db, "Teams", yourTeam.id);
+        updateDoc(docRef, {
+          firstName: firstTeamName,
+          secondName: secondTeamName,
+          sport: sport,
+          uid: user.uid,
+        });
+      }
       onClose();
       setFirstTeamName("");
       setSecondTeamName(null);
@@ -109,13 +124,12 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
   };
 
   const getSport = (option) => {
-    console.log(option.value);
     setSport(option.value);
   };
 
   return (
     <div className={open ? "active-modal mg-edit" : "modal"}>
-      <div className="add-window">
+      <div className="add-window mt-5">
         <label>Pierwsza część nazwy drużyny</label>
         <input
           type="text"

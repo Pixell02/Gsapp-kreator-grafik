@@ -13,14 +13,23 @@ function EditPlayerWindow({ player, open, onClose }) {
   const [firstOpponentName, setFirstOpponentName] = useState(player.firstName);
   const [secondOpponentName, setSecondOpponentName] = useState(player.secondName);
   const [image, setImage] = useState(player.img);
+  const [isImage, setIsImage] = useState(true);
   const [preview, setPreview] = useState(player.img);
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
+
+  useEffect(() => {
+    if(!image) {
+      setIsImage(false);
+    } 
+  },[])
+
   const handleEdit = (e) => {
     const file = e.target.files[0];
+    setIsImage(false);
     if(file.size > 1000000) {
       alert("Maksymalny rozmiar obrazu to 1MB")
       return;
@@ -44,6 +53,7 @@ function EditPlayerWindow({ player, open, onClose }) {
       alert("brak zdjecia");
     }
      else {
+      if(!isImage){
       const storage = getStorage();
       const metadata = {
         contentType: "image/png",
@@ -85,6 +95,14 @@ function EditPlayerWindow({ player, open, onClose }) {
           });
         }
       );
+      } else {
+        const docRef = doc(db, "Opponents", player.id);
+        updateDoc(docRef, {
+          firstName: firstOpponentName,
+          secondName: secondOpponentName,
+          uid: user.uid,
+        });
+      }
       onClose();
       setFirstOpponentName("");
       setSecondOpponentName("");

@@ -23,6 +23,8 @@ function YourTeamPanel() {
       console.log("not-first-time");
     }
   }, []);
+  const cos = "aASKDHJGasdjkhasdkjhADASD"
+  console.log(cos.toLowerCase());
   return (
     <div className="page-container">
       <WelcomeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />

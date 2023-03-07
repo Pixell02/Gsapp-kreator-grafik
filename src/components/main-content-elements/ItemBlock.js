@@ -18,7 +18,7 @@ export default function ItemBlock({ items }) {
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[1];
   const handleDeleteClick = async (id) => {
-    if(goodLocation === "players") {
+    if (goodLocation === "players") {
       const ref = doc(db, "Players", id);
       await deleteDoc(ref);
     } else if (goodLocation === "opponents") {
@@ -51,7 +51,6 @@ export default function ItemBlock({ items }) {
     openEditModal();
     setItemToEdit(null);
   };
-  
 
   return (
     <div ref={hideElement} className="catalog-container">
@@ -99,7 +98,12 @@ export default function ItemBlock({ items }) {
             </div>
           </div>
           <div className="image-content">
-           {item.img !== null && item.img !== "" && <img src={item.img} alt={item.firstName + " " + item.secondName} />}
+            {item.img !== null && item.img !== "" && (
+              <img
+                src={item.img}
+                alt={item.firstName + " " + item.secondName}
+              />
+            )}
           </div>
         </div>
       ))}
@@ -117,13 +121,13 @@ export default function ItemBlock({ items }) {
           onClose={closeEditModal}
         />
       )}
-      {data && isEditModal && goodLocation === "sponsors" && (
+      {/* {data && isEditModal && goodLocation === "sponsors" && (
         <EditSponsorWindow
           player={data}
           open={isEditModal}
           onClose={closeEditModal}
         />
-      )}
+      )} */}
     </div>
   );
 }
