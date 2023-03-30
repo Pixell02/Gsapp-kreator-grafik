@@ -5,143 +5,48 @@ import { fabric } from "fabric";
 import useFabricCanvas from "./hooks/useFabricCanvas.js";
 import FontFaceObserver from "fontfaceobserver";
 import { useParams } from "react-router-dom";
+import useTeamName from "./hooks/useTeamName.js";
+import useOpponentName from "./hooks/useOpponentName.js";
 
-export default function GoalPoster({
-  posterBackGround,
-  yourPlayer,
-  id,
-  coords,
-  themeOption,
-  yourTeamResult,
-  yourOpponentResult,
-  yourTeamImage,
-  yourLogo,
-  radioChecked,
-  opponent
-}) {
+export default function GoalPoster(props) {
   
   const { poster } = useParams();
-  // const backImg = new Image();
-  const [yourTeamLogo, setYourTeamLogo] = useState(yourLogo);
-  const [yourTeamImg, setYourTeamImg] = useState(yourTeamImage);
-  // backImg.src = posterBackGround;
   const fabricRef = useRef();
-  const {initFabric} = useFabricCanvas(fabricRef, posterBackGround);
+  const {initFabric} = useFabricCanvas(fabricRef, props);
+  const [yourTeamLogo, setYourTeamLogo] = useState(props.yourLogo);
+  const [yourTeamImg, setYourTeamImg] = useState(props.yourTeamImage);
+  const { teamLogo, secondTeamLogo, teamName } = useTeamName(fabricRef, props);
+  const {opponentsName, opponentLogo} = useOpponentName(fabricRef ,props);
+  const [width, setWidth] = useState()
+  const [height, setHeight] = useState();
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = props.posterBackGround;
+    setWidth(img.width)
+    setHeight(img.height);
+  },[props.posterBackGround])
+ 
+ 
+  
+  
   useEffect(() => {
     initFabric();
-  }, [posterBackGround]);
+  }, [props.posterBackGround]);
 
-  const opponentLogo = () => {
-    if (opponent) {
-      if (radioChecked === "radio1") {
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "opponentImage") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        const opponentImg = new Image();
-        opponentImg.src = opponent;
-        opponentImg.onload = () => {
-          fabric.Image.fromURL(opponentImg.src, function (img) {
-            img.set({
-              selectable: false,
-              top: coords.opponentImageTop,
-              left: coords.opponentImageLeft,
-              className: "opponentImage",
-              originX: "center",
-              originY: "center",
-            });
 
-            img.scaleToHeight(coords.opponentImageScaleToHeight);
-
-            fabricRef.current.add(img);
-          });
-        };
-      } else {
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "opponentImage") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        const opponentImg = new Image();
-        opponentImg.src = opponent;
-        opponentImg.onload = () => {
-          fabric.Image.fromURL(opponentImg.src, function (img) {
-            img.set({
-              selectable: false,
-              top: coords.yourTeamLogoTop,
-              left: coords.yourTeamLogoLeft,
-              className: "opponentImage",
-              originX: "center",
-              originY: "center",
-            });
-            img.scaleToHeight(coords.yourTeamLogoScaleToHeight);
-            fabricRef.current.add(img);
-          });
-        };
-      }
-    }
-  };
-  opponentLogo();
-
-  const teamLogo = () => {
-    if (yourTeamImg && coords.yourTeamLogoTop) {
-      if (radioChecked === "radio1") {
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "teamLogo") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        const secondImg = new Image();
-        secondImg.src = yourTeamImg;
-        secondImg.onload = () => {
-          fabric.Image.fromURL(secondImg.src, function (img) {
-            img.set({
-              selectable: false,
-              top: coords.yourTeamLogoTop,
-              left: coords.yourTeamLogoLeft,
-              originX: "center",
-              originY: "center",
-              className: "teamLogo",
-            });
-            img.scaleToHeight(coords.yourTeamLogoScaleToHeight);
-            fabricRef.current.add(img);
-            fabricRef.current.renderAll();
-          });
-        };
-      } else {
-        fabricRef.current._objects.forEach((image, i) => {
-          if (fabricRef.current.item(i).className === "teamLogo") {
-            fabricRef.current.remove(fabricRef.current.item(i));
-          }
-        });
-        const secondImg = new Image();
-        secondImg.src = yourTeamLogo[0].img;
-        secondImg.onload = () => {
-          fabric.Image.fromURL(secondImg.src, function (img) {
-            img.set({
-              selectable: false,
-              top: coords.opponentImageTop,
-              left: coords.opponentImageLeft,
-              originX: "center",
-              originY: "center",
-              className: "teamLogo",
-            });
-            img.scaleToHeight(coords.opponentImageScaleToHeight);
-            fabricRef.current.add(img);
-            fabricRef.current.renderAll();
-          });
-        };
-      }
-    }
-  };
+  useEffect(() => {
+    
+  opponentLogo(props);
+},[props.radioChecked, props.posterBackGround, props.opponent])
+  
   useEffect(() => {
     teamLogo();
-  }, [radioChecked, posterBackGround]);
+  }, [props.radioChecked, props.posterBackGround, props.yourTeamImage]);
 
   const yourPlayerFullName = () => {
-    if (yourPlayer) {
+    let player;
+    if (props.yourPlayer) {
       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className === "yourPlayer") {
           fabricRef.current.remove(fabricRef.current.item(i));
@@ -152,32 +57,35 @@ export default function GoalPoster({
         poster === "oRVBJEM5RcjZ0J1dj7C7" ||
         poster === "rtZUgjjd4i74jHW0mRPs"
       ) {
-        const playerSurName = yourPlayer.split(" ")[1];
-        yourPlayer = yourPlayer[0] + "." + playerSurName;
+        const playerSurName = props.yourPlayer.split(" ")[1];
+        player = props.yourPlayer[0] + "." + playerSurName;
+        
       }
-      const font = new FontFaceObserver(coords.playerFontFamily);
+        console.log(props.coords.player)
+      const font = new FontFaceObserver(props.coords.player.FontFamily);
       font.load().then(() => {
         if(poster !== "lZP9mhRklsifxKLUvzTd"){
-          yourPlayer = yourPlayer.toUpperCase();
+          player = props.yourPlayer.toUpperCase();
         }
-        const playerName = new fabric.Text(yourPlayer, {
-          left: coords.playerLeft,
-          top: coords.playerTop,
-          fill: coords.playerFill,
-          originX: coords.playerOriginX,
-          originY: coords.playerOriginY,
-          width: coords.playerWidth,
+
+        const playerName = new fabric.Text(player ? player : props.yourPlayer, {
+          left: props.coords.player.Left,
+          top: props.coords.player.Top,
+          fill: props.coords.player.Fill,
+          originX: props.coords.player.OriginX,
+          originY: props.coords.player.OriginY,
           className: "yourPlayer",
           selectable: false,
-          fontFamily: coords.playerFontFamily,
+          fontFamily: props.coords.player.FontFamily,
         });
-        playerName.scaleToHeight(coords.playerScaleToHeight);
-        if (playerName.width > coords.playerWidth) {
-          playerName.scaleToWidth(coords.playerScaleToWidth);
+        playerName.scaleToHeight(props.coords.player.ScaleToHeight);
+        if (playerName.width > props.coords.player.ScaleToWidth) {
+          playerName.scaleToWidth(props.coords.player.ScaleToWidth);
         }
+        console.log(playerName)
         if (
           poster === "lZP9mhRklsifxKLUvzTd" &&
-          themeOption.label.split("-")[0] === "żółto"
+          props.themeOption.label.split("-")[0] === "żółto"
         ) {
           playerName.set({
             fill: "black",
@@ -187,56 +95,58 @@ export default function GoalPoster({
             fill: "white",
           });
         }
-        if (id.theme === "motyw 4" && themeOption.label === "czarno-biały") {
+        if (props.id.theme === "motyw 4" && props.themeOption.label === "czarno-biały") {
           playerName.set({
             fill: "black",
           });
         }
-        if (id.theme === "motyw 4" && themeOption.label === "zielony") {
+        if (props.id.theme === "motyw 4" && props.themeOption.label === "zielony") {
           playerName.set({
             fill: "black",
           });
         }
-        if (id.theme === "motyw 4" && themeOption.label === "niebieski") {
+        if (props.id.theme === "motyw 4" && props.themeOption.label === "niebieski") {
           playerName.set({
             fill: "black",
           });
         }
+        console.log(playerName);
         fabricRef.current.add(playerName);
       });
     }
   };
   const yourResult = () => {
-    if (yourTeamResult) {
-      if (radioChecked === "radio1") {
+    if (props.yourTeamResult) {
+      if (props.radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className == "yourTeamResult") {
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
         const font = new FontFaceObserver(
-          coords.yourTeamResultFontFamily
+          props.coords.yourTeamResult.FontFamily
         );
         font.load().then(() => {
-          const result = new fabric.Text(yourTeamResult, {
-            top: coords.yourTeamResultTop,
-            left: coords.yourTeamResultLeft,
-            fontFamily: coords.yourTeamResultFontFamily,
+          const result = new fabric.Text(props.yourTeamResult, {
+            top: props.coords.yourTeamResult.Top,
+            left: props.coords.yourTeamResult.Left,
+            fontFamily: props.coords.yourTeamResult.FontFamily,
             selectable: false,
-            fill: coords.yourTeamResultFill,
+            fill: props.coords.yourTeamResult.Fill,
+            fontSize: props.coords.yourTeamResult.FontSize,
             className: "yourTeamResult",
-            originX: coords.yourTeamResultOriginX,
-            originY: coords.yourTeamResultOriginY,
+            originX: props.coords.yourTeamResult.OriginX,
+            originY: props.coords.yourTeamResult.OriginY,
           });
-          result.scaleToHeight(coords.yourTeamResultScaleToHeight);
-          if(result.width > coords.yourOpponentResultWidth) {
-            result.scaleToWidth(coords.yourOpponentResultScaleToWidth);
+          
+          if(result.width > props.coords.yourOpponentResult.ScaleToWidth) {
+            result.scaleToWidth(props.coords.yourOpponentResult.ScaleToWidth);
           }
-          if (themeOption) {
+          if (props.themeOption) {
             if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
+              props.themeOption.label.split("-")[0] === "biało" ||
+              props.themeOption.label.split("-")[0] === "żółto" ||
+              props.themeOption.label === "biały"
             ) {
               result.set({
                 fill: "black",
@@ -244,31 +154,31 @@ export default function GoalPoster({
             }
             if (
               poster === "PmoRESwg91LxFAGFObbZ" ||
-              themeOption.label === "biało-czerwono-niebiesko-zielony"
+              props.themeOption.label === "biało-czerwono-niebiesko-zielony"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 3" &&
-              themeOption.label === "biało-niebieski"
+              props.id.theme === "motyw 3" &&
+              props.themeOption.label === "biało-niebieski"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 3" &&
-              themeOption.label === "żółto-czarny"
+              props.id.theme === "motyw 3" &&
+              props.themeOption.label === "żółto-czarny"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 5" &&
-              (themeOption.label === "żółto-czarny" || themeOption.label === "biało-niebieski")
+              props.id.theme === "motyw 5" &&
+              (props.themeOption.label === "żółto-czarny" || props.themeOption.label === "biało-niebieski")
             ) {
               result.set({
                 fill: "white",
@@ -278,35 +188,36 @@ export default function GoalPoster({
 
           fabricRef.current.add(result);
         });
-      } else if (radioChecked === "radio2") {
+      } else if (props.radioChecked === "radio2") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className == "yourTeamResult") {
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
         const font = new FontFaceObserver(
-          coords.yourOpponentResultFontFamily
+          props.coords.yourOpponentResult.FontFamily
         );
         font.load().then(() => {
-          const result = new fabric.Text(yourTeamResult, {
-            top: coords.yourOpponentResultTop,
-            left: coords.yourOpponentResultLeft,
-            fontFamily: coords.yourOpponentResultFontFamily,
+          const result = new fabric.Text(props.yourTeamResult, {
+            top: props.coords.yourOpponentResult.Top,
+            left: props.coords.yourOpponentResult.Left,
+            fontFamily: props.coords.yourOpponentResult.FontFamily,
+            fontSize: props.coords.yourOpponentResult.FontSize,
             selectable: false,
-            fill: coords.yourOpponentResultFill,
+            fill: props.coords.yourOpponentResult.Fill,
             className: "yourTeamResult",
-            originX: coords.yourOpponentResultOriginX,
-            originY: coords.yourOpponentResultOriginY,
+            originX: props.coords.yourOpponentResult.OriginX,
+            originY: props.coords.yourOpponentResult.OriginY,
           });
-          result.scaleToHeight(coords.yourOpponentResultScaleToHeight);
-          if(result.width > coords.yourOpponentResultWidth) {
-            result.scaleToWidth(coords.yourOpponentResultScaleToWidth);
+          
+          if(result.width > props.coords.yourOpponentResult.ScaleToWidth) {
+            result.scaleToWidth(props.coords.yourOpponentResult.ScaleToWidth);
           }
-          if (themeOption) {
+          if (props.themeOption) {
             if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
+              props.themeOption.label.split("-")[0] === "biało" ||
+              props.themeOption.label.split("-")[0] === "żółto" ||
+              props.themeOption.label === "biały"
             ) {
               result.set({
                 fill: "black",
@@ -314,31 +225,31 @@ export default function GoalPoster({
             }
             if (
               poster === "PmoRESwg91LxFAGFObbZ" ||
-              themeOption.label === "biało-czerwono-niebiesko-zielony"
+              props.themeOption.label === "biało-czerwono-niebiesko-zielony"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 3" &&
-              themeOption.label === "biało-niebieski"
+              props.id.theme === "motyw 3" &&
+              props.themeOption.label === "biało-niebieski"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 3" &&
-              themeOption.label === "żółto-czarny"
+              props.id.theme === "motyw 3" &&
+              props.themeOption.label === "żółto-czarny"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 5" &&
-              (themeOption.label === "żółto-czarny" || themeOption.label === "biało-niebieski")
+              props.id.theme === "motyw 5" &&
+              (props.themeOption.label === "żółto-czarny" || props.themeOption.label === "biało-niebieski")
             ) {
               result.set({
                 fill: "white",
@@ -351,38 +262,38 @@ export default function GoalPoster({
     }
   };
   const opponentResult = () => {
-    if (yourOpponentResult) {
-      if (radioChecked === "radio1") {
+    if (props.yourOpponentResult) {
+      if (props.radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className == "yourOpponentResult") {
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
         const font = new FontFaceObserver(
-          coords.yourOpponentResultFontFamily
+          props.coords.yourOpponentResult.FontFamily
         );
         font.load().then(() => {
-          const result = new fabric.Text(yourOpponentResult, {
-            top: coords.yourOpponentResultTop,
-            left: coords.yourOpponentResultLeft,
-            width: coords.yourOpponentResultWidth,
-            fontFamily: coords.yourOpponentResultFontFamily,
+          const result = new fabric.Text(props.yourOpponentResult, {
+            top:props.coords.yourOpponentResult.Top,
+            left: props.coords.yourOpponentResult.Left,
+            fontFamily: props.coords.yourOpponentResult.FontFamily,
+            fontSize: props.coords.yourOpponentResult.FontSize,
             selectable: false,
-            fill: coords.yourOpponentResultFill,
+            fill: props.coords.yourOpponentResult.Fill,
             className: "yourOpponentResult",
-            originX: coords.yourOpponentResultOriginX,
-            originY: coords.yourOpponentResultOriginY,
+            originX: props.coords.yourOpponentResult.OriginX,
+            originY: props.coords.yourOpponentResult.OriginY,
           });
 
-          result.scaleToHeight(coords.yourOpponentResultScaleToHeight);
-          if(result.width > coords.yourOpponentResultWidth) {
-            result.scaleToWidth(coords.yourOpponentResultScaleToWidth);
+         
+          if(result.width > props.coords.yourOpponentResult.ScaleToWidth) {
+            result.scaleToWidth(props.coords.yourOpponentResult.ScaleToWidth);
           }
-          if (themeOption) {
+          if (props.themeOption) {
             if (
-              themeOption.label.split("-")[0] === "biało" ||
-              themeOption.label.split("-")[0] === "żółto" ||
-              themeOption.label === "biały"
+              props.themeOption.label.split("-")[0] === "biało" ||
+              props.themeOption.label.split("-")[0] === "żółto" ||
+              props.themeOption.label === "biały"
             ) {
               result.set({
                 fill: "black",
@@ -390,31 +301,31 @@ export default function GoalPoster({
             }
             if (
               poster === "PmoRESwg91LxFAGFObbZ" ||
-              themeOption.label === "biało-czerwono-niebiesko-zielony"
+              props.themeOption.label === "biało-czerwono-niebiesko-zielony"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 3" &&
-              themeOption.label === "biało-niebieski"
+              props.id.theme === "motyw 3" &&
+              props.themeOption.label === "biało-niebieski"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 3" &&
-              themeOption.label === "żółto-czarny"
+              props.id.theme === "motyw 3" &&
+              props.themeOption.label === "żółto-czarny"
             ) {
               result.set({
                 fill: "white",
               });
             }
             if (
-              id.theme === "motyw 5" &&
-              (themeOption.label === "żółto-czarny" || themeOption.label === "biało-niebieski")
+              props.id.theme === "motyw 5" &&
+              (props.themeOption.label === "żółto-czarny" || props.themeOption.label === "biało-niebieski")
             ) {
               result.set({
                 fill: "white",
@@ -430,26 +341,26 @@ export default function GoalPoster({
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
-        const result = new fabric.Text(yourOpponentResult, {
-          top: coords.yourTeamResultTop,
-          left: coords.yourTeamResultLeft,
-          width: coords.yourTeamResultWidth,
-          fontFamily: coords.yourTeamResultFontFamily,
+        const result = new fabric.Text(props.yourOpponentResult, {
+          top: props.coords.yourTeamResult.Top,
+          left: props.coords.yourTeamResult.Left,
+          fontFamily: props.coords.yourTeamResult.FontFamily,
+          fontSize: props.coords.yourTeamResult.fontSize,
           selectable: false,
-          fill: coords.yourTeamResultFill,
+          fill: props.coords.yourTeamResult.Fill,
           className: "yourOpponentResult",
-          originX: coords.yourTeamResultOriginX,
-          originY: coords.yourTeamResultOriginY,
+          originX: props.coords.yourTeamResult.OriginX,
+          originY: props.coords.yourTeamResult.OriginY,
         });
-        result.scaleToHeight(coords.yourTeamResultScaleToHeight);
-        if(result.width > coords.yourTeamResultWidth) {
-          result.scaleToWidth(coords.yourTeamResultScaleToWidth);
+        
+        if(result.width > props.coords.yourTeamResult.ScaleToWidth) {
+          result.scaleToWidth(props.coords.yourTeamResult.ScaleToWidth);
         }
-        if (themeOption) {
+        if (props.themeOption) {
           if (
-            themeOption.label.split("-")[0] === "biało" ||
-            themeOption.label.split("-")[0] === "żółto" ||
-            themeOption.label === "biały"
+            props.themeOption.label.split("-")[0] === "biało" ||
+            props.themeOption.label.split("-")[0] === "żółto" ||
+            props.themeOption.label === "biały"
           ) {
             result.set({
               fill: "black",
@@ -457,31 +368,31 @@ export default function GoalPoster({
           }
           if (
             poster === "PmoRESwg91LxFAGFObbZ" ||
-            themeOption.label === "biało-czerwono-niebiesko-zielony"
+            props.themeOption.label === "biało-czerwono-niebiesko-zielony"
           ) {
             result.set({
               fill: "white",
             });
           }
           if (
-            id.theme === "motyw 3" &&
-            themeOption.label === "biało-niebieski"
+            props.id.theme === "motyw 3" &&
+            props.themeOption.label === "biało-niebieski"
           ) {
             result.set({
               fill: "white",
             });
           }
           if (
-            id.theme === "motyw 3" &&
-            themeOption.label === "żółto-czarny"
+            props.id.theme === "motyw 3" &&
+            props.themeOption.label === "żółto-czarny"
           ) {
             result.set({
               fill: "white",
             });
           }
           if (
-            id.theme === "motyw 5" &&
-            (themeOption.label === "żółto-czarny" || themeOption.label === "biało-niebieski")
+            props.id.theme === "motyw 5" &&
+            (props.themeOption.label === "żółto-czarny" || props.themeOption.label === "biało-niebieski")
           ) {
             result.set({
               fill: "white",
@@ -495,15 +406,15 @@ export default function GoalPoster({
   };
   useEffect(() => {
     opponentResult();
-  }, [yourOpponentResult, posterBackGround, radioChecked]);
+  }, [props.yourOpponentResult, props.posterBackGround, props.radioChecked]);
 
   useEffect(() => {
     yourResult();
-  }, [yourTeamResult, posterBackGround, radioChecked]);
+  }, [props.yourTeamResult, props.posterBackGround, props.radioChecked]);
 
   useEffect(() => {
     yourPlayerFullName();
-  }, [yourPlayer, posterBackGround]);
+  }, [props.yourPlayer, props.posterBackGround]);
 
   return <canvas id="canvas" ref={fabricRef}></canvas>;
 }

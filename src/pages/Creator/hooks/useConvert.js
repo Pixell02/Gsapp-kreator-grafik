@@ -1,12 +1,20 @@
 import React from 'react'
 
-export default function useConvert() {
-  const convertTeamName = () => {
+export const convertPlayerName = (player, props) => {
 
+  const splittedPlayerName = player.split(".")
+  if (splittedPlayerName.length === 3) {
+    if (props.coords.playerNameType === "onlySurName") {
+      
+    }
   }
-  const convertPlayerName = () => {
 
-  }
-  
-    return {convertTeamName, convertPlayerName}
+
+  return {convertPlayerName}
+}
+
+export const convertReserveName = (reserve, props) => {
+
+
+  return {convertReserveName}
 }

@@ -3,8 +3,10 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 
 export default function useTeamName(fabricRef, props) {
+  
   const teamLogo = () => {
-    if (props.yourTeamImage && props.coords.yourTeamLogoTop) {
+    if (props.yourTeamImage && props.coords.yourTeamLogo) {
+      
       if (props.radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "teamLogo") {
@@ -13,17 +15,19 @@ export default function useTeamName(fabricRef, props) {
         });
         const secondImg = new Image();
         secondImg.src = props.yourTeamImage;
+        
         secondImg.onload = () => {
           fabric.Image.fromURL(secondImg.src, function (img) {
             img.set({
               selectable: false,
-              top: props.coords.yourTeamLogoTop,
-              left: props.coords.yourTeamLogoLeft,
+              top: parseInt(props.coords.yourTeamLogo.Top),
+              left: parseInt(props.coords.yourTeamLogo.Left),
               originX: "center",
               originY: "center",
               className: "teamLogo",
             });
-            img.scaleToHeight(props.coords.yourTeamLogoScaleToHeight);
+            img.scaleToHeight(props.coords.yourTeamLogo.ScaleToHeight);
+          
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
           });
@@ -40,13 +44,13 @@ export default function useTeamName(fabricRef, props) {
           fabric.Image.fromURL(secondImg.src, function (img) {
             img.set({
               selectable: false,
-              top: props.coords.opponentImageTop,
-              left: props.coords.opponentImageLeft,
+              top: parseInt(props.coords.opponentImage.Top),
+              left: parseInt(props.coords.opponentImage.Left),
               originX: "center",
               originY: "center",
               className: "teamLogo",
             });
-            img.scaleToHeight(props.coords.opponentImageScaleToHeight);
+            img.scaleToHeight(parseInt(props.coords.opponentImage.ScaleToHeight));
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
           });
@@ -55,25 +59,25 @@ export default function useTeamName(fabricRef, props) {
     }
   };
   const secondTeamLogo = (yourTeamLogo) => {
-    if (yourTeamLogo[0].img && props.coords.yourTeamSecondLogoTop) {
+    if (yourTeamLogo && props.coords.yourTeamSecondLogoTop) {
       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className === "teamSecondLogo") {
           fabricRef.current.remove(fabricRef.current.item(i));
         }
       });
       const secondImg = new Image();
-      secondImg.src = yourTeamLogo[0].img;
+      secondImg.src = yourTeamLogo;
       secondImg.onload = () => {
         fabric.Image.fromURL(secondImg.src, function (img) {
           img.set({
             selectable: false,
-            top: props.coords.yourTeamSecondLogoTop,
-            left: props.coords.yourTeamSecondLogoLeft,
+            top: parseInt(props.coords.yourTeamSecondLogo.Top),
+            left: parseInt(props.coords.yourTeamSecondLogo.Left),
             originX: "center",
             originY: "center",
             className: "teamSecondLogo",
           });
-          img.scaleToHeight(props.coords.yourTeamSecondLogoScaleToHeight);
+          img.scaleToHeight(parseInt(props.coords.yourTeamSecondLogo.ScaleToHeight));
           fabricRef.current.add(img);
           fabricRef.current.renderAll();
         });
@@ -81,12 +85,11 @@ export default function useTeamName(fabricRef, props) {
     }
   };
   const teamName = (yourTeamLogo, poster) => {
-   
-    if (yourTeamLogo[0].firstName) {
+    if (yourTeamLogo) {
       if (
-        props.coords.yourTeamFirstNameTop ||
-        props.coords.yourTeamNameTop ||
-        props.coords.yourTeamSecondNameTop
+        props.coords.yourTeamFirstName ||
+        props.coords.yourTeamName ||
+        props.coords.yourTeamSecondName
       ) {
          fabricRef.current._objects.forEach((image, i) => {
             if (fabricRef.current.item(i).className === "yourName") {
@@ -107,50 +110,42 @@ export default function useTeamName(fabricRef, props) {
          
           let yourTeamName;
           if (poster === "23b5ff36a490e8f93breae34") {
-            yourTeamName = yourTeamLogo[0].firstName;
+            yourTeamName =  yourTeamLogo.split(" ")[0];
           } else if (poster === "PmoRESwg91LxFAGFObbZ") {
             yourTeamName =
-              yourTeamLogo[0].firstName.toUpperCase() +
+              yourTeamLogo.split(" ")[0].toUpperCase() +
               " " +
-              yourTeamLogo[0].secondName.toUpperCase();
+              yourTeamLogo.split(" ")[1].toUpperCase();
           } else {
             yourTeamName =
-              yourTeamLogo[0].firstName.toUpperCase() +
+              yourTeamLogo.split(" ")[0].toUpperCase() +
               " " +
-              yourTeamLogo[0].secondName.toUpperCase();
+              yourTeamLogo.split(" ")[1].toUpperCase();
           }
-          if (props.coords.yourTeamFirstNameFontFamily) {
-            const firstTeamName = yourTeamLogo[0].firstName.toUpperCase();
+          if (props.coords.yourTeamFirstName) {
+            const firstTeamName = yourTeamLogo.split(" ")[0].toUpperCase();
 
-            const secondTeamName = yourTeamLogo[0].secondName.toUpperCase();
+            const secondTeamName = yourTeamLogo.split(" ")[1].toUpperCase();
             const firstFont = new FontFaceObserver(
-              props.coords.yourTeamFirstNameFontFamily
+              props.coords.yourTeamFirstName.FontFamily
             );
             firstFont.load().then(() => {
               const firstName = new fabric.Text(firstTeamName, {
                 selectable: false,
-                top: props.coords.yourTeamFirstNameTop,
-                left: props.coords.yourTeamFirstNameLeft,
-                width: props.coords.yourTeamFirstNameWidth,
-                fill: props.coords.yourTeamFirstNameFill,
-                fontFamily: props.coords.yourTeamFirstNameFontFamily,
-                originX: props.coords.yourTeamFirstNameOriginX,
-                originY: props.coords.yourTeamFirstNameOriginY,
+                top: props.coords.yourTeamFirstName.Top,
+                left: props.coords.yourTeamFirstName.Left,
+                fill: props.coords.yourTeamFirstName.Fill,
+                fontFamily: props.coords.yourTeamFirstName.FontFamily,
+                fontSize: props.coords.yourTeamFirstName.FontSize,
+                originX: props.coords.yourTeamFirstName.OriginX,
+                originY: props.coords.yourTeamFirstName.OriginY,
                 className: "yourFirstName",
               });
-              if (props.coords.yourTeamFirstNameScaleToWidth) {
+              
+              
+              if (firstName.width > props.coords.yourTeamFirstName.ScaleToWidth) {
                 firstName.scaleToWidth(
-                  props.coords.yourTeamFirstNameScaleToWidth
-                );
-              }
-              if (props.coords.yourTeamFirstNameScaleToHeight) {
-                firstName.scaleToHeight(
-                  props.coords.yourTeamFirstNameScaleToHeight
-                );
-              }
-              if (firstName.width > props.coords.yourTeamFirstNameWidth) {
-                firstName.scaleToWidth(
-                  props.coords.yourTeamFirstNameScaleToWidth
+                  props.coords.yourTeamFirstName.ScaleToWidth
                 );
               }
               if (props.themeOption) {
@@ -165,33 +160,31 @@ export default function useTeamName(fabricRef, props) {
                 }
               }
               fabricRef.current.add(firstName);
+              fabricRef.current.renderAll();
             });
             if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
               const secondFont = new FontFaceObserver(
-                props.coords.yourTeamSecondNameFontFamily
+                props.coords.yourTeamSecondName.FontFamily
               );
               secondFont.load().then(() => {
                 const secondName = new fabric.Text(secondTeamName, {
                   selectable: false,
-                  originX: props.coords.yourTeamSecondNameOriginX,
-                  originY: props.coords.yourTeamSecondNameOriginY,
-                  top: props.coords.yourTeamSecondNameTop,
-                  width: props.coords.yourTeamSecondNameWidth,
-                  left: props.coords.yourTeamSecondNameLeft,
-                  fill: props.coords.yourTeamSecondNameFill,
-                  fontFamily: props.coords.yourTeamSecondNameFontFamily,
+                  originX: props.coords.yourTeamSecondName.OriginX,
+                  originY: props.coords.yourTeamSecondName.OriginY,
+                  top: props.coords.yourTeamSecondName.Top,
+                  left: props.coords.yourTeamSecondName.Left,
+                  fill: props.coords.yourTeamSecondName.Fill,
+                  fontSize: props.coords.yourTeamSecondName.FontSize,
+                  fontFamily: props.coords.yourTeamSecondName.FontFamily,
                   className: "yourSecondName",
-                });
-                if (props.coords.yourTeamSecondNameScaleToHeight) {
-                  secondName.scaleToHeight(
-                    props.coords.yourTeamSecondNameScaleToHeight
-                  );
-                }
-                if (secondName.width > props.coords.yourTeamSecondNameWidth) {
+                })
+                
+                if (secondName.width > props.coords.yourTeamSecondName.ScaleToWidth) {
                   secondName.scaleToWidth(
-                    props.coords.yourTeamSecondNameScaleToWidth
+                    props.coords.yourTeamSecondName.ScaleToWidth
                   );
                 }
+                
                 if (props.themeOption) {
                   if (
                     props.themeOption.label.split("-")[0] === "biało" ||
@@ -205,31 +198,33 @@ export default function useTeamName(fabricRef, props) {
                 }
 
                 fabricRef.current.add(secondName);
+                fabricRef.current.renderAll();
               });
             }
           } else {
             const font = new FontFaceObserver(
-              props.coords.yourTeamNameFontFamily
+              props.coords.yourTeamName.FontFamily
             );
             font.load().then(() => {
+              
               const name = new fabric.Text(yourTeamName.toUpperCase(), {
                 selectable: false,
-                originX: props.coords.yourTeamNameOriginX,
-                originY: props.coords.yourTeamNameOriginY,
-                top: props.coords.yourTeamNameTop,
-                left: props.coords.yourTeamNameLeft,
-                fill: props.coords.yourTeamNameFill,
-                fontFamily: props.coords.yourTeamNameFontFamily,
+                originX: props.coords.yourTeamName.OriginX,
+                originY: props.coords.yourTeamName.OriginY,
+                top: props.coords.yourTeamName.Top,
+                left: props.coords.yourTeamName.Left,
+                fill: props.coords.yourTeamName.Fill,
+                fontSize: props.coords.yourTeamName.FontSize,
+                fontFamily: props.coords.yourTeamName.FontFamily,
                 className: "yourName",
               });
-              if (props.coords.yourTeamNameCharSpacing) {
-                name.charSpacing = props.coords.yourTeamNameCharSpacing;
+              if (props.coords.yourTeamName.CharSpacing) {
+                name.charSpacing = props.coords.yourTeamName.CharSpacing;
               }
-              if (props.coords.yourTeamNameWidth) {
-                name.width = props.coords.yourTeamNameWidth;
+              
+              if (name.width > props.coords.yourTeamName.ScaleToWidth) {
+                name.scaleToWidth(props.coords.yourTeamName.ScaleToWidth);
               }
-
-              name.scaleToWidth(props.coords.yourTeamNameScaleToWidth);
               if (props.themeOption) {
                 if (
                   props.themeOption.label.split("-")[0] === "biało" ||
@@ -259,58 +254,51 @@ export default function useTeamName(fabricRef, props) {
                   });
                 }
               }
+             
               fabricRef.current.add(name);
+              fabricRef.current.renderAll();
             });
           }
         } else if (props.radioChecked === "radio2") {
       
           let yourTeamName;
           if (poster === "23b5ff36a490e8f93breae34") {
-            yourTeamName = yourTeamLogo[0].firstName;
+            yourTeamName = yourTeamLogo.split(" ")[0];
           } else if (poster === "PmoRESwg91LxFAGFObbZ") {
             yourTeamName =
-              yourTeamLogo[0].firstName.toUpperCase() +
+              yourTeamLogo.split(" ")[0].toUpperCase() +
               " " +
-              yourTeamLogo[0].secondName.toUpperCase();
+              yourTeamLogo.split(" ")[1].toUpperCase();
           } else {
             yourTeamName =
-              yourTeamLogo[0].firstName.toUpperCase() +
+              yourTeamLogo.split(" ")[0].toUpperCase() +
               " " +
-              yourTeamLogo[0].secondName.toUpperCase();
+              yourTeamLogo.split(" ")[1].toUpperCase();
           }
-          if (props.coords.yourTeamFirstNameFontFamily) {
-            const firstTeamName = yourTeamLogo[0].firstName.toUpperCase();
+          if (props.coords.yourTeamFirstName) {
+            const firstTeamName = yourTeamLogo.split(" ")[0].toUpperCase();
 
-            const secondTeamName = yourTeamLogo[0].secondName.toUpperCase();
+            const secondTeamName = yourTeamLogo.split(" ")[1].toUpperCase();
             const font = new FontFaceObserver(
-              props.coords.yourTeamFirstNameFontFamily
+              props.coords.yourTeamFirstName.FontFamily
             );
             font.load().then(() => {
               const firstName = new fabric.Text(firstTeamName, {
                 selectable: false,
-                originX: props.coords.opponentFirstNameOriginX,
-                originY: props.coords.opponentFirstNameOriginY,
-                top: props.coords.opponentFirstNameTop,
-                left: props.coords.opponentFirstNameLeft,
-                width: props.coords.opponentFirstNameWidth,
-                fill: props.coords.opponentFirstNameFill,
-                fontFamily: props.coords.opponentFirstNameFontFamily,
+                originX: props.coords.opponentFirstName.OriginX,
+                originY: props.coords.opponentFirstName.OriginY,
+                top: props.coords.opponentFirstName.Top,
+                left: props.coords.opponentFirstName.Left,
+                fill: props.coords.opponentFirstName.Fill,
+                fontFamily: props.coords.opponentFirstName.FontFamily,
+                fontSize: props.coords.opponentFirstName.FontSize,
                 className: "yourFirstName",
               });
-              if (props.coords.opponentFirstNameScaleToWidth) {
-                firstName.scaleToWidth(
-                  props.coords.opponentFirstNameScaleToWidth
-                );
-              }
-              if (props.coords.opponentFirstNameScaleToHeight) {
-                firstName.scaleToHeight(
-                  props.coords.opponentFirstNameScaleToHeight
-                );
-              }
+              
 
-              if (firstName.width > props.coords.opponentFirstNameWidth) {
+              if (firstName.width > props.coords.opponentFirstName.ScaleToWidth) {
                 firstName.scaleToWidth(
-                  props.coords.opponentFirstNameScaleToWidth
+                  props.coords.opponentFirstName.ScaleToWidth
                 );
               }
               if (props.themeOption) {
@@ -327,26 +315,26 @@ export default function useTeamName(fabricRef, props) {
               fabricRef.current.add(firstName);
             });
             const secondFont = new FontFaceObserver(
-              props.coords.yourTeamSecondNameFontFamily
+              props.coords.yourTeamSecondName.FontFamily
             );
             secondFont.load().then(() => {
               const secondName = new fabric.Text(secondTeamName, {
                 selectable: false,
-                originX: props.coords.opponentSecondNameOriginX,
-                originY: props.coords.opponentSecondNameOriginY,
-                top: props.coords.opponentSecondNameTop,
-                width: props.coords.opponentSecondNameWidth,
-                left: props.coords.opponentSecondNameLeft,
-                fill: props.coords.opponentSecondNameFill,
-                fontFamily: props.coords.opponentSecondNameFontFamily,
+                originX: props.coords.opponentSecondName.OriginX,
+                originY: props.coords.opponentSecondName.OriginY,
+                top: props.coords.opponentSecondName.Top,
+                left: props.coords.opponentSecondName.Left,
+                fill: props.coords.opponentSecondName.Fill,
+                fontFamily: props.coords.opponentSecondName.FontFamily,
+                fontSize: props.coords.opponentSecondName.FontSize,
                 className: "yourSecondName",
               });
-              secondName.scaleToHeight(
-                props.coords.opponentSecondNameScaleToHeight
-              );
-              if (secondName.width > props.coords.opponentSecondNameWidth) {
+              // secondName.scaleToHeight(
+              //   props.coords.opponentSecondNameScaleToHeight
+              // );
+              if (secondName.width > props.coords.opponentSecondName.ScaleToWidth) {
                 secondName.scaleToWidth(
-                  props.coords.opponentSecondNameScaleToWidth
+                  props.coords.opponentSecondName.ScaleToWidth
                 );
               }
               if (props.themeOption) {
@@ -362,30 +350,32 @@ export default function useTeamName(fabricRef, props) {
               }
 
               fabricRef.current.add(secondName);
+              fabricRef.current.renderAll();
             });
           } else {
             const font = new FontFaceObserver(
-              props.coords.yourTeamNameFontFamily
+              props.coords.yourTeamName.FontFamily
             );
             font.load().then(() => {
+                
               const name = new fabric.Text(yourTeamName, {
                 selectable: false,
-                originX: props.coords.opponentNameOriginX,
-                originY: props.coords.opponentNameOriginY,
-                top: props.coords.opponentNameTop,
-                left: props.coords.opponentNameLeft,
-                fill: props.coords.opponentNameFill,
-                fontFamily: props.coords.opponentNameFontFamily,
+                originX: props.coords.opponentName.OriginX,
+                originY: props.coords.opponentName.OriginY,
+                top: props.coords.opponentName.Top,
+                left: props.coords.opponentName.Left,
+                fill: props.coords.opponentName.Fill,
+                fontFamily: props.coords.opponentName.FontFamily,
                 className: "yourName",
               });
-              if (props.coords.yourTeamNameCharSpacing) {
-                name.charSpacing = props.coords.yourTeamNameCharSpacing;
+              if (props.coords.yourTeamName.CharSpacing) {
+                name.charSpacing = props.coords.yourTeamName.CharSpacing;
               }
-              if (props.coords.yourTeamNameWidth) {
-                name.width = props.coords.yourTeamNameWidth;
+             
+              if (name.width > props.coords.opponentName.ScaleToWidth) {
+                name.scaleToWidth(props.coords.opponentName.ScaleToWidth);
+                
               }
-
-              name.scaleToWidth(props.coords.yourTeamNameScaleToWidth);
               if (props.themeOption) {
                 if (
                   props.themeOption.label.split("-")[0] === "biało" ||
@@ -414,7 +404,9 @@ export default function useTeamName(fabricRef, props) {
                   });
                 }
               }
+             
               fabricRef.current.add(name);
+              fabricRef.current.renderAll();
             });
           }
         }

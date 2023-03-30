@@ -4,36 +4,61 @@ import FontFaceObserver from "fontfaceobserver";
 
 export default function usePlayerName(fabricRef, props) {
   const squadPlayer = (props) => {
+    
     if (props.players) {
-      
       props.players.forEach((player, i) => {
+        
         if (player) {
           fabricRef.current._objects.forEach((image, i) => {
             if (fabricRef.current.item(i).className === "player") {
               fabricRef.current.remove(fabricRef.current.item(i));
             }
           });
-          if (props.goalKeeper === player) {
-            player += " (gk)";
-          } else if (props.capitan === player) {
-            player += " (c)";
+          let formatPlayer;
+          
+          if (props.coords.playerOne.format === "NumDotSurName") {
+            formatPlayer = player.split(".")[0] + "." + player.split(".")[2];
+          } else if (props.coords.playerOne.format === "NumSurName") {
+            formatPlayer = player.split(".")[0] + " " + player.split(".")[2];
+            
+          } else if (props.coords.playerOne.format === "dotted") {
+            formatPlayer = player.split(".")[0] + "." + player.split(".")[1][0] + "." + player.split(".")[2]; 
+          } else if (props.coords.playerOne.format === "oneDot") {
+            formatPlayer = player.split(".")[0] + " " + player.split(".")[1][0] + "." + player.split(".")[2];
           } else {
-            player = player;
+            formatPlayer = player.split(".")[2]
           }
-          const font = new FontFaceObserver(props.coords.playerOneFontFamily);
+          
+          if (props.goalKeeper === player) {
+            formatPlayer += " (gk)";
+          } else if (props.capitan === player) {
+            formatPlayer += " (c)";
+          } else {
+            formatPlayer = formatPlayer;
+          }
+          
+          
+          if (props.coords.playerOne.textType === "upper") {
+            formatPlayer = formatPlayer.toUpperCase();
+          }
+          const font = new FontFaceObserver(props.coords.playerOne.FontFamily);
           font.load().then(() => {
-            const showPlayer = new fabric.Text(player, {
+            const showPlayer = new fabric.Text(formatPlayer, {
               selectable: false,
-              top: props.coords.playerOneTop + props.coords.playerOneMargin * i,
-              left: props.coords.playerOneLeft,
-              originX: props.coords.playerOneOriginX,
-              originY: props.coords.playerOneOriginY,
-              fontSize: props.coords.playerOneFontSize,
-              width: props.coords.playerOneWidth,
-              fill: props.coords.playerOneFill,
+              top: props.coords.playerOne.Top + props.coords.playerOne.Margin * i,
+              left: props.coords.playerOne.Left,
+              originX: props.coords.playerOne.OriginX,
+              originY: "center",
+              fontSize: props.coords.playerOne.FontSize,
+              fill: props.coords.playerOne.Fill,
               className: "player",
-              fontFamily: props.coords.playerOneFontFamily,
+              fontFamily: props.coords.playerOne.FontFamily,
             });
+            if (props.coords.playerOne.CharSpacing) {
+              showPlayer.set({
+                charSpacing: props.coords.playerOne.CharSpacing
+              })
+            }
             if (props.themeOption) {
               if (
                 props.themeOption.label.split("-")[0] === "biało" ||
@@ -78,20 +103,20 @@ export default function usePlayerName(fabricRef, props) {
                 showPlayer.set({ fill: "white" });
               }
             }
-            if (props.coords.playerOneLeft) {
+            if (props.coords.playerOne.Left) {
               showPlayer.set({
-                left: props.coords.playerOneLeft,
+                left: props.coords.playerOne.Left,
               });
             } else {
               showPlayer.set({
-                left: props.coords.playerOneWidth / 2,
+                left: props.coords.playerOne.Width / 2,
               });
             }
-            if (props.coords.playersScaleToWidth) {
-              if (showPlayer.width >= props.coords.playersScaleToWidth) {
-                showPlayer.scaleToWidth(props.coords.playersScaleToWidth);
+            
+              if (showPlayer.width >= props.coords.playerOne.ScaleToWidth) {
+                showPlayer.scaleToWidth(props.coords.playerOne.ScaleToWidth);
               }
-            }
+            
             fabricRef.current.add(showPlayer);
           });
         }

@@ -4,7 +4,7 @@ import FontFaceObserver from "fontfaceobserver";
 
 export default function useReserve(fabricRef, props) {
   const showReserve = (props) => {
-    if (props.reserve) {
+    if (props.reserve && props.coords.reserveOne) {
       let text = "";
       props.reserve.forEach((reserve) => {
         if (reserve) {
@@ -13,24 +13,42 @@ export default function useReserve(fabricRef, props) {
               fabricRef.current.remove(fabricRef.current.item(i));
             }
           });
-          text = text + " " + reserve + `${props.coords.reserveOneFormatter}`;
+
+          if (props.coords.playerOne.format === "NumDotSurName") {
+            reserve = reserve.split(".")[0] + "." + reserve.split(".")[2];
+          } else if (props.coords.playerOne.format === "NumSurName") {
+           reserve =reserve.split(".")[0] + "." +reserve.split(".")[2];
+          } else if (props.coords.playerOne.format === "dotted") {
+            reserve = reserve.split(".")[0] + "." + reserve.split(".")[1][0] + "." + reserve.split(".")[2]; 
+          } else if (props.coords.playerOne.format === "oneDot") {
+            reserve = reserve.split(".")[0] + "." + reserve.split(".")[1][0] + "." + reserve.split(".")[2];
+          } else {
+            reserve = reserve.split(".")[2]
+          }
+
+            text = text + " " + reserve + `${props.coords.reserveOne.Formatter}`;
+          
         }
       });
-      const font = new FontFaceObserver(props.coords.reserveOneFontFamily)
+      if (props.coords.playerOne.textType === "upper") {
+        text = text.toUpperCase();
+      }
+      const font = new FontFaceObserver(props.coords.reserveOne.FontFamily)
       font.load().then(() => {
         const reserveText = new fabric.Textbox(text, {
           selectable: false,
           className: "reserve",
-          textAlign: props.coords.reserveOneTextAlign,
-          width: props.coords.reserveOneWidth,
-          top: props.coords.reserveOneTop,
-          left: props.coords.reserveOneLeft,
-          originX: props.coords.reserveOneOriginX,
-          originY: props.coords.reserveOneOriginY,
-          fontFamily: props.coords.reserveOneFontFamily,
-          fontSize: props.coords.reserveOneFontSize,
-          fill: props.coords.reserveOneFill,
-      })
+          textAlign: props.coords.reserveOne.TextAlign,
+          width: props.coords.reserveOne.ScaleToWidth,
+          top: props.coords.reserveOne.Top,
+          left: props.coords.reserveOne.Left,
+          originX: props.coords.reserveOne.OriginX,
+          originY: props.coords.reserveOne.OriginY,
+          fontFamily: props.coords.reserveOne.FontFamily,
+          fontSize: props.coords.reserveOne.FontSize,
+          fill: props.coords.reserveOne.Fill,
+        })
+        
       if (props.themeOption) {
         if (
           props.themeOption.label.split("-")[0] === "biało" ||
@@ -77,7 +95,8 @@ export default function useReserve(fabricRef, props) {
           reserveText.set({ fill: "white" });
         }
       }
-      fabricRef.current.add(reserveText);
+        fabricRef.current.add(reserveText);
+        fabricRef.current.renderAll();
       })
     }
   };

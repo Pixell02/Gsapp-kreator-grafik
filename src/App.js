@@ -59,13 +59,24 @@ function App() {
        <Route path="/stats" element = {user ? <Stats /> : <Navigate to="/login" /> } />
       <Route path="/posterCreator" element = {user ? <PosterCreator /> : <Navigate to="/login" /> } />
       <Route path="/stats/:id" element = {user ? <UserAccount /> : <Navigate to="/login" /> } />
-       </>
-      )}
+              <Route path="/posterCreator/:id" element={user ? <PosterCreator />: <Navigate to="/login" />} /> 
+            </>
+          )}
+          
+          {user && user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" && (
+            <>
+              <Route path="/stats" element={user ? <Stats /> : <Navigate to="/login" />} />
+              <Route path="/posterCreator" element={user ? <PosterCreator /> : <Navigate to="/login" />} />
+              <Route path="/stats/:id" element={user ? <UserAccount /> : <Navigate to="/login" />} />
+              <Route path="/posterCreator/:id" element={user ? <PosterCreator /> : <Navigate to="/login" />} />
+            </>
+          )}     
       {user && user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2" && (
         <>
        <Route path="/stats" element = {user ? <Stats /> : <Navigate to="/login" /> } />
       <Route path="/posterCreator" element = {user ? <PosterCreator /> : <Navigate to="/login" /> } />
       <Route path="/stats/:id" element = {user ? <UserAccount /> : <Navigate to="/login" /> } />
+      <Route path="/posterCreator/:id" element={user ? <PosterCreator /> : <Navigate to="/login" />} />
        </>
       )}
       <Route path="/guide" element = {user ? <Guide /> : <Navigate to="/login" /> } />

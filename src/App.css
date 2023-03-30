@@ -1,3 +1,8 @@
+@import url(https://pl.allfont.net/allfont.css?fonts=haettenschweiler);
+@font-face {
+  font-family: Impact;
+  src: url(./fonts/impact.ttf);
+}
 @font-face {
   font-family: "Russo_One";
   src: url(./fonts/Russo_One.ttf);
@@ -46,6 +51,10 @@
   font-family: "Made Outer Sans Regular";
   src: url(./fonts/MADE\ Outer\ Sans\ Regular\ PERSONAL\ USE.otf);
 }
+/* @font-face {
+  font-family: "haetten";
+  src: url(./fonts/haetten.ttf);
+} */
 @font-face {
   font-family: "Made Outer Sans Thin";
   src: url(./fonts/MADE\ Outer\ Sans\ Thin\ PERSONAL\ USE.otf);
@@ -59,6 +68,10 @@
   src: url(./fonts/Now-Black.otf);
 }
 @font-face {
+  font-family: "Now Light";
+  src: url(./fonts/Now-Light.otf);
+}
+@font-face {
   font-family: "Now Thin";
   src: url(./fonts/Now-Thin.otf);
 }
@@ -66,8 +79,6 @@
   font-family: "Teko-SemiBold";
   src: url(./fonts/Teko-SemiBold.ttf);
 }
-
-
 
 body {
   background-color: rgb(245, 245, 245);
@@ -118,6 +129,7 @@ body {
 .ml-5 button {
   margin-left: 25px;
 }
+
 .option-container {
   z-index: 50;
 }
@@ -144,10 +156,8 @@ body {
 @media only screen and (max-width: 1250px) {
   .content-wrap .main-content {
     padding-left: 50px !important;
-    
   }
   .content-wrap {
     width: 100% !important;
-    
   }
 }

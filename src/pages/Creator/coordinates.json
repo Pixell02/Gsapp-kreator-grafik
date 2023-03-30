@@ -1,0 +1,2935 @@
+[
+  {
+    "id": "K1iRaLYzkSdrg3vBRyDL",
+    "typeData": {
+      "CharSpacing": 200,
+      "Top": 238,
+      "Left": 305,
+      "FontSize": 20,
+      "FontFamily": "Poppins-italic",
+      "ScaleToWidth": 450,
+      "Fill": "white"
+    },
+    "yourKolejka": {
+      "CharSpacing": 0,
+      "Top": 400,
+      "Left": 35,
+      "FontSize": 20,
+      "FontFamily": "Poppins-italic",
+      "ScaleToWidth": 190,
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 460,
+      "Left": 470,
+      "ScaleToHeight": 150
+    },
+    "opponentFirstName": {
+      "Top": 483,
+      "Left": 90,
+      "FontSize": 30,
+      "OriginX": "left",
+      "OriginY": "center",
+      "Fill": "#d1a75f",
+      "FontFamily": "Poppins-italic",
+      "ScaleToWidth": 140
+    },
+    "yourTeamLogo": {
+      "Top": 460,
+      "Left": 330,
+      "ScaleToHeight": 150,
+      "SecondTop": 50,
+      "SecondLeft": 50
+    },
+    "yourTeamSecondLogo": {
+      "Top": 50,
+      "Left": 50,
+      "ScaleToHeight": 50,
+      "SecondTop": 50,
+      "SecondLeft": 50
+    },
+    "yourTeamFirstName": {
+      "Top": 440,
+      "Left": 30,
+      "FontSize": 30,
+      "FontFamily": "Poppins-italic",
+      "Fill": "white",
+      "ScaleToWidth": 200,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "1wlpmf0KyPSGbmzxY8hK",
+    "yourTeamResult": {
+      "Top": 530,
+      "Left": 570,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 100,
+      "ScaleToHeight": 100,
+      "ScaleToWidth": 70
+    },
+    "yourOpponentResult": {
+      "Top": 530,
+      "Left": 600,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 100,
+      "ScaleToHeight": 100,
+      "ScaleToWidth": 70
+    },
+    "opponentImage": {
+      "Top": 530,
+      "Left": 190,
+      "ScaleToHeight": 90
+    },
+    "yourTeamLogo": {
+      "Top": 530,
+      "Left": 100,
+      "ScaleToHeight": 90
+    }
+  },
+  {
+    "id": "VZtk0ztSsTrfFNtLpvGY",
+    "yourTeamResult": {
+      "Top": 220,
+      "Left": 250,
+      "Width": 30,
+      "FontFamily": "Poppins Bold",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 150
+    },
+    "yourOpponentResult": {
+      "Top": 220,
+      "Left": 550,
+      "Width": 30,
+      "FontFamily": "Poppins Bold",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 150
+    },
+    "opponentImage": {
+      "Top": 215,
+      "Left": 470,
+      "ScaleToHeight": 90
+    },
+    "yourTeamLogo": {
+      "Top": 215,
+      "Left": 310,
+      "ScaleToHeight": 90
+    },
+    "yourPlayerOneGoal": {
+      "Top": 420,
+      "Left": 130,
+      "FontFamily": "Poppins Bold",
+      "FontSize": 25,
+      "ScaleToWidth": 500,
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "Margin": 25
+    }
+  },
+  {
+    "id": "OquH8Pd6s2TL0LoETJE9",
+    "yourTeamResult": {
+      "Top": 210,
+      "Left": 280,
+      "FontFamily": "helvetica",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 150
+      
+    },
+    "yourOpponentResult": {
+      "Top": 210,
+      "Left": 340,
+      "FontFamily": "helvetica",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 150
+      
+    },
+    "opponentImage": {
+      "Top": 330,
+      "Left": 390,
+      "ScaleToHeight": 90
+    },
+    "yourTeamLogo": {
+      "Top": 330,
+      "Left": 230,
+      "ScaleToHeight": 90
+    }
+  },
+  {
+    "id": "w2gy7P9xehKJYPLOGEay",
+    "yourTeamResult": {
+      "Top": 340,
+      "Left": 430,
+      "FontFamily": "Teko-SemiBold",
+      "Fill": "black",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 120
+    },
+    "yourOpponentResult": {
+      "Top": 340,
+      "Left": 510,
+      "FontFamily": "Teko-SemiBold",
+      "Fill": "black",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 120
+    },
+    "opponentImage": {
+      "Top": 210,
+      "Left": 550,
+      "ScaleToHeight": 90,
+      "ScaleToWidth": 60
+    },
+    "yourTeamLogo": {
+      "Top": 210,
+      "Left": 380,
+      "ScaleToHeight": 90
+    }
+  },
+  {
+    "id": "yFQUttMy49j50689ATGF",
+    "numberOfMatches": 4,
+    "typeData": {
+      "OneTop": 232,
+      "OneLeft": 330,
+      "OneMargin": 75,
+      "OneFontFamily": "Now black",
+      "OneFontSize": 15,
+      "OneFill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 80
+    },
+    "yourLeague": {
+      "Top": 163,
+      "Left": 233,
+      "FontFamily": "Now black",
+      "FontSize": 15,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "typeMonth": {
+      "Top": 50,
+      "Left": 330,
+      "CharSpacing": 100,
+      "FontFamily": "Now Light",
+      "FontSize": 20,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 200
+    },
+    "yourTeamName": {
+      "OneFontFamily": "Now Light",
+      "OneTop": 258,
+      "OneLeft": 310,
+      "OneFill": "white",
+      "OneMargin": 75,
+      "OneFontSize": 13,
+      "OneOriginX": "right",
+      "OneOriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "opponentName": {
+      "OneFontFamily": "Now Light",
+      "OneTop": 258,
+      "OneLeft": 340,
+      "OneFill": "white",
+      "OneMargin": 75,
+      "OneFontSize": 13,
+      "OneOriginX": "left",
+      "OneOriginY": "center",
+      "ScaleToWidth": 150
+    }
+  },
+  {
+    "id": "s8qAolnFvpC5C09KkHCW",
+    "imageType": "withImage",
+    "numberOfMatches": 7,
+    "typeDataOne": {
+      "Top": 221,
+      "Left": 332,
+      "Margin": 44.5,
+      "FontFamily": "Now black",
+      "FontSize": 13,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 80
+    },
+    "type": "league",
+    "yourLeague": {
+      "Top": 163,
+      "Left": 233,
+      "FontFamily": "Now black",
+      "FontSize": 15,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "typeMonth": {
+      "Top": 50,
+      "Left": 330,
+      "CharSpacing": 100,
+      "FontFamily": "Now Light",
+      "FontSize": 20,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 200
+    },
+    "yourTeamNameOne": {
+      "FontFamily": "Now Light",
+      "Top": 239,
+      "Left": 317,
+      "Fill": "white",
+      "Margin": 44.5,
+      "FontSize": 12,
+      "OriginX": "right",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "opponentNameOne": {
+      "FontFamily": "Now Light",
+      "Top": 239,
+      "Left": 345,
+      "Fill": "white",
+      "Margin": 44.5,
+      "FontSize": 12,
+      "OriginX": "left",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "yourTeamLogoOne": {
+      "Top": 238,
+      "Left": 130,
+      "ScaleToHeight": 25,
+      "Margin": 44.5
+    },
+    "opponentImageOne": {
+      "Top": 238,
+      "Left": 530,
+      "ScaleToHeight": 25
+    }
+  },
+  {
+    "id": "dEeqBVG7GGs2g8QwGh49",
+    "numberOfMatches": 4,
+    "yourTeamNameOne": {
+      "FontFamily": "Now Light",
+      "Top": 231,
+      "Left": 310,
+      "Fill": "white",
+      "Margin": 73,
+      "FontSize": 13,
+      "OriginX": "right",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "opponentNameOne": {
+      "FontFamily": "Now Light",
+      "Top": 231,
+      "Left": 350,
+      "Fill": "white",
+      "Margin": 73,
+      "FontSize": 13,
+      "OriginX": "left",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "yourTeamResultsOne": {
+      "Top": 265,
+      "Left": 320,
+      "FontFamily": "Now Black",
+      "FontSize": 20,
+      "Margin": 73,
+      "Fill": "white",
+      "ScaleToWidth": 15,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "opponentTeamResults": {
+      "OneTop": 265,
+      "Left": 340,
+      "FontFamily": "Now Black",
+      "FontSize": 20,
+      "Margin": 73,
+      "Fill": "white",
+      "ScaleToWidth": 15,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "61F9EOk0ZY06izZTMn5s",
+    "numberOfMatches": 7,
+    "yourKolejka": {
+      "FontFamily": "Now Light",
+      "CharSpacing": 200,
+      "Top": 36,
+      "Left": 330,
+      "FontSize": 25,
+      "Fill":"white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 210
+    },
+    "yourTeamNameOne": {
+      "FontFamily": "Now Light",
+      "Top": 225,
+      "Left": 310,
+      "Fill": "white",
+      "Margin": 44.5,
+      "FontSize": 10,
+      "OriginX": "right",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "type": "league",
+    "opponentNameOne": {
+      "FontFamily": "Now Light",
+      "Top": 225,
+      "Left": 350,
+      "Fill": "white",
+      "Margin": 44.5,
+      "FontSize": 10,
+      "OriginX": "left",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "yourTeamResultsOne": {
+      "Top": 243,
+      "Left": 325,
+      "FontFamily": "Now Black",
+      "FontSize": 13,
+      "Margin": 44.5,
+      "Fill": "white",
+      "ScaleToWidth": 15,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "opponentTeamResultsOne": {
+      "Top": 243,
+      "Left": 337,
+      "FontFamily": "Now Black",
+      "FontSize": 13,
+      "Margin": 44.5,
+      "Fill": "white",
+      "ScaleToWidth": 15,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourTeamLogoOne": {
+      "Top": 226,
+      "Left": 130,
+      "ScaleToHeight": 28,
+      "Margin": 44.5
+    },
+    "opponentImageOne": {
+      "Top": 226,
+      "Left": 530,
+      "ScaleToHeight": 28
+    }
+  },
+  {
+    "id": "mvzttPwmXvDWCz4vJefn",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 248,
+      "Left": 335,
+      "FontSize": 25,
+      "FontFamily": "Now Black",
+      "Fill": "white",
+      "ScaleToWidth": 320,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 210,
+      "Left": 335,
+      "FontSize": 25,
+      "Fill": "#1f3a76",
+      "FontFamily": "Now black",
+      "ScaleToWidth": 335,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourLeague": {
+      "Top": 70,
+      "Left": 330,
+      "FontFamily": "Now black",
+      "FontSize": 15,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "yourTeamResult": {
+      "Top": 330,
+      "Left": 290,
+      "FontFamily": "Now Black",
+      "Width": 25,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 80,
+      "ScaleToWidth": 50
+    },
+    "yourOpponentResult": {
+      "Top": 330,
+      "Left": 380,
+      "FontFamily": "Now Black",
+      "Width": 25,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 80,
+      "ScaleToWidth": 50
+    },
+    "opponentImage": {
+      "Top": 325,
+      "Left": 465,
+      "ScaleToHeight": 90
+    },
+    "opponentName": {
+      "Top": 397,
+      "Left": 445,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 40,
+      "Fill": "white",
+      "FontFamily": "Now Black",
+      "ScaleToWidth": 120
+    },
+    "yourTeamLogo": {
+      "Top": 325,
+      "Left": 207,
+      "ScaleToHeight": 90
+    },
+    "yourTeamName": {
+      "Top": 397,
+      "Left": 225,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 50,
+      "Fill": "white",
+      "FontFamily": "Now Black",
+      "ScaleToWidth": 120
+    },
+    "yourPlayerOneGoal": {
+      "Top": 440,
+      "Left": 155,
+      "FontFamily": "Now Black",
+      "FontSize": 25,
+      "ScaleToWidth": 150,
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "Margin": 25
+    },
+    "opponentPlayerOneGoal": {
+      "Top": 440,
+      "Left": 515,
+      "OriginX": "right",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "fbdiShvAmFm1QbivOwMU",
+    "yourTeamResult": {
+      "Top": 400,
+      "Left": 440,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 80,
+      "ScaleToWidth": 40
+    },
+    "yourOpponentResult": {
+      "Top": 400,
+      "Left": 480,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 80,
+      "ScaleToWidth": 40
+    },
+    "player": {
+      "Top": 395,
+      "Left": 270,
+      "Width": 170,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontFamily": "Kenyan coffee",
+      "ScaleToHeight": 70,
+      "ScaleToWidth": 170
+    }
+  },
+  {
+    "id": "rtZUgjjd4i74jHW0mRPs",
+    "yourTeamResult": {
+      "Top": 480,
+      "Left": 600,
+      "Width": 30,
+      "FontFamily": "Poppins bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 60,
+      "ScaleToWidth": 40
+    },
+    "yourOpponentResult": {
+      "Top": 610,
+      "Left": 600,
+      "Width": 30,
+      "FontFamily": "Poppins bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 60,
+      "ScaleToWidth": 40
+    },
+    "opponentImage": {
+      "Top": 610,
+      "Left": 660,
+      "ScaleToHeight": 70
+    },
+    "yourTeamLogo": {
+      "Top": 480,
+      "Left": 660,
+      "ScaleToHeight": 70
+    },
+    "player": {
+      "Top": 640,
+      "Left": 120,
+      "Width": 350,
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontFamily": "Poppins bold",
+      "ScaleToHeight": 50,
+      "ScaleToWidth": 350
+    }
+  },
+  {
+    "id": "EKRbPQntz8YvKXEpVVvc",
+    "yourTeamResult": {
+      "Top": 530,
+      "Left": 530,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 100,
+      "ScaleToWidth": 70
+    },
+    "yourOpponentResult": {
+      "Top": 530,
+      "Left": 600,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "ScaleToHeight": 100,
+      "ScaleToWidth": 70
+    },
+    "opponentImage": {
+      "Top": 530,
+      "Left": 190,
+      "ScaleToHeight": 90
+    },
+    "opponentName": {
+      "Top": 1200,
+      "Left": 150,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "#003981",
+      "FontFamily": "Baron-Neue-Black",
+      "ScaleToWidth": 100
+    },
+    "yourTeamLogo": {
+      "Top": 530,
+      "Left": 100,
+      "ScaleToHeight": 90
+    },
+    "yourTeamName": {
+      "Top": 1090,
+      "Left": 150,
+      "FontFamily": "Baron-Neue-Black",
+      "Fill": "#003981",
+      "ScaleToWidth": 230,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "YJu8UNwdZjgQEgWcnftH",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 530,
+      "Left": 350,
+      "FontSize": 60,
+      "FontFamily": "Goldman-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 450,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 580,
+      "Left": 350,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "Goldman-Bold",
+      "ScaleToWidth": 450,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 425,
+      "Left": 190,
+      "ScaleToHeight": 100
+    },
+    "opponentFirstName": {
+      "Top": 400,
+      "Left": 250,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 40,
+      "Fill": "white",
+      "FontFamily": "Goldman-Bold",
+      "ScaleToWidth": 350
+    },
+    "opponentSecondName": {
+      "Top": 450,
+      "Left": 250,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 40,
+      "Width": 350,
+      "Fill": "white",
+      "FontFamily": "Goldman-Regular",
+      "ScaleToWidth": 350
+    },
+    "yourTeamLogo": {
+      "Top": 260,
+      "Left": 500,
+      "ScaleToHeight": 100
+    },
+    "yourTeamFirstName": {
+      "Top": 240,
+      "Left": 440,
+      "FontFamily": "Goldman-Bold",
+      "FontSize": 40,
+      "Fill": "white",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "yourTeamSecondName": {
+      "Top": 280,
+      "Left": 440,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "FontSize": 40,
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "hGbSMO3INrFdiSpv29vy",
+    "type": "scalable",
+    "yourKolejka": {
+      "Top": 80,
+      "Left": 520,
+      "FontFamily": "Impact",
+      "Fill": "black",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 430,
+      "FontSize": 45
+    },
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 655,
+      "Left": 370,
+      "FontSize": 50,
+      "FontFamily": "Impact",
+      "Fill": "black",
+      "ScaleToWidth": 370,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 700,
+      "Left": 370,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 400,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourTeamLogo": {
+      "Top": 390,
+      "Left": 160,
+      "ScaleToHeight": 200
+    },
+    "opponentImage": {
+      "Top": 390,
+      "Left": 350,
+      "ScaleToHeight": 200
+    },
+    "yourTeamName": {
+      "Top": 545,
+      "Left": 120,
+      "FontSize": 75,
+      "FontFamily": "Impact",
+      "Fill": "#131632",
+      "ScaleToWidth": 350,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentName": {
+      "Top": 605,
+      "Left": 185,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 50,
+      "Fill": "#131632",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 290
+    }
+  },
+  {
+    "id": "ImUwUvWPFCkNrEr7kpO7",
+    "type": "scalable",
+    "yourKolejka": {
+      "Top": 80,
+      "Left": 520,
+      "FontFamily": "Impact",
+      "Fill": "black",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 430,
+      "FontSize": 45
+    },
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 655,
+      "Left": 370,
+      "FontSize": 50,
+      "FontFamily": "Impact",
+      "Fill": "black",
+      "ScaleToWidth": 370,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 700,
+      "Left": 370,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 400,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourTeamLogo": {
+      "Top": 390,
+      "Left": 160,
+      "ScaleToHeight": 200
+    },
+    "opponentImage": {
+      "Top": 390,
+      "Left": 350,
+      "ScaleToHeight": 200
+    },
+    "yourTeamName": {
+      "Top": 545,
+      "Left": 120,
+      "FontSize": 75,
+      "FontFamily": "Impact",
+      "Fill": "#131632",
+      "ScaleToWidth": 350,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentName": {
+      "Top": 605,
+      "Left": 185,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 50,
+      "Fill": "#131632",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 290
+    }
+  },
+  {
+    "id": "I5erOPgA2heHzrGsuxvi",
+    
+    "playerOne": {
+      "CharSpacing": 50,
+      "Top": 220,
+      "Left": 70,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 35,
+      "Width": 300,
+      "Fill": "white",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 300,
+      "Margin": 30,
+      "format": "oneDot",
+      "textType": "upper"
+    },
+
+    "textType": "upper",
+    "reserveOne": {
+      "Top": 535,
+      "Left": 420,
+      "Fill": "white",
+      "TextAlign": "left",
+      "Formatter": ", ",
+      "FontSize": 22,
+      "ScaleToWidth": 250,
+      "FontFamily": "Impact",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+    "yourTeamLogo": {
+      "Top": 320,
+      "Left": 530,
+      "ScaleToHeight": 260
+    }
+  },
+  {
+    "id": "MFjrrxdq9XFvQ956KH7T",
+    "playerOne": {
+      "CharSpacing": 50,
+      "Top": 220,
+      "Left": 70,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 35,
+      "Width": 300,
+      "Fill": "white",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 300,
+      "Margin": 30,
+      "format": "oneDot",
+      "textType": "upper"
+    },
+    "reserveOne": {
+      "Top": 535,
+      "Left": 420,
+      "Fill": "white",
+      "TextAlign": "left",
+      "Formatter": ", ",
+      "FontSize": 22,
+      "ScaleToWidth": 250,
+      "FontFamily": "Impact",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+    "yourTeamLogo": {
+      "Top": 320,
+      "Left": 530,
+      "ScaleToHeight": 260
+    }
+  },
+  {
+    "id": "Xr6ATAd1yQ7T2IV8zObQ",
+    "type": "yourLogo",
+    "imageType": "withImage",
+
+    "numberOfMatches": 5,
+    "typeDataOne": {
+      "Top": 290,
+      "Left": 122,
+      "Margin": 192,
+      "FontFamily": "Impact",
+      "FontSize": 22,
+      "Fill": "black",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 120
+    },
+
+    "dataType": "vertical",
+    "typeMonth": {
+      "Top": 120,
+      "Left": 520,
+      "CharSpacing": 100,
+      "FontFamily": "Impact",
+      "FontSize": 70,
+      "Fill": "black",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 450
+    },
+    "yourTeamLogoOne": {
+      "Top": 220,
+      "Left": 95,
+      "ScaleToHeight": 70,
+      "Margin": 194
+    },
+    "opponentImageOne": {
+      "Top": 220,
+      "Left": 185,
+      "ScaleToHeight": 70
+      
+    }
+  },
+  {
+    "id": "5eCTAxFSkOur0iw8Hk11",
+    "type": "yourLogo",
+    "imageType": "withImage",
+
+    "numberOfMatches": 5,
+    "typeDataOne": {
+      "Top": 290,
+      "Left": 122,
+      "Margin": 192,
+      "FontFamily": "Impact",
+      "FontSize": 22,
+      "Fill": "black",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 120
+    },
+
+    "dataType": "vertical",
+    "typeMonth": {
+      "Top": 120,
+      "Left": 520,
+      "CharSpacing": 100,
+      "FontFamily": "Impact",
+      "FontSize": 70,
+      "Fill": "black",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 450
+    },
+    "yourTeamLogoOne": {
+      "Top": 220,
+      "Left": 95,
+      "ScaleToHeight": 70,
+      "Margin": 194
+    },
+    "opponentImageOne": {
+      "Top": 220,
+      "Left": 185,
+      "ScaleToHeight": 70
+      
+    }
+  },
+  {
+    "id": "5Wzta0xpMkXoD4f4BfAI",
+    "yourTeamResult": {
+      "Top": 300,
+      "Left": 290,
+      "Width": 20,
+      "FontFamily": "Impact",
+      "Fill": "#ffc200",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 160,
+      "ScaleToWidth": 90
+    },
+    "yourTeamName": {
+      "Top": 52,
+      "Left": 260,
+      "FontSize": 45,
+      "FontFamily": "Impact",
+      "Fill": "black",
+      "ScaleToWidth": 120,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentName": {
+      "Top": 52,
+      "Left": 420,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "black",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 120
+    },
+    "yourOpponentResult": {
+      "Top": 300,
+      "Left": 360,
+      "Width": 20,
+      "FontFamily": "Impact",
+      "Fill": "#ffc200",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 160,
+      "ScaleToWidth": 90
+    },
+    "opponentImage": {
+      "Top": 285,
+      "Left": 540,
+      "ScaleToHeight": 100
+    },
+    "yourTeamLogo": {
+      "Top": 285,
+      "Left": 110,
+      "ScaleToHeight": 100
+    },
+    "yourPlayerOneGoal": {
+      "Top": 390,
+      "Left": 290,
+      "FontFamily": "Impact",
+      "FontSize": 23,
+      "ScaleToWidth": 200,
+      "Fill": "#141626",
+      "OriginX": "right",
+      "OriginY": "center",
+      "Margin": 20
+    },
+    "opponentPlayerOneGoal": {
+      "Top": 390,
+      "Left": 410,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "WO7EvZ12cLpHwWNwWBjG",
+    "yourTeamResult": {
+      "Top": 300,
+      "Left": 290,
+      "FontFamily": "Impact",
+      "Fill": "#ffc200",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 180,
+      "ScaleToWidth": 120
+    },
+    "yourTeamName": {
+      "Top": 52,
+      "Left": 260,
+      "FontSize": 45,
+      "FontFamily": "Impact",
+      "Fill": "black",
+      "ScaleToWidth": 120,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentName": {
+      "Top": 52,
+      "Left": 420,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "black",
+      "FontFamily": "Impact",
+      "ScaleToWidth": 120
+    },
+    "yourOpponentResult": {
+      "Top": 300,
+      "Left": 360,
+      "FontFamily": "Impact",
+      "Fill": "#ffc200",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 160,
+      "ScaleToWidth": 120
+    },
+    "opponentImage": {
+      "Top": 285,
+      "Left": 540,
+      "ScaleToHeight": 100
+    },
+    "yourTeamLogo": {
+      "Top": 285,
+      "Left": 110,
+      "ScaleToHeight": 100
+    },
+    "yourPlayerOneGoal": {
+      "Top": 390,
+      "Left": 290,
+      "FontFamily": "Impact",
+      "FontSize": 23,
+      "ScaleToWidth": 200,
+      "Fill": "#141626",
+      "OriginX": "right",
+      "OriginY": "center",
+      "Margin": 18
+    },
+    "opponentPlayerOneGoal": {
+      "Top": 390,
+      "Left": 410,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "8hTNRCBbwqv8UXB12fjZ",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 485,
+      "Left": 320,
+      "FontSize": 60,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "ScaleToWidth": 550,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 530,
+      "Left": 320,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "kenyan coffee",
+      "ScaleToWidth": 550,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourKolejka": {
+      "Top": 35,
+      "Left": 50,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "ScaleToWidth": 250,
+      "ScaleToHeight": 50
+    },
+    "opponentImage": {
+      "Top": 310,
+      "Left": 470,
+      "ScaleToHeight": 170
+    },
+    "yourTeamLogo": {
+      "Top": 310,
+      "Left": 140,
+      "ScaleToHeight": 170
+    }
+  },
+  {
+    "id": "4123XABIebkl34m496f4",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 280,
+      "Left": 590,
+      "FontSize": 25,
+      "FontFamily": "Russo_one",
+      "Fill": "#0d4e7a",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 310,
+      "Left": 590,
+      "FontSize": 25,
+      "Fill": "#0d4e7a",
+      "FontFamily": "Russo_one",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 220,
+      "Left": 540,
+      "ScaleToHeight": 80
+    },
+    "yourTeamLogo": {
+      "Top": 220,
+      "Left": 400,
+      "ScaleToHeight": 80
+    }
+  },
+  {
+    "id": "g55Sf67FN3nVGkKHD4Vc",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 280,
+      "Left": 590,
+      "FontSize": 25,
+      "FontFamily": "Russo_one",
+      "Fill": "#0d4e7a",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 310,
+      "Left": 590,
+      "FontSize": 25,
+      "Fill": "#0d4e7a",
+      "FontFamily": "Russo_one",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 220,
+      "Left": 540,
+      "ScaleToHeight": 80
+    },
+    "yourTeamLogo": {
+      "Top": 220,
+      "Left": 400,
+      "ScaleToHeight": 80
+    }
+  },
+  {
+    "id": "YfwG3U5L7RLVLndyqjXu",
+    "yourTeamResult": {
+      "Top": 390,
+      "Left": 330,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 100
+    },
+    "opponentFirstName": {
+      "Top": 235,
+      "Left": 500,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 40,
+      "Fill": "white",
+      "FontFamily": "Goldman-Bold",
+      "ScaleToWidth": 160
+    },
+    "opponentSecondName": {
+      "Top": 270,
+      "Left": 500,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Width": 160,
+      "Fill": "white",
+      "FontFamily": "Goldman-Regular",
+      "ScaleToWidth": 160
+    },
+    "yourOpponentResult": {
+      "Top": 390,
+      "Left": 365,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 100
+    },
+    "opponentImage": {
+      "Top": 250,
+      "Left": 440,
+      "ScaleToHeight": 100
+    },
+    "yourTeamLogo": {
+      "Top": 250,
+      "Left": 270,
+      "ScaleToHeight": 100
+    },
+    "yourTeamFirstName": {
+      "Top": 235,
+      "Left": 220,
+      "FontFamily": "Goldman-Bold",
+      "FontSize": 40,
+      "Fill": "white",
+      "ScaleToWidth": 200,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "yourTeamSecondName": {
+      "Top": 270,
+      "Left": 220,
+      "FontFamily": "Goldman-Regular",
+      "FontSize": 40,
+      "Fill": "white",
+      "ScaleToWidth": 160,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "yourTeamName": {
+      "Top": 250,
+      "Left": 240,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "BaOPtW7VEvw2JLRaSRTw",
+    "yourTeamResult": {
+      "Top": 430,
+      "Left": 290,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 110,
+      "ScaleToWidth": 100
+    },
+    "yourOpponentResult": {
+      "Top": 430,
+      "Left": 320,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 110,
+      "ScaleToWidth": 100
+    },
+    "opponentImage": {
+      "Top": 285,
+      "Left": 440,
+      "ScaleToHeight": 130
+    },
+    "yourTeamLogo": {
+      "Top": 285,
+      "Left": 170,
+      "ScaleToHeight": 130
+    },
+    "yourPlayerOneGoal": {
+      "Top": 385,
+      "Left": 110,
+      "FontFamily": "kenyan coffee",
+      "FontSize": 14,
+      "ScaleToWidth": 100,
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "Margin": 15
+    },
+    "opponentPlayerOneGoal": {
+      "Top": 385,
+      "Left": 510,
+      "OriginX": "right",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "0Gbnsa2c4SCS3SQJLEjR",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 355,
+      "Left": 350,
+      "FontSize": 70,
+      "FontFamily": "Goldman-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 450,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 410,
+      "Left": 350,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "Goldman-Bold",
+      "ScaleToWidth": 400,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 250,
+      "Left": 430,
+      "ScaleToHeight": 90
+    },
+    "opponentFirstName": {
+      "Top": 235,
+      "Left": 480,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "Goldman-Bold",
+      "ScaleToWidth": 160
+    },
+    "opponentSecondName": {
+      "Top": 265,
+      "Left": 480,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "Goldman-Regular",
+      "ScaleToWidth": 160
+    },
+    "yourTeamLogo": {
+      "Top": 250,
+      "Left": 270,
+      "ScaleToHeight": 90
+    },
+    "yourTeamFirstName": {
+      "Top": 235,
+      "Left": 220,
+      "FontFamily": "Goldman-Bold",
+      "FontSize": 25,
+      "Fill": "white",
+      "ScaleToWidth": 160,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "yourTeamSecondName": {
+      "Top": 265,
+      "Left": 220,
+      "FontFamily": "Goldman-Regular",
+      "FontSize": 20,
+      "Fill": "white",
+      "ScaleToWidth": 160,
+      "OriginX": "right",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "gz4ujMBS9WjVzzTT4T85",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 550,
+      "Left": 304,
+      "FontSize": 35,
+      "FontFamily": "MADE Outer Sans Regular",
+      "Fill": "white",
+      "ScaleToWidth": 350,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 580,
+      "Left": 304,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "MADE Outer Sans Regular",
+      "ScaleToWidth": 350,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 370,
+      "Left": 410,
+      "ScaleToHeight": 100
+    },
+    "opponentFirstName": {
+      "Top": 440,
+      "Left": 410,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 20,
+      "Fill": "white",
+      "FontFamily": "MADE Outer Sans Black",
+      "ScaleToWidth": 200
+    },
+    "opponentSecondName": {
+      "Top": 465,
+      "Left": 410,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 20,
+      "Width": 200,
+      "Fill": "white",
+      "FontFamily": "MADE Outer Sans Black",
+      "ScaleToWidth": 200
+    },
+    "yourTeamLogo": {
+      "Top": 370,
+      "Left": 200,
+      "ScaleToHeight": 100
+    },
+    "yourTeamFirstName": {
+      "Top": 440,
+      "Left": 200,
+      "FontFamily": "MADE Outer Sans Black",
+      "FontSize": 20,
+      "Fill": "white",
+      "ScaleToWidth": 140,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourTeamSecondName": {
+      "Top": 465,
+      "Left": 200,
+      "FontFamily": "MADE Outer Sans Black",
+      "FontSize": 20,
+      "Fill": "white",
+      "ScaleToWidth": 140,
+      "OriginX": "center",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "QwhxCzjvV0yW3kI6ZXy2",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 550,
+      "Left": 300,
+      "FontSize": 40,
+      "FontFamily": "MADE Outer Sans Regular",
+      "Fill": "white",
+      "ScaleToWidth": 400,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 580,
+      "Left": 300,
+      "FontSize": 35,
+      "Fill": "white",
+      "FontFamily": "MADE Outer Sans Regular",
+      "ScaleToWidth": 400,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 290,
+      "Left": 440,
+      "ScaleToHeight": 170
+    },
+    "opponentFirstName": {
+      "Top": 390,
+      "Left": 440,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "MADE Outer Sans Black",
+      "ScaleToWidth": 170
+    },
+    "opponentSecondName": {
+      "Top": 420,
+      "Left": 440,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Width": 170,
+      "Fill": "white",
+      "FontFamily": "MADE Outer Sans Black",
+      "ScaleToWidth": 170
+    },
+    "yourTeamLogo": {
+      "Top": 290,
+      "Left": 150,
+      "ScaleToHeight": 170
+    },
+    "yourTeamFirstName": {
+      "Top": 390,
+      "Left": 150,
+      "FontFamily": "MADE Outer Sans Black",
+      "FontSize": 25,
+      "Fill": "white",
+      "ScaleToWidth": 160,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourTeamSecondName": {
+      "Top": 420,
+      "Left": 150,
+      "FontFamily": "MADE Outer Sans Black",
+      "FontSize": 20,
+      "Fill": "white",
+      "ScaleToWidth": 160,
+      "OriginX": "center",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "EvaTvUZBFtGIBG5NqlLJ",
+    "yourKolejka": {
+      "CharSpacing": 0,
+      "Top": 80,
+      "Left": 50,
+      "FontSize": 40,
+      "FontFamily": "kenyan coffee",
+      "Fill": "white",
+      "ScaleToWidth": 200,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 475,
+      "Left": 310,
+      "FontSize": 45,
+      "Fill": "white",
+      "FontFamily": "kenyan coffee",
+      "ScaleToWidth": 500,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 310,
+      "Left": 460,
+      "ScaleToHeight": 160
+    },
+    "yourTeamLogo": {
+      "Top": 310,
+      "Left": 140,
+      "ScaleToHeight": 160
+    }
+  },
+  {
+    "id": "PmoRESwg91LxFAGFObbZ",
+    "typeData": {
+      "CharSpacing": 120,
+      "Top": 585,
+      "Left": 150,
+      "FontSize": 20,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 170,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourTeamResult": {
+      "Top": 220,
+      "Left": 425,
+      "Width": 30,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 100
+    },
+    "yourOpponentResult": {
+      "Top": 390,
+      "Left": 425,
+      "Width": 30,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 100
+    },
+    "opponentImage": {
+      "Top": 390,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "opponentName": {
+      "Top": 555,
+      "Left": 150,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "oxanium-Bold",
+      "ScaleToWidth": 120
+    },
+    "yourTeamLogo": {
+      "Top": 210,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "yourTeamName": {
+      "Top": 530,
+      "Left": 150,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "FontSize": 30,
+      "ScaleToWidth": 190,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "kaxZ2rBlj39ThOsCIFkR",
+    "yourTeamResult": {
+      "Top": 200,
+      "Left": 250,
+      "Width": 30,
+      "FontFamily": "MADE Outer Sans Black",
+      "Fill": "#0d4e7a",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 100
+    },
+    "yourOpponentResult": {
+      "Top": 370,
+      "Left": 250,
+      "Width": 30,
+      "FontFamily": "MADE Outer Sans Black",
+      "Fill": "#0d4e7a",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 150,
+      "ScaleToWidth": 100
+    },
+    "opponentImage": {
+      "Top": 370,
+      "Left": 110,
+      "ScaleToHeight": 130
+    },
+    "yourTeamLogo": {
+      "Top": 200,
+      "Left": 110,
+      "ScaleToHeight": 130
+    }
+  },
+  {
+    "id": "ziIMxvAgvRzCNck5ARL0",
+    
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 570,
+      "Left": 130,
+      "FontSize": 20,
+      "FontFamily": "oxanium-regular",
+      "Fill": "white",
+      "ScaleToWidth": 200,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "playerOne": {
+      "Top": 140,
+      "Left": 135,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 25,
+      "Width": 400,
+      "Fill": "white",
+      "FontFamily": "oxanium-regular",
+      "Margin": 25,
+      "ScaleToWidth": 400,
+      "textType": "normal",
+      "format": "NumSurName"
+    },
+    "reserveOne": {
+      "Top": 460,
+      "Left": 130,
+      "ScaleToWidth": 500,
+      "TextAlign": "left",
+      "Formatter": "| ",
+      "Fill": "white",
+      "FontSize": 15,
+      "FontFamily": "oxanium-regular",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+    "opponentImage": {
+      "Top": 100,
+      "Left": 550,
+      "ScaleToHeight": 100
+    },
+    "opponentName": {
+      "Top": 540,
+      "Left": 130,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "oxanium-regular",
+      "ScaleToWidth": 130
+    },
+    "yourTeamLogo": {
+      "Top": 100,
+      "Left": 450,
+      "ScaleToHeight": 100
+    },
+    "yourTeamName": {
+      "Top": 510,
+      "Left": 130,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "FontSize": 30,
+      "ScaleToWidth": 170,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "sbTp2fakTOhG5B8Tpkon",
+    "playerOne": {
+      "Top": 160,
+      "Left": 40,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 25,
+      "Width": 250,
+      "Fill": "#004172",
+      "FontFamily": "Made Outer Sans Black",
+      "ScaleToWidth": 250,
+      "Margin": 28,
+      "textType": "upper",
+      "format": "oneDot"
+    },
+    "reserveOne": {
+      "Top": 395,
+      "Left": 420,
+      "Fill": "white",
+      "TextAlign": "left",
+      "Formatter": " ",
+      "FontSize": 12,
+      "ScaleToWidth": 230,
+      "FontFamily": "Made Outer Sans Black",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+    "yourTeamLogo": {
+      "Top": 240,
+      "Left": 530,
+      "ScaleToHeight": 170
+    }
+  },
+  {
+    "id": "I9yBQpC3TultV14ru02w",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 480,
+      "Left": 280,
+      "FontSize": 50,
+      "FontFamily": "Teko-SemiBold",
+      "Fill": "black",
+      "ScaleToWidth": 380,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 430,
+      "Left": 280,
+      "FontSize": 50,
+      "Fill": "black",
+      "FontFamily": "Teko-SemiBold",
+      "ScaleToWidth": 380,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourKolejka": {
+      "CharSpacing": 0,
+      "Top": 50,
+      "Left": 235,
+      "FontSize": 55,
+      "FontFamily": "Teko-SemiBold",
+      "Fill": "black",
+      "ScaleToWidth": 320,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourLeague": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 200,
+      "Left": 615,
+      "FontSize": 50,
+      "Fill": "black",
+      "FontFamily": "Teko-SemiBold",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "yourTeamLogo": {
+      "Top": 310,
+      "Left": 360,
+      "ScaleToHeight": 110
+    },
+    "opponentImage": {
+      "Top": 310,
+      "Left": 550,
+      "ScaleToHeight": 110
+    }
+  },
+  {
+    "id": "t5JL8kVhS5wzDUqczaIU",
+    
+    "yourKolejka": {
+      "CharSpacing": 0,
+      "Top": 35,
+      "Left": 260,
+      "FontSize": 35,
+      "FontFamily": "Teko-SemiBold",
+      "Fill": "black",
+      "ScaleToWidth": 320,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourLeague": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 180,
+      "Left": 610,
+      "FontSize": 30,
+      "Fill": "black",
+      "FontFamily": "Teko-SemiBold",
+      "ScaleToWidth": 350,
+      "OriginX": "right",
+      "OriginY": "center"
+    },
+    "playerOne": {
+      "Top": 200,
+      "Left": 290,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 25,
+      "Width": 400,
+      "Fill": "black",
+      "FontFamily": "Teko-SemiBold",
+      "ScaleToWidth": 400,
+      "Margin": 28,
+      "textType": "normal",
+      "format": "SurName"
+    },
+    "reserveOne": {
+      "Top": 520,
+      "Left": 290,
+      "Fill": "black",
+      "TextAlign": "left",
+      "Formatter": " ",
+      "FontSize": 20,
+      "ScaleToWidth": 280,
+      "FontFamily": "Teko-SemiBold",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+    "yourTeamLogo": {
+      "Top": 535,
+      "Left": 90,
+      "ScaleToHeight": 60
+    },
+    "opponentImage": {
+      "Top": 535,
+      "Left": 190,
+      "ScaleToHeight": 60
+    }
+  },
+  {
+    "id": "1Ysby1Ba2usHuFTGgKBE",
+    
+    "playerOne": {
+      "Top": 240,
+      "Left": 150,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Width": 400,
+      "Fill": "white",
+      "FontFamily": "poppins",
+      "Margin": 28,
+      "ScaleToWidth": 600,
+      "format": "NumSurName",
+      "textType": "normal"
+    },
+    "reserveOne": {
+      "Top": 600,
+      "Left": 150,
+      "Fill": "white",
+      "TextAlign": "left",
+      "Formatter": ", ",
+      "FontSize": 15,
+      "ScaleToWidth": 400,
+      "FontFamily": "poppins",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+    "opponentImage": {
+      "Top": 280,
+      "Left": 660,
+      "ScaleToHeight": 80
+    },
+    "yourTeamLogo": {
+      "Top": 150,
+      "Left": 660,
+      "ScaleToHeight": 80
+    }
+  },
+  {
+    "id": "6CeLvKVyWP5Nv5fW2v5U",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 680,
+      "Left": 60,
+      "FontSize": 20,
+      "FontFamily": "Goldman-Regular",
+      "Fill": "white",
+      "ScaleToWidth": 180,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "playerOne": {
+      "Top": 250,
+      "Left": 335,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Width": 500,
+      "Fill": "white",
+      "FontFamily": "Goldman-Regular",
+      "Margin": 25,
+      "ScaleToWidth": 500,
+      "format": "NumSurName",
+      "textType": "normal"
+
+    },
+    "reserveOne": {
+      "Top": 570,
+      "ScaleToWidth": 600,
+      "Left": 335,
+      "TextAlign": "center",
+      "Formatter": "| ",
+      "Fill": "white",
+      "FontSize": 15,
+      "FontFamily": "Goldman-Regular",
+      "OriginX": "center",
+      "OriginY": "top"
+    },
+    "opponentImage": {
+      "Top": 670,
+      "Left": 600,
+      "ScaleToHeight": 80
+    },
+    "opponentName": {
+      "Top": 655,
+      "Left": 60,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "Goldman-Regular",
+      "ScaleToWidth": 130
+    },
+    "yourTeamLogo": {
+      "Top": 670,
+      "Left": 500,
+      "ScaleToHeight": 80
+    },
+    "yourTeamName": {
+      "Top": 630,
+      "Left": 60,
+      "FontFamily": "Goldman-Bold",
+      "Fill": "white",
+      "FontSize": 30,
+      "ScaleToWidth": 170,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "AaKfblCd2D2DZTPxVzLN",
+    
+    "playerOne": {
+      "Top": 150,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 25,
+      "Width": 600,
+      "Fill": "white",
+      "FontFamily": "Made Outer Sans Black",
+      "Margin": 23,
+      "format": "oneDot",
+      "textType": "upper",
+      "ScaleToWidth": 600
+    },
+    "reserveOne": {
+      "Top": 450,
+      "Left": 304,
+      "TextAlign": "center",
+      "Formatter": " ",
+      "Fill": "white",
+      "FontSize": 15,
+      "FontFamily": "Made Outer Sans Regular",
+      "OriginX": "center",
+      "OriginY": "top",
+      "ScaleToWidth": 550
+    },
+    "opponentImage": {
+      "Top": 560,
+      "Left": 450,
+      "ScaleToHeight": 80
+    },
+    "opponentName": {
+      "Top": 560,
+      "Left": 305,
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontSize": 25,
+      "Fill": "white",
+      "FontFamily": "Made Outer Sans Regular",
+      "ScaleToWidth": 150
+    },
+    "yourTeamLogo": {
+      "Top": 560,
+      "Left": 150,
+      "ScaleToHeight": 80
+    },
+    "yourTeamName": {
+      "Top": 540,
+      "Left": 305,
+      "FontFamily": "Made Outer Sans Black",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 190
+    }
+  },
+  {
+    "id": "IxOg6DyMuo9gTvv8BJK9",
+    
+    "yourKolejka": {
+      "CharSpacing": 400,
+      "Top": 155,
+      "Left": 330,
+      "FontSize": 20,
+      "FontFamily": "Now black",
+      "Fill": "#1f3a76",
+      "ScaleToWidth": 320,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourLeague": {
+      "CharSpacing": 100,
+      "TextAlign": "center",
+      "Top": 525,
+      "Left": 165,
+      "FontSize": 15,
+      "Fill": "white",
+      "FontFamily": "Now black",
+      "ScaleToWidth": 150,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "playerOne": {
+      "Top": 230,
+      "Left": 180,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 17,
+      "Fill": "#1f3a76",
+      "FontFamily": "Now black",
+      "Margin": 21,
+      "format": "NumDotSurName",
+      "formatCases": "upper",
+      "ScaleToWidth": 200
+    },
+    "reserveOne": {
+      "Top": 470,
+      "Left": 175,
+      "Fill": "#00923f",
+      "TextAlign": "left",
+      "Formatter": " ",
+      "FontSize": 9,
+      "ScaleToWidth": 230,
+      "FontFamily": "Now light",
+      "OriginX": "left",
+      "OriginY": "top"
+    },
+
+    "textType": "upper",
+    "opponentImage": {
+      "Top": 615,
+      "Left": 380,
+      "ScaleToHeight": 70
+    },
+    "yourTeamLogo": {
+      "Top": 615,
+      "Left": 310,
+      "ScaleToHeight": 70
+    }
+  },
+  {
+    "id": "6JftCRHQYUItjEz55Rn1",
+    
+    "playerOne": {
+      "Top": 170,
+      "Left": 100,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Width": 180,
+      "Fill": "white",
+      "FontFamily": "kenyan coffee",
+      "Margin": 30,
+      "format": "oneDot",
+      "textType": "upper",
+      "ScaleToWidth": 180
+    },
+    "reserveOne": {
+      "Top": 480,
+      "Left": 545,
+      "Fill": "white",
+      "TextAlign": "right",
+      "Formatter": ", ",
+      "FontSize": 15,
+      "FontFamily": "kenyan coffee",
+      "OriginX": "right",
+      "OriginY": "top",
+      "ScaleToWidth": 290
+    },
+    "yourTeamLogo": {
+      "Top": 290,
+      "Left": 420,
+      "ScaleToHeight": 280
+    }
+  },
+  {
+    "id": "63b5fb36C590f8f93beeae34",
+    "typeData": {
+      "CharSpacing": 50,
+      "Top": 440,
+      "Left": 235,
+      "FontSize": 20,
+      "FontFamily": "Baron-Neue-Black",
+      "Fill": "#003981",
+      "ScaleToWidth": 200,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 650,
+      "Left": 420,
+      "ScaleToHeight": 130
+    },
+    "opponentName": {
+      "Top": 520,
+      "Left": 230,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "#003981",
+      "FontFamily": "Baron-Neue-Black",
+      "ScaleToWidth": 310
+    },
+    "yourTeamLogo": {
+      "Top": 650,
+      "Left": 290,
+      "ScaleToHeight": 130
+    },
+    "yourTeamName": {
+      "Top": 480,
+      "Left": 230,
+      "FontFamily": "Baron-Neue-Black",
+      "Fill": "#003981",
+      "ScaleToWidth": 400,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "qyCYooseTtFZ4WnXNcxf",
+    "typeData": {
+      "CharSpacing": 50,
+      "Top": 460,
+      "Left": 135,
+      "FontSize": 20,
+      "FontFamily": "oxanium-regular",
+      "Fill": "white",
+      "ScaleToWidth": 430,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 300,
+      "Left": 135,
+      "FontSize": "25",
+      "Fill": "white",
+      "FontFamily": "oxanium-bold",
+      "ScaleToWidth": 430,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 530,
+      "Left": 270,
+      "ScaleToHeight": 90
+    },
+    "opponentName": {
+      "Top": 430,
+      "Left": 135,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "oxanium-regular",
+      "ScaleToWidth": 200
+    },
+    "yourTeamLogo": {
+      "Top": 530,
+      "Left": 180,
+      "ScaleToHeight": 90
+    },
+    "yourTeamName": {
+      "Top": 400,
+      "Left": 135,
+      "FontFamily": "oxanium-bold",
+      "FontSize": 30,
+      "Fill": "white",
+      "ScaleToWidth": 250,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "63b5fb36a4wee8f93beeae34",
+    "player": {
+      "Top": 585,
+      "Left": 280,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontFamily": "Baron-Neue-Black",
+      "ScaleToHeight": 50
+    }
+  },
+  {
+    "id": "lZP9mhRklsifxKLUvzTd",
+    "player": {
+      "Top": 530,
+      "Left": 350,
+      "Width": 350,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontFamily": "Baron-Neue-Black",
+      "ScaleToHeight": 50,
+      "ScaleToWidth": 350
+    }
+  },
+  {
+    "id": "oRVBJEM5RcjZ0J1dj7C7",
+    "player": {
+      "Top": 560,
+      "Left": 304,
+      "Width": 350,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "FontFamily": "MADE Outer Sans Regular",
+      "ScaleToHeight": 50,
+      "ScaleToWidth": 350
+    },
+    "yourTeamResult": {
+      "Top": 345,
+      "Left": 250,
+      "Width": 40,
+      "FontFamily": "MADE Outer Sans Black",
+      "Fill": "white",
+      "OriginX": "right",
+      "OriginY": "center",
+      "FontSize": 200,
+      "ScaleToWidth": 200
+    },
+    "yourOpponentResult": {
+      "Top": 345,
+      "Left": 350,
+      "Width": 40,
+      "FontFamily": "MADE Outer Sans Black",
+      "Fill": "white",
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 200,
+      "ScaleToWidth": 200
+    }
+  },
+  {
+    "id": "LDFjBmsWJcelDHqa0vrE",
+    "typePlace": {
+      "CharSpacing": 0,
+      "TextAlign": "center",
+      "Top": 670,
+      "Left": 135,
+      "FontSize": 25,
+      "Fill": "white",
+      "FontFamily": "oxanium-bold",
+      "ScaleToWidth": 430,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 290,
+      "Left": 640,
+      "ScaleToHeight": 90
+    },
+    "opponentName": {
+      "Top": 550,
+      "Left": 135,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 40,
+      "Fill": "white",
+      "FontFamily": "Poppins bold",
+      "ScaleToWidth": 350
+    },
+    "yourTeamLogo": {
+      "Top": 150,
+      "Left": 640,
+      "ScaleToHeight": 90
+    },
+    "yourTeamName": {
+      "Top": 500,
+      "Left": 135,
+      "FontFamily": "Poppins bold",
+      "FontSize": 50,
+      "Fill": "white",
+      "ScaleToWidth": 450,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "FkbRjeu4p2PvRryL8byB",
+    "typeData": {
+      "CharSpacing": 50,
+      "Top": 450,
+      "Left": 215,
+      "FontSize": 15,
+      "FontFamily": "oxanium-regular",
+      "ScaleToWidth": 300,
+      "OriginX": "left",
+      "OriginY": "center",
+      "Fill": "white"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "Top": 545,
+      "Left": 210,
+      "FontSize": 25,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 300,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 350,
+      "Left": 430,
+      "ScaleToHeight": 160
+    },
+    "opponentName": {
+      "Top": 515,
+      "Left": 210,
+      "FontSize": 25,
+      "OriginX": "left",
+      "OriginY": "center",
+      "Fill": "white",
+      "FontFamily": "oxanium-regular",
+      "ScaleToWidth": 250
+    },
+    "yourTeamLogo": {
+      "Top": 350,
+      "Left": 280,
+      "ScaleToHeight": 160
+    },
+    "yourTeamName": {
+      "Top": 480,
+      "Left": 210,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "FontSize": 30,
+      "ScaleToWidth": 280,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "N1gfNvHs9LBeKRBD7nur",
+    "typePlace": {
+      "CharSpacing": 0,
+      "Top": 670,
+      "Left": 130,
+      "FontSize": 25,
+      "FontFamily": "Poppins Bold",
+      "Fill": "white",
+      "ScaleToWidth": 450,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "opponentImage": {
+      "Top": 440,
+      "Left": 330,
+      "ScaleToHeight": 80
+    },
+    "opponentName": {
+      "Top": 570,
+      "Left": 130,
+      "FontSize": 35,
+      "OriginX": "left",
+      "OriginY": "center",
+      "Fill": "white",
+      "FontFamily": "Poppins Bold",
+      "ScaleToWidth": 450
+    },
+    "yourTeamLogo": {
+      "Top": 440,
+      "Left": 190,
+      "ScaleToHeight": 80
+    },
+    "yourTeamName": {
+      "Top": 520,
+      "Left": 130,
+      "FontFamily": "Poppins Bold",
+      "Fill": "white",
+      "FontSize": 30,
+      "ScaleToWidth": 450,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "wsAn3pPtaand0xDdNZ5S",
+    "typeData": {
+      "CharSpacing": 50,
+      "Top": 248,
+      "Left": 330,
+      "FontSize": 15,
+      "FontFamily": "Now black",
+      "ScaleToWidth": 300,
+      "OriginX": "center",
+      "OriginY": "center",
+      "Fill": "white"
+    },
+    "typePlace": {
+      "CharSpacing": 230,
+      "Top": 480,
+      "Left": 320,
+      "FontSize": 40,
+      "FontFamily": "Now black",
+      "Fill": "#1f3a76",
+      "ScaleToWidth": 300,
+      "OriginX": "center",
+      "OriginY": "center"
+    },
+    "yourLeague": {
+      "Top": 70,
+      "Left": 320,
+      "FontFamily": "Now black",
+      "FontSize": 12,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 150
+    },
+    "yourKolejka": {
+      "Top": 207,
+      "CharSpacing": 550,
+      "Left": 325,
+      "FontFamily": "Now black",
+      "FontSize": 15,
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToWidth": 350
+    },
+    "opponentImage": {
+      "Top": 340,
+      "Left": 435,
+      "ScaleToHeight": 120
+    },
+    "opponentName": {
+      "Top": 432,
+      "Left": 432,
+      "FontSize": 30,
+      "OriginX": "center",
+      "OriginY": "center",
+      "Fill": "white",
+      "FontFamily": "Now black",
+      "ScaleToWidth": 120
+    },
+    "yourTeamLogo": {
+      "Top": 340,
+      "Left": 215,
+      "ScaleToHeight": 120
+    },
+    "yourTeamName": {
+      "Top": 432,
+      "Left": 215,
+      "FontFamily": "Now black",
+      "Fill": "white",
+      "FontSize": 30,
+      "ScaleToWidth": 120,
+      "OriginX": "center",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "J6vcya0H6bthyGwarQZl",
+    "typeData": {
+      "CharSpacing": 0,
+      "Top": 400,
+      "Left": 30,
+      "FontSize": 70,
+      "FontFamily": "Teko-SemiBold",
+      "ScaleToWidth": 270,
+      "OriginX": "left",
+      "OriginY": "bottom",
+      "Fill": "black"
+    },
+    "typePlace": {
+      "CharSpacing": 0,
+      "Top": 380,
+      "Left": 310,
+      "FontSize": 40,
+      "FontFamily": "Teko-SemiBold",
+      "Fill": "black",
+      "ScaleToWidth": 300,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourKolejka": {
+      "Top": 200,
+      "CharSpacing": 0,
+      "Left": 390,
+      "FontFamily": "Now black",
+      "FontSize": 30,
+      "Fill": "black",
+      "OriginX": "right",
+      "OriginY": "center",
+      "ScaleToWidth": 350
+    },
+    "opponentImage": {
+      "Top": 275,
+      "Left": 200,
+      "ScaleToHeight": 80
+    },
+    "yourTeamLogo": {
+      "Top": 275,
+      "Left": 60,
+      "ScaleToHeight": 80
+    }
+  },
+  {
+    "id": "aRg5wLZVHqoREaJ5ybOC",
+    "typeData": {
+      "CharSpacing": 120,
+      "Top": 585,
+      "Left": 150,
+      "FontSize": 20,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 170,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourTeamResult": {
+      "Top": 220,
+      "Left": 425,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 150,
+      "ScaleToWidth": 130
+    },
+    "yourOpponentResult": {
+      "Top": 390,
+      "Left": 425,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 150,
+      "ScaleToWidth": 130
+    },
+    "opponentImage": {
+      "Top": 390,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "opponentName": {
+      "Top": 555,
+      "Left": 150,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "oxanium-Bold",
+      "ScaleToWidth": 120
+    },
+    "yourTeamLogo": {
+      "Top": 210,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "yourTeamName": {
+      "Top": 530,
+      "Left": 150,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 150,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "puxyQFtHRU20YA6ejxcW",
+    "typeData": {
+      "CharSpacing": 120,
+      "Top": 585,
+      "Left": 150,
+      "FontSize": 20,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 170,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourTeamResult": {
+      "Top": 220,
+      "Left": 425,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 150,
+      "ScaleToWidth": 130
+    },
+    "yourOpponentResult": {
+      "Top": 390,
+      "Left": 425,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 150,
+      "ScaleToWidth": 130
+    },
+    "opponentImage": {
+      "Top": 390,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "opponentName": {
+      "Top": 555,
+      "Left": 150,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "oxanium-Bold",
+      "ScaleToWidth": 120
+    },
+    "yourTeamLogo": {
+      "Top": 210,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "yourTeamName": {
+      "Top": 530,
+      "Left": 150,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 150,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  },
+  {
+    "id": "V3oyvnsLJl7q01wGFjYb",
+    "typeData": {
+      "CharSpacing": 120,
+      "Top": 585,
+      "Left": 150,
+      "FontSize": 20,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 170,
+      "OriginX": "left",
+      "OriginY": "center"
+    },
+    "yourTeamResult": {
+      "Top": 220,
+      "Left": 425,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 150,
+      "ScaleToWidth": 130
+    },
+    "yourOpponentResult": {
+      "Top": 390,
+      "Left": 425,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "OriginX": "center",
+      "OriginY": "center",
+      "ScaleToHeight": 150,
+      "ScaleToWidth": 130
+    },
+    "opponentImage": {
+      "Top": 390,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "opponentName": {
+      "Top": 555,
+      "Left": 150,
+      "OriginX": "left",
+      "OriginY": "center",
+      "FontSize": 30,
+      "Fill": "white",
+      "FontFamily": "oxanium-Bold",
+      "ScaleToWidth": 120
+    },
+    "yourTeamLogo": {
+      "Top": 210,
+      "Left": 220,
+      "ScaleToHeight": 130
+    },
+    "yourTeamName": {
+      "Top": 530,
+      "Left": 150,
+      "FontFamily": "oxanium-Bold",
+      "Fill": "white",
+      "ScaleToWidth": 150,
+      "OriginX": "left",
+      "OriginY": "center"
+    }
+  }
+]

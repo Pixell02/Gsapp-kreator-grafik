@@ -10,7 +10,7 @@ export default function YourTeamBlock({ Team }) {
 
 
   const editClick = (e, team) => {
-    console.log(team)
+    
     setOpenEditYourTeam(true)
     setData(team)
   };

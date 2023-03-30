@@ -1,24 +1,34 @@
 import "./WorkSpace.css";
 import { useCollection } from "../../hooks/useCollection";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { getDoc, doc, onSnapshot, collection, query, where} from "firebase/firestore";
+import { getDoc, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 
 import { db } from "../../firebase/config";
-import html2canvas from "html2canvas";
 import Select from "react-select";
 import MatchPoster from "./Canvas";
 import background from "../../img/back.png";
-import posterCoords from "./coords.json";
+import posterCoords from "./coordinates.json";
 import StartingSquad from "./StartingSquad";
 import GoalPoster from "./GoalPoster";
-// import watermarkImg from "../../img/2.svg";
 import { exportImg } from "./components/exportImg";
 import useCreateYourTeamGoals from "./hooks2/useCreateYourTeamGoals";
 import ReservePlayers from "./components/ReservePlayers";
 import useReservePlayer from "./hooks2/useReservePlayer";
 import useCreateOpponentGoals from "./hooks2/useCreateOpponentGoals";
+import useTimeTable from "./hooks2/useTimeTable";
+import TimeTable from "./TimeTable";
+import TimeTableEdit from "./components/TimeTableEdit";
+import ResultTable from "./ResultTable";
+import ResultTableEdit from "./components/ResultTableEdit";
+import useResults from "./hooks/useResults";
+import useTeamOption from "./hooks/TimeTable/useTeamOption";
+import { YourTeamNameAndLogo } from "./hooks2/useYourTeamLogo";
+import {
+  TransformWrapper,
+  TransformComponent,
+} from "react-zoom-pan-pinch";
 
 function WorkSpace() {
   const { poster } = useParams();
@@ -27,23 +37,53 @@ function WorkSpace() {
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
   const { documents: Opponent } = useCollection("Opponents", ["uid", "==", user.uid]);
   const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
-  const [teamOption, setTeamOption] = useState([]);
+  const { documents: coordinates } = useCollection("coords", ["uid", "==", poster]);
+ ;
+  const [coords, setCoords] = useState();
+  useEffect(() => {
+    posterCoords.map((postersCoords) => {
+      if (postersCoords.id === poster) {
+        setCoords(postersCoords);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    if (coordinates)
+      if (coordinates.length > 0) {
+        setCoords(coordinates[0]);
+      }
+  }, [coordinates]);
+  const [numberOfMatches, setNumberOfMatches] = useState();
+  useEffect(() => {
+    if (coords) {
+      setNumberOfMatches(coords.numberOfMatches);
+    }
+  }, [coords]);
   const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
     Array(6).fill()
   );
+  const [yourTeam, teamOption, getTeamOption, yourLogo, yourName] = YourTeamNameAndLogo(Logo);
+
   const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] =
     useCreateOpponentGoals(Array(6).fill());
-  const [reserve, handleReserveChange] = useReservePlayer(Array(7).fill());
 
-  useEffect(() => {
-    if (Logo) {
-      const TeamOption = Logo.map((logo) => ({
-        value: logo.firstName + " " + logo.secondName,
-        label: logo.firstName + " " + logo.secondName,
-      }));
-      setTeamOption(TeamOption);
-    }
-  }, [Logo]);
+  const [reserve, handleReserveChange] = useReservePlayer(Array(7).fill());
+  const {
+    loops,
+    handleRadioChange,
+    handleTextChange,
+    handleSelectChange,
+    radioValues,
+    textInputValues,
+    selectValues,
+    selectNamesValues,
+    selectLogoValues,
+    selectHostLogoValues,
+    selectHostNamesValues,
+    handleSelectHostChange,
+  } = useTimeTable();
+  const { yourTeamResultsValue, opponentTeamResultsValue, handleOpponentTeamResultChange, handleYourTeamResultChange } =
+    useResults(Array(6).fill());
 
   let options;
 
@@ -53,28 +93,38 @@ function WorkSpace() {
       label: opponent.firstName + " " + opponent.secondName,
     }));
   }
+  const { concated, selectTeamValue, handleSelectTeamValue } = useTeamOption(Logo, Opponent);
+
   const [playerOptions, setPlayerOption] = useState([]);
   const [fullPlayers, setFullPlayers] = useState([]);
   const [playerOptions2, setPlayerOption2] = useState([]);
   const [specialPlayerOptions, setSpecialPlayerOption] = useState([]);
   const [specialPlayerOptions2, setSpecialPlayerOption2] = useState([]);
+  const [reserveOptionsThree, setReserveOptionsThree] = useState([]);
   const [reserveTwoOptions, setReserveTwoOptions] = useState([]);
+  const [reserveOptionsOne, setReserveOptionsOne] = useState([]);
 
   let playerOption;
   let playerOption2;
   let reserveOptions;
   let reserveOptions2;
+  let reserveOptions3;
   useEffect(() => {
     if (Players) {
       playerOption = Players.map((player) => ({
         value: player.number + "." + player.secondName,
         label: player.number + " " + player.firstName + " " + player.secondName,
       }));
+      playerOption.forEach((item, i) => {
+        if (!Players[i].number) {
+          item.value = item.value.replace(".", " ");
+        }
+      });
       setFullPlayers(playerOption);
       setPlayerOption(playerOption);
       setSpecialPlayerOption(playerOption);
       playerOption2 = Players.map((player) => ({
-        value: player.number + " " + player.firstName.toUpperCase() + " " + player.secondName.toUpperCase(),
+        value: player.number + "." + player.firstName + "." + player.secondName,
         label: player.number + " " + player.firstName + " " + player.secondName,
       }));
       setPlayerOption2(playerOption2);
@@ -86,13 +136,18 @@ function WorkSpace() {
         value: player.number + "." + player.firstName[0].toUpperCase() + "." + player.secondName,
         label: player.number + " " + player.firstName + " " + player.secondName,
       }));
+      reserveOptions3 = Players.map((player) => ({
+        value: player.number + "." + player.secondName,
+        label: player.number + " " + player.firstName + " " + player.secondName,
+      }));
+      setReserveOptionsOne(reserveOptions);
+      setReserveOptionsThree(reserveOptions3);
 
       setReserveTwoOptions(reserveOptions2);
     }
   }, [Players]);
   const [opponent, setOpponent] = useState();
   const [opponentName, setOpponentName] = useState();
-
   const [posters, setPosters] = useState();
 
   const [themeOption, setThemeOption] = useState([]);
@@ -163,6 +218,7 @@ function WorkSpace() {
         setPosters(doc.data());
       });
     };
+
     if (!posters && themeOption.length === 0) {
       addYourBackground();
     } else if (!posters && themeOption.length > 0) {
@@ -212,33 +268,6 @@ function WorkSpace() {
     setSelectThemes(option);
   };
 
-  const [coords, setCoords] = useState();
-  useEffect(() => {
-    posterCoords.map((postersCoords) => {
-      if (postersCoords.id === poster) {
-        setCoords(postersCoords);
-      }
-    });
-  }, []);
-
-  const [yourLogo, setYourLogo] = useState();
-
-  useEffect(() => {
-    if (Logo) {
-      if (Logo.length > 0) {
-        fetch(`${Logo[0].img}`)
-          .then((res) => res.blob())
-          .then((blob) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = () => {
-              setYourLogo(reader.result);
-            };
-          });
-      }
-    }
-  }, [Logo, yourLogo]);
-
   const setOpponentLogo = (option) => {
     fetch(`${option.value}`)
       .then((res) => res.blob())
@@ -255,9 +284,6 @@ function WorkSpace() {
 
   const setThemeBackground = (option) => {
     setSelectThemes(option);
-  };
-  const getTeamOption = (option) => {
-    setYourLogo(option.value);
   };
 
   const [typeDate, setTypeDate] = useState("");
@@ -287,39 +313,7 @@ function WorkSpace() {
     setYourPlayer(fullName);
     setYourPlayerImg(option.value);
   };
-
   // Result
-
-  const [yourPlayerOneGoal, setYourPlayerOneGoal] = useState();
-
-  const getYourPlayerOneGoal = (option) => {
-    setYourPlayerOneGoal(option.value);
-  };
-  const [yourPlayerTwoGoal, setYourPlayerTwoGoal] = useState();
-
-  const getYourPlayerTwoGoal = (option) => {
-    setYourPlayerTwoGoal(option.value);
-  };
-  const [yourPlayerThreeGoal, setYourPlayerThreeGoal] = useState();
-
-  const getYourPlayerThreeGoal = (option) => {
-    setYourPlayerThreeGoal(option.value);
-  };
-  const [yourPlayerFourGoal, setYourPlayerFourGoal] = useState();
-
-  const getYourPlayerFourGoal = (option) => {
-    setYourPlayerFourGoal(option.value);
-  };
-  const [yourPlayerFiveGoal, setYourPlayerFiveGoal] = useState();
-
-  const getYourPlayerFiveGoal = (option) => {
-    setYourPlayerFiveGoal(option.value);
-  };
-  const [yourPlayerSixGoal, setYourPlayerSixGoal] = useState();
-
-  const getYourPlayerSixGoal = (option) => {
-    setYourPlayerSixGoal(option.value);
-  };
 
   const [yourTeamResult, setYourTeamResult] = useState();
 
@@ -353,12 +347,15 @@ function WorkSpace() {
 
   // Monthly
 
- 
-
   const [league, setLeague] = useState();
 
   const getLeague = (e) => {
     setLeague(e.target.value);
+  };
+  const [month, setMonth] = useState();
+
+  const getMonth = (e) => {
+    setMonth(e.target.value);
   };
 
   const [radioChecked, setRadioChecked] = useState("radio1");
@@ -369,6 +366,27 @@ function WorkSpace() {
     newPlayerValue[i] = option.value;
     setSquadPlayers(newPlayerValue);
   };
+
+  const [initScale, setInitScale] = useState();
+  const [scaleX, setScaleX] = useState();
+  const [scaleY, setScaleY] = useState();
+  useEffect(() => {
+    if (dataURL) {
+      const image = new Image();
+      image.src = dataURL;
+      image.onload = () => {
+        if (image.width > 2000 || image.height > 2000) {
+          setInitScale(0.5);
+          setScaleX(150);
+          setScaleY(100);
+        } else if (image.width > 1000 || image.height > 1000) {
+          setInitScale(0.75);
+        } else if (image.width < 1000 || image.height < 1000) {
+          setInitScale(1);
+        }
+      };
+    }
+  }, [dataURL]);
 
   return (
     <>
@@ -382,92 +400,153 @@ function WorkSpace() {
       {Licenses && Licenses[0].license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            {posters && posters.type === "GOOOOL" && yourLogo && (
-              <GoalPoster
-                posterBackGround={dataURL}
-                coords={coords}
-                yourPlayer={yourPlayer}
-                yourTeamImage={yourLogo}
-                themeOption={selectThemes}
-                yourTeamResult={yourTeamResult}
-                yourOpponentResult={yourOpponentResult}
-                yourLogo={Logo}
-                opponent={opponent}
-                radioChecked={radioChecked}
-                id={posters}
-              />
-            )}
+            {initScale && dataURL && (
+              <TransformWrapper minScale={0.1} initialScale={initScale} centerOnInit>
+                      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <>
+          <div className="tools">
+            <button onClick={() => zoomIn()}>+</button>
+            <button onClick={() => zoomOut()}>-</button>
+            <button onClick={() => resetTransform()}>x</button>
+          </div>
+          <TransformComponent>
+            <img src="image.jpg" alt="test" />
+            <div>Example text</div>
+          </TransformComponent>
+        </>
+      )}
+                <TransformComponent>
+                  <div className="d-flex w-100 h-100">
+                    {coords && posters && posters.type === "GOOOOL" && (
+                      <GoalPoster
+                        posterBackGround={dataURL}
+                        coords={coords}
+                        yourPlayer={yourPlayer}
+                        yourTeamImage={yourLogo}
+                        yourLogo={yourName}
+                        themeOption={selectThemes}
+                        yourTeamResult={yourTeamResult}
+                        yourOpponentResult={yourOpponentResult}
+                        opponent={opponent}
+                        radioChecked={radioChecked}
+                        id={posters}
+                      />
+                    )}
 
-            {posters && posters.type === "MATCH-POSTER" && yourLogo && (
-              <MatchPoster
-                id={posters}
-                posterBackGround={dataURL}
-                opponent={opponent}
-                yourTeamImage={yourLogo}
-                yourLogo={Logo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-                radioChecked={radioChecked}
-                themeOption={selectThemes}
-                league={league}
-                kolejka={typeKolejka}
-                yourTeamResult={yourTeamResult}
-                yourOpponentResult={yourOpponentResult}
-              />
-            )}
+                    {coords && posters && posters.type === "MATCH-POSTER" && (
+                      <MatchPoster
+                        id={posters}
+                        posterBackGround={dataURL}
+                        opponent={opponent}
+                        yourTeamImage={yourLogo}
+                        yourLogo={yourName}
+                        coords={coords}
+                        date={typeDate}
+                        place={typePlace}
+                        opponentName={opponentName}
+                        radioChecked={radioChecked}
+                        themeOption={selectThemes}
+                        league={league}
+                        kolejka={typeKolejka}
+                        yourTeamResult={yourTeamResult}
+                        yourOpponentResult={yourOpponentResult}
+                      />
+                    )}
 
-            {posters && posters.type === "STARTING-SQUAD" && yourLogo && (
-              <StartingSquad
-                posterBackGround={dataURL}
-                opponent={opponent}
-                yourLogo={Logo}
-                yourTeamImage={yourLogo}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                kolejka={typeKolejka}
-                players={squadPlayers}
-                opponentName={opponentName}
-                reserve={reserve}
-                radioChecked={radioChecked}
-                themeOption={selectThemes}
-                goalKeeper={goalKeeper}
-                capitan={capitan}
-                league={league}
-                id={posters}
-              />
-            )}
-            {posters && posters.type === "RESULT" && yourLogo && (
-              <MatchPoster
-                posterBackGround={dataURL}
-                opponent={opponent}
-                yourLogo={Logo}
-                yourTeamImage={yourLogo}
-                id={posters}
-                coords={coords}
-                date={typeDate}
-                place={typePlace}
-                opponentName={opponentName}
-                radioChecked={radioChecked}
-                themeOption={selectThemes}
-                league={league}
-                opponentGoalMinute={opponentGoalMinute}
-                opponentGoal={opponentGoals}
-                yourTeamGoalMinute={yourTeamGoalMinute}
-                yourTeamGoal={yourTeamGoal}
-                yourPlayerOneGoal={yourPlayerOneGoal}
-                yourPlayerTwoGoal={yourPlayerTwoGoal}
-                yourPlayerThreeGoal={yourPlayerThreeGoal}
-                yourPlayerFourGoal={yourPlayerFourGoal}
-                yourPlayerFiveGoal={yourPlayerFiveGoal}
-                yourPlayerSixGoal={yourPlayerSixGoal}
-                yourTeamResult={yourTeamResult}
-                yourOpponentResult={yourOpponentResult}
-              />
+                    {coords && posters && posters.type === "STARTING-SQUAD" && (
+                      <StartingSquad
+                        poster={poster}
+                        posterBackGround={dataURL}
+                        opponent={opponent}
+                        yourLogo={yourName}
+                        yourTeamImage={yourLogo}
+                        coords={coords}
+                        date={typeDate}
+                        place={typePlace}
+                        kolejka={typeKolejka}
+                        players={squadPlayers}
+                        opponentName={opponentName}
+                        reserve={reserve}
+                        radioChecked={radioChecked}
+                        themeOption={selectThemes}
+                        goalKeeper={goalKeeper}
+                        capitan={capitan}
+                        league={league}
+                        id={posters}
+                      />
+                    )}
+                    {coords && posters && posters.type === "RESULT" && (
+                      <MatchPoster
+                        posterBackGround={dataURL}
+                        opponent={opponent}
+                        yourLogo={yourName}
+                        yourTeamImage={yourLogo}
+                        id={posters}
+                        coords={coords}
+                        date={typeDate}
+                        place={typePlace}
+                        opponentName={opponentName}
+                        radioChecked={radioChecked}
+                        themeOption={selectThemes}
+                        league={league}
+                        opponentGoalMinute={opponentGoalMinute}
+                        opponentGoal={opponentGoals}
+                        yourTeamGoalMinute={yourTeamGoalMinute}
+                        yourTeamGoal={yourTeamGoal}
+                        yourTeamResult={yourTeamResult}
+                        yourOpponentResult={yourOpponentResult}
+                      />
+                    )}
+                    {coords && posters && posters.type === "TIMETABLE" && (
+                      <TimeTable
+                        posterBackGround={dataURL}
+                        opponent={opponent}
+                        yourLogo={Logo}
+                        yourTeamImage={yourLogo}
+                        id={posters}
+                        coords={coords}
+                        date={typeDate}
+                        place={typePlace}
+                        opponentName={opponentName}
+                        league={league}
+                        radioValues={radioValues}
+                        textInputValues={textInputValues}
+                        selectValues={selectValues}
+                        month={month}
+                        selectTeamValue={selectTeamValue}
+                        selectNamesValues={selectNamesValues}
+                        selectLogoValues={selectLogoValues}
+                        selectHostLogoValues={selectHostLogoValues}
+                        selectHostNamesValues={selectHostNamesValues}
+                      />
+                    )}
+
+                    {posters && posters.type === "RESULT-TABLE" && (
+                      <ResultTable
+                        posterBackGround={dataURL}
+                        opponent={opponent}
+                        yourLogo={Logo}
+                        yourTeamImage={yourLogo}
+                        id={posters}
+                        coords={coords}
+                        radioValues={radioValues}
+                        yourTeamResultsValue={yourTeamResultsValue}
+                        opponentTeamResultsValue={opponentTeamResultsValue}
+                        selectValues={selectValues}
+                        selectNamesValues={selectNamesValues}
+                        selectLogoValues={selectLogoValues}
+                        selectHostLogoValues={selectHostLogoValues}
+                        selectHostNamesValues={selectHostNamesValues}
+                        kolejka={typeKolejka}
+                      />
+                    )}
+                  </div>
+                </TransformComponent>
+          
+              </TransformWrapper>
             )}
           </div>
+
           <div className="tools-container">
             <div className="workspace-title">
               <span className="workspace-title-container">Kreator</span>
@@ -477,7 +556,7 @@ function WorkSpace() {
 
               {/* gospodarz / przeciwnik */}
 
-              {coords.opponentImageTop && (
+              {coords && coords.opponentImage && (
                 <>
                   <div className="option-container">
                     <div className="input-container">
@@ -552,16 +631,23 @@ function WorkSpace() {
                 </>
               )}
               {/* Twoje drużyny */}
-              {/* {teamOption && teamOption.length > 1 && (
+              {teamOption && teamOption.length > 1 && (
                 <>
-                <label>Twoje drużyny</label>
-                <Select options={teamOption} onChange={getTeamOption} />
+                  <label>Twoje drużyny</label>
+                  <Select options={teamOption} onChange={getTeamOption} />
                 </>
-              )} */}
+              )}
+              {/* Miesiąc */}
+              {coords && coords.typeMonth && (
+                <>
+                  <label>Miesiąc</label>
+                  <input type="text" value={month} onChange={getMonth} />
+                </>
+              )}
 
               {/* Kolejka */}
 
-              {coords.yourKolejkaTop && (
+              {coords && coords.yourKolejka && (
                 <>
                   <label>Kolejka</label>
                   <input type="text" value={typeKolejka} onChange={kolejka} />
@@ -569,35 +655,80 @@ function WorkSpace() {
               )}
 
               {/* Klasa / Liga */}
-              {coords.yourLeagueTop && (
+              {coords && coords.yourLeague && (
                 <>
                   <label>Klasa / Liga</label>
                   <input type="text" value={league} onChange={getLeague} />
                 </>
               )}
               {/* Miejsce */}
-              {coords.typePlaceTop && (
+              {coords && coords.typePlace && (
                 <>
                   <label>Miejsce</label>
                   <input type="text" value={typePlace} onChange={place} />
                 </>
               )}
               {/* Data */}
-              {coords.typeDataTop && (
+              {coords && coords.typeData && (
                 <>
                   <label>Data i godzina</label>
                   <input type="text" onChange={date} value={typeDate} className="date-type" />
                 </>
               )}
+              {/* Terminarz */}
+              {coords && coords.typeDataOne && (
+                <TimeTableEdit
+                  opponent={concated}
+                  opponents={options}
+                  handleRadioChange={handleRadioChange}
+                  radioValues={radioValues}
+                  handleTextChange={handleTextChange}
+                  handleSelectChange={handleSelectChange}
+                  textInputValues={textInputValues}
+                  selectValues={selectValues}
+                  handleSelectTeamValue={handleSelectTeamValue}
+                  coords={coords}
+                  concated={concated}
+                  radioChecked={radioChecked}
+                  setRadioChecked={setRadioChecked}
+                  selectNamesValues={selectNamesValues}
+                  selectLogoValues={selectLogoValues}
+                  selectHostLogoValues={selectHostLogoValues}
+                  selectHostNamesValues={selectHostNamesValues}
+                  handleSelectHostChange={handleSelectHostChange}
+                />
+              )}
+
+              {coords && coords.yourTeamResultsOne && (
+                <ResultTableEdit
+                  opponent={options}
+                  concated={concated}
+                  handleRadioChange={handleRadioChange}
+                  radioValues={radioValues}
+                  yourTeamResultsValue={yourTeamResultsValue}
+                  handleYourTeamResultChange={handleYourTeamResultChange}
+                  opponentTeamResultsValue={opponentTeamResultsValue}
+                  handleOpponentTeamResultChange={handleOpponentTeamResultChange}
+                  handleSelectChange={handleSelectChange}
+                  selectValues={selectValues}
+                  selectNamesValues={selectNamesValues}
+                  selectLogoValues={selectLogoValues}
+                  coords={coords}
+                  opponents={options}
+                  selectHostLogoValues={selectHostLogoValues}
+                  selectHostNamesValues={selectHostNamesValues}
+                  handleSelectHostChange={handleSelectHostChange}
+                />
+              )}
               {/* Przeciwnicy */}
-              {coords.opponentImageTop && (
+              {coords && coords.opponentImage && (
                 <>
                   <label>Przeciwnicy</label>
                   {Opponent && <Select options={options} onChange={setOpponentLogo} />}
                 </>
               )}
               {/* Wynik*/}
-              {coords.yourTeamResultTop && (
+              {coords && coords.yourTeamResult && (
                 <>
                   <input
                     type="number"
@@ -621,7 +752,7 @@ function WorkSpace() {
               )}
 
               {/* GOL zawodnika */}
-              {coords.playerTop && (
+              {coords && coords.player && (
                 <>
                   <label>Zawodnik</label>
                   <Select options={playerOptions} onChange={getYourPlayer} />
@@ -630,78 +761,60 @@ function WorkSpace() {
 
               {/* GOLE zawodników */}
 
-              {coords && coords.yourPlayerOneGoalTop && (
+              {coords && coords.yourPlayerOneGoal && (
                 <>
-                  {/* <p className="mt-2">Gole zawodników</p>
-                  <label>Twój GOL 1</label>
-                  <Select options={playerOptions} onChange={getYourPlayerOneGoal} /> */}
                   {yourTeamGoal &&
                     yourTeamGoal.map((goal, i) => (
                       <div key={i} className="goal-container">
                         <div className="minute-container">
                           <label htmlFor={`input${i}`}>Minuta</label>
-                          <input id={`input${i}`} type="number" onChange={(e) => handleYourTeamMinuteChange(e, i)} />
+                          <input
+                            id={`input${i}`}
+                            type="number"
+                            min="0"
+                            onChange={(e) => handleYourTeamMinuteChange(e, i)}
+                          />
                         </div>
-                        <div className="goal-contaienr">
-                          <label htmlFor={`select${i}`}>Twój GOL 1</label>
-                          <Select className="player-select" id={`select${i}`} options={playerOptions} onChange={(e) => handleGoalChange(e, i)} />
+                        <div className="goals-container">
+                          <label htmlFor={`select${i}`}>{`Twój GOL${i}`}</label>
+                          <Select
+                            className="player-select"
+                            id={`select${i}`}
+                            options={playerOptions}
+                            onChange={(e) => handleGoalChange(e, i)}
+                          />
                         </div>
                       </div>
                     ))}
                 </>
               )}
-              {/* {coords && coords.yourPlayerTwoGoalTop && (
-                <>
-                  <label>Twój GOL 2</label>
-                  <Select options={playerOptions} onChange={getYourPlayerTwoGoal} />
-                </>
-              )}
-              {coords && coords.yourPlayerThreeGoalTop && (
-                <>
-                  <label>Twój GOL 3</label>
-                  <Select options={playerOptions} onChange={getYourPlayerThreeGoal} />
-                </>
-              )}
-              {coords && coords.yourPlayerFourGoalTop && (
-                <>
-                  <label>Twój GOL 4</label>
-                  <Select options={playerOptions} onChange={getYourPlayerFourGoal} />
-                </>
-              )}
-              {coords && coords.yourPlayerFiveGoalTop && (
-                <>
-                  <label>Twój GOL 5</label>
-                  <Select options={playerOptions} onChange={getYourPlayerFiveGoal} />
-                </>
-              )}
-              {coords && coords.yourPlayerSixGoalTop && (
-                <>
-                  <label>Twój GOL 6</label>
-                  <Select options={playerOptions} onChange={getYourPlayerSixGoal} />
-                </>
-              )} */}
+
               {/* Gole przeciwników */}
 
               {coords &&
-                coords.opponentPlayerOneGoalTop &&
+                coords.opponentPlayerOneGoal &&
                 opponentGoals.map((goal, i) => (
                   <div key={i} className="goal-container">
                     <div className="minute-container">
                       <label htmlFor={`input${i}`}>Minuta</label>
-                      <input id={`imput${i}`} type="number" onChange={(e) => handleOpponentMinuteChange(e, i)} />
+                      <input
+                        id={`imput${i}`}
+                        type="number"
+                        min="0"
+                        onChange={(e) => handleOpponentMinuteChange(e, i)}
+                      />
                     </div>
-                    <div className="goal-contaienr">
-                      <label htmlFor={`select${i}`}>GOL przeciwnika</label>
-                      <input type="text" onChange={(e) => handleOpponentGoalChange(e, i)} />
+                    <div className="goals-container">
+                      <label htmlFor={`text${i}`}>GOL przeciwnika</label>
+                      <input id={`text${i}`} type="text" onChange={(e) => handleOpponentGoalChange(e, i)} />
                     </div>
                   </div>
                 ))}
-             
 
               {/*  */}
-              {coords.playerOneTop && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
+              {coords && coords.playerOne && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
                 <>
-                  <p style={{ marginTop: "20px" }}>Zawodnicy</p>
+                  <p style={{ margin: "20px" }}>Zawodnicy</p>
 
                   {squadPlayers &&
                     squadPlayers.map((player, i) => (
@@ -711,7 +824,7 @@ function WorkSpace() {
 
                           <Select
                             id={`select${i}`}
-                            options={playerOptions}
+                            options={playerOptions2}
                             onChange={(option) => handlePlayerChange(option, i)}
                           />
                         </div>
@@ -719,7 +832,7 @@ function WorkSpace() {
                     ))}
                 </>
               )}
-              {coords.playerOneTop && poster === "IxOg6DyMuo9gTvv8BJK9" && (
+              {coords && coords.playerOne && poster === "IxOg6DyMuo9gTvv8BJK9" && (
                 <>
                   {squadPlayers &&
                     squadPlayers.map((player, i) => (
@@ -744,33 +857,40 @@ function WorkSpace() {
                     <>
                       <p style={{ marginTop: "20px" }}>Rezerwowi</p>
 
-                      {coords.reserveOneTop && (
-                      
-                        <ReservePlayers
-                          reserve={reserve}
-                          playerOptions={playerOptions}
-                          handleReserveChange={handleReserveChange}
-                        />
+                      {coords && coords.reserveOne && (
+                        <>
+                          <ReservePlayers
+                            reserve={reserve}
+                            playerOptions={playerOptions2}
+                            handleReserveChange={handleReserveChange}
+                          />
+                        </>
                       )}
                     </>
                   )}
                   <label>Bramkarz</label>
                   {poster && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
-                    <Select options={specialPlayerOptions} onChange={getGoalKeeper} />
+                    <Select options={playerOptions2} onChange={getGoalKeeper} />
                   )}
                   {poster && poster === "IxOg6DyMuo9gTvv8BJK9" && (
                     <Select options={playerOptions2} onChange={getGoalKeeper} />
                   )}
                   <label>Kapitan</label>
                   {poster && poster !== "IxOg6DyMuo9gTvv8BJK9" && (
-                    <Select options={specialPlayerOptions} onChange={getCapitan} />
+                    <Select options={playerOptions2} onChange={getCapitan} />
                   )}
                   {poster && poster === "IxOg6DyMuo9gTvv8BJK9" && (
                     <Select options={playerOptions2} onChange={getCapitan} />
                   )}
                 </>
               )}
-              <button className="btn primary-btn save" onClick={() => exportImg(Licenses, posters, user, poster)}>
+
+              <button
+                className="btn primary-btn save"
+                onClick={() => {
+                  exportImg(Licenses, posters, user, poster, coords.type);
+                }}
+              >
                 Zapisz
               </button>
             </div>

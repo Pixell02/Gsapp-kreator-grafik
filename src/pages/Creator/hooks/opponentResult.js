@@ -2,6 +2,7 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 
 export const opponentResult = (fabricRef, props) => {
+  
     if (props.yourOpponentResult) {
       if (props.radioChecked === "radio1") {
         fabricRef.current._objects.forEach((image, i) => {
@@ -10,24 +11,24 @@ export const opponentResult = (fabricRef, props) => {
           }
         });
         const font = new FontFaceObserver(
-          props.coords.yourOpponentResultFontFamily
+          props.coords.yourOpponentResult.FontFamily
         );
         font.load().then(() => {
           const result = new fabric.Text(props.yourOpponentResult, {
-            top: props.coords.yourOpponentResultTop,
-            left: props.coords.yourOpponentResultLeft,
-            width: props.coords.yourOpponentResult,
-            fontFamily: props.coords.yourOpponentResultFontFamily,
+            top: props.coords.yourOpponentResult.Top,
+            left: props.coords.yourOpponentResult.Left,
+            fontFamily: props.coords.yourOpponentResult.FontFamily,
             selectable: false,
-            fill: props.coords.yourOpponentResultFill,
+            fill: props.coords.yourOpponentResult.Fill,
+            fontSize: props.coords.yourTeamResult.FontSize,
             className: "yourOpponentResult",
-            originX: props.coords.yourOpponentResultOriginX,
-            originY: props.coords.yourOpponentResultOriginY,
+            originX: props.coords.yourOpponentResult.OriginX,
+            originY: props.coords.yourOpponentResult.OriginY,
           });
 
-          result.scaleToHeight(props.coords.yourOpponentResultScaleToHeight);
-          if (result.width >= props.coords.yourOpponentResultWidth) {
-            result.scaleToWidth(props.coords.yourOpponentResultScaleToWidth);
+          // result.scaleToHeight(props.coords.yourOpponentResult.ScaleToHeight);
+          if (result.width >= props.coords.yourOpponentResult.ScaleToWidth) {
+            result.scaleToWidth(props.coords.yourOpponentResult.ScaleToWidth);
           }
           if (props.themeOption) {
             if (
@@ -75,6 +76,7 @@ export const opponentResult = (fabricRef, props) => {
           }
 
           fabricRef.current.add(result);
+          fabricRef.current.renderAll();
         });
       } else {
         fabricRef.current._objects.forEach((image, i) => {
@@ -83,19 +85,19 @@ export const opponentResult = (fabricRef, props) => {
           }
         });
         const result = new fabric.Text(props.yourOpponentResult, {
-          top: props.coords.yourTeamResultTop,
-          left: props.coords.yourTeamResultLeft,
-          width: props.coords.yourTeamResultWidth,
-          fontFamily: props.coords.yourTeamResultFontFamily,
+          top: props.coords.yourTeamResult.Top,
+          left: props.coords.yourTeamResult.Left,
+          fontFamily: props.coords.yourTeamResult.FontFamily,
+          fontSize: props.coords.yourTeamResult.FontSize,
           selectable: false,
-          fill: props.coords.yourTeamResultFill,
+          fill: props.coords.yourTeamResult.Fill,
           className: "yourOpponentResult",
-          originX: props.coords.yourTeamResultOriginX,
-          originY: props.coords.yourTeamResultOriginY,
+          originX: props.coords.yourTeamResult.OriginX,
+          originY: props.coords.yourTeamResult.OriginY,
         });
-        result.scaleToHeight(props.coords.yourTeamResultScaleToHeight);
-        if (result.width >= props.coords.yourTeamResultWidth) {
-          result.scaleToWidth(props.coords.yourTeamResultScaleToWidth);
+        // result.scaleToHeight(props.coords.yourTeamResult.ScaleToHeight);
+        if (result.width >= props.coords.yourTeamResult.ScaleToWidth) {
+          result.scaleToWidth(props.coords.yourTeamResult.ScaleToWidth);
         }
         if (props.themeOption) {
           if (
@@ -143,6 +145,7 @@ export const opponentResult = (fabricRef, props) => {
         }
 
         fabricRef.current.add(result);
+        fabricRef.current.renderAll();
       }
     }
   };

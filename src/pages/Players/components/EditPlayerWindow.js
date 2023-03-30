@@ -4,25 +4,30 @@ import bin from "../../../img/binIcon.png";
 import { addDoc, collection, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useParams } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
-import updatePlayer from "../../../hooks/UpdatePlayer";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { useTeams } from "./useTeams";
+import Select from "react-select";
 
-function EditPlayerWindow({ player, open, onClose }) {
+function EditPlayerWindow({ player, open, onClose, Teams }) {
+  
   const [firstPlayerName, setFirstPlayerName] = useState(player.firstName);
   const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
   const [number, setNumber] = useState(player.number);
-  const [isImage, setIsImage] = useState(true);
+  const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
+  
+  
+
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -33,12 +38,11 @@ function EditPlayerWindow({ player, open, onClose }) {
       setIsImage(false);
     }
   },[])
-
   const handleEdit = (e) => {
     setIsImage(false);
     const file = e.target.files[0];
-    if (file.size > 1000000) {
-      alert("Maksymalny rozmiar obrazu to 1MB");
+    if (file.size > 2000000) {
+      alert("Maksymalny rozmiar obrazu to 2MB");
       return;
     }
     const reader = new FileReader();
@@ -54,15 +58,15 @@ function EditPlayerWindow({ player, open, onClose }) {
       setImage("");
     }
   },[image])
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(isImage)
     if (!firstPlayerName || !secondPlayerName) {
       alert("puste pole");
-    } else if (!number) {
-      alert("brak numeru");
     } else {
-      if (!isImage) {
+      
+      if (isImage === false) {
+        
         const storage = getStorage();
         const metadata = {
           contentType: "image/png",
@@ -99,7 +103,7 @@ function EditPlayerWindow({ player, open, onClose }) {
                   firstName: firstPlayerName,
                   secondName: secondPlayerName,
                   img: downloadURL,
-                  number: number,
+                  number: number || "",
                   uid: user.uid,
                 });
               })
@@ -111,7 +115,8 @@ function EditPlayerWindow({ player, open, onClose }) {
         updateDoc(docRef, {
           firstName: firstPlayerName,
           secondName: secondPlayerName,
-          number: number,
+          number: number || "",
+          team: selectedTeam,
           uid: user.uid,
         });
       }
@@ -147,6 +152,23 @@ function EditPlayerWindow({ player, open, onClose }) {
           value={number}
           className="Number"
         />
+        <label>Drużyna</label>
+        
+        {/* <Select value={selectedTeam} options={teamOptions} onChange={(option) => handleTeamChange(option.value)} /> */}
+        <select 
+          name="country"
+          className="form-control"
+          value={selectedTeam}
+          defaultValue={selectedTeam}
+          onChange={(e) => handleTeamChange(e.target.value)}
+        >
+          <option value=""></option>
+        {teamOptions && teamOptions.map((team) => (
+          <option value={team.value}>{team.label}</option>
+        ))}
+         
+        </select>
+        <br />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj Zdjęcie
         </button>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
 
@@ -11,69 +11,88 @@ export default function opponentGoals(fabricRef, props) {
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
-        const font = new FontFaceObserver(props.coords.yourPlayerGoalFontFamily);
+        const font = new FontFaceObserver(props.coords.yourPlayerOneGoal.FontFamily);
         font.load().then(() => {
           if (props.radioChecked === "radio1") {
             if (opponentGoal) {
               const showPlayer = new fabric.Text(
                 props.opponentGoalMinute[i] ? props.opponentGoalMinute[i] + "' " + opponentGoal : opponentGoal,
                 {
-                  top: props.coords.opponentPlayerOneGoalTop + i * props.coords.yourPlayerGoalMargin,
-                  left: props.coords.opponentPlayerOneGoalLeft,
-                  width: props.coords.opponentPlayerOneGoalWidth,
-                  fontFamily: props.coords.yourPlayerGoalFontFamily,
-                  fontSize: props.coords.yourPlayerGoalFontSize,
+                  top: props.coords.opponentPlayerOneGoal.Top + i * props.coords.yourPlayerOneGoal.Margin,
+                  left: props.coords.opponentPlayerOneGoal.Left,
+                  fontFamily: props.coords.yourPlayerOneGoal.FontFamily,
+                  fontSize: props.coords.yourPlayerOneGoal.FontSize,
                   selectable: false,
-                  fill: props.coords.yourPlayerGoalFill,
+                  fill: props.coords.yourPlayerOneGoal.Fill,
                   className: "opponentGoals",
-                  originX: props.coords.opponentPlayerGoalOriginX,
-                  originY: props.coords.opponentPlayerGoalOriginY,
+                  originX: props.coords.opponentPlayerOneGoal.OriginX,
+                  originY: props.coords.opponentPlayerOneGoal.OriginY,
                 }
               );
 
-              if (showPlayer.width > props.coords.yourPlayerGoalScaleToWidth) {
-                showPlayer.scaleToWidth(props.coords.yourPlayerGoalScaleToWidth);
+              if (showPlayer.width > props.coords.yourPlayerOneGoal.ScaleToWidth) {
+                showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
               }
               fabricRef.current.add(showPlayer);
             } else {
               const showPlayer = new fabric.Text(
                 opponentGoal ? props.opponentGoalMinute[i] + "' " + opponentGoal : props.opponentGoalMinute[i] + "' ",
                 {
-                  top: props.coords.opponentPlayerOneGoalTop + i * props.coords.yourPlayerGoalMargin,
-                  left: props.coords.opponentPlayerOneGoalLeft,
-                  width: props.coords.opponentPlayerOneGoalWidth,
-                  fontFamily: props.coords.yourPlayerGoalFontFamily,
-                  fontSize: props.coords.yourPlayerGoalFontSize,
+                  top: props.coords.opponentPlayerOneGoal.Top + i * props.coords.yourPlayerOneGoal.Margin,
+                  left: props.coords.opponentPlayerOneGoal.Left,
+                  fontFamily: props.coords.yourPlayerOneGoal.FontFamily,
+                  fontSize: props.coords.yourPlayerOneGoal.FontSize,
                   selectable: false,
-                  fill: props.coords.yourPlayerGoalFill,
+                  fill: props.coords.yourPlayerOneGoal.Fill,
                   className: "opponentGoals",
-                  originX: props.coords.opponentPlayerGoalOriginX,
-                  originY: props.coords.opponentPlayerGoalOriginY,
+                  originX: props.coords.opponentPlayerOneGoal.OriginX,
+                  originY: props.coords.opponentPlayerOneGoal.OriginY,
                 }
               );
 
-              if (showPlayer.width > props.coords.yourPlayerGoalScaleToWidth) {
-                showPlayer.scaleToWidth(props.coords.yourPlayerGoalScaleToWidth);
+              if (showPlayer.width > props.coords.yourPlayerOneGoal.ScaleToWidth) {
+                showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
               }
               fabricRef.current.add(showPlayer);
             }
           } else {
-            const showPlayer = new fabric.Text(props.opponentGoalMinute[i] + "' " + opponentGoal, {
-              top: props.coords.opponentPlayerOneGoalTop + i * props.coords.yourPlayerGoalMargin,
-              left: props.coords.yourPlayerOneGoalLeft,
-              width: props.coords.opponentPlayerOneGoalWidth,
-              fontFamily: props.coords.yourPlayerGoalFontFamily,
-              fontSize: props.coords.yourPlayerGoalFontSize,
-              selectable: false,
-              fill: props.coords.yourPlayerGoalFill,
-              className: "opponentGoals",
-              originX: props.coords.yourPlayerGoalOriginX,
-              originY: props.coords.opponentPlayerGoalOriginY,
-            });
-            if (showPlayer.width > props.coords.yourPlayerGoalScaleToWidth) {
-              showPlayer.scaleToWidth(props.coords.yourPlayerGoalScaleToWidth);
+            if (opponentGoal) {
+              const showPlayer = new fabric.Text(props.opponentGoalMinute[i] + "' " + opponentGoal, {
+                top: props.coords.opponentPlayerOneGoal.Top + i * props.coords.yourPlayerOneGoal.Margin,
+                left: props.coords.yourPlayerOneGoal.Left,
+                fontFamily: props.coords.yourPlayerOneGoal.FontFamily,
+                fontSize: props.coords.yourPlayerOneGoal.FontSize,
+                selectable: false,
+                fill: props.coords.yourPlayerOneGoal.Fill,
+                className: "opponentGoals",
+                originX: props.coords.yourPlayerOneGoal.OriginX,
+                originY: props.coords.opponentPlayerOneGoal.OriginY,
+              });
+              if (showPlayer.width > props.coords.yourPlayerOneGoal.ScaleToWidth) {
+                showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
+              }
+              fabricRef.current.add(showPlayer);
+            } else {
+              const showPlayer = new fabric.Text(
+                opponentGoal ? props.opponentGoalMinute[i] + "' " + opponentGoal : props.opponentGoalMinute[i] + "' ",
+                {
+                  top: props.coords.opponentPlayerOneGoal.Top + i * props.coords.yourPlayerOneGoal.Margin,
+                  left: props.coords.yourPlayerOneGoal.Left,
+                  fontFamily: props.coords.yourPlayerOneGoal.FontFamily,
+                  fontSize: props.coords.yourPlayerOneGoal.FontSize,
+                  selectable: false,
+                  fill: props.coords.yourPlayerOneGoal.Fill,
+                  className: "opponentGoals",
+                  originX: props.coords.yourPlayerOneGoal.OriginX,
+                  originY: props.coords.yourPlayerOneGoal.OriginY,
+                }
+              );
+
+              if (showPlayer.width > props.coords.yourPlayerOneGoal.ScaleToWidth) {
+                showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
+              }
+              fabricRef.current.add(showPlayer);
             }
-            fabricRef.current.add(showPlayer);
           }
         });
       }

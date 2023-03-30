@@ -1,7 +1,6 @@
 .licenseCount-container {
   display: flex;
   flex-direction: column;
-  
 }
 .licenseCount-container .licenseType-container {
   width: 200px;
@@ -16,8 +15,8 @@
   align-items: center;
 }
 .usersPosters-container .users-poster-container .users-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .upper-container {
@@ -26,7 +25,133 @@
 .table-container {
   height: 500px;
   overflow-y: scroll;
-  
+}
+.button-option {
+  background-color: white;
+  border: none;
+  margin-right: 10px;
+}
+
+.show-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 30px;
+  animation-name: clear-show;
+  z-index: 100;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes clear-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.show-list .edit-element,
+.show-list .delete-element {
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  animation-name: clear-show;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+.show-list .edit-element :hover,
+.show-list .delete-element :hover {
+  background-color: rgb(204, 204, 204) !important;
+  transition: ease-in-out 0.2s;
+}
+
+.show-list .edit-element button,
+.show-list .delete-element button {
+  padding: 10px;
+  width: 100%;
+  margin-left: 0;
+  animation-name: clear-show;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+.item-window {
+  margin: 20px 50px 20px 0 !important;
+  width: 200px;
+  height: 150px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  z-index: 0;
+}
+.add-window {
+  margin-top: 100px;
+}
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.name-content {
+  justify-content: left;
+  margin: 2px 0px 0px 5px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  color: black;
+  display: flex;
+  height: 24.5px;
+}
+.image-content {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  z-index: -1;
+}
+.image-content img {
+  max-height: 100%;
+  max-width: 150px;
+  z-index: -1;
+}
+.catalog-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.option-container button {
+  border: 0;
+  background: none;
+}
+.icon-item {
+  position: fixed;
+  margin: 5px 0 20px 170px;
+}
+
+.option-container {
+  border: 0 !important;
+  background: none;
+  display: flex;
+  justify-content: right;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+.option-container ul {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+  display: flex;
+}
+.show-option {
+  margin-top: 5px;
 }
 
 .favorite-users-posters {
@@ -42,19 +167,17 @@
 .users-poster-container {
   overflow: auto;
   height: 400px;
-  
 }
 .team-name-container {
   display: flex;
   justify-content: center;
 }
 .profile-image-container {
-  width: 200px ;
+  width: 200px;
   height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .profile-image-container .profile-image {
   width: 100%;
@@ -81,29 +204,28 @@
 }
 
 .cos-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: gray;
-    width: 100%;
-    height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+  width: 100%;
+  height: auto;
 }
 .users-posters {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .users-id {
-    margin-left: 40px;
+  margin-left: 40px;
 }
 
 .item-category-window {
-    display: flex;
-    flex-direction: column ;
-    
+  display: flex;
+  flex-direction: column;
 }
 .orders {
-    background-color: gray;
-    height: 100px;
+  background-color: gray;
+  height: 100px;
 }
 
 .order-btn {
@@ -111,5 +233,5 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
-  margin: 0 0 0 10px !important; 
+  margin: 0 0 0 10px !important;
 }

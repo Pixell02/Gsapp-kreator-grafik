@@ -24,6 +24,15 @@ function StartingSquad(props) {
     fabricRef,
     props
   );
+  const [width, setWidth] = useState()
+  const [height, setHeight] = useState();
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = props.posterBackGround;
+    setWidth(img.width)
+    setHeight(img.height);
+  },[props.posterBackGround])
   useEffect(() => {
     squadPlayer(props);
   }, [
@@ -35,7 +44,7 @@ function StartingSquad(props) {
   ]);
   useEffect(() => {
     showReserve(props);
-  }, [props.reserve, props.posterBackGround, props.themeOption]);
+  }, [props.reserve, props.themeOption]);
 
   useEffect(() => {
     yourLeague();
@@ -53,18 +62,11 @@ function StartingSquad(props) {
     initFabric();
   }, [props.posterBackGround]);
 
-  useEffect(() => {
-    teamLogo();
-  }, [
-    props.radioChecked,
-    props.posterBackGround,
-    props.themeOption,
-    props.yourTeamImg,
-  ]);
 
   useEffect(() => {
-    teamName(yourTeamLogo, poster);
-  }, [props.themeOption, props.radioChecked, props.posterBackGround]);
+    teamLogo();
+    teamName(props.yourLogo, poster);
+  }, [props.themeOption, props.posterBackGround, props.radioChecked, props.yourTeamImage]);
 
   useEffect(() => {
     opponentLogo(props);
@@ -80,7 +82,7 @@ function StartingSquad(props) {
     typeDate();
   }, [props.date, props.posterBackGround, props.themeOption]);
 
-  return <canvas id="canvas" ref={fabricRef} />;
+  return <canvas id="canvas" ref={fabricRef} width={width} height={height} />;
 }
 
 export default StartingSquad;

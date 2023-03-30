@@ -99,7 +99,7 @@ function AddTeamWindow({ open, onClose }) {
 
   return (
     <div className={open ? "active-modal" : "modal"}>
-      <div className="add-window">
+      <div className="add-window yourTeam-panel-window">
         <label>Pierwsza część nazwy drużyny</label>
         <input
           type="text"

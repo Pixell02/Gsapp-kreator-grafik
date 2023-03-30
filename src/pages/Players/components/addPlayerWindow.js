@@ -6,16 +6,22 @@ import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { useCollection } from "../../../hooks/useCollection";
+import Select from "react-select";
+import { useTeams } from "./useTeams";
 
-function AddPlayerWindow({ open, onClose }) {
+function AddPlayerWindow({ open, onClose, Teams }) {
   const { id } = useParams();
-
+  const { user } = useAuthContext();
+  
   const [firstPlayerName, setFirstPlayerName] = useState("");
   const [secondPlayerName, setSecondPlayerName] = useState("");
   const [number, setNumber] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-  const { user } = useAuthContext();
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams);
+  console.log(image)
+
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
@@ -23,7 +29,7 @@ function AddPlayerWindow({ open, onClose }) {
 
   useEffect(() => {
     if (image) {
-      if (Math.round(image.size / 1024) < 1000) {
+      if (Math.round(image.size / 1024) < 2000) {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result);
@@ -31,7 +37,7 @@ function AddPlayerWindow({ open, onClose }) {
         reader.readAsDataURL(image);
       } else {
         setPreview(null);
-        alert("maksymalna wielkość obrazu to 1MB");
+        alert("maksymalna wielkość obrazu to 2MB");
       }
     } else {
       setPreview(null);
@@ -43,8 +49,8 @@ function AddPlayerWindow({ open, onClose }) {
     
     if (!firstPlayerName || !secondPlayerName ) {
       alert("puste pole");
-    } else if (!number) {
-      alert("brak numeru zawodnika")
+    } else if (! selectedTeam) {
+      alert("Nie wybrano drużyny")
     }  else {
       if(image){
       const storage = getStorage();
@@ -75,7 +81,8 @@ function AddPlayerWindow({ open, onClose }) {
         firstName: firstPlayerName,
         secondName: secondPlayerName,
         img: downloadURL || "",
-        number: number,
+        number: number || "",
+        team: selectedTeam,
         uid: user.uid,
       });
         });
@@ -86,7 +93,8 @@ function AddPlayerWindow({ open, onClose }) {
           firstName: firstPlayerName,
           secondName: secondPlayerName,
           img: "",
-          number: number,
+          number: number || "",
+          team: selectedTeam,
           uid: user.uid,
       })
       }
@@ -99,7 +107,7 @@ function AddPlayerWindow({ open, onClose }) {
   };
   return (
     <div className={open ? "active-modal" : "modal"}>
-      <div className="add-window">
+      <div className="add-window yourTeam-panel-window">
         <label>Imię</label>
         <input
           type="text"
@@ -122,6 +130,13 @@ function AddPlayerWindow({ open, onClose }) {
           value={number}
           className="Number"
         />
+        
+          <>
+            <label>Drużyna</label>
+            <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
+          </>
+        
+        
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj Zdjęcie
         </button>

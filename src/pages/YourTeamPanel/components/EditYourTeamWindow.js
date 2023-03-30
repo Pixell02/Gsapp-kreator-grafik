@@ -23,7 +23,8 @@ const options = [
   { value: "piłka ręczna", label: "piłka ręczna" },
   { value: "hokej", label: "hokej" },
 ];
-function EditPlayerWindow({ yourTeam, open, onClose }) {
+function EditYourTeamWindow({ yourTeam, open, onClose }) {
+  
   const { id } = useParams();
   const { user } = useAuthContext();
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
@@ -101,7 +102,7 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
                   secondName: secondTeamName,
                   img: downloadURL,
                   sport: sport,
-                  uid: user.uid,
+                  uid: yourTeam.uid,
                 });
               }
             );
@@ -200,4 +201,4 @@ function EditPlayerWindow({ yourTeam, open, onClose }) {
   );
 }
 
-export default EditPlayerWindow;
+export default EditYourTeamWindow;

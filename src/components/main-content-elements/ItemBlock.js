@@ -13,10 +13,14 @@ import "./ItemBlock.css";
 
 import Options from "./Options";
 
-export default function ItemBlock({ items }) {
+export default function ItemBlock({ items, Teams, type }) {
+
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const location = useLocation();
-  const goodLocation = location.pathname.split("/")[1];
+  let goodLocation = location.pathname.split("/")[1];
+  if (type) {
+    goodLocation = type;
+  }
   const handleDeleteClick = async (id) => {
     if (goodLocation === "players") {
       const ref = doc(db, "Players", id);
@@ -47,6 +51,7 @@ export default function ItemBlock({ items }) {
     setItemToEdit(item);
   };
   const editClick = (e, item) => {
+    
     setData(item);
     openEditModal();
     setItemToEdit(null);
@@ -112,6 +117,7 @@ export default function ItemBlock({ items }) {
           player={data}
           open={isEditModal}
           onClose={closeEditModal}
+          Teams={Teams}
         />
       )}
       {data && isEditModal && goodLocation === "opponents" && (
@@ -119,6 +125,7 @@ export default function ItemBlock({ items }) {
           player={data}
           open={isEditModal}
           onClose={closeEditModal}
+          Teams={Teams}
         />
       )}
       {/* {data && isEditModal && goodLocation === "sponsors" && (

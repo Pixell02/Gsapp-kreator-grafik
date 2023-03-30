@@ -119,6 +119,24 @@ function LeftBar() {
           </Link>
           </>
           )}
+          {user && user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" && (
+            <>
+            <Link key="9" to={`/stats`} className="icon text-white link-content" onMouseEnter={() => setIsHover(9)} onMouseLeave={() => setIsHover(null)} >
+            <li>
+              <Icon.BarChartFill className="icon-element" />
+            </li>
+            <span className={isHover === 9 ? "extended-text" : "slide-text"}>Statystyki</span>
+            {isActive ? <span className="extended-text">Statystyki</span> : <span className="slide-text">Statystyki</span>}
+          </Link>
+          <Link key="10" to={`/posterCreator`} className="icon text-white link-content" onMouseEnter={() => setIsHover(10)} onMouseLeave={() => setIsHover(null)} >
+            <li>
+              <Icon.BoundingBoxCircles className="icon-element" />
+            </li>
+            <span className={isHover === 10 ? "extended-text" : "slide-text"}>Kreator</span>
+            {isActive ? <span className="extended-text">Kreator</span> : <span className="slide-text">Kreator</span>}
+          </Link>
+          </>
+          )}
           {user && user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2" && (
             <>
             <Link key="9" to={`/stats`} className="icon text-white link-content" onMouseEnter={() => setIsHover(9)} onMouseLeave={() => setIsHover(null)} >

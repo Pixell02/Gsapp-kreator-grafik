@@ -10,23 +10,23 @@ export const yourResult = (fabricRef,props) => {
           }
         });
         const font = new FontFaceObserver(
-          props.coords.yourTeamResultFontFamily
+          props.coords.yourTeamResult.FontFamily
         );
         font.load().then(() => {
           const result = new fabric.Text(props.yourTeamResult, {
-            top: props.coords.yourTeamResultTop,
-            left: props.coords.yourTeamResultLeft,
-            width: props.coords.yourTeamResultWidth,
-            fontFamily: props.coords.yourTeamResultFontFamily,
+            top: props.coords.yourTeamResult.Top,
+            left: props.coords.yourTeamResult.Left,
+            fontFamily: props.coords.yourTeamResult.FontFamily,
+            fontSize: props.coords.yourTeamResult.FontSize,
             selectable: false,
-            fill: props.coords.yourTeamResultFill,
+            fill: props.coords.yourTeamResult.Fill,
             className: "yourTeamResult",
-            originX: props.coords.yourTeamResultOriginX,
-            originY: props.coords.yourTeamResultOriginY,
+            originX: props.coords.yourTeamResult.OriginX,
+            originY: props.coords.yourTeamResult.OriginY,
           });
-          result.scaleToHeight(props.coords.yourTeamResultScaleToHeight);
-          if (result.width > props.coords.yourTeamResultWidth) {
-            result.scaleToWidth(props.coords.yourTeamResultScaleToWidth);
+          
+          if (result.width > props.coords.yourTeamResult.ScaleToWidth) {
+            result.scaleToWidth(props.coords.yourTeamResult.ScaleToWidth);
           }
           if (props.themeOption) {
             if (
@@ -74,6 +74,7 @@ export const yourResult = (fabricRef,props) => {
           }
 
           fabricRef.current.add(result);
+          fabricRef.current.renderAll();
         });
       } else if (props.radioChecked === "radio2") {
         fabricRef.current._objects.forEach((image, i) => {
@@ -82,23 +83,23 @@ export const yourResult = (fabricRef,props) => {
           }
         });
         const font = new FontFaceObserver(
-          props.coords.yourOpponentResultFontFamily
+          props.coords.yourOpponentResult.FontFamily
         );
         font.load().then(() => {
           const result = new fabric.Text(props.yourTeamResult, {
-            top: props.coords.yourOpponentResultTop,
-            width: props.coords.yourOpponentResult,
-            left: props.coords.yourOpponentResultLeft,
-            fontFamily: props.coords.yourOpponentResultFontFamily,
+            top: props.coords.yourOpponentResult.Top,
+            left: props.coords.yourOpponentResult.Left,
+            fontFamily: props.coords.yourOpponentResult.FontFamily,
+            fontSize: props.coords.yourOpponentResult.FontSize,
             selectable: false,
-            fill: props.coords.yourOpponentResultFill,
+            fill: props.coords.yourOpponentResult.Fill,
             className: "yourTeamResult",
-            originX: props.coords.yourOpponentResultOriginX,
-            originY: props.coords.yourOpponentResultOriginY,
+            originX: props.coords.yourOpponentResult.OriginX,
+            originY: props.coords.yourOpponentResult.OriginY,
           });
-          result.scaleToHeight(props.coords.yourOpponentResultScaleToHeight);
-          if (result.width > props.coords.yourOpponentResultWidth) {
-            result.scaleToWidth(props.coords.yourOpponentResultScaleToWidth);
+          // result.scaleToHeight(props.coords.yourOpponentResult.ScaleToHeight);
+          if (result.width > props.coords.yourOpponentResult.ScaleToWidth) {
+            result.scaleToWidth(props.coords.yourOpponentResult.ScaleToWidth);
           }
           if (props.themeOption) {
             if (
@@ -145,6 +146,7 @@ export const yourResult = (fabricRef,props) => {
             }
           }
           fabricRef.current.add(result);
+          fabricRef.current.renderAll();
         });
       }
     }

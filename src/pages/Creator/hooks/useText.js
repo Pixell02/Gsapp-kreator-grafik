@@ -20,27 +20,26 @@ export default function useText(fabricRef, props) {
             }
           });
     
-          const font = new FontFaceObserver(props.coords.typePlaceFontFamily);
+          const font = new FontFaceObserver(props.coords.typePlace.FontFamily);
           
             font.load().then(() => {
-          const typePlace = new fabric.Text(props.place.toUpperCase(), {
+          const typePlace = new fabric.Text(props.place, {
             selectable: false,
-            charSpacing: props.coords.typePlaceCharSpacing,
+            charSpacing: props.coords.typePlace.CharSpacing,
             textAlign: "center",
-            top: props.coords.typePlaceTop,
-            left: props.coords.typePlaceLeft,
-            width: props.coords.typePlaceWidth,
+            top: props.coords.typePlace.Top,
+            left: props.coords.typePlace.Left,
             className: "typePlace",
-            fontSize: props.coords.typePlaceFontSize,
-            fill: props.coords.typePlaceFill,
-            originX: props.coords.typePlaceOriginX,
-            originY: props.coords.typePlaceOriginY,
-            fontFamily: props.coords.typePlaceFontFamily,
+            fontSize: props.coords.typePlace.FontSize,
+            fill: props.coords.typePlace.Fill,
+            originX: props.coords.typePlace.OriginX,
+            originY: props.coords.typePlace.OriginY,
+            fontFamily: props.coords.typePlace.FontFamily,
           });
           
     
-          if (typePlace.width >= props.coords.typePlaceScaleToWidth) {
-            typePlace.scaleToWidth(props.coords.typePlaceScaleToWidth);
+          if (typePlace.width >= props.coords.typePlace.ScaleToWidth) {
+            typePlace.scaleToWidth(props.coords.typePlace.ScaleToWidth);
           }
           if (props.themeOption) {
             if (
@@ -53,7 +52,7 @@ export default function useText(fabricRef, props) {
               });
             } else {
               typePlace.set({
-                fill: props.coords.typePlaceFill,
+                fill: props.coords.typePlace.Fill,
               });
             }
             if (
@@ -139,25 +138,25 @@ export default function useText(fabricRef, props) {
               fabricRef.current.remove(fabricRef.current.item(i));
             }
           });
-          const font = new FontFaceObserver(props.coords.typeDataFontFamily);
+          
+          const font = new FontFaceObserver(props.coords.typeData.FontFamily);
           font.load().then(() => {
-          const typeDate = new fabric.Text(props.date.toUpperCase(), {
+          const typeDate = new fabric.Text(props.date, {
             selectable: false,
-            top: props.coords.typeDataTop,
-            left: props.coords.typeDataLeft,
-            width: props.coords.typeDataWidth,
+            top: props.coords.typeData.Top,
+            left: props.coords.typeData.Left,
             className: "typeDate",
-            fontSize: props.coords.typeDataFontSize,
-            fill: props.coords.typeDataFill,
-            originX: props.coords.typeDataOriginX,
-            originY: props.coords.typeDataOriginY,
-            fontFamily: props.coords.typeDataFontFamily,
-            charSpacing: props.coords.typeDataCharSpacing,
+            fontSize: props.coords.typeData.FontSize,
+            fill: props.coords.typeData.Fill,
+            originX: props.coords.typeData.OriginX,
+            originY: props.coords.typeData.OriginY,
+            fontFamily: props.coords.typeData.FontFamily,
+            charSpacing: props.coords.typeData.CharSpacing,
           });      
-          console.log(typeDate)
-          if (typeDate.width >= props.coords.typeDataScaleToWidth) {
-            typeDate.scaleToWidth(props.coords.typeDataScaleToWidth);
-          }
+          if (typeDate.width >= props.coords.typeData.ScaleToWidth) {
+            typeDate.scaleToWidth(props.coords.typeData.ScaleToWidth);
+            }
+          
           if (props.themeOption) {
             if (
               props.themeOption.label.split("-")[0] === "biało" ||
@@ -169,7 +168,7 @@ export default function useText(fabricRef, props) {
               });
             } else {
               typeDate.set({
-                fill: props.coords.typeDataFill,
+                fill: props.coords.typeData.Fill,
               });
             }
             if (
@@ -226,9 +225,9 @@ export default function useText(fabricRef, props) {
                 fill: "white",
               });
             }
-          }
-    
-          fabricRef.current.add(typeDate);
+          } 
+            fabricRef.current.add(typeDate);
+            fabricRef.current.renderAll();
         });
         }
       };
@@ -241,44 +240,32 @@ export default function useText(fabricRef, props) {
               fabricRef.current.remove(fabricRef.current.item(i));
             }
           });
-          const font = new FontFaceObserver(props.coords.yourKolejkaFontFamily);
+          const font = new FontFaceObserver(props.coords.yourKolejka.FontFamily);
           font.load().then(() => {
-            if (props.poster === "wsAn3pPtaand0xDdNZ5S") {
-              props.kolejka = props.kolejka.toUpperCase();
-            }
+            
             const yourKolejka = new fabric.Text(props.kolejka, {
-              top: props.coords.yourKolejkaTop,
-              left: props.coords.yourKolejkaLeft,
-              fontFamily: props.coords.yourKolejkaFontFamily,
+              top: props.coords.yourKolejka.Top,
+              left: props.coords.yourKolejka.Left,
+              fontFamily: props.coords.yourKolejka.FontFamily,
               selectable: false,
-              fill: props.coords.yourKolejkaFill,
+              fontSize:props.coords.yourKolejka.FontSize,
+              fill: props.coords.yourKolejka.Fill,
               className: "yourKolejka",
-              originX: props.coords.yourKolejkaOriginX,
-              originY: props.coords.yourKolejkaOriginY,
+              originX: props.coords.yourKolejka.OriginX,
+              originY: props.coords.yourKolejka.OriginY,
             });
-            if (props.coords.yourKolejkaCharSpacing) {
+            if (props.coords.yourKolejka.CharSpacing) {
               yourKolejka.set({
-                charSpacing: props.coords.yourKolejkaCharSpacing,
+                charSpacing: props.coords.yourKolejka.CharSpacing,
               });
             }
-    
-            if (props.coords.yourKolejkaWidth) {
-              yourKolejka.set({
-                width: props.coords.yourKolejkaWidth,
-              });
-            }
-            if (props.coords.yourKolejkaScaleToHeight) {
-              yourKolejka.scaleToHeight(props.coords.yourKolejkaScaleToHeight);
-            }
-            if (props.coords.yourKolejkaFontSize) {
-              yourKolejka.set({
-                fontSize: props.coords.yourKolejkaFontSize,
-              });
-            }
-            if (yourKolejka.width > props.coords.yourKolejkaScaleToWidth) {
-              yourKolejka.scaleToWidth(props.coords.yourKolejkaScaleToWidth);
+            
+            
+            if (yourKolejka.width > props.coords.yourKolejka.ScaleToWidth) {
+              yourKolejka.scaleToWidth(props.coords.yourKolejka.ScaleToWidth);
             }
             fabricRef.current.add(yourKolejka);
+            fabricRef.current.renderAll();
           });
         }
       };
@@ -286,7 +273,7 @@ export default function useText(fabricRef, props) {
         if (props.league) {
           if (fabricRef.current && props.league === "") {
             fabricRef.current._objects.forEach((image, i) => {
-              if (fabricRef.current.item(i).className == "yourLeague") {
+              if (fabricRef.current.item(i).className === "yourLeague") {
                 fabricRef.current.remove(fabricRef.current.item(i));
               }
             });
@@ -297,39 +284,26 @@ export default function useText(fabricRef, props) {
             }
           });
     
-          const font = new FontFaceObserver(props.coords.yourLeagueFontFamily);
+          const font = new FontFaceObserver(props.coords.yourLeague.FontFamily);
           font.load().then(() => {
-            if (props.poster === "mvzttPwmXvDWCz4vJefn") {
-              props.league = props.league.toUpperCase();
-            }
+            
             const yourLeague = new fabric.Text(props.league, {
-              top: props.coords.yourLeagueTop,
-              left: props.coords.yourLeagueLeft,
-              fontFamily: props.coords.yourLeagueFontFamily,
+              top: props.coords.yourLeague.Top,
+              left: props.coords.yourLeague.Left,
+              fontFamily: props.coords.yourLeague.FontFamily,
               selectable: false,
-              fill: props.coords.yourLeagueFill,
+              fontSize: props.coords.yourLeague.FontSize,
+              fill: props.coords.yourLeague.Fill,
               className: "yourLeague",
-              originX: props.coords.yourLeagueOriginX,
-              originY: props.coords.yourLeagueOriginY,
+              originX: props.coords.yourLeague.OriginX,
+              originY: props.coords.yourLeague.OriginY,
             });
     
-            if (props.coords.yourLeagueWidth) {
-              yourLeague.set({
-                width: props.coords.yourLeagueWidth,
-              });
-            }
-            if (props.coords.yourLeagueScaleToHeight) {
-              yourLeague.scaleToHeight(props.coords.yourLeagueScaleToHeight);
-            }
-            if (props.coords.yourLeagueFontSize) {
-              yourLeague.set({
-                fontSize: props.coords.yourLeagueFontSize,
-              });
-            }
-            if (yourLeague.width > props.coords.yourLeagueScaleToWidth) {
-              yourLeague.scaleToWidth(props.coords.yourLeagueScaleToWidth);
+            if (yourLeague.width > props.coords.yourLeague.ScaleToWidth) {
+              yourLeague.scaleToWidth(props.coords.yourLeague.ScaleToWidth);
             }
             fabricRef.current.add(yourLeague);
+            fabricRef.current.renderAll();
           });
         }
       };

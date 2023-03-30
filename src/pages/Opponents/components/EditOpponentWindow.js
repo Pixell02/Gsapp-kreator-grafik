@@ -5,16 +5,19 @@ import { addDoc, collection, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
-import { doc, updateDoc  } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import updatePlayer from "../../../hooks/UpdatePlayer";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { useTeams } from "../../Players/components/useTeams";
 
-function EditPlayerWindow({ player, open, onClose }) {
+function EditOpponentWindow({ player, open, onClose, Teams }) {
+  
   const [firstOpponentName, setFirstOpponentName] = useState(player.firstName);
   const [secondOpponentName, setSecondOpponentName] = useState(player.secondName);
   const [image, setImage] = useState(player.img);
   const [isImage, setIsImage] = useState(true);
   const [preview, setPreview] = useState(player.img);
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
@@ -22,84 +25,82 @@ function EditPlayerWindow({ player, open, onClose }) {
   };
 
   useEffect(() => {
-    if(!image) {
+    if (!image) {
       setIsImage(false);
-    } 
-  },[])
+    }
+  }, []);
 
   const handleEdit = (e) => {
     const file = e.target.files[0];
     setIsImage(false);
-    if(file.size > 1000000) {
-      alert("Maksymalny rozmiar obrazu to 1MB")
+    if (file.size > 1000000) {
+      alert("Maksymalny rozmiar obrazu to 1MB");
       return;
     }
     const reader = new FileReader();
     reader.onload = () => {
-      setPreview(reader.result)
-    }
-    reader.readAsDataURL(file)
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
     setImage(file);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstOpponentName ) {
+    if (!firstOpponentName) {
       alert("brak pierwszej części nazwy drużyny");
     } else if (!secondOpponentName) {
       alert("brak drugiej części nazwy drużyny");
-    }
-     else if (!preview) {
+    } else if (!selectedTeam) {
+      alert("nie wybrano drużyny");
+    } else if (!preview) {
       alert("brak zdjecia");
-    }
-     else {
-      if(!isImage){
-      const storage = getStorage();
-      const metadata = {
-        contentType: "image/png",
-      };
-      const storageRef = ref(
-        storage,
-        `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`
-      );
-       
-      const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+    } else {
+      if (!isImage) {
+        const storage = getStorage();
+        const metadata = {
+          contentType: "image/png",
+        };
+        const storageRef = ref(storage, `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          let progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        async () => {
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            const docRef = doc(db, "Opponents", player.id);
-            updateDoc(docRef, {
-              firstName: firstOpponentName,
-              secondName: secondOpponentName,
-              img: downloadURL,
-              uid: user.uid,
+        const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              const docRef = doc(db, "Opponents", player.id);
+              updateDoc(docRef, {
+                firstName: firstOpponentName,
+                secondName: secondOpponentName,
+                img: downloadURL,
+                team: selectedTeam,
+                uid: user.uid,
+              });
             });
-          });
-        }
-      );
+          }
+        );
       } else {
         const docRef = doc(db, "Opponents", player.id);
         updateDoc(docRef, {
           firstName: firstOpponentName,
           secondName: secondOpponentName,
+          team: selectedTeam,
           uid: user.uid,
         });
       }
@@ -108,7 +109,6 @@ function EditPlayerWindow({ player, open, onClose }) {
       setSecondOpponentName("");
       setImage(null);
     }
-    
   };
 
   return (
@@ -128,7 +128,17 @@ function EditPlayerWindow({ player, open, onClose }) {
           value={secondOpponentName}
           className="secondPlayerName"
         />
-        
+        <label>Drużyna</label>
+        <select
+          name="country"
+          className="form-control"
+          value={selectedTeam}
+          defaultValue={selectedTeam}
+          onChange={(e) => handleTeamChange(e.target.value)}
+        >
+          <option value=""></option>
+          {teamOptions && teamOptions.map((team) => <option value={team.value}>{team.label}</option>)}
+        </select>
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj Zdjęcie
         </button>
@@ -138,14 +148,12 @@ function EditPlayerWindow({ player, open, onClose }) {
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
-            handleEdit(e)
+            handleEdit(e);
           }}
         />
         <div className="add-logo-window">
-          <div className="image-container">
-            {preview && <img src={preview} />}
-          </div>
-          <div className="bin-container">{preview && <img src={bin} onClick= {() => setPreview(null) } />}</div>
+          <div className="image-container">{preview && <img src={preview} />}</div>
+          <div className="bin-container">{preview && <img src={bin} onClick={() => setPreview(null)} />}</div>
         </div>
         <div className="buttons-container">
           <button
@@ -168,4 +176,4 @@ function EditPlayerWindow({ player, open, onClose }) {
   );
 }
 
-export default EditPlayerWindow;
+export default EditOpponentWindow;
