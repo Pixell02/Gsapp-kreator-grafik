@@ -929,8 +929,9 @@
       "Fill": "white",
       "TextAlign": "left",
       "Formatter": ", ",
-      "FontSize": 22,
-      "ScaleToWidth": 250,
+      "FontSize": 20,
+      "ScaleToHeight": 80,
+      "ScaleToWidth": 300,
       "FontFamily": "Impact",
       "OriginX": "left",
       "OriginY": "top"
@@ -959,12 +960,13 @@
       "textType": "upper"
     },
     "reserveOne": {
-      "Top": 535,
+      "Top": 530,
       "Left": 420,
       "Fill": "white",
       "TextAlign": "left",
       "Formatter": ", ",
-      "FontSize": 22,
+      "FontSize": 20,
+      "ScaleToHeight":80,
       "ScaleToWidth": 250,
       "FontFamily": "Impact",
       "OriginX": "left",

@@ -24,7 +24,7 @@ export const initFabric = (background, fabricRef ) => {
         img.scaleToHeight(newImage.height);
         fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
       });
-    
+      
     };
     
   return {fabricRef}

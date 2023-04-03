@@ -1,7 +1,7 @@
 import "./WorkSpace.css";
 import { useCollection } from "../../hooks/useCollection";
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { getDoc, doc, onSnapshot, collection, query, where } from "firebase/firestore";
 
@@ -32,13 +32,15 @@ import {
 
 function WorkSpace() {
   const { poster } = useParams();
+ 
   const { user } = useAuthContext();
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
   const { documents: Opponent } = useCollection("Opponents", ["uid", "==", user.uid]);
   const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
   const { documents: coordinates } = useCollection("coords", ["uid", "==", poster]);
- ;
+  ;
+  const navigate = useNavigate();
   const [coords, setCoords] = useState();
   useEffect(() => {
     posterCoords.map((postersCoords) => {
@@ -153,11 +155,11 @@ function WorkSpace() {
   const [themeOption, setThemeOption] = useState([]);
   const [selectThemes, setSelectThemes] = useState();
   const [selectPlayerTheme, setSelectPlayerThemes] = useState([]);
-  useEffect(() => {
-    if (selectPlayerTheme) {
-      setSelectPlayerThemes([...selectPlayerTheme].sort((a, b) => a.label.localeCompare(b.label)));
-    }
-  }, [posters]);
+  // useEffect(() => {
+  //   if (selectPlayerTheme) {
+  //     setSelectPlayerThemes([...selectPlayerTheme].sort((a, b) => a.label.localeCompare(b.label)));
+  //   }
+  // }, [posters]);
 
   const [isPOP, setIsPOP] = useState(false);
 
@@ -192,7 +194,7 @@ function WorkSpace() {
       }
     });
   }, [isPOP]);
-
+  
   useEffect(() => {
     setSelectThemes(themeOption[0]);
   }, [themeOption]);
@@ -549,7 +551,14 @@ function WorkSpace() {
 
           <div className="tools-container">
             <div className="workspace-title">
+              <div className="d-flex flex-column mt-4">
+                {(user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" || user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" || user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2") && (
+                  <button className="btn" onClick={() => navigate(`/posterCreator/${poster}`)}>Edytuj</button>
+              )}
+              
+              
               <span className="workspace-title-container">Kreator</span>
+              </div>
             </div>
             <div className="ms-5 me-5 mt-3">
               {/* Właściwy workspace */}

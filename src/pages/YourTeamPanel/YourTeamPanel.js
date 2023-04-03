@@ -18,7 +18,7 @@ function YourTeamPanel() {
     }
   }, []);
   useEffect(() => {
-    const update = localStorage.getItem("update1.0");
+    const update = localStorage.getItem("update2.0");
     if (update === null) {
       setIsUpdateOpen(true);
     } else {
@@ -29,7 +29,7 @@ function YourTeamPanel() {
   return (
     <div className="page-container">
       <WelcomeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      {/* <UpdateModal isOpen={isUpdateOpen} onClose={() => setIsUpdateOpen(false)} /> */}
+      <UpdateModal isOpen={isUpdateOpen} onClose={() => setIsUpdateOpen(false)} />
       <div className="content-wrap">
         <LeftBar />
         <MainYourTeamPanel />

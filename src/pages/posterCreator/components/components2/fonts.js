@@ -9,6 +9,7 @@ const fonts = [
   { label: "Goldman-Regular", value: "Goldman-Regular" },
   { label: "Goldman-Bold", value: "Goldman-Bold" },
   { label: "kenyan coffee", value: "kenyan coffee" },
+  { label: "eurostar", value:"eurostar"},
   { label: "Made Outer Sans Thin", value: "Made Outer Sans Thin" },
   { label: "Made Outer Sans Regular", value: "Made Outer Sans Regular" },
   { label: "Made Outer Sans Black", value: "Made Outer Sans Black" },

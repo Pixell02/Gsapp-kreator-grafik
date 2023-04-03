@@ -61,7 +61,7 @@ export default function useOpponentName(fabricRef) {
                 }
                 fabricRef.current.add(firstName);
               });
-              if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+              if (props.coords.opponentSecondName) {
               const fontTwo = new FontFaceObserver(
                 props.coords.opponentSecondName.FontFamily
               );
@@ -180,10 +180,10 @@ export default function useOpponentName(fabricRef) {
                 fabricRef.current.remove(fabricRef.current.item(i));
               }
             });
-            if (props.coords.opponentFirstName) {
               const opponentFirstName = props.opponentName.split(" ")[0];
-    
               const opponentSecondName = props.opponentName.split(" ")[1];
+            if (props.coords.opponentFirstName) {
+             
     
               const firstName = new fabric.Text(opponentFirstName.toUpperCase(), {
                 selectable: false,
@@ -214,7 +214,7 @@ export default function useOpponentName(fabricRef) {
               }
               fabricRef.current.add(firstName);
               fabricRef.current.renderAll();
-              if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+              if (props.coords.opponentSecondName) {
                 const fontTwo = new FontFaceObserver(
                   props.coords.yourTeamSecondName.FontFamily
                 );

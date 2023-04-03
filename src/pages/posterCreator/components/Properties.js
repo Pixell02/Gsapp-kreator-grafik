@@ -12,7 +12,7 @@ export default function Properties({ fabricRef }) {
   const { coords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
   
   return (
-    <div className="overflow-auto">
+    <div className="overflow-scroll d-flex h-75">
       {coords.type === "image" && (
         <ImageProperties coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}

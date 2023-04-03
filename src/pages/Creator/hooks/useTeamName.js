@@ -162,7 +162,7 @@ export default function useTeamName(fabricRef, props) {
               fabricRef.current.add(firstName);
               fabricRef.current.renderAll();
             });
-            if (poster !== "K1iRaLYzkSdrg3vBRyDL") {
+            if (props.coords.yourTeamSecondName) {
               const secondFont = new FontFaceObserver(
                 props.coords.yourTeamSecondName.FontFamily
               );
@@ -314,44 +314,47 @@ export default function useTeamName(fabricRef, props) {
               }
               fabricRef.current.add(firstName);
             });
+            if(props.coords.yourTeamSecondName){
             const secondFont = new FontFaceObserver(
               props.coords.yourTeamSecondName.FontFamily
             );
-            secondFont.load().then(() => {
-              const secondName = new fabric.Text(secondTeamName, {
-                selectable: false,
-                originX: props.coords.opponentSecondName.OriginX,
-                originY: props.coords.opponentSecondName.OriginY,
-                top: props.coords.opponentSecondName.Top,
-                left: props.coords.opponentSecondName.Left,
-                fill: props.coords.opponentSecondName.Fill,
-                fontFamily: props.coords.opponentSecondName.FontFamily,
-                fontSize: props.coords.opponentSecondName.FontSize,
-                className: "yourSecondName",
-              });
-              // secondName.scaleToHeight(
-              //   props.coords.opponentSecondNameScaleToHeight
-              // );
-              if (secondName.width > props.coords.opponentSecondName.ScaleToWidth) {
-                secondName.scaleToWidth(
-                  props.coords.opponentSecondName.ScaleToWidth
-                );
-              }
-              if (props.themeOption) {
-                if (
-                  props.themeOption.label.split("-")[0] === "biało" ||
-                  props.themeOption.label.split("-")[0] === "żółto" ||
-                  props.themeOption.label === "biały"
-                ) {
-                  secondName.set({
-                    fill: "black",
-                  });
+              secondFont.load().then(() => {
+                const secondName = new fabric.Text(secondTeamName, {
+                  selectable: false,
+                  originX: props.coords.opponentSecondName.OriginX,
+                  originY: props.coords.opponentSecondName.OriginY,
+                  top: props.coords.opponentSecondName.Top,
+                  left: props.coords.opponentSecondName.Left,
+                  fill: props.coords.opponentSecondName.Fill,
+                  fontFamily: props.coords.opponentSecondName.FontFamily,
+                  fontSize: props.coords.opponentSecondName.FontSize,
+                  className: "yourSecondName",
+                });
+                // secondName.scaleToHeight(
+                //   props.coords.opponentSecondNameScaleToHeight
+                // );
+                if (secondName.width > props.coords.opponentSecondName.ScaleToWidth) {
+                  secondName.scaleToWidth(
+                    props.coords.opponentSecondName.ScaleToWidth
+                  );
                 }
-              }
+                if (props.themeOption) {
+                  if (
+                    props.themeOption.label.split("-")[0] === "biało" ||
+                    props.themeOption.label.split("-")[0] === "żółto" ||
+                    props.themeOption.label === "biały"
+                  ) {
+                    secondName.set({
+                      fill: "black",
+                    });
+                  }
+                }
 
-              fabricRef.current.add(secondName);
-              fabricRef.current.renderAll();
+                fabricRef.current.add(secondName);
+                fabricRef.current.renderAll();
+              
             });
+            }
           } else {
             const font = new FontFaceObserver(
               props.coords.yourTeamName.FontFamily

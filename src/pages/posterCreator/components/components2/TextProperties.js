@@ -30,11 +30,22 @@ export default function TextProperties({ coords, handleInputChange, handleSelect
           kolor: <input type="color" value={coords.fill} className="w-50" name="fill" onChange={handleInputChange} />
         </div>
       </div>
-      {coords.className === "kolejka" || coords.className === "klasa" || coords.className === "miejsce" || coords.className === "data i godzina" && (
+      {(coords.className === "yourKolejka" || coords.className === "yourLeague" || coords.className === "typePlace" || coords.className === "typeData") && (
         <div className="d-flex w-100 flex-column mt-2" style={{fontSize: "10px"}}>
             odstęp między literami: <input type="number" value={coords.charSpacing} className="w-50" name="charSpacing" onChange={handleInputChange} />
-          </div>
+          styl czcionki:
+          <select
+            name="fontStyle"
+            className="form-control w-75"
+            value={coords.fontStyle}
+            onChange={(e) => handleSelectChange(e)}>
+            <option value="normal">normal</option>
+          <option value="italic">italic</option>
+          </select>
+          
+        </div>
       )}
+
       
       <div className="d-flex w-100 mt-2">
         <div className="d-flex flex-column w-100">

@@ -3,6 +3,7 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 
 export default function useReserve(fabricRef, props) {
+  const [fontSize, setFontSize] = useState();
   const showReserve = (props) => {
     if (props.reserve && props.coords.reserveOne) {
       let text = "";
@@ -48,6 +49,21 @@ export default function useReserve(fabricRef, props) {
           fontSize: props.coords.reserveOne.FontSize,
           fill: props.coords.reserveOne.Fill,
         })
+        if (props.coords.reserveOne.ScaleToHeight) {
+          if (reserveText.height > props.coords.reserveOne.ScaleToHeight) {
+            // reserveText.scaleToHeight(props.coords.reserveOne.ScaleToHeight);
+            reserveText.set({
+              fontSize: props.coords.reserveOne.FontSize - 5
+            })
+            if (reserveText.height > props.coords.reserveOne.ScaleToHeight) {
+              reserveText.set({
+                width: props.coords.reserveOne.ScaleToWidth,
+                fontSize: props.coords.reserveOne.FontSize - 9
+              })
+            }
+          }
+        }
+       
         
       if (props.themeOption) {
         if (

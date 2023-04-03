@@ -9,7 +9,8 @@ export const createFabricText = (fabricRef, setFabricObject, name, className) =>
     className: className,
     fill: "#000000",
     fontFamily: "Poppins",
-    type: "text"
+    type: "text",
+    originY: "center"
   })
   fabricRef.current.add(text);
   setFabricObject(prevState => [...prevState, { name }])
@@ -59,6 +60,7 @@ export const createMultiplyText = (fabricRef, setFabricObject, name, className, 
       fill: "#000",
       fontFamily: "Poppins",
       type: "multiply",
+      fontStyle: "normal",
       selectable: i === 0 ? true : false
     })
     return text;

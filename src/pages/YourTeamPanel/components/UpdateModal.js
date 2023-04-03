@@ -10,7 +10,8 @@ export default function UpdateModal({ isOpen, onClose }) {
             <div className="welcome-title h-100">
               <p>Aktualizacja</p>
               <p className="welcome-content-text h-100">
-                Dodaliśmy możliwość dodania kilku drużyn do konta, przypisanie zawodników oraz przeciwników do danej drużyny.
+                Dodaliśmy opcję przybliżania i oddalania grafik używając scrolla w myszce, bądź palców na telefonie. Dzięki temu grafiki o większym formacie mieszczą się w oknie
+                na wszystkich urządzeniach. 
               </p>
             </div>
           </div>
@@ -19,7 +20,7 @@ export default function UpdateModal({ isOpen, onClose }) {
               className="btn primary-btn welcome-button close-update-btn mx-3"
               onClick={() => {
                 onClose();
-                localStorage.setItem("update1.0", true);
+                localStorage.setItem("update2.0", true);
               }}
             >
               Zamknij

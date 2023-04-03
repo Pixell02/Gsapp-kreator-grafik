@@ -35,7 +35,8 @@ const useActiveObjectCoords = (fabricRef) => {
                 type: activeObject.type,
                 textAlign: activeObject.textAlign,
                 Margin: activeObject.className === "opponentPlayerOneGoal"?globalProperties.yourPlayerOneGoal.Margin:activeObject.Margin,
-                format: activeObject.format
+                format: activeObject.format,
+                fontStyle: activeObject.fontStyle
               };
 
               const filteredCoords = Object.entries(newCoords).reduce((acc, [key, value]) => {
@@ -64,7 +65,6 @@ const useActiveObjectCoords = (fabricRef) => {
       }
     }
   }, [fabricRef, background, globalProperties]);
-  console.log(globalProperties, coords)
   const handleDeleteKeyPress = (event) => {
     
     if (event.keyCode === 46 || event.keyCode === 8) {
@@ -72,8 +72,7 @@ const useActiveObjectCoords = (fabricRef) => {
       
       const activeObject = fabricRef.current.getActiveObject();
       const key = Object.keys(globalProperties).find((prop) => activeObject.className.includes(prop));
-      console.log(key, activeObject.className);
-      console.log(globalProperties)
+      
       if (activeObject && key) {
         for (const key in globalProperties) {
           if (globalProperties.hasOwnProperty(key)) {
@@ -192,6 +191,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
             FontFamily: coords.fontFamily,
+            FontStyle: coords.fontStyle,
             Fill: coords.fill,
             ScaleToWidth: parseInt(coords.width),
             OriginX: coords.originX,
@@ -208,6 +208,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
             FontFamily: coords.fontFamily,
+            FontStyle: coords.fontStyle,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
             OriginX: coords.originX,
@@ -425,6 +426,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
             FontFamily: coords.fontFamily,
+            FontStyle: coords.fontStyle,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
             OriginX: coords.originX,
@@ -440,6 +442,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
+            FontStyle: coords.fontStyle,
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,

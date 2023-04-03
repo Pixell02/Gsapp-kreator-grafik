@@ -13,6 +13,7 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
       <div className="w-100 d-flex justify-content-around">
       <button onClick={onButtonClick} className="btn ml-5">Dodaj tło</button>
         <button onClick={setIsOpen} className="btn ">Zapisz</button>
+        
         <input
           type="file"
           style={{ display: "none" }}
@@ -23,6 +24,7 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
           }}
         />
       </div>
+      
       <div className="add-properties-container ml-5 pt-2">
         <p>Właściwości</p>
         <Properties fabricRef={fabricRef} />
@@ -34,3 +36,6 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
     </div>
   );
 }
+
+
+

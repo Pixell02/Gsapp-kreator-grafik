@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
-import {BrowserRouter, Link , Route, Routes, Navigate} from "react-router-dom";
+import React from "react";
+import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import Success from "./pages/Success/Success";
-import Header from "./components/Header";
-import Footer from "./components/MainFooter";
-import FormPage from "./components/form-elements/FormPage";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Catalog from "./pages/Catalog/Catalog";
@@ -12,21 +9,17 @@ import YourTeamPanel from "./pages/YourTeamPanel/YourTeamPanel";
 import Players from "./pages/Players/Players";
 import Opponents from "./pages/Opponents/Opponents";
 import Sponsors from "./pages/Sponsors/Sponsors";
-import YourTeams from "./pages/YourTeams/YourTeams";
 import YourCatalog from "./pages/YourCatalog/YourCatalog";
 import Offer from "./pages/Offer/Offer";
 import Account from "./pages/Account/Account";
 import "./App.css"
 import Creator from "./pages/Creator/Creator";
-import { useLogout } from './hooks/useLogout'
-import { auth } from "./firebase/config";
-import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
 import Stats from "./pages/stats/Stats";
 import PosterCreator from "./pages/posterCreator/PosterCreator";
 import UserAccount from "./pages/stats/components/UserAccountComponents/UserAccount";
 import ResetPassword from "./pages/Login/components/ResetPassword";
 import Guide from "./pages/Guide/Guide";
+import EditPoster from "./pages/EditPoster/EditPoster";
 function App() {
   const {user, authIsReady} = useAuthContext()
   
@@ -59,7 +52,7 @@ function App() {
        <Route path="/stats" element = {user ? <Stats /> : <Navigate to="/login" /> } />
       <Route path="/posterCreator" element = {user ? <PosterCreator /> : <Navigate to="/login" /> } />
       <Route path="/stats/:id" element = {user ? <UserAccount /> : <Navigate to="/login" /> } />
-              <Route path="/posterCreator/:id" element={user ? <PosterCreator />: <Navigate to="/login" />} /> 
+              <Route path="/posterCreator/:id" element={user ? <EditPoster />: <Navigate to="/login" />} /> 
             </>
           )}
           

@@ -3,13 +3,14 @@ import React, { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import * as Icon from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Title from "../../../components/main-content-elements/Title";
 import { db } from "../../../firebase/config";
 import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
 
 export default function UsersPosters() {
+  const navigate = useNavigate();
   const { documents: userPosters } = useCollection("yourCatalog");
   const { documents: Teams } = useCollection("Teams");
   const [users, setUsers] = useState("");
@@ -43,6 +44,7 @@ export default function UsersPosters() {
   const editClick = (e, item) => {
     setData(item);
     setItemToEdit(null);
+    navigate(`/posterCreator/${item.uuid}`)
   };
   useEffect(() => {
     if (userPosters) {

@@ -14,12 +14,25 @@
 }
 
 .react-transform-wrapper {
-  width: 100% !important;
-  height: 100% !important;
+  max-width: 100%;
+  max-height: 100%;
   display: flex;
+  align-items: start;
+  margin-right: 500px;
 }
+
+@media screen and (min-width: 1200px) {
+  .react-transform-wrapper {
+    max-width: 100%;
+  }
+}
+
 .add-workspace-container {
-  width: 400px;
+  width: 320px;
+  position: absolute;
+  height: 100%;
+  right: 0;
+  background-color: white;
 }
 .add-properties-container {
   height: 50%;
@@ -59,4 +72,41 @@
 .add-name-container,
 .add-layer-btn-container {
   height: 50px;
+}
+
+.window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid gray;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.handle {
+  padding: 8px;
+  background-color: gray;
+  color: white;
+  cursor: move;
+}
+
+.content {
+  padding: 16px;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.file-input {
+  display: none;
 }

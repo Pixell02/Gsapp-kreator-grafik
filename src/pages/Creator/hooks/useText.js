@@ -35,8 +35,13 @@ export default function useText(fabricRef, props) {
             originX: props.coords.typePlace.OriginX,
             originY: props.coords.typePlace.OriginY,
             fontFamily: props.coords.typePlace.FontFamily,
+            
           });
-          
+              if (props.coords.typePlace.FontStyle) {
+                typePlace.set({
+              fontStyle: props.coords.typePlace.FontStyle
+            })
+          }
     
           if (typePlace.width >= props.coords.typePlace.ScaleToWidth) {
             typePlace.scaleToWidth(props.coords.typePlace.ScaleToWidth);
@@ -156,7 +161,12 @@ export default function useText(fabricRef, props) {
           if (typeDate.width >= props.coords.typeData.ScaleToWidth) {
             typeDate.scaleToWidth(props.coords.typeData.ScaleToWidth);
             }
-          
+            if (props.coords.typeData.FontStyle) {
+              typeDate.set({
+            fontStyle: props.coords.typeData.FontStyle
+          })
+            }
+           
           if (props.themeOption) {
             if (
               props.themeOption.label.split("-")[0] === "biało" ||
@@ -259,6 +269,11 @@ export default function useText(fabricRef, props) {
                 charSpacing: props.coords.yourKolejka.CharSpacing,
               });
             }
+            if (props.coords.yourKolejka.FontStyle) {
+              yourKolejka.set({
+            fontStyle: props.coords.yourKolejka.FontStyle
+          })
+        }
             
             
             if (yourKolejka.width > props.coords.yourKolejka.ScaleToWidth) {
@@ -298,6 +313,11 @@ export default function useText(fabricRef, props) {
               originX: props.coords.yourLeague.OriginX,
               originY: props.coords.yourLeague.OriginY,
             });
+            if (props.coords.yourLeague.FontStyle) {
+              yourLeague.set({
+            fontStyle: props.coords.yourLeague.FontStyle
+          })
+        }
     
             if (yourLeague.width > props.coords.yourLeague.ScaleToWidth) {
               yourLeague.scaleToWidth(props.coords.yourLeague.ScaleToWidth);
