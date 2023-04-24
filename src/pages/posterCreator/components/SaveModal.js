@@ -27,7 +27,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [userPoster, setUserPoster] = useState({
     type: "MATCH-POSTER"
   });
-  console.log(manyBackgrounds);
+  
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
@@ -126,7 +126,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
               uid: userPoster.uid,
               uuid: userPoster.uuid,
             });
-            setDoc(doc(collection(db, "coords"), id), globalProperties);
+            setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
           }).then(() => {
             setTimeout(() => {
               navigate(`/creator/${userPoster.uuid}`)

@@ -3,8 +3,8 @@ import fonts from './fonts'
 import originX from './originX'
 import originY from './originY'
 
-export default function TextboxProperties({ coords, handleInputChange, handleSelectChange }) {
-  console.log(coords.textAlign)
+export default function TextboxProperties({ coords, handleInputChange, handleSelectChange, handleSelectGroupChange }) {
+  
   return (
     <div>
     <div>Nazwa obiektu : {coords.className}</div>
@@ -19,12 +19,16 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
     <div className="d-flex w-100">
       <div>
         sz:
-        <input type="number" value={coords.width} className="w-75" disabled />
+        <input type="number" value={coords.width} className="w-75" name="width" onChange={handleInputChange} />
       </div>
       <div>
         w:
-        <input type="number" value={coords.height} className="w-75" disabled />
-      </div>
+        <input type="number" value={coords.height} className="w-75" name="height" onChange={handleInputChange} />
+        </div>
+        <div>
+          odstęp między wierszami: 
+          <input type="number" value={coords.lineHeight} step="0.01" className="w-75" name="lineHeight" onChange={handleInputChange} />
+        </div>
     </div>
       <div className="d-flex mx-2 w-100 align-items-center justify-content-start">
         <div className='d-flex w-50'>
@@ -45,6 +49,21 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
           <option value="right">prawo</option>
         </select>
         </div>
+        <div className='w-100'>
+        format: 
+        <select
+          name="format"
+          className='form-control w-75'
+          value={coords.format}
+          onChange={(e) => handleSelectChange(e)}
+        >
+          <option value="NumDotSurName">88.Nazwisko</option>
+          <option value="NumSurName">88 Nazwisko</option>
+          <option value="dotted">88.I.Nazwisko</option>
+          <option value="oneDot">88 I.Nazwisko</option>
+          <option value="SurName">Nazwisko</option>
+        </select>
+      </div>
     </div>
     <div className="d-flex w-100 mt-2">
       <div className="d-flex flex-column w-100">

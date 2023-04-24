@@ -3,45 +3,11 @@ import { layersName } from '../../layersName'
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 export default function createDefaultObjects(fabricRef, globalProperties, coords) {
-  console.log(coords)
+ 
   layersName.forEach((layer, i) => {
     for (const key in globalProperties) {
       if (layer.className === key) {
-        if (layer.type === "multiply") {
-          const font = new FontFaceObserver(globalProperties[key].FontFamily);
-            font.load().then(() => {
-          const objects = layer.loops.map((loop, i) => {
-            
-              const text = new fabric.Text(layer.text, {
-                top: i * globalProperties[key].Margin,
-                left: 200,
-                fontSize: globalProperties[key].FontSize,
-                className: layer.className,
-                fill: globalProperties[key].Fill,
-                fontFamily: globalProperties[key].FontFamily,
-                type: "multiply",
-                fontStyle: globalProperties[key].FontStyle ? globalProperties[key].FontStyle : "normal",
-                selectable: i === 0 ? true : false
-              })
-              return text;
-            });
-          
-          
-          const group = new fabric.Group(objects, {
-            left: globalProperties[key].Left,
-            top: globalProperties[key].Top,
-            className: layer.className,
-            type: "multiply",
-            originY: "top",
-            fontSize: globalProperties[key].FontSize,
-            fontFamily: globalProperties[key].FontFamily,
-            Margin: globalProperties[key].Margin,
-            format: globalProperties[key].Format
-          });
-          
-              fabricRef.current.add(group);
-            })
-        } else if (layer.type === "image") {
+         if (layer.type === "image") {
           
           fabric.Image.fromURL(layer.image, function (img) {
             img.set({
@@ -52,9 +18,11 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
               originY: "center",
               type: "image"
             })
-            img.scaleToHeight(globalProperties[key].ScaleToHeight);
+            img.scaleToHeight(globalProperties[key].ScaleToHeight)
+            console.log(img)
            
             fabricRef.current.add(img);
+            fabricRef.current.renderAll();
           })
         } else if (layer.type === "textBox") {
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
@@ -64,11 +32,15 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
               left: globalProperties[key].Left,
               fontSize: globalProperties[key].FontSize,
               className: layer.className,
+              width: globalProperties[key].ScaleToWidth,
+              textAlign: globalProperties[key].TextAlign,
               fill: globalProperties[key].Fill,
               fontFamily: globalProperties[key].FontFamily,
               type: "textBox",
             })
+            
             fabricRef.current.add(text);
+            fabricRef.current.renderAll();
           })
         } else if (layer.type === "text") {
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
@@ -85,9 +57,13 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
             originY: "center",
             originX: globalProperties[key].OriginX
           })
+            text.set({
+              scaleX: globalProperties[key].ScaleToWidth / text.width
+            })
             fabricRef.current.add(text);
+            fabricRef.current.renderAll();
           })
-        }
+        } 
       }
     }
   })

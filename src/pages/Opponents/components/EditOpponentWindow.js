@@ -23,6 +23,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
+  console.log(Teams);
 
   useEffect(() => {
     if (!image) {
@@ -90,7 +91,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
                 secondName: secondOpponentName,
                 img: downloadURL,
                 team: selectedTeam,
-                uid: user.uid,
+                uid:  user.uid,
               });
             });
           }

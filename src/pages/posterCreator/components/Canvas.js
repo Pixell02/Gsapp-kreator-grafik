@@ -12,7 +12,7 @@ export default function Canvas({ fabricRef }) {
 
   const img = new Image();
  
-
+  console.log(globalProperties)
  
   img.src = background;
   useEffect(() => {

@@ -5,9 +5,10 @@ import FontFaceObserver from "fontfaceobserver";
 export default function usePlayerName(fabricRef, props) {
   const squadPlayer = (props) => {
     
-    if (props.players) {
-      props.players.forEach((player, i) => {
-        
+    if (props.players && props.coords.playerOne) {
+      
+      let text = "";
+      props.players.forEach(player => {
         if (player) {
           fabricRef.current._objects.forEach((image, i) => {
             if (fabricRef.current.item(i).className === "player") {
@@ -22,7 +23,7 @@ export default function usePlayerName(fabricRef, props) {
             formatPlayer = player.split(".")[0] + " " + player.split(".")[2];
             
           } else if (props.coords.playerOne.format === "dotted") {
-            formatPlayer = player.split(".")[0] + "." + player.split(".")[1][0] + "." + player.split(".")[2]; 
+            formatPlayer = player.split(".")[0] + "." + player.split(".")[1][0] + "." + player.split(".")[2];
           } else if (props.coords.playerOne.format === "oneDot") {
             formatPlayer = player.split(".")[0] + " " + player.split(".")[1][0] + "." + player.split(".")[2];
           } else {
@@ -37,22 +38,27 @@ export default function usePlayerName(fabricRef, props) {
             formatPlayer = formatPlayer;
           }
           
-          
+          text = text + " " + formatPlayer + "\n" ;
           if (props.coords.playerOne.textType === "upper") {
             formatPlayer = formatPlayer.toUpperCase();
           }
+        }
+        });
           const font = new FontFaceObserver(props.coords.playerOne.FontFamily);
           font.load().then(() => {
-            const showPlayer = new fabric.Text(formatPlayer, {
+            const showPlayer = new fabric.Textbox(text, {
               selectable: false,
-              top: props.coords.playerOne.Top + props.coords.playerOne.Margin * i,
+              top: props.coords.playerOne.Top,
               left: props.coords.playerOne.Left,
+              lineHeight: props.coords.playerOne.LineHeight,
+              textAlign: props.coords.playerOne.TextAlign,
               originX: props.coords.playerOne.OriginX,
-              originY: "center",
+              width: props.coords.playerOne.ScaleToWidth * 2,
               fontSize: props.coords.playerOne.FontSize,
               fill: props.coords.playerOne.Fill,
               className: "player",
               fontFamily: props.coords.playerOne.FontFamily,
+              splitByGrapheme: true,
             });
             if (props.coords.playerOne.CharSpacing) {
               showPlayer.set({
@@ -103,25 +109,23 @@ export default function usePlayerName(fabricRef, props) {
                 showPlayer.set({ fill: "white" });
               }
             }
-            if (props.coords.playerOne.Left) {
-              showPlayer.set({
-                left: props.coords.playerOne.Left,
-              });
-            } else {
-              showPlayer.set({
-                left: props.coords.playerOne.Width / 2,
-              });
-            }
             
-              if (showPlayer.width >= props.coords.playerOne.ScaleToWidth) {
-                showPlayer.scaleToWidth(props.coords.playerOne.ScaleToWidth);
-              }
+            console.log(showPlayer, showPlayer.__lineWidths)
+            // showPlayer.__lineWidths.forEach((line, i) => {
+            //   console.log(showPlayer.__lineWidths)
+            //   if (line >= props.coords.playerOne.ScaleToWidth)
+                // showPlayer.scaleToWidth(props.coords.playerOne.ScaleToWidth)
+            // })
+            
+                
             
             fabricRef.current.add(showPlayer);
+            
+            fabricRef.current.renderAll();
           });
         }
-      });
-    }
+     
+    
   };
   return { squadPlayer };
 }

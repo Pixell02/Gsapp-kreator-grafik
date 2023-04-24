@@ -11,6 +11,10 @@ import createDefaultObjects from "./components/hooks/createDefaultObjects";
 import AddBackgroundWindow from "./components/AddBackgroundWindow";
 import UpdateModal from "./components/UpdateModal";
 import { ManyBackgroundsContext } from "./Context/ManyBackgroundsContext";
+import HelpLinesModal from "./components/HelpLinesModal";
+import useGuides from "./components/hooks/useGuides";
+import { Layer, Line, Stage } from "react-konva";
+import Draggable from "react-draggable";
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   const [background, setBackground] = useState(defaultBackGround ? defaultBackGround.src : null);
@@ -19,28 +23,52 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [isOpen, setIsOpen] = useState(true);
   const fabricRef = useRef(null);
   const [manyBackgrounds, setManyBackgrounds] = useState([]);
-  
+  const {
+    lines,
+    setLines,
+    lineDirection,
+    setLineDirection,
+    isDragging,
+    setIsDragging,
+    dragOffset,
+    setDragOffset,
+    lineRef,
+    handleLineDirectionChange,
+    handleCreateLine,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+  } = useGuides();
+  const [helpLinesModal, setHelpLinesModal] = useState(false);
+
   useEffect(() => {
     if (fabricRef) {
       createDefaultObjects(fabricRef, globalProperties, coords);
     }
   }, [fabricRef]);
 
- 
-
+  console.log(lines);
   return (
     <BackgroundContext.Provider value={{ background, setBackground, image, setImage }}>
       <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>
         <ManyBackgroundsContext.Provider value={{ manyBackgrounds, setManyBackgrounds }}>
           <AddBackgroundWindow backgrounds={backgrounds} />
+          {helpLinesModal ? (
+            <HelpLinesModal helpLinesModal={helpLinesModal} setHelpLinesModal={setHelpLinesModal} />
+          ) : null}
           {!id && <SaveModal isOpen={isOpen} setIsOpen={() => setIsOpen(true)} />}
           {id && (
-            <UpdateModal backgrounds={backgrounds} defaultBackGround={defaultBackGround} isOpen={isOpen} setIsOpen={() => setIsOpen(true)} />
+            <UpdateModal
+              backgrounds={backgrounds}
+              defaultBackGround={defaultBackGround}
+              isOpen={isOpen}
+              setIsOpen={() => setIsOpen(true)}
+            />
           )}
           <div className="add-creator-container d-flex h-100">
             <div className="add-preview-container d-flex flex-column h-100 w-100">
               <div className="w-100 d-flex z-index-1000">
-                <WorkSpaceNavbar />
+                <WorkSpaceNavbar setHelpLinesModal={setHelpLinesModal} helpLinesModal={helpLinesModal} />
               </div>
               {background && (
                 <TransformWrapper minScale={0.1} initialScale={1} panning={{ disabled: true }} centerOnInit>

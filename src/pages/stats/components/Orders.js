@@ -1,35 +1,47 @@
 import moment from "moment/moment";
-import 'moment/locale/pl';
+import "moment/locale/pl";
 import React, { useEffect, useState } from "react";
+import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
 export default function Orders(props) {
+  const { documents: history } = useCollection("history");
+  const { documents : user } = useCollection("Teams");
   const [sortedHistory, setSortedHistory] = useState();
   const [isHistory, setIsHistory] = useState(false);
   const [formattedArray, setFormattedArray] = useState();
+
   const sortHistory = () => {
-    const sortedData = [...props.history]
-      .slice()
-      .sort((a, b) => b.date - a.date);
+    const sortedData = [...history].slice().sort((a, b) => b.date - a.date);
     setSortedHistory(sortedData);
-    setIsHistory(true)
+    setIsHistory(true);
   };
-  
-   
-  
+
+  const [dataFiltered, setDataFiltered] = useState([]);
+
   useEffect(() => {
-    if (props.history) {
-      sortHistory();
-      console.log(sortedHistory)
-      if(sortedHistory){
-       setFormattedArray(sortedHistory.map(item => {
-      const date = new Date(item.date);
-      const formattedDate = moment(date).locale('pl').format('D MMMM YYYY, HH:mm:ss');
-      
-      return {...item, date: formattedDate}
-    }))
-  }
+    if (user) {
+      const filteredData = user.filter((user, index, self) => {
+        return index === self.findIndex(u => u.uid === user.uid);
+      });
+      setDataFiltered(filteredData);
     }
-  }, [props.history, isHistory]);
+  }, [user]);
+
+  useEffect(() => {
+    if (history) {
+      sortHistory();
+      if (sortedHistory) {
+        setFormattedArray(
+          sortedHistory.map((item) => {
+            const date = new Date(item.date);
+            const formattedDate = moment(date).locale("pl").format("D MMMM YYYY, HH:mm:ss");
+
+            return { ...item, date: formattedDate };
+          })
+        );
+      }
+    }
+  }, [history, isHistory]);
   return (
     <div className="order-container mt-5 ml-5">
       <p>Zamówienia</p>
@@ -48,8 +60,8 @@ export default function Orders(props) {
                 <tr key={i}>
                   <td className="dimension">{history.orderId}</td>
 
-                  {props.user &&
-                    props.user
+                  {dataFiltered &&
+                    dataFiltered
                       .filter((user) => user.uid === history.uid)
                       .map((user) => (
                         <>
@@ -57,17 +69,19 @@ export default function Orders(props) {
                             <img className="logo-img" src={user.img} />
                           </td>
                           <td className="dimension">
-                            <div>{user.firstName + " " + user.secondName + " " + `(${user.uid.substring(0, 10)}...)`}</div>
-                          </td>
-                          <td className="dimension">
-                            {history.type} <br />
-                            {history.products.map(product => <div>{product.name}</div>)}
-                          </td>
-                          <td className="dimension">
-                            {history.date}
+                            <div>
+                              {user.firstName + " " + user.secondName + " " + `(${user.uid.substring(0, 10)}...)`}
+                            </div>
                           </td>
                         </>
                       ))}
+                  <td className="dimension">
+                    {history.type} <br />
+                    {history.products.map((product) => (
+                      <div>{product.name}</div>
+                    ))}
+                  </td>
+                  <td className="dimension">{history.date}</td>
                 </tr>
               </>
             ))}

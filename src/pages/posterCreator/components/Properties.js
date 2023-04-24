@@ -21,7 +21,7 @@ export default function Properties({ fabricRef }) {
       )}
       
       {coords.type === "textBox" && (
-        <TextboxProperties coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
+        <TextboxProperties handleSelectGroupChange={handleSelectGroupChange} coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}
       {coords.type === "multiply" && (
         <MultiplyProperties handleSelectGroupChange={handleSelectGroupChange} updateActiveGroupObjectCoords={updateActiveGroupObjectCoords} coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange}  />

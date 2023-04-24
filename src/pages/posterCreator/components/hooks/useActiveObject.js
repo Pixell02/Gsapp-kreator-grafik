@@ -27,18 +27,24 @@ const useActiveObjectCoords = (fabricRef) => {
                 width: (activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0),
                 height: (activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0),
                 fontSize: activeObject.fontSize,
-                fontFamily: activeObject.className === "opponentPlayerOneGoal" ? globalProperties.yourPlayerOneGoal.fontFamily : activeObject.fontFamily,
+                fontFamily:
+                  activeObject.className === "opponentPlayerOneGoal"
+                    ? globalProperties.yourPlayerOneGoal.fontFamily
+                    : activeObject.fontFamily,
                 charSpacing: activeObject.charSpacing,
                 fill: activeObject.fill,
                 originX: activeObject.originX,
                 originY: activeObject.originY,
                 type: activeObject.type,
                 textAlign: activeObject.textAlign,
-                Margin: activeObject.className === "opponentPlayerOneGoal"?globalProperties.yourPlayerOneGoal.Margin:activeObject.Margin,
+                Margin:
+                  activeObject.className === "opponentPlayerOneGoal"
+                    ? globalProperties.yourPlayerOneGoal.Margin
+                    : activeObject.Margin,
                 format: activeObject.format,
-                fontStyle: activeObject.fontStyle
+                fontStyle: activeObject.fontStyle,
+                lineHeight: activeObject.lineHeight
               };
-
               const filteredCoords = Object.entries(newCoords).reduce((acc, [key, value]) => {
                 if (value !== undefined) {
                   acc[key] = value;
@@ -48,31 +54,29 @@ const useActiveObjectCoords = (fabricRef) => {
               }, {});
 
               setCoords(filteredCoords);
-              
             }
           }
         };
 
         canvasRef.current.on("object:modified", handleObjectModified);
         canvasRef.current.on("mouse:down", handleObjectModified);
-        document.addEventListener('keydown', handleDeleteKeyPress);
+        document.addEventListener("keydown", handleDeleteKeyPress);
 
         return () => {
           canvasRef.current.off("object:modified", handleObjectModified);
           canvasRef.current.off("mouse:down", handleObjectModified);
-          document.removeEventListener('keydown', handleDeleteKeyPress);
+          document.removeEventListener("keydown", handleDeleteKeyPress);
         };
       }
     }
   }, [fabricRef, background, globalProperties]);
   const handleDeleteKeyPress = (event) => {
-    
-    if (event.keyCode === 46 || event.keyCode === 8) {
+    if (event.keyCode === 46) {
       // kod klawisza Delete lub Backspace
-      
+
       const activeObject = fabricRef.current.getActiveObject();
       const key = Object.keys(globalProperties).find((prop) => activeObject.className.includes(prop));
-      
+
       if (activeObject && key) {
         for (const key in globalProperties) {
           if (globalProperties.hasOwnProperty(key)) {
@@ -87,18 +91,28 @@ const useActiveObjectCoords = (fabricRef) => {
           }
         }
         // Usuń koordynaty obiektu z globalnych właściwości
-        
       }
     }
-  }
+  };
 
   const updateActiveObjectCoords = (name, value) => {
     const canvas = canvasRef.current;
     if (canvas) {
       const activeObject = canvas.getActiveObject();
       if (activeObject) {
-        activeObject.set(name, value);
-        canvas.renderAll();
+        if (name !== "width" && name !== "height") {
+          activeObject.set(name, value);
+          canvas.renderAll();
+        } else {
+          if (name === "width") {
+            
+            activeObject.set("scaleX", Number(value) / activeObject.width)
+            canvas.renderAll();
+          } else {
+            activeObject.set("scaleY", Number(value) / activeObject.width)
+            canvas.renderAll();
+          }
+        }
       }
     }
   };
@@ -129,7 +143,7 @@ const useActiveObjectCoords = (fabricRef) => {
                 top: i === 0 ? obj.top : objects[0].top + i * parseInt(value),
               });
             });
-            activeObject.set({ height: objects[objects.length-1].top + 11 * parseInt(value) });
+            activeObject.set({ height: objects[objects.length - 1].top + 11 * parseInt(value) });
             const newHeight = activeObject.height - oldHeight;
             objects.forEach((obj, i) => {
               obj.set({
@@ -147,7 +161,7 @@ const useActiveObjectCoords = (fabricRef) => {
           });
           canvas.renderAll();
         }
-        
+
         setCoords({ ...coords, [name]: value });
       }
     }
@@ -162,15 +176,16 @@ const useActiveObjectCoords = (fabricRef) => {
     setCoords({ ...coords, [name]: value });
   };
   const handleInputChange = (e) => {
+    const canvas = canvasRef.current;
+    const activeObject = canvas.getActiveObject();
     const { name, value } = e.target;
     if (name !== "fill" && name !== "fontFamily" && name !== "originX" && name !== "originY") {
-      updateActiveObjectCoords(name, parseInt(value));
+      updateActiveObjectCoords(name, parseFloat(value));
     } else {
       updateActiveObjectCoords(name, value.toString());
     }
     setCoords({ ...coords, [name]: value });
   };
-  console.log(globalProperties);
 
   useEffect(() => {
     if (coords && coords.className !== undefined) {
@@ -245,6 +260,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
+            FontStyle: coords.fontStyle,
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
@@ -260,6 +276,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
+            FontStyle: coords.fontStyle,
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
@@ -275,6 +292,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
+            FontStyle: coords.fontStyle,
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
@@ -290,6 +308,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
+            FontStyle: coords.fontStyle,
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
@@ -305,6 +324,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
+            FontStyle: coords.fontStyle,
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
@@ -321,6 +341,7 @@ const useActiveObjectCoords = (fabricRef) => {
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
             FontFamily: coords.fontFamily,
+            FontStyle: coords.fontStyle,
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
             OriginX: coords.originX,
@@ -331,16 +352,17 @@ const useActiveObjectCoords = (fabricRef) => {
         setGlobalProperties((prevState) => ({
           ...prevState,
           playerOne: {
-            ...prevState.playerOne,
+            
             Top: parseInt(coords.top),
             Left: parseInt(coords.left),
             FontSize: parseInt(coords.fontSize),
             FontFamily: coords.fontFamily,
             ScaleToWidth: parseInt(coords.width),
+            TextAlign: coords.textAlign,
+            LineHeight: parseFloat(coords.lineHeight),
             Fill: coords.fill,
             OriginX: coords.originX,
-            Margin: parseInt(coords.Margin),
-            format: coords.format
+            format: coords.format,
           },
         }));
       } else if (coords.className === "reserveOne") {

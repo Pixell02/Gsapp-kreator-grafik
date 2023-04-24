@@ -13,14 +13,13 @@ import { useTeams } from "./useTeams";
 function AddPlayerWindow({ open, onClose, Teams }) {
   const { id } = useParams();
   const { user } = useAuthContext();
-  
   const [firstPlayerName, setFirstPlayerName] = useState("");
   const [secondPlayerName, setSecondPlayerName] = useState("");
   const [number, setNumber] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams);
-  console.log(image)
+  
 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
@@ -83,7 +82,7 @@ function AddPlayerWindow({ open, onClose, Teams }) {
         img: downloadURL || "",
         number: number || "",
         team: selectedTeam,
-        uid: user.uid,
+        uid: id ? id : user.uid,
       });
         });
       }
@@ -95,7 +94,7 @@ function AddPlayerWindow({ open, onClose, Teams }) {
           img: "",
           number: number || "",
           team: selectedTeam,
-          uid: user.uid,
+          uid: id ? id : user.uid,
       })
       }
       onClose(true);

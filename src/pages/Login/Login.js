@@ -5,12 +5,12 @@ import LoginPage from '../../components/form-elements/FormPage';
 import Footer from '../../components/MainFooter';
 import "../../App.css";
 function Login() {
-  setTimeout(() => {
-  if (!sessionStorage.getItem('hasRun')) {
-    sessionStorage.setItem('hasRun', 'true');
-    window.location.reload();
-  }
-  },10)
+  // setTimeout(() => {
+  // if (!sessionStorage.getItem('hasRun')) {
+  //   sessionStorage.setItem('hasRun', 'true');
+  //   window.location.reload();
+  // }
+  // },10)
   
     
     return (

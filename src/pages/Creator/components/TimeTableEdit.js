@@ -16,15 +16,21 @@ export default function TimeTableEdit({
   selectHostLogoValues,
   selectHostNamesValues,
   handleSelectHostChange,
-  concated
+  concated,
+  numberOfMatches,
+  manyLeaguesValues,
+    setManyLeaguesValues,
+    handleLeagueChange
 }) {
-  const { loops } = useTimeTable();
+  
+  const { loops } = useTimeTable({ numberOfMatches });
+  console.log(manyLeaguesValues)
   return (
     <div>
       {loops &&
         loops.map((loop, i) => (
           <div key={i} className="timeTable-container">
-            {coords && coords.type === "yourLogo" && (
+            {coords && (coords.type === "yourLogo" || coords.type === "connected text") && (
               <div>
                 <label>
                   <input
@@ -66,7 +72,7 @@ export default function TimeTableEdit({
                 />
               </>
             )}
-            {coords && coords.type === "yourLogo" && (
+            {coords && (coords.type === "yourLogo" || coords.type === "connected text") && (
               <>
                 <label className="label-container">Przeciwnik {`${i + 1}`}</label>
                 <Select
@@ -74,6 +80,15 @@ export default function TimeTableEdit({
                   
                   onChange={(option) => handleSelectChange(option, i)}
                 />
+              </>
+            )}
+            {coords && coords.yourLeagueOne && (
+              <>
+              <label key={i} className="label-container">Liga</label>
+                <input
+                  type="text"
+                  value={manyLeaguesValues[i]}
+                  onChange={(e) => handleLeagueChange(i, e.target.value)} />
               </>
             )}
           </div>

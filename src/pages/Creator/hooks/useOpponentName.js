@@ -129,6 +129,11 @@ export default function useOpponentName(fabricRef) {
                       props.coords.opponentName.ScaleToWidth
                     );
                   }
+                  if (props.coords.opponentName.FontStyle) {
+                    opponentsName.set({
+                      fontStyle: props.coords.opponentName.FontStyle
+                    })
+                  }
                   if (props.themeOption) {
                     if (
                       props.themeOption.label.split("-")[0] === "biało" ||
@@ -196,10 +201,13 @@ export default function useOpponentName(fabricRef) {
                 className: "opponentsFirstName",
                 fontFamily: props.coords.yourTeamFirstName.FontFamily,
               });
-    
-              
               if (firstName.width > props.coords.yourTeamFirstName.ScaleToWidth) {
                 firstName.scaleToWidth(props.coords.yourTeamFirstName.ScaleToWidth);
+              }
+              if (props.coords.yourTeamFirstName.FontStyle) {
+                firstName.set({
+                  fontStyle: props.coords.yourTeamFirstName.FontStyle
+                })
               }
               if (props.themeOption) {
                 if (
@@ -240,6 +248,11 @@ export default function useOpponentName(fabricRef) {
                       props.coords.yourTeamSecondName.ScaleToWidth
                     );
                   }
+                  if (props.coords.yourTeamSecondName.FontStyle) {
+                    opponentSecondName.set({
+                      fontStyle: props.coords.yourTeamSecondName.FontStyle
+                    })
+                  }
                   if (props.themeOption) {
                     if (
                       props.themeOption.label.split("-")[0] === "biało" ||
@@ -279,6 +292,13 @@ export default function useOpponentName(fabricRef) {
                 if (opponentsName.width > props.coords.yourTeamName.ScaleToWidth) {
                   opponentsName.scaleToWidth(props.coords.yourTeamName.ScaleToWidth);
                 }
+                
+                if (props.coords.yourTeamName.FontStyle) {
+                  opponentsName.set({
+                    fontStyle: props.coords.yourTeamName.FontStyle
+                  })
+                }
+
                 if (props.themeOption) {
                   if (
                     props.themeOption.label.split("-")[0] === "biało" ||

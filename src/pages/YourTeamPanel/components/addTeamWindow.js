@@ -6,10 +6,13 @@ import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import Select from "react-select";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { sportOptions } from "../../../components/options";
+import { useParams } from "react-router-dom";
 
 function AddTeamWindow({ open, onClose }) {
   const [firstTeamName, setFirstTeamName] = useState("");
   const [secondTeamName, setSecondTeamName] = useState("");
+  const { id } = useParams()
   const [image, setImage] = useState(null);
   const [sport, setSport] = useState();
   const [preview, setPreview] = useState(null);
@@ -51,44 +54,52 @@ function AddTeamWindow({ open, onClose }) {
     e.preventDefault();
     if (!firstTeamName || !secondTeamName) {
       return alert("puste pole");
-    } else if (!preview) {
-      return alert("brak obrazu");
-    } else {
-      const storage = getStorage();
-      const metadata = {
-        contentType: 'image/png'
-      };
-      const player = ref(storage, `${user.uid}/herb/${firstTeamName}_${secondTeamName}`);
+    }  else {
+      if (preview) {
+        const storage = getStorage();
+        const metadata = {
+          contentType: 'image/png'
+        };
+        const player = ref(storage, `${id ? id : user.uid}/herb/${firstTeamName}_${secondTeamName}`);
     
-    const uploadTask = uploadBytesResumable(player, image, metadata)
+        const uploadTask = uploadBytesResumable(player, image, metadata)
     
-    uploadTask.on('state_changed', (snapshot) => {
-      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
-          break;
-        case 'running':
-          console.log('Upload is running');
-          break;
-      }
-    }, (error) => {
-      console.log(error);
-    },
-      async() => {
-        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-           addDoc(collection(db, "Teams"), {
-        firstName: firstTeamName,
-        secondName: secondTeamName,
-        img: downloadURL,
-        sport: sport,
-        uid: user.uid,
-      });
+        uploadTask.on('state_changed', (snapshot) => {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        }, (error) => {
+          console.log(error);
+        },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              addDoc(collection(db, "Teams"), {
+                firstName: firstTeamName,
+                secondName: secondTeamName,
+                img: downloadURL,
+                sport: sport,
+                uid: id ? id : user.uid,
+              });
+            });
+          }
+      
+        )
+      } else {
+        addDoc(collection(db, "Teams"), {
+          firstName: firstTeamName,
+          secondName: secondTeamName,
+          img: "",
+          sport: sport,
+          uid: id ? id : user.uid,
         });
       }
-    )
-     
       
       onClose(true);
       setFirstTeamName("");
@@ -117,7 +128,7 @@ function AddTeamWindow({ open, onClose }) {
           required
         />
         <label>Dyscyplina</label>
-        <Select options={options} onChange={getSport} />
+        <Select options={sportOptions} onChange={getSport} />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           Dodaj logo
         </button>

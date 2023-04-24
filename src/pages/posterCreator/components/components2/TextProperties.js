@@ -18,11 +18,11 @@ export default function TextProperties({ coords, handleInputChange, handleSelect
       <div className="d-flex w-100">
         <div>
           sz:
-          <input type="number" value={coords.width} className="w-75" disabled />
+          <input type="number" value={coords.width} className="w-75" name="width" onChange={handleInputChange} />
         </div>
         <div>
           w:
-          <input type="number" value={coords.height} className="w-75" disabled />
+          <input type="number" value={coords.height} className="w-75" name="height" onChange={handleInputChange} />
         </div>
       </div>
       <div className="d-flex mx-2 w-100">
@@ -30,7 +30,7 @@ export default function TextProperties({ coords, handleInputChange, handleSelect
           kolor: <input type="color" value={coords.fill} className="w-50" name="fill" onChange={handleInputChange} />
         </div>
       </div>
-      {(coords.className === "yourKolejka" || coords.className === "yourLeague" || coords.className === "typePlace" || coords.className === "typeData") && (
+      
         <div className="d-flex w-100 flex-column mt-2" style={{fontSize: "10px"}}>
             odstęp między literami: <input type="number" value={coords.charSpacing} className="w-50" name="charSpacing" onChange={handleInputChange} />
           styl czcionki:
@@ -44,7 +44,7 @@ export default function TextProperties({ coords, handleInputChange, handleSelect
           </select>
           
         </div>
-      )}
+     
 
       
       <div className="d-flex w-100 mt-2">

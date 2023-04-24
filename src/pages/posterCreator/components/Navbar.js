@@ -1,19 +1,21 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
-export default function WorkSpaceNavbar() {
+export default function WorkSpaceNavbar({setHelpLinesModal, helpLinesModal}) {
   return (
     <div className=" nav-container w-100 bg-light">
       <div class="collapse navbar-collapse d-flex flex-row w-100">
         <div class="navbar-nav d-flex flex-row ml-5" style={{marginLeft: "100px"}}>
           
           <NavDropdown title="obszar roboczy">
+            <NavDropdown.Item >do motywów</NavDropdown.Item>
             <NavDropdown.Item >do GIFów</NavDropdown.Item>
           </NavDropdown>
          
         <div className="ml-5 d-flex">
-          <NavDropdown title="Opcje">
-            <NavDropdown.Item >dodaj kilka teł</NavDropdown.Item>
+            <NavDropdown title="Opcje">
+              <NavDropdown.Item onClick={() => setHelpLinesModal(!helpLinesModal)}>Dodaj linię pomocniczą</NavDropdown.Item>
+            <NavDropdown.Item >Dodaj kilka teł</NavDropdown.Item>
             <NavDropdown.Item >Filtry na zawodnika</NavDropdown.Item>
           </NavDropdown>
           </div>

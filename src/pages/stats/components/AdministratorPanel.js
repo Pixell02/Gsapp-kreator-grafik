@@ -1,29 +1,87 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LicenseStats from "./LicenseStats";
-import "../../../App.css";
+import "../Stats.css";
 import UsersPosters from "./UsersPosters";
 import Orders from "./Orders";
 import Users from "./Users";
-import { useCollection } from "../../../hooks/useCollection";
 import FavoriteTheme from "./FavoriteTheme";
 import UsersCountry from "./UsersCountry";
+import Themes from "./Themes";
+import { useSearch } from "../../../hooks/useLimit";
+import PromoCode from "./PromoCode";
+
 export default function AdministratorPanel() {
-  const { documents: license } = useCollection("user");
-  const { documents: users } = useCollection("Teams");
-  const { documents: history } = useCollection("history");
-  const { documents: email } = useCollection("email");
+  const [activeBar, setActiveBar] = useState("users");
+  const [radioValue, setRadioValue] = useState("firstName");
+  const [search, setSearch] = useState("");
+  const { documents: users, loading, error } = useSearch("Teams", radioValue, search === "" ? null : search);
+  const [dataFiltered, setDataFiltered] = useState([]);
+
+  useEffect(() => {
+    if (users) {
+      const filteredData = users.filter((user, index, self) => {
+        return index === self.findIndex((u) => u.uid === user.uid);
+      });
+      setDataFiltered(filteredData);
+    }
+  }, [users]);
+
   return (
     <div className="main-content">
       <div className="ml-5 mt-5">
-        <p>Tutaj jeżeli będzie za dużo rzeczy to będą zakładki</p>
-        <div className="d-flex flex-row  upper-container">
-          <LicenseStats license={license} />
-          <FavoriteTheme />
-          <UsersCountry />
-        </div>
-        <Orders history={history} user={users} />
-        <UsersPosters />
-        <Users users={users} license={license} email={email} />
+        <ul className="d-flex flex-row navbar-container">
+          <li
+            className={activeBar === "users" ? "trapezoid-active" : "trapezoid"}
+            onClick={() => {
+              setActiveBar("users");
+            }}
+          >
+            <span>użytkownicy</span>
+          </li>
+          <li
+            className={activeBar === "themes" ? "trapezoid-active" : "trapezoid"}
+            onClick={() => {
+              setActiveBar("themes");
+            }}
+          >
+            <span>Motywy</span>
+          </li>
+          <li
+            className={activeBar === "stats" ? "trapezoid-active" : "trapezoid"}
+            onClick={() => {
+              setActiveBar("stats");
+            }}
+          >
+            <span>Statystyki</span>
+          </li>
+        </ul>
+        <hr />
+
+        {activeBar === "stats" && (
+          <>
+            <div className="d-flex flex-row  upper-container">
+              <LicenseStats />
+              <FavoriteTheme />
+              <UsersCountry />
+            </div>
+            <Orders />
+          </>
+        )}
+        {activeBar === "users" && (
+          <>
+            <PromoCode />
+            <UsersPosters />
+            <Users
+              users={dataFiltered}
+              loading={loading}
+              search={search}
+              setSearch={setSearch}
+              radioValue={radioValue}
+              setRadioValue={setRadioValue}
+            />
+          </>
+        )}
+        {activeBar === "themes" && <Themes />}
       </div>
     </div>
   );

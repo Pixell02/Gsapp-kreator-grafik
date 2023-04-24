@@ -4,7 +4,7 @@ import FontFaceObserver from "fontfaceobserver";
 
 
 export default function hostName(fabricRef, props, loops) {
-
+  
   if (loops && props.selectHostNamesValues) {
     loops.forEach((loop, i) => {
       fabricRef.current._objects.forEach((image, i) => {

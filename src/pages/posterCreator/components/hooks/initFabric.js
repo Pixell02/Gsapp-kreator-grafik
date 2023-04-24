@@ -16,9 +16,11 @@ export const initFabric = (background, fabricRef ) => {
     newImage.src = background;
     newImage.width = img.width;
     newImage.height = img.height;
-    document.querySelector(".canvas-container").style.display = "flex";
-    document.querySelector(".canvas-container").style.marginTop = "50px";
-    document.querySelector(".upper-canvas").style.position = "inherit";
+    // document.querySelector(".canvas-container").style.display = "flex";
+    // document.querySelector(".canvas-container").style.marginTop = "50px";
+    // document.querySelector(".upper-canvas").width = img.width;
+    // document.querySelector(".upper-canvas").height = img.height;
+    
     img.onload = () => {
       const newImg = new fabric.Image.fromURL(img.src, function (img) {
         img.scaleToHeight(newImage.height);

@@ -55,21 +55,21 @@ function WorkSpace() {
         setCoords(coordinates[0]);
       }
   }, [coordinates]);
-  const [numberOfMatches, setNumberOfMatches] = useState();
+  const [numberOfMatch, setNumberOfMatch] = useState();
   useEffect(() => {
     if (coords) {
-      setNumberOfMatches(coords.numberOfMatches);
+      setNumberOfMatch(coords.numberOfMatches);
     }
   }, [coords]);
   const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
-    Array(6).fill()
+    Array(9).fill()
   );
   const [yourTeam, teamOption, getTeamOption, yourLogo, yourName] = YourTeamNameAndLogo(Logo);
 
   const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] =
-    useCreateOpponentGoals(Array(6).fill());
+    useCreateOpponentGoals(Array(9).fill());
 
-  const [reserve, handleReserveChange] = useReservePlayer(Array(7).fill());
+  const [reserve, handleReserveChange] = useReservePlayer(Array(9).fill());
   const {
     loops,
     handleRadioChange,
@@ -83,10 +83,13 @@ function WorkSpace() {
     selectHostLogoValues,
     selectHostNamesValues,
     handleSelectHostChange,
+    manyLeaguesValues,
+    setManyLeaguesValues,
+    handleLeagueChange
   } = useTimeTable();
   const { yourTeamResultsValue, opponentTeamResultsValue, handleOpponentTeamResultChange, handleYourTeamResultChange } =
     useResults(Array(6).fill());
-
+  
   let options;
 
   if (Opponent) {
@@ -96,6 +99,8 @@ function WorkSpace() {
     }));
   }
   const { concated, selectTeamValue, handleSelectTeamValue } = useTeamOption(Logo, Opponent);
+
+  
 
   const [playerOptions, setPlayerOption] = useState([]);
   const [fullPlayers, setFullPlayers] = useState([]);
@@ -402,21 +407,8 @@ function WorkSpace() {
       {Licenses && Licenses[0].license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            {initScale && dataURL && (
               <TransformWrapper minScale={0.1} initialScale={initScale} centerOnInit>
-                      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-        <>
-          <div className="tools">
-            <button onClick={() => zoomIn()}>+</button>
-            <button onClick={() => zoomOut()}>-</button>
-            <button onClick={() => resetTransform()}>x</button>
-          </div>
-          <TransformComponent>
-            <img src="image.jpg" alt="test" />
-            <div>Example text</div>
-          </TransformComponent>
-        </>
-      )}
+                     
                 <TransformComponent>
                   <div className="d-flex w-100 h-100">
                     {coords && posters && posters.type === "GOOOOL" && (
@@ -519,7 +511,10 @@ function WorkSpace() {
                         selectNamesValues={selectNamesValues}
                         selectLogoValues={selectLogoValues}
                         selectHostLogoValues={selectHostLogoValues}
-                        selectHostNamesValues={selectHostNamesValues}
+                      selectHostNamesValues={selectHostNamesValues}
+                      manyLeaguesValues={manyLeaguesValues}
+                      setManyLeaguesValues={setManyLeaguesValues}
+                      handleLeagueChange={handleLeagueChange} 
                       />
                     )}
 
@@ -546,7 +541,7 @@ function WorkSpace() {
                 </TransformComponent>
           
               </TransformWrapper>
-            )}
+            
           </div>
 
           <div className="tools-container">
@@ -705,6 +700,10 @@ function WorkSpace() {
                   selectHostLogoValues={selectHostLogoValues}
                   selectHostNamesValues={selectHostNamesValues}
                   handleSelectHostChange={handleSelectHostChange}
+                  numberOfMatches={numberOfMatch}
+                  manyLeaguesValues={manyLeaguesValues}
+                  setManyLeaguesValues={setManyLeaguesValues}
+                  handleLeagueChange={handleLeagueChange}
                 />
               )}
 
@@ -727,6 +726,7 @@ function WorkSpace() {
                   selectHostLogoValues={selectHostLogoValues}
                   selectHostNamesValues={selectHostNamesValues}
                   handleSelectHostChange={handleSelectHostChange}
+                  numberOfMatches={numberOfMatch}
                 />
               )}
               {/* Przeciwnicy */}
@@ -776,19 +776,19 @@ function WorkSpace() {
                     yourTeamGoal.map((goal, i) => (
                       <div key={i} className="goal-container">
                         <div className="minute-container">
-                          <label htmlFor={`input${i}`}>Minuta</label>
+                          <label htmlFor={`input${i+1}`}>Minuta</label>
                           <input
-                            id={`input${i}`}
+                            id={`input${i+1}`}
                             type="number"
                             min="0"
                             onChange={(e) => handleYourTeamMinuteChange(e, i)}
                           />
                         </div>
                         <div className="goals-container">
-                          <label htmlFor={`select${i}`}>{`Twój GOL${i}`}</label>
+                          <label htmlFor={`select${i}`}>{`Twój GOL ${i + 1}`}</label>
                           <Select
                             className="player-select"
-                            id={`select${i}`}
+                            id={`select${i + 1}`}
                             options={playerOptions}
                             onChange={(e) => handleGoalChange(e, i)}
                           />

@@ -1,0 +1,8 @@
+.promoCode-container {
+  height: 250px;
+}
+.promoCode-container .promoCode-content {
+  border: 1px solid gray;
+  height: 50%;
+  background-color: white;
+}

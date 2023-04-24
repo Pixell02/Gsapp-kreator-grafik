@@ -11,13 +11,15 @@ import yourTeamLogos from "./hooks/TimeTable/yourTeamLogos";
 import useFabricCanvas from "./hooks/useFabricCanvas";
 import useText from "./hooks/useText";
 import useTimeTable from "./hooks2/useTimeTable";
+import manyLeagues from "./hooks/TimeTable/manyLeagues";
+import connectedText from "./hooks/TimeTable/connectedText";
 
 export default function TimeTable(props) {
   const fabricRef = useRef();
   const { initFabric } = useFabricCanvas(fabricRef, props);
   const { loops } = useTimeTable(Array(4).fill({}));
   const { typePlace, yourKolejka, typeDate, yourLeague } = useText(fabricRef, props);
-
+  console.log(props)
   const [width, setWidth] = useState()
   const [height, setHeight] = useState();
 
@@ -58,6 +60,14 @@ export default function TimeTable(props) {
   useEffect(() => {
     yourLeague();
   }, [props.league]);
+
+  useEffect(() => {
+    manyLeagues(fabricRef, props, loops)
+  }, [props.yourLeagueOne, props.manyLeaguesValues])
+  
+  useEffect(() => {
+    connectedText(fabricRef, props, loops)
+  },[props.selectHostNameValues,props.selectNamesValues, props.radioValues])
   
   useEffect(() => {
     opponentNames(fabricRef, props, loops);

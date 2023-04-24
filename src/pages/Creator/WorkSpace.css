@@ -5,7 +5,7 @@
   width: auto;
 }
 
-.react-transform-wrapper {
+.preview-container .react-transform-wrapper {
   width: 1920px !important;
   display: flex;
   align-items: start;
@@ -238,7 +238,7 @@
     overflow: auto;
     height: auto;
   }
-  .react-transform-wrapper {
+  .preview-container .react-transform-wrapper {
     margin-right: 0 !important;
   }
 }

@@ -1,0 +1,14 @@
+.theme-container {
+  width: 95%;
+  height: auto;
+  background-color: white;
+  border: rgb(228, 228, 228);
+  flex-direction: column;
+}
+.theme-container .theme-content {
+  height: 50px;
+}
+.poster-content {
+  height: 200px;
+  background-color: rgb(231, 231, 231);
+}

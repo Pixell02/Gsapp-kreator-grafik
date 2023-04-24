@@ -13,6 +13,7 @@ import {
 } from "firebase/storage";
 import { useTeams } from "./useTeams";
 import Select from "react-select";
+import { useParams } from "react-router-dom";
 
 function EditPlayerWindow({ player, open, onClose, Teams }) {
   
@@ -23,6 +24,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
+  const params = useParams();
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   
@@ -104,7 +106,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
                   secondName: secondPlayerName,
                   img: downloadURL,
                   number: number || "",
-                  uid: user.uid,
+                  uid: params ? params.id : user.uid,
                 });
               })
               .catch((err) => console.log(err));
@@ -117,7 +119,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
           secondName: secondPlayerName,
           number: number || "",
           team: selectedTeam,
-          uid: user.uid,
+          uid: params ? params.id : user.uid,
         });
       }
       onClose();

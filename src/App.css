@@ -1,5 +1,14 @@
 @font-face {
-  font-family: Impact;
+  font-family: "Raleway Medium";
+  src: url(./fonts/Raleway-Medium.ttf);
+}
+@font-face {
+  font-family: "Raleway Black";
+  src: url(./fonts/Raleway-Black.ttf);
+}
+
+@font-face {
+  font-family: "Impact";
   src: url(./fonts/impact.ttf);
 }
 @font-face {
@@ -54,10 +63,7 @@
   font-family: "Made Outer Sans Regular";
   src: url(./fonts/MADE\ Outer\ Sans\ Regular\ PERSONAL\ USE.otf);
 }
-/* @font-face {
-  font-family: "haetten";
-  src: url(./fonts/haetten.ttf);
-} */
+
 @font-face {
   font-family: "Made Outer Sans Thin";
   src: url(./fonts/MADE\ Outer\ Sans\ Thin\ PERSONAL\ USE.otf);

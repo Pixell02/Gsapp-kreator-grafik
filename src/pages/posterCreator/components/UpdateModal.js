@@ -66,6 +66,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
         );
       });
     }
+    
     updateDoc(doc(db, "yourCatalog", globalProperties.uid), userPoster)
     
     updateDoc(doc(db, "coords", globalProperties.uid), globalProperties);

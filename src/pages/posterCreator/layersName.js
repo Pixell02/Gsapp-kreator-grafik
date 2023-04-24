@@ -10,7 +10,12 @@ export const layersName = [
   { name: "pierwsza część nazwy przeciwnika", type: "text", text: "Twój", className: "opponentFirstName" },
   { name: "druga część nazwy przeciwnika", type: "text", text: "Przeciwnik", className: "opponentSecondName" },
   { name: "pełna nazwa przeciwnika", type: "text", text: "Twój przeciwnik", className: "opponentName" },
-  { name: "skład meczowy", type: "multiply", text: "88.I.Nazwisko", loops: Array(11).fill(""), className: "playerOne" },
+  {
+    name: "skład meczowy",
+    type: "textBox",
+    text: "88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko \n 88.I.Nazwisko",
+    className: "playerOne"
+  },
   {
     name: "rezerwowi",
     type: "textBox",

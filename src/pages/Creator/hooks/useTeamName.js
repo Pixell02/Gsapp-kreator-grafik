@@ -106,26 +106,25 @@ export default function useTeamName(fabricRef, props) {
               fabricRef.current.remove(fabricRef.current.item(i));
             }
           });
+        console.log(yourTeamLogo)
         if (props.radioChecked === "radio1") {
          
           let yourTeamName;
           if (poster === "23b5ff36a490e8f93breae34") {
-            yourTeamName =  yourTeamLogo.split(" ")[0];
+            yourTeamName =  yourTeamLogo.split(".")[0];
           } else if (poster === "PmoRESwg91LxFAGFObbZ") {
             yourTeamName =
-              yourTeamLogo.split(" ")[0].toUpperCase() +
+              yourTeamLogo.split(".")[0].toUpperCase() +
               " " +
-              yourTeamLogo.split(" ")[1].toUpperCase();
+              yourTeamLogo.split(".")[1].toUpperCase();
           } else {
             yourTeamName =
-              yourTeamLogo.split(" ")[0].toUpperCase() +
+              yourTeamLogo.split(".")[0].toUpperCase() +
               " " +
-              yourTeamLogo.split(" ")[1].toUpperCase();
+              yourTeamLogo.split(".")[1].toUpperCase();
           }
           if (props.coords.yourTeamFirstName) {
-            const firstTeamName = yourTeamLogo.split(" ")[0].toUpperCase();
-
-            const secondTeamName = yourTeamLogo.split(" ")[1].toUpperCase();
+            const firstTeamName = yourTeamLogo.split(".")[0].toUpperCase();
             const firstFont = new FontFaceObserver(
               props.coords.yourTeamFirstName.FontFamily
             );
@@ -148,6 +147,11 @@ export default function useTeamName(fabricRef, props) {
                   props.coords.yourTeamFirstName.ScaleToWidth
                 );
               }
+              if (props.coords.yourTeamFirstName.FontStyle) {
+                firstName.set({
+              fontStyle: props.coords.yourTeamFirstName.FontStyle
+            })
+              }
               if (props.themeOption) {
                 if (
                   props.themeOption.label.split("-")[0] === "biało" ||
@@ -163,6 +167,7 @@ export default function useTeamName(fabricRef, props) {
               fabricRef.current.renderAll();
             });
             if (props.coords.yourTeamSecondName) {
+              const secondTeamName = yourTeamLogo.split(".")[1].toUpperCase();
               const secondFont = new FontFaceObserver(
                 props.coords.yourTeamSecondName.FontFamily
               );
@@ -183,6 +188,11 @@ export default function useTeamName(fabricRef, props) {
                   secondName.scaleToWidth(
                     props.coords.yourTeamSecondName.ScaleToWidth
                   );
+                }
+                if (props.coords.yourTeamFirstName.FontStyle) {
+                  secondName.set({
+                    fontStyle: props.coords.yourTeamFirstName.FontStyle
+                  })
                 }
                 
                 if (props.themeOption) {
@@ -221,7 +231,11 @@ export default function useTeamName(fabricRef, props) {
               if (props.coords.yourTeamName.CharSpacing) {
                 name.charSpacing = props.coords.yourTeamName.CharSpacing;
               }
-              
+              if (props.coords.yourTeamName.FontStyle) {
+                name.set({
+                  fontStyle: props.coords.yourTeamName.FontStyle
+                })
+              }
               if (name.width > props.coords.yourTeamName.ScaleToWidth) {
                 name.scaleToWidth(props.coords.yourTeamName.ScaleToWidth);
               }
@@ -262,23 +276,11 @@ export default function useTeamName(fabricRef, props) {
         } else if (props.radioChecked === "radio2") {
       
           let yourTeamName;
-          if (poster === "23b5ff36a490e8f93breae34") {
-            yourTeamName = yourTeamLogo.split(" ")[0];
-          } else if (poster === "PmoRESwg91LxFAGFObbZ") {
-            yourTeamName =
-              yourTeamLogo.split(" ")[0].toUpperCase() +
-              " " +
-              yourTeamLogo.split(" ")[1].toUpperCase();
-          } else {
-            yourTeamName =
-              yourTeamLogo.split(" ")[0].toUpperCase() +
-              " " +
-              yourTeamLogo.split(" ")[1].toUpperCase();
-          }
+          yourTeamName = yourTeamLogo.split(".")[0].toUpperCase() + " " + yourTeamLogo.split(".")[1].toUpperCase();
           if (props.coords.yourTeamFirstName) {
-            const firstTeamName = yourTeamLogo.split(" ")[0].toUpperCase();
+            const firstTeamName = yourTeamLogo.split(".")[0].toUpperCase();
 
-            const secondTeamName = yourTeamLogo.split(" ")[1].toUpperCase();
+            
             const font = new FontFaceObserver(
               props.coords.yourTeamFirstName.FontFamily
             );
@@ -301,6 +303,11 @@ export default function useTeamName(fabricRef, props) {
                   props.coords.opponentFirstName.ScaleToWidth
                 );
               }
+              if (props.coords.opponentFirstName.FontStyle) {
+                firstName.set({
+                  fontStyle: props.coords.opponentFirstName.FontStyle
+                })
+              }
               if (props.themeOption) {
                 if (
                   props.themeOption.label.split("-")[0] === "biało" ||
@@ -314,7 +321,8 @@ export default function useTeamName(fabricRef, props) {
               }
               fabricRef.current.add(firstName);
             });
-            if(props.coords.yourTeamSecondName){
+            if (props.coords.yourTeamSecondName) {
+              const secondTeamName = yourTeamLogo.split(".")[1].toUpperCase();
             const secondFont = new FontFaceObserver(
               props.coords.yourTeamSecondName.FontFamily
             );
@@ -330,14 +338,18 @@ export default function useTeamName(fabricRef, props) {
                   fontSize: props.coords.opponentSecondName.FontSize,
                   className: "yourSecondName",
                 });
-                // secondName.scaleToHeight(
-                //   props.coords.opponentSecondNameScaleToHeight
-                // );
+                
                 if (secondName.width > props.coords.opponentSecondName.ScaleToWidth) {
                   secondName.scaleToWidth(
                     props.coords.opponentSecondName.ScaleToWidth
                   );
                 }
+                if (props.coords.opponentSecondName.FontStyle) {
+                  secondName.set({
+                    fontStyle: props.coords.opponentSecondName.FontStyle
+                  })
+                }
+                
                 if (props.themeOption) {
                   if (
                     props.themeOption.label.split("-")[0] === "biało" ||
@@ -368,6 +380,7 @@ export default function useTeamName(fabricRef, props) {
                 top: props.coords.opponentName.Top,
                 left: props.coords.opponentName.Left,
                 fill: props.coords.opponentName.Fill,
+                fontSize: props.coords.opponentName.FontSize,
                 fontFamily: props.coords.opponentName.FontFamily,
                 className: "yourName",
               });
@@ -377,7 +390,11 @@ export default function useTeamName(fabricRef, props) {
              
               if (name.width > props.coords.opponentName.ScaleToWidth) {
                 name.scaleToWidth(props.coords.opponentName.ScaleToWidth);
-                
+              }
+              if (props.coords.opponentName.FontStyle) {
+                name.set({
+                  fontStyle: props.coords.opponentName.FontStyle
+                })
               }
               if (props.themeOption) {
                 if (

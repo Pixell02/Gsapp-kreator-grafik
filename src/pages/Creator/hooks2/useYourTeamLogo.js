@@ -12,7 +12,7 @@ export const YourTeamNameAndLogo = (Logo) => {
     if (Logo) {
       const TeamOption = Logo.map((logo) => ({
         value: logo.img,
-        label: logo.firstName + " " + logo.secondName,
+        label: logo.firstName + "." + logo.secondName,
       }));
       setTeamOption(TeamOption);
     }
@@ -22,7 +22,7 @@ export const YourTeamNameAndLogo = (Logo) => {
     if (Logo) {
       if (Logo.length === 1) {
         setLogoLink(Logo[0].img);
-        setYourName(Logo[0].firstName + " " + Logo[0].secondName)
+        setYourName(Logo[0].firstName + "." + Logo[0].secondName)
       }
     }
   }, [Logo]);

@@ -10,7 +10,7 @@ import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDmqmCgUHChFn88wr71Rzos0S2K__Wovp4",
-  authDomain: "poster-dd714.firebaseapp.com",
+  authDomain: "gsapp.pl",
   projectId: "poster-dd714",
   storageBucket: "poster-dd714.appspot.com",
   messagingSenderId: "230369778825",

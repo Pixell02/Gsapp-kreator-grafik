@@ -8,7 +8,7 @@ export default function useTeamOption(Team, Opponent) {
   const [yourTeam, setYourTeam] = useState([]);
   const [opponents, setOpponents] = useState([]);
   const [concated, setConcated] = useState([]);
-
+  console.log(concated)
   const [coords, setCoords] = useState();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function useTeamOption(Team, Opponent) {
     newSelectTeamValue[i] = value;
     setSelectTeamValue(newSelectTeamValue)
   };
-  
+
   
   
   return { concated, selectTeamValue, handleSelectTeamValue }

@@ -24,7 +24,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
-
+  
   useEffect(() => {
     if (image) {
       if (Math.round(image.size / 1024) < 1000) {
@@ -84,7 +84,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
               firstName: firstOpponentName,
               secondName: secondOpponentName,
               img: downloadURL,
-              uid: user.uid,
+              uid: id ? id : user.uid,
               team: selectedTeam
             });
           });

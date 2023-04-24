@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import posterCoords from "../coords.json";
+import posterCoords from "../coordinates.json";
+import { useCollection } from "../../../hooks/useCollection";
 
 export default function useTimeTable() {
   const { poster } = useParams();
   const [coords, setCoords] = useState();
-
+  const { documents: coordinates } = useCollection("coords", ["uid", "==", poster]);
   useEffect(() => {
-    posterCoords.map((postersCoords) => {
-      if (postersCoords.id === poster) {
-        setCoords(postersCoords);
-      }
-    });
-  }, []);
+    if (coordinates) {
+      coordinates.map((postersCoords) => {
+        if (postersCoords.id === poster) {
+          setCoords(postersCoords);
+        }
+      });
+    }
+  }, [coordinates]);
 
-  const [numberOfMatch, setNumberOfMatch] = useState(0);
+  const [numberOfMatch, setNumberOfMatch] = useState();
 
   useEffect(() => {
     if (coords) {
@@ -32,6 +35,7 @@ export default function useTimeTable() {
   const [selectLogoValues, setSelectLogoValues] = useState(Array(numberOfMatch).fill(" "));
   const [selectHostLogoValues, setSelectHostLogoValues] = useState(Array(numberOfMatch).fill(" "));
   const [selectHostNamesValues, setSelectHostNamesValues] = useState(Array(numberOfMatch).fill(" "));
+  const [manyLeaguesValues, setManyLeaguesValues] = useState(Array(numberOfMatch).fill(" "));
   useEffect(() => {
     setLoops(Array(numberOfMatch).fill(" "));
     setRadioValues(Array(numberOfMatch).fill("radio1"));
@@ -41,8 +45,16 @@ export default function useTimeTable() {
     setSelectLogoValues(Array(numberOfMatch).fill(" "));
     setSelectHostLogoValues(Array(numberOfMatch).fill(" "));
     setSelectHostNamesValues(Array(numberOfMatch).fill(" "));
+    setManyLeaguesValues(Array(numberOfMatch).fill(" "));
   }, [numberOfMatch]);
 
+  const handleLeagueChange = (i, value) => {
+    
+    const newLeagueValues = [...manyLeaguesValues];
+    newLeagueValues[i] = value;
+    setManyLeaguesValues(newLeagueValues);
+  }
+  
   const handleRadioChange = (index, value) => {
     const newRadioValues = [...radioValues];
     newRadioValues[index] = value;
@@ -76,6 +88,7 @@ export default function useTimeTable() {
   
 
   const handleSelectChange = (value, index) => {
+    
     const newSelectNamesValues = [...selectNamesValues];
     const newSelectLogoValues = [...selectLogoValues];
     fetch(`${value.value}`)
@@ -88,7 +101,7 @@ export default function useTimeTable() {
           setSelectLogoValues(newSelectLogoValues);
         };
       });
-
+      
     newSelectNamesValues[index] = value.label;
     setSelectNamesValues(newSelectNamesValues);
   };
@@ -105,6 +118,9 @@ export default function useTimeTable() {
     selectLogoValues,
     handleSelectHostChange,
     selectHostLogoValues,
-    selectHostNamesValues
+    selectHostNamesValues,
+    manyLeaguesValues,
+    setManyLeaguesValues,
+    handleLeagueChange
   };
 }

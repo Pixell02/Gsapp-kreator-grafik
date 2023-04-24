@@ -5,40 +5,41 @@ import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
 export default function LicenseStats(props) {
   
+  const { documents: license } = useCollection("user");
   const [fullLicenseCount, setFullLicenseCount] = useState();
   const [freeLicenseCount, setFreeLicenseCount] = useState();
   const [noLicenseCount, setNoLicenseCount] = useState();
   const [adminCount, setAdminCount] = useState();
   const [userCount, setUserCount] = useState();
   useEffect(() => {
-    if (props.license) {
+    if (license) {
       const fullLicense = "full-license";
-      const matchFullLicense = props.license.filter(
+      const matchFullLicense = license.filter(
         (license) => license.license === fullLicense
       );
       setFullLicenseCount(matchFullLicense.length);
 
       const freeLicense = "free-trial";
-      const matchFreeLicense = props.license.filter(
+      const matchFreeLicense = license.filter(
         (license) => license.license === freeLicense
       );
       setFreeLicenseCount(matchFreeLicense.length);
 
       const noLicense = "no-license";
-      const matchNoLicense = props.license.filter(
+      const matchNoLicense = license.filter(
         (license) => license.license === noLicense
       );
       setNoLicenseCount(matchNoLicense.length);
 
       const adminAccount = "admin";
-      const matchAdminAccount = props.license.filter(
+      const matchAdminAccount = license.filter(
         (license) => license.license === adminAccount
       );
       setAdminCount(matchAdminAccount.length);
 
       setUserCount(matchFreeLicense.length + matchFullLicense.length + matchNoLicense.length + matchAdminAccount.length)
     }
-  }, [props.license]);
+  }, [license]);
 
   return (
     <div className="license-table">

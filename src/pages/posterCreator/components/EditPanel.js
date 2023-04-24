@@ -27,6 +27,7 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
       
       <div className="add-properties-container ml-5 pt-2">
         <p>Właściwości</p>
+        <span style={{fontSize:"10px"}}>odblokowałem sz i w, ale jeszcze nie działa</span>
         <Properties fabricRef={fabricRef} />
       </div>
       <div className="add-layers-container ml-5">

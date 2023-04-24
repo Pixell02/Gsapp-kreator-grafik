@@ -47,10 +47,13 @@ export default function YourTeamBlock({ Team }) {
             </div>
 
             <div className="your-team-image-content">
-              <img
+              {team.img ?
+               <img
                 src={team.img}
                 alt={team.firstName + " " + team.secondName}
               />
+               : null}
+              
             </div>
             
           </div>

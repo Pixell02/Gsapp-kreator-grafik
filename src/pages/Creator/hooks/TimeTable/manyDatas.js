@@ -16,7 +16,6 @@ export default function manyDatas(fabricRef, props, loops) {
         font.load().then(() => {
          
           if (props.coords.dataType !== "vertical") {
-            console.log(props)
             const dataText = new fabric.Text(props.textInputValues[i], {
               selectable: false,
               className: "data-text",
@@ -32,7 +31,7 @@ export default function manyDatas(fabricRef, props, loops) {
             if (dataText.width > props.coords.typeDataOne.ScaleToWidth) {
               dataText.scaleToWidth(props.coords.typeDataOne.ScaleToWidth)
             }
-            
+            console.log(dataText)
             fabricRef.current.add(dataText);
           } else {
             const dataText = new fabric.Text(props.textInputValues[i], {
@@ -50,6 +49,7 @@ export default function manyDatas(fabricRef, props, loops) {
             if (dataText.width > props.coords.typeDataOne.ScaleToWidth) {
               dataText.scaleToWidth(props.coords.typeDataOne.ScaleToWidth)
             }
+            console.log(dataText)
             fabricRef.current.add(dataText);
           }
         });

@@ -2,7 +2,7 @@ import React from 'react'
 import { fabric } from "fabric";
 
 export const createFabricText = (fabricRef, setFabricObject, name, className) => {
-  const text = new fabric.Text(name, {
+  const text = new fabric.IText(name, {
     top: 400,
     left: 400,
     fontSize: 55,
@@ -36,10 +36,14 @@ export const createFabricImage = (fabricRef, setFabricObject, name, image) => {
 }
 
 export const createFabricTextBox = (fabricRef, setFabricObject, name, className) => {
+  
   const text = new fabric.Textbox(name, {
     top: 400,
     left: 400,
     fontSize: 25,
+    lineHeight: 0.5,
+    originX: "center",
+    originY: "top",
     className: className,
     fill: "#000000",
     fontFamily: "Poppins",
@@ -51,33 +55,20 @@ export const createFabricTextBox = (fabricRef, setFabricObject, name, className)
 }
 export const createMultiplyText = (fabricRef, setFabricObject, name, className, loops) => {
   
-  const objects = loops.map((loop, i) => {
-    const text = new fabric.Text(name, {
-      top: i * 20,
-      left: 200,
-      fontSize: 25,
-      className: className,
-      fill: "#000",
-      fontFamily: "Poppins",
-      type: "multiply",
-      fontStyle: "normal",
-      selectable: i === 0 ? true : false
-    })
-    return text;
-  });
-  const group = new fabric.Group(objects, {
-    left: 0,
-    top: 0,
-    className: className,
-    type: "multiply",
-    originY: "top",
+  const text = new fabric.Textbox(name, {
+    top: 400,
+    left: 400,
     fontSize: 25,
+    lineHeight: 0.5,
+    originX: "center",
+    originY: "top",
+    className: className,
+    fill: "#000000",
     fontFamily: "Poppins",
-    Margin: 20,
-    format: "dotted"
-  });
-  
-  fabricRef.current.add(group);
+    format: "NumDotSurName",
+    type: "textBox",
+  })
+  fabricRef.current.add(text);
 
   setFabricObject(prevState => [...prevState, { name }])
   ;

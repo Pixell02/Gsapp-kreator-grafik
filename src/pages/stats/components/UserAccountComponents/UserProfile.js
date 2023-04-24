@@ -14,6 +14,7 @@ import AddPlayerWindow from "../../../Players/components/addPlayerWindow";
 import AddOpponentWindow from "../../../Opponents/components/addOpponentWindow";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
+import AddTeamWindow from "../../../YourTeamPanel/components/addTeamWindow";
 
 export default function UserProfile(props) {
   const [data, setData] = useState();
@@ -21,6 +22,7 @@ export default function UserProfile(props) {
   const [openEditPlayer, setOpenEditPlayer] = useState(false);
   const [openEditOpponent, setOpenEditOpponent] = useState(false);
   const [openPlayerModal, setOpenPlayerModal] = useState(false);
+  const [openTeamModal, setOpenTeamModal] = useState(false);
   const [openOpponentModal, setOpenOpponentModal] = useState(false);
   const editClick = (e, user, type) => {
     if (type === "player") {
@@ -51,9 +53,13 @@ export default function UserProfile(props) {
   const handleClick = (e, item) => {
     setItemToEdit(item);
   };
-
   return (
     <div className="main-content">
+      {openTeamModal && (
+        <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
+          <AddTeamWindow Teams={props.user} open={openTeamModal} onClose={() => setOpenTeamModal(false)} />
+        </div>
+      )}
       {openOpponentModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
           <AddOpponentWindow Teams={props.user} open={openOpponentModal} onClose={() => setOpenOpponentModal(false)} />
@@ -115,6 +121,9 @@ export default function UserProfile(props) {
               />
             </div>
           </div>
+        </div>
+        <div className="btn-container">
+          <button onClick={() => setOpenTeamModal(true)} className="btn">Dodaj drużynę</button>
         </div>
         <div>
           <div className="yourPoster-container">
