@@ -32,17 +32,37 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
               left: globalProperties[key].Left,
               fontSize: globalProperties[key].FontSize,
               className: layer.className,
-              width: globalProperties[key].ScaleToWidth,
+              width: globalProperties[key].ScaleToWidth * 1.2,
               textAlign: globalProperties[key].TextAlign,
               fill: globalProperties[key].Fill,
               fontFamily: globalProperties[key].FontFamily,
+              format: globalProperties[key].format,
+              type: "textBox",
+            })
+            fabricRef.current.add(text);
+            fabricRef.current.renderAll();
+          })
+         }else if (layer.type === "multiply") {
+          const font = new FontFaceObserver(globalProperties[key].FontFamily);
+          font.load().then(() => {
+            const text = new fabric.Textbox(layer.text, {
+              top: globalProperties[key].Top,
+              left: globalProperties[key].Left,
+              fontSize: globalProperties[key].FontSize,
+              className: layer.className,
+              width: globalProperties[key].ScaleToWidth * 1.2,
+              textAlign: globalProperties[key].TextAlign,
+              fill: globalProperties[key].Fill,
+              fontFamily: globalProperties[key].FontFamily,
+              format: globalProperties[key].format,
               type: "textBox",
             })
             
             fabricRef.current.add(text);
             fabricRef.current.renderAll();
           })
-        } else if (layer.type === "text") {
+        }
+         else if (layer.type === "text") {
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
           font.load().then(() => {
           const text = new fabric.Text(layer.text, {

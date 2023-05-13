@@ -1,11 +1,11 @@
 
 
 export const sportOptions = [
-  { label: 'piłka nożna', value: 'football' },
-  { label: 'koszykówka', value: 'basketball' },
-  { label: 'siatkówka', value: 'volleyball' },
-  { label: 'hokej', value: 'hockey' },
-  {label: 'piłka ręczna', value: 'handball'}
+  { label: 'piłka nożna', value: 'piłka nożna' },
+  { label: 'koszykówka', value: 'koszykówka' },
+  { label: 'siatkówka', value: 'siatkówka' },
+  { label: 'hokej', value: 'hokej' },
+  {label: 'piłka ręczna', value: 'piłka ręczna'}
 ]
 
 export const langOptions = [

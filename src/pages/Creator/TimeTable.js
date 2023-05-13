@@ -19,7 +19,7 @@ export default function TimeTable(props) {
   const { initFabric } = useFabricCanvas(fabricRef, props);
   const { loops } = useTimeTable(Array(4).fill({}));
   const { typePlace, yourKolejka, typeDate, yourLeague } = useText(fabricRef, props);
-  console.log(props)
+  
   const [width, setWidth] = useState()
   const [height, setHeight] = useState();
 

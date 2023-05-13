@@ -31,8 +31,9 @@ export default function manyDatas(fabricRef, props, loops) {
             if (dataText.width > props.coords.typeDataOne.ScaleToWidth) {
               dataText.scaleToWidth(props.coords.typeDataOne.ScaleToWidth)
             }
-            console.log(dataText)
+            
             fabricRef.current.add(dataText);
+            fabricRef.current.renderAll();
           } else {
             const dataText = new fabric.Text(props.textInputValues[i], {
               selectable: false,
@@ -49,8 +50,9 @@ export default function manyDatas(fabricRef, props, loops) {
             if (dataText.width > props.coords.typeDataOne.ScaleToWidth) {
               dataText.scaleToWidth(props.coords.typeDataOne.ScaleToWidth)
             }
-            console.log(dataText)
+            
             fabricRef.current.add(dataText);
+            fabricRef.current.renderAll();
           }
         });
       });

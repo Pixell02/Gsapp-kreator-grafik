@@ -61,7 +61,7 @@ export default function GoalPoster(props) {
         player = props.yourPlayer[0] + "." + playerSurName;
         
       }
-        console.log(props.coords.player)
+        
       const font = new FontFaceObserver(props.coords.player.FontFamily);
       font.load().then(() => {
         if(poster !== "lZP9mhRklsifxKLUvzTd"){

@@ -1,114 +1,86 @@
+import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import useFabricCanvas from './hooks/useFabricCanvas';
+import useTimeTable from './hooks2/useTimeTable';
+import useText from './hooks/useText';
+import hostLogo from './hooks/TimeTable/hostLogo';
+import hostName from './hooks/TimeTable/hostName';
+import teamLogos from './hooks/TimeTable/teamLogos';
+import yourTeamLogos from './hooks/TimeTable/yourTeamLogos';
+import selectedTeam from './hooks/TimeTable/selectedTeam';
+import manyLeagues from './hooks/TimeTable/manyLeagues';
+import connectedText from './hooks/TimeTable/connectedText';
+import typeMonth from './hooks/TimeTable/typeMonth';
+import manyDatas from './hooks/TimeTable/manyDatas';
+import opponentLogos from './hooks/TimeTable/opponentLogos';
+import opponentNames from './hooks/TimeTable/opponentNames';
 
-import { useEffect, useRef, useState } from "react";
-import { fabric } from "fabric";
-import { useParams } from "react-router-dom";
-import useFabricCanvas from "./hooks/useFabricCanvas.js";
-import FontFaceObserver from "fontfaceobserver";
-import useTeamName from "./hooks/useTeamName.js";
-import useText from "./hooks/useText.js";
-import useOpponentName from "./hooks/useOpponentName.js";
-import { opponentResult } from "./hooks/opponentResult.js";
-import { yourResult } from "./hooks/yourTeamResult.js";
-import opponentGoals from "./hooks/opponentGoals.js";
-import yourTeamGoals from "./hooks/useYourTeamGoal.js";
-
-function MatchPoster(props) {
+function Canvas(props) {
   
-  const { poster } = useParams();
-  
-  const [yourTeamLogo, setYourTeamLogo] = useState(props.yourLogo);
-  const fabricRef = useRef();
-  const {initFabric, initFabricScale} = useFabricCanvas(fabricRef, props);
-  const {teamLogo, secondTeamLogo, teamName} = useTeamName(fabricRef, props);
-  const {opponentsName, opponentLogo} = useOpponentName(fabricRef);
-  const { typePlace, yourKolejka, typeDate, yourLeague } = useText(fabricRef, props)
   const [width, setWidth] = useState()
   const [height, setHeight] = useState();
-
+  const {initFabric, initFabricScale} = useFabricCanvas(props.fabricRef, props);
+  const { loops } = useTimeTable(Array(4).fill({}));
+  const { typePlace, yourKolejka, typeDate, yourLeague } = useText(props.fabricRef, props);
+  
   useEffect(() => {
     const img = new Image();
     img.src = props.posterBackGround;
     setWidth(img.width)
     setHeight(img.height);
-  },[props.posterBackGround])
-  useEffect(() => {
-    opponentGoals(fabricRef, props);
-  },[props.opponentGoal, props.opponentGoalMinute, props.radioChecked, props.themeOption,props.posterBackGround])
-
-  useEffect(() => {
-    
-    yourTeamGoals(fabricRef, props)
-  },[props.yourTeamGoal, props.yourTeamGoalMinute, props.radioChecked, props.themeOption, props.posterBackGround])
-
- 
+    initFabric();
+  }, [props.posterBackGround])
   
   useEffect(() => {
-    yourKolejka();
-  },[props.posterBackGround, props.themeOption, props.kolejka])
-    
+    hostLogo(props.fabricRef, props, loops)
+    hostName(props.fabricRef, props, loops)
+  },[props.selectHostLogoValues, props.selectHostNameValues, props.selectNamesValues, props.selectLogoValues])
 
+  useEffect(() => {
+    
+    if (props.coords.imageType === "withImage") {
+     
+      if (props.coords.type !== "yourLogo") {
+        
+        teamLogos(props.fabricRef, props, loops);
+      } else {
+       
+        yourTeamLogos(props.fabricRef, props, loops)
+      }
+    }
+  }, [props.yourLogo, props.posterBackGround, props.radioValues, props.selectValues, props.yourTeamImage, props.selectNamesValues
+  ]);
  
+  useEffect(() => {
+    selectedTeam(props.fabricRef, props, loops);
+  },[props.selectTeamValue, props.posterBackGround])
   useEffect(() => {
     yourLeague();
-  }, [props.league, props.themeOption, props.posterBackGround]);
-
- 
-  useEffect(() => {
-    
-      if (props.coords.type !== "scalable") {
-        initFabric();
-      } else {
-        initFabricScale();
-      }
-   
-  }, [props.posterBackGround, props.coords]);
-  
- 
+  }, [props.league]);
 
   useEffect(() => {
-    
-    teamLogo();
-     teamName(props.yourLogo, poster);
-  }, [props.radioChecked, props.themeOption, props.yourTeamImage, props.posterBackGround]);
+    manyLeagues(props.fabricRef, props, loops)
+  }, [props.yourLeagueOne, props.manyLeaguesValues])
   
   useEffect(() => {
-    secondTeamLogo(props.yourTeamImage);
-  }, [props.posterBackGround, props.yourLogo]);
+    connectedText(props.fabricRef, props, loops)
+  },[props.selectHostNameValues,props.selectNamesValues, props.radioValues])
+  
+  useEffect(() => {
+    opponentNames(props.fabricRef, props, loops);
+    opponentLogos(props.fabricRef, props, loops)
+  }, [props.selectHostLogoValues, props.selectHostNameValues,props.selectNamesValues, props.selectLogoValues, props.radioValues, loops, props.posterBackGround]);
+  useEffect(() => {
+    manyDatas(props.fabricRef, props, loops);
+  }, [props.textInputValues, props.posterBackGround]);
 
   useEffect(() => {
-    opponentLogo(props);
-  }, [
-    props.radioChecked,
-    props.themeOption,
-    props.opponent,
-    props.posterBackGround,
-  ]);
-
-  useEffect(() => {
-    opponentsName(props, poster);
-  }, [
-    props.radioChecked,
-    props.themeOption,
-    props.opponentName,
-    props.posterBackGround,
-  ]);
-  useEffect(() => {
-  typeDate();
-},[props.posterBackGround, props.radioChecked, props.date])
-  
-useEffect(() => {
-  typePlace();
-},[props.posterBackGround, props.radioChecked, props.place])
-  
- useEffect(() => {
-  yourResult(fabricRef, props);
-  opponentResult(fabricRef, props);
- },[props.posterBackGround, props.radioChecked, props.yourTeamResult, props.yourOpponentResult])
-  
+    typeMonth(props.fabricRef, props);
+  }, [props.month, props.psoterBackGround]);
 
   return (
-    <>
-      <canvas
+    <canvas
         id="canvas"
         className="resposive-canvas"
         crossOrigin="anonymous"
@@ -116,8 +88,7 @@ useEffect(() => {
         width={width}
         height={height}
       />
-    </>
-  );
+  )
 }
 
-export default MatchPoster;
+export default Canvas

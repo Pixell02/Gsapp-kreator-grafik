@@ -8,10 +8,11 @@ export default function UpdateModal({ isOpen, onClose }) {
         <div className="welcome-add-window h-100">
           <div className='h-50'>
             <div className="welcome-title h-100">
-              <p>Aktualizacja</p>
+              <p>Uwaga</p>
               <p className="welcome-content-text h-100">
-                Dodaliśmy opcję przybliżania i oddalania grafik używając scrolla w myszce, bądź palców na telefonie. Dzięki temu grafiki o większym formacie mieszczą się w oknie
-                na wszystkich urządzeniach. 
+                Prowadzimy aktualnie prace przy kreatorze i część rzeczy chwilowo nie działa m.in dodawanie do grafiki osób które strzeliły gola.
+                Nie działają również chwilowo możliwość dodawania elementów na grafikach które mają możliwość dodania wielu drużyn takich jak terminarz.
+                Z góry przepraszamy.
               </p>
             </div>
           </div>
@@ -20,7 +21,7 @@ export default function UpdateModal({ isOpen, onClose }) {
               className="btn primary-btn welcome-button close-update-btn mx-3"
               onClick={() => {
                 onClose();
-                localStorage.setItem("update2.0", true);
+                localStorage.setItem("update3.0", true);
               }}
             >
               Zamknij

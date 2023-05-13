@@ -124,7 +124,7 @@ const useActiveObjectCoords = (fabricRef) => {
       const activeObject = canvas.getActiveObject();
 
       if (activeObject) {
-        if (name !== "fill" && name !== "fontFamily" && name !== "originX" && name !== "originY") {
+        if (name !== "fill" && name !== "fontFamily" && name !== "originX" && name !== "originY" && name !== "format") {
           if (name !== "Margin") {
             activeObject.set(name, parseInt(value));
             const objects = activeObject._objects;
@@ -425,7 +425,7 @@ const useActiveObjectCoords = (fabricRef) => {
             ScaleToWidth: parseInt(coords.width),
             Fill: coords.fill,
             OriginX: coords.originX,
-            Margin: parseInt(coords.Margin),
+            LineHeight: parseFloat(coords.lineHeight),
           },
         }));
       } else if (coords.className === "opponentPlayerOneGoal") {

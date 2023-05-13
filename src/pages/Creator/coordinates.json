@@ -1,5 +1,4 @@
 [
-  
   {
     "id": "1wlpmf0KyPSGbmzxY8hK",
     "yourTeamResult": {
@@ -11,7 +10,53 @@
       "OriginY": "center",
       "FontSize": 100,
       "ScaleToHeight": 100,
-      "ScaleToWidth": 70
+      "ScaleToWidth": 70,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourOpponentResult": {
       "Top": 530,
@@ -22,7 +67,53 @@
       "OriginY": "center",
       "FontSize": 100,
       "ScaleToHeight": 100,
-      "ScaleToWidth": 70
+      "ScaleToWidth": 70,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentImage": {
       "Top": 530,
@@ -45,7 +136,25 @@
       "Fill": "white",
       "OriginX": "right",
       "OriginY": "center",
-      "FontSize": 150
+      "FontSize": 150,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 220,
@@ -55,7 +164,25 @@
       "Fill": "white",
       "OriginX": "left",
       "OriginY": "center",
-      "FontSize": 150
+      "FontSize": 150,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 215,
@@ -76,7 +203,31 @@
       "Fill": "white",
       "OriginX": "left",
       "OriginY": "center",
-      "Margin": 25
+      "TextAlign": "left",
+      "LineHeight": 1,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
+    },
+    "opponentPlayerOneGoal": {
+      "Left": 130,
+      "TextAlign": "left",
+      "OriginX": "left"
     }
   },
   {
@@ -88,8 +239,37 @@
       "Fill": "white",
       "OriginX": "right",
       "OriginY": "center",
-      "FontSize": 150
-      
+      "FontSize": 150,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 210,
@@ -98,8 +278,37 @@
       "Fill": "white",
       "OriginX": "left",
       "OriginY": "center",
-      "FontSize": 150
-      
+      "FontSize": 150,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 330,
@@ -112,7 +321,7 @@
       "ScaleToHeight": 90
     }
   },
- 
+
   {
     "id": "yFQUttMy49j50689ATGF",
     "numberOfMatches": 4,
@@ -171,7 +380,7 @@
       "ScaleToWidth": 150
     }
   },
-  
+
   {
     "id": "dEeqBVG7GGs2g8QwGh49",
     "numberOfMatches": 4,
@@ -230,7 +439,33 @@
       "OriginX": "center",
       "OriginY": "center",
       "FontSize": 80,
-      "ScaleToWidth": 40
+      "ScaleToWidth": 40,
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 400,
@@ -240,7 +475,33 @@
       "OriginX": "left",
       "OriginY": "center",
       "FontSize": 80,
-      "ScaleToWidth": 40
+      "ScaleToWidth": 40,
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "player": {
       "Top": 395,
@@ -251,7 +512,33 @@
       "OriginY": "center",
       "FontFamily": "Kenyan coffee",
       "ScaleToHeight": 70,
-      "ScaleToWidth": 170
+      "ScaleToWidth": 170,
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -265,7 +552,25 @@
       "OriginX": "center",
       "OriginY": "center",
       "FontSize": 60,
-      "ScaleToWidth": 40
+      "ScaleToWidth": 40,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 610,
@@ -276,7 +581,25 @@
       "OriginX": "center",
       "OriginY": "center",
       "FontSize": 60,
-      "ScaleToWidth": 40
+      "ScaleToWidth": 40,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 610,
@@ -297,7 +620,25 @@
       "OriginY": "center",
       "FontFamily": "Poppins bold",
       "ScaleToHeight": 50,
-      "ScaleToWidth": 350
+      "ScaleToWidth": 350,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -363,7 +704,53 @@
       "Fill": "white",
       "ScaleToWidth": 450,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -375,7 +762,53 @@
       "FontFamily": "Goldman-Bold",
       "ScaleToWidth": 450,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentImage": {
       "Top": 425,
@@ -390,7 +823,53 @@
       "FontSize": 40,
       "Fill": "white",
       "FontFamily": "Goldman-Bold",
-      "ScaleToWidth": 350
+      "ScaleToWidth": 350,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentSecondName": {
       "Top": 450,
@@ -401,7 +880,53 @@
       "Width": 350,
       "Fill": "white",
       "FontFamily": "Goldman-Regular",
-      "ScaleToWidth": 350
+      "ScaleToWidth": 350,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourTeamLogo": {
       "Top": 260,
@@ -416,7 +941,53 @@
       "Fill": "white",
       "ScaleToWidth": 350,
       "OriginX": "right",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourTeamSecondName": {
       "Top": 280,
@@ -426,10 +997,56 @@
       "FontSize": 40,
       "ScaleToWidth": 350,
       "OriginX": "right",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     }
   },
- 
+
   {
     "id": "8hTNRCBbwqv8UXB12fjZ",
     "typeData": {
@@ -441,7 +1058,33 @@
       "Fill": "white",
       "ScaleToWidth": 550,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -453,17 +1096,69 @@
       "FontFamily": "kenyan coffee",
       "ScaleToWidth": 550,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "yourKolejka": {
-      "Top": 35,
+      "Top": 38,
       "Left": 50,
       "FontFamily": "kenyan coffee",
       "Fill": "white",
       "OriginX": "left",
       "OriginY": "center",
       "ScaleToWidth": 250,
-      "ScaleToHeight": 50
+      "FontSize": 30,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 310,
@@ -476,7 +1171,7 @@
       "ScaleToHeight": 170
     }
   },
-  
+
   {
     "id": "g55Sf67FN3nVGkKHD4Vc",
     "typeData": {
@@ -523,7 +1218,53 @@
       "OriginX": "right",
       "OriginY": "center",
       "FontSize": 150,
-      "ScaleToWidth": 100
+      "ScaleToWidth": 100,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentFirstName": {
       "Top": 235,
@@ -533,7 +1274,53 @@
       "FontSize": 40,
       "Fill": "white",
       "FontFamily": "Goldman-Bold",
-      "ScaleToWidth": 160
+      "ScaleToWidth": 160,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentSecondName": {
       "Top": 270,
@@ -544,7 +1331,53 @@
       "Width": 160,
       "Fill": "white",
       "FontFamily": "Goldman-Regular",
-      "ScaleToWidth": 160
+      "ScaleToWidth": 160,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourOpponentResult": {
       "Top": 390,
@@ -554,7 +1387,53 @@
       "OriginX": "left",
       "OriginY": "center",
       "FontSize": 150,
-      "ScaleToWidth": 100
+      "ScaleToWidth": 100,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentImage": {
       "Top": 250,
@@ -574,7 +1453,53 @@
       "Fill": "white",
       "ScaleToWidth": 200,
       "OriginX": "right",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourTeamSecondName": {
       "Top": 270,
@@ -584,16 +1509,55 @@
       "Fill": "white",
       "ScaleToWidth": 160,
       "OriginX": "right",
-      "OriginY": "center"
-    },
-    "yourTeamName": {
-      "Top": 250,
-      "Left": 240,
-      "FontFamily": "oxanium-Bold",
-      "Fill": "white",
-      "OriginX": "right",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     }
+   
   },
   {
     "id": "BaOPtW7VEvw2JLRaSRTw",
@@ -605,7 +1569,33 @@
       "OriginX": "right",
       "OriginY": "center",
       "FontSize": 110,
-      "ScaleToWidth": 100
+      "ScaleToWidth": 100,
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 430,
@@ -615,7 +1605,33 @@
       "OriginX": "left",
       "OriginY": "center",
       "FontSize": 110,
-      "ScaleToWidth": 100
+      "ScaleToWidth": 100,
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 285,
@@ -628,21 +1644,75 @@
       "ScaleToHeight": 130
     },
     "yourPlayerOneGoal": {
-      "Top": 385,
+      "Top": 380,
       "Left": 110,
       "FontFamily": "kenyan coffee",
-      "FontSize": 14,
+      "FontSize": 8,
       "ScaleToWidth": 100,
       "Fill": "white",
       "OriginX": "left",
       "OriginY": "center",
-      "Margin": 15
+      "TextAlign": "left",
+      "LineHeight": 1,
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentPlayerOneGoal": {
-      "Top": 385,
+      "Top": 380,
       "Left": 510,
       "OriginX": "right",
-      "OriginY": "center"
+      "TextAlign": "right",
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -656,7 +1726,53 @@
       "Fill": "white",
       "ScaleToWidth": 450,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -668,7 +1784,53 @@
       "FontFamily": "Goldman-Bold",
       "ScaleToWidth": 400,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentImage": {
       "Top": 250,
@@ -683,7 +1845,53 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "Goldman-Bold",
-      "ScaleToWidth": 160
+      "ScaleToWidth": 160,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentSecondName": {
       "Top": 265,
@@ -693,7 +1901,53 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "Goldman-Regular",
-      "ScaleToWidth": 160
+      "ScaleToWidth": 160,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourTeamLogo": {
       "Top": 250,
@@ -708,7 +1962,53 @@
       "Fill": "white",
       "ScaleToWidth": 160,
       "OriginX": "right",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourTeamSecondName": {
       "Top": 265,
@@ -718,7 +2018,53 @@
       "Fill": "white",
       "ScaleToWidth": 160,
       "OriginX": "right",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     }
   },
   {
@@ -732,7 +2078,37 @@
       "Fill": "white",
       "ScaleToWidth": 350,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -744,7 +2120,37 @@
       "FontFamily": "MADE Outer Sans Regular",
       "ScaleToWidth": 350,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 370,
@@ -759,7 +2165,37 @@
       "FontSize": 20,
       "Fill": "white",
       "FontFamily": "MADE Outer Sans Black",
-      "ScaleToWidth": 200
+      "ScaleToWidth": 200,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentSecondName": {
       "Top": 465,
@@ -785,7 +2221,37 @@
       "Fill": "white",
       "ScaleToWidth": 140,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamSecondName": {
       "Top": 465,
@@ -795,7 +2261,37 @@
       "Fill": "white",
       "ScaleToWidth": 140,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -809,7 +2305,37 @@
       "Fill": "white",
       "ScaleToWidth": 400,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -821,7 +2347,37 @@
       "FontFamily": "MADE Outer Sans Regular",
       "ScaleToWidth": 400,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 290,
@@ -836,7 +2392,37 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "MADE Outer Sans Black",
-      "ScaleToWidth": 170
+      "ScaleToWidth": 170,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentSecondName": {
       "Top": 420,
@@ -847,7 +2433,37 @@
       "Width": 170,
       "Fill": "white",
       "FontFamily": "MADE Outer Sans Black",
-      "ScaleToWidth": 170
+      "ScaleToWidth": 170,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 290,
@@ -862,7 +2478,37 @@
       "Fill": "white",
       "ScaleToWidth": 160,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamSecondName": {
       "Top": 420,
@@ -872,7 +2518,37 @@
       "Fill": "white",
       "ScaleToWidth": 160,
       "OriginX": "center",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -922,7 +2598,29 @@
       "Fill": "white",
       "ScaleToWidth": 170,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamResult": {
       "Top": 220,
@@ -933,7 +2631,29 @@
       "OriginX": "center",
       "OriginY": "center",
       "FontSize": 150,
-      "ScaleToWidth": 100
+      "ScaleToWidth": 100,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 390,
@@ -944,7 +2664,29 @@
       "OriginX": "center",
       "OriginY": "center",
       "FontSize": 150,
-      "ScaleToWidth": 100
+      "ScaleToWidth": 100,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 390,
@@ -959,7 +2701,29 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "oxanium-Bold",
-      "ScaleToWidth": 120
+      "ScaleToWidth": 120,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 210,
@@ -974,13 +2738,35 @@
       "FontSize": 30,
       "ScaleToWidth": 190,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
-  
+
   {
     "id": "ziIMxvAgvRzCNck5ARL0",
-    
+
     "typeData": {
       "CharSpacing": 0,
       "Top": 570,
@@ -990,7 +2776,29 @@
       "Fill": "white",
       "ScaleToWidth": 200,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "playerOne": {
       "Top": 140,
@@ -1004,7 +2812,29 @@
       "LineHeight": 0.9,
       "ScaleToWidth": 400,
       "textType": "normal",
-      "format": "NumSurName"
+      "format": "NumSurName",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "reserveOne": {
       "Top": 460,
@@ -1016,7 +2846,29 @@
       "FontSize": 15,
       "FontFamily": "oxanium-regular",
       "OriginX": "left",
-      "OriginY": "top"
+      "OriginY": "top",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 100,
@@ -1031,7 +2883,29 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "oxanium-regular",
-      "ScaleToWidth": 130
+      "ScaleToWidth": 130,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 100,
@@ -1046,15 +2920,35 @@
       "FontSize": 30,
       "ScaleToWidth": 170,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
-  
-  
-  
+
   {
     "id": "1Ysby1Ba2usHuFTGgKBE",
-    
+
     "playerOne": {
       "Top": 240,
       "Left": 150,
@@ -1066,8 +2960,25 @@
       "ScaleToWidth": 600,
       "format": "NumSurName",
       "textType": "normal",
-      "LineHeight": 0.9
-      
+      "LineHeight": 0.9,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "reserveOne": {
       "Top": 600,
@@ -1079,7 +2990,25 @@
       "ScaleToWidth": 400,
       "FontFamily": "poppins",
       "OriginX": "left",
-      "OriginY": "top"
+      "OriginY": "top",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 280,
@@ -1103,7 +3032,53 @@
       "Fill": "white",
       "ScaleToWidth": 180,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "playerOne": {
       "Top": 220,
@@ -1117,8 +3092,53 @@
       "FontFamily": "Goldman-Regular",
       "ScaleToWidth": 500,
       "format": "NumSurName",
-      "textType": "normal"
-
+      "textType": "normal",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "reserveOne": {
       "Top": 570,
@@ -1130,7 +3150,53 @@
       "FontSize": 15,
       "FontFamily": "Goldman-Regular",
       "OriginX": "center",
-      "OriginY": "top"
+      "OriginY": "top",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "opponentImage": {
       "Top": 670,
@@ -1145,7 +3211,53 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "Goldman-Regular",
-      "ScaleToWidth": 130
+      "ScaleToWidth": 130,
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     },
     "yourTeamLogo": {
       "Top": 670,
@@ -1160,12 +3272,58 @@
       "FontSize": 30,
       "ScaleToWidth": 170,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "jasno niebiesko-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "szaro-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielono-biały",
+          "Fill": "white"
+        }
+    ]
     }
   },
   {
     "id": "AaKfblCd2D2DZTPxVzLN",
-    
+
     "playerOne": {
       "Top": 150,
       "TextAlign": "center",
@@ -1177,7 +3335,37 @@
       "FontFamily": "Made Outer Sans Black",
       "format": "oneDot",
       "textType": "upper",
-      "ScaleToWidth": 600
+      "ScaleToWidth": 600,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "reserveOne": {
       "Top": 450,
@@ -1189,7 +3377,37 @@
       "FontFamily": "Made Outer Sans Regular",
       "OriginX": "center",
       "OriginY": "top",
-      "ScaleToWidth": 550
+      "ScaleToWidth": 550,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 560,
@@ -1204,7 +3422,37 @@
       "FontSize": 25,
       "Fill": "white",
       "FontFamily": "Made Outer Sans Regular",
-      "ScaleToWidth": 150
+      "ScaleToWidth": 150,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 560,
@@ -1218,13 +3466,43 @@
       "Fill": "white",
       "OriginX": "center",
       "OriginY": "center",
-      "ScaleToWidth": 190
+      "ScaleToWidth": 190,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
-  
+
   {
     "id": "6JftCRHQYUItjEz55Rn1",
-    
+
     "playerOne": {
       "Top": 170,
       "Left": 100,
@@ -1237,7 +3515,37 @@
       "FontFamily": "kenyan coffee",
       "format": "oneDot",
       "textType": "upper",
-      "ScaleToWidth": 180
+      "ScaleToWidth": 180,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "black"
+        },
+        {
+          "color": "zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        }
+      ]
     },
     "reserveOne": {
       "Top": 480,
@@ -1249,7 +3557,41 @@
       "FontFamily": "kenyan coffee",
       "OriginX": "right",
       "OriginY": "top",
-      "ScaleToWidth": 290
+      "ScaleToWidth": 290,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "black"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "black"
+        },
+        {
+          "color": "biało-czerwono-niebiesko-zielony",
+          "Fill": "black"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 290,
@@ -1311,7 +3653,29 @@
       "Fill": "white",
       "ScaleToWidth": 430,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -1323,7 +3687,29 @@
       "FontFamily": "oxanium-bold",
       "ScaleToWidth": 430,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 530,
@@ -1338,7 +3724,29 @@
       "FontSize": 30,
       "Fill": "white",
       "FontFamily": "oxanium-regular",
-      "ScaleToWidth": 200
+      "ScaleToWidth": 200,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 530,
@@ -1353,7 +3761,29 @@
       "Fill": "white",
       "ScaleToWidth": 250,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -1379,7 +3809,29 @@
       "OriginY": "center",
       "FontFamily": "Baron-Neue-Black",
       "ScaleToHeight": 50,
-      "ScaleToWidth": 350
+      "ScaleToWidth": 350,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -1393,7 +3845,37 @@
       "OriginY": "center",
       "FontFamily": "MADE Outer Sans Regular",
       "ScaleToHeight": 50,
-      "ScaleToWidth": 350
+      "ScaleToWidth": 350,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamResult": {
       "Top": 345,
@@ -1404,7 +3886,37 @@
       "OriginX": "right",
       "OriginY": "center",
       "FontSize": 200,
-      "ScaleToWidth": 200
+      "ScaleToWidth": 200,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourOpponentResult": {
       "Top": 345,
@@ -1415,7 +3927,37 @@
       "OriginX": "left",
       "OriginY": "center",
       "FontSize": 200,
-      "ScaleToWidth": 200
+      "ScaleToWidth": 200,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-czarny",
+          "Fill": "white"
+        },
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -1430,7 +3972,25 @@
       "FontFamily": "oxanium-bold",
       "ScaleToWidth": 430,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 290,
@@ -1445,7 +4005,25 @@
       "FontSize": 40,
       "Fill": "white",
       "FontFamily": "Poppins bold",
-      "ScaleToWidth": 350
+      "ScaleToWidth": 350,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 150,
@@ -1460,7 +4038,25 @@
       "Fill": "white",
       "ScaleToWidth": 450,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -1474,7 +4070,29 @@
       "ScaleToWidth": 300,
       "OriginX": "left",
       "OriginY": "center",
-      "Fill": "white"
+      "Fill": "white",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "typePlace": {
       "CharSpacing": 0,
@@ -1500,7 +4118,29 @@
       "OriginY": "center",
       "Fill": "white",
       "FontFamily": "oxanium-regular",
-      "ScaleToWidth": 250
+      "ScaleToWidth": 250,
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 350,
@@ -1515,7 +4155,29 @@
       "FontSize": 30,
       "ScaleToWidth": 280,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-biały",
+          "Fill": "white"
+        },
+        {
+          "color": "zielony",
+          "Fill": "white"
+        },
+        {
+          "color": "niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "czerwono-granatowy",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
   {
@@ -1529,7 +4191,25 @@
       "Fill": "white",
       "ScaleToWidth": 450,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "opponentImage": {
       "Top": 440,
@@ -1544,7 +4224,25 @@
       "OriginY": "center",
       "Fill": "white",
       "FontFamily": "Poppins Bold",
-      "ScaleToWidth": 450
+      "ScaleToWidth": 450,
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     },
     "yourTeamLogo": {
       "Top": 440,
@@ -1559,11 +4257,28 @@
       "FontSize": 30,
       "ScaleToWidth": 450,
       "OriginX": "left",
-      "OriginY": "center"
+      "OriginY": "center",
+      "themeOption": [
+        {
+          "color": "czarno-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "granatowo-czerwony",
+          "Fill": "white"
+        },
+        {
+          "color": "biało-niebieski",
+          "Fill": "white"
+        },
+        {
+          "color": "żółto-czarny",
+          "Fill": "white"
+        }
+      ]
     }
   },
-  
-  
+
   {
     "id": "aRg5wLZVHqoREaJ5ybOC",
     "typeData": {

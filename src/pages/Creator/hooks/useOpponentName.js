@@ -278,27 +278,27 @@ export default function useOpponentName(fabricRef) {
                   props.opponentName.toUpperCase(),
                   {
                     selectable: false,
-                    top: props.coords.yourTeamName.Top,
-                    left: props.coords.yourTeamName.Left,
-                    originY: props.coords.yourTeamName.OriginY,
-                    originX: props.coords.yourTeamName.OriginX,
-                    fontSize: props.coords.yourTeamName.FontSize,
-                    fill: props.coords.yourTeamName.Fill,
+                    top: props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.Top : props.coords.yourTeamName.Top,
+                    left: props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.Left : props.coords.yourTeamName.Left,
+                    originY:props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.OriginY : props.coords.yourTeamName.OriginY,
+                    originX:props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.OriginX : props.coords.yourTeamName.OriginX,
+                    fontSize:props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.FontSize : props.coords.yourTeamName.FontSize,
+                    fill:props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.Fill :props.coords.yourTeamName.Fill,
                     className: "opponentsName",
-                    fontFamily: props.coords.yourTeamName.FontFamily,
+                    fontFamily:props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.FontFamily :props.coords.yourTeamName.FontFamily,
                   }
                 );
     
-                if (opponentsName.width > props.coords.yourTeamName.ScaleToWidth) {
-                  opponentsName.scaleToWidth(props.coords.yourTeamName.ScaleToWidth);
+                if (opponentsName.width > (props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.ScaleToWidth : props.coords.yourTeamName.ScaleToWidth)) {
+                  opponentsName.scaleToWidth(props.coords.yourTeamFirstName ? props.coords.opponentName.ScaleToWidth : props.coords.yourTeamName.ScaleToWidth);
                 }
                 
-                if (props.coords.yourTeamName.FontStyle) {
+                if (props.coords.yourTeamName ? props.coords.yourTeamName.FontStyle : props.coords.yourTeamFirstName.FontStyle) {
                   opponentsName.set({
-                    fontStyle: props.coords.yourTeamName.FontStyle
+                    fontStyle:props.coords.yourTeamFirstName ? props.coords.yourTeamFirstName.FontStyle : props.coords.yourTeamName.FontStyle
                   })
                 }
-
+                console.log(opponentsName)
                 if (props.themeOption) {
                   if (
                     props.themeOption.label.split("-")[0] === "biało" ||

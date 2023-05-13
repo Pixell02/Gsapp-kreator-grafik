@@ -26,7 +26,7 @@ function StartingSquad(props) {
   );
   const [width, setWidth] = useState()
   const [height, setHeight] = useState();
-
+  
   useEffect(() => {
     const img = new Image();
     img.src = props.posterBackGround;
@@ -40,11 +40,12 @@ function StartingSquad(props) {
     props.posterBackGround,
     props.themeOption,
     props.goalKeeper,
-    props.capitan,
+    props.capitan,props.young
   ]);
   useEffect(() => {
     showReserve(props);
-  }, [props.reserve, props.themeOption]);
+  }, [props.reserve, props.themeOption, props.posterBackGround,props.goalKeeper,
+    props.capitan, props.young]);
 
   useEffect(() => {
     yourLeague();

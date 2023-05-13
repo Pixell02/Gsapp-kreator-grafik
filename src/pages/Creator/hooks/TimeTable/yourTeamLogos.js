@@ -2,9 +2,10 @@ import React from 'react'
 import { fabric } from 'fabric';
 
 export default function yourTeamLogos(fabricRef, props, loops) {
-  
+  console.log(props)
   if (props.yourTeamImage && props.coords.yourTeamLogoOne && loops) {
     if (loops) {
+      
       loops.forEach((loop, i) => {
         if (props.radioValues[i] === "radio1") {
           
@@ -28,7 +29,7 @@ export default function yourTeamLogos(fabricRef, props, loops) {
                 className: "teamLogo",
               });
               img.scaleToHeight(props.coords.yourTeamLogoOne.ScaleToHeight);
-            
+              console.log(img)
               fabricRef.current.add(img);
               fabricRef.current.renderAll();
             });

@@ -23,22 +23,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [isOpen, setIsOpen] = useState(true);
   const fabricRef = useRef(null);
   const [manyBackgrounds, setManyBackgrounds] = useState([]);
-  const {
-    lines,
-    setLines,
-    lineDirection,
-    setLineDirection,
-    isDragging,
-    setIsDragging,
-    dragOffset,
-    setDragOffset,
-    lineRef,
-    handleLineDirectionChange,
-    handleCreateLine,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-  } = useGuides();
+  const {lines} = useGuides();
   const [helpLinesModal, setHelpLinesModal] = useState(false);
 
   useEffect(() => {

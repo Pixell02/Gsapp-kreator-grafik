@@ -9,12 +9,14 @@ import UsersCountry from "./UsersCountry";
 import Themes from "./Themes";
 import { useSearch } from "../../../hooks/useLimit";
 import PromoCode from "./PromoCode";
+import { useCollection } from "../../../hooks/useCollection";
 
 export default function AdministratorPanel() {
   const [activeBar, setActiveBar] = useState("users");
   const [radioValue, setRadioValue] = useState("firstName");
   const [search, setSearch] = useState("");
-  const { documents: users, loading, error } = useSearch("Teams", radioValue, search === "" ? null : search);
+  const { documents: users, loading} = useSearch("Teams", radioValue, search === "" ? null : search);
+  
   const [dataFiltered, setDataFiltered] = useState([]);
 
   useEffect(() => {

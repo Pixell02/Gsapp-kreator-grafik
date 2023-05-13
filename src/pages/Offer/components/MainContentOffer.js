@@ -7,15 +7,11 @@ import { useState } from "react";
 
 function MainContentOffer() {
 
-    const [month, setMonth] = useState(1);
-    
-
     return (
         <div className="main-content">
           <div className="ml-5">
             <Title title = "Kup dostęp" />
-            
-            <BuyFormContainer price = {month} />  
+            <BuyFormContainer />  
           </div>
         </div>
     );

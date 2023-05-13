@@ -91,7 +91,6 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
                 secondName: secondOpponentName,
                 img: downloadURL,
                 team: selectedTeam,
-                uid:  user.uid,
               });
             });
           }
@@ -102,7 +101,6 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
           firstName: firstOpponentName,
           secondName: secondOpponentName,
           team: selectedTeam,
-          uid: user.uid,
         });
       }
       onClose();

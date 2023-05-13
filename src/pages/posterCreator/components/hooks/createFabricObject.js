@@ -47,6 +47,7 @@ export const createFabricTextBox = (fabricRef, setFabricObject, name, className)
     className: className,
     fill: "#000000",
     fontFamily: "Poppins",
+    format: "NumDotSurName",
     type: "textBox",
   })
   fabricRef.current.add(text);

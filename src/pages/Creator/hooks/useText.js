@@ -293,12 +293,7 @@ export default function useText(fabricRef, props) {
               }
             });
           }
-          fabricRef.current._objects.forEach((image, i) => {
-            if (fabricRef.current.item(i).className === "yourLeague") {
-              fabricRef.current.remove(fabricRef.current.item(i));
-            }
-          });
-    
+              
           const font = new FontFaceObserver(props.coords.yourLeague.FontFamily);
           font.load().then(() => {
             

@@ -15,6 +15,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import useEditModal from "../../../hooks/useEditModal";
+import updateData from "../EditYourTeamWindow/updateData";
 
 const options = [
   { value: "piłka nożna", label: "piłka nożna" },
@@ -34,6 +35,7 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
   const [sport, setSport] = useState(yourTeam.sport);
   const [image, setImage] = useState(yourTeam.img);
   const [preview, setPreview] = useState(yourTeam.img);
+  const [oldName] = useState(yourTeam.firstName + " " + yourTeam.secondName);
 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
@@ -58,8 +60,6 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
     e.preventDefault();
     if (!firstTeamName) {
       alert("puste pole");
-    } else if (!preview) {
-      alert("brak zdjecia");
     } else if (!secondTeamName) {
       alert("puste pole");
     } else {
@@ -102,8 +102,8 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
                   secondName: secondTeamName,
                   img: downloadURL,
                   sport: sport,
-                  uid: yourTeam.uid,
                 });
+                updateData(user.uid, firstTeamName, secondTeamName)
               }
             );
           }
@@ -114,8 +114,8 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
           firstName: firstTeamName,
           secondName: secondTeamName,
           sport: sport,
-          uid: user.uid,
         });
+        updateData(user.uid, oldName, firstTeamName, secondTeamName);
       }
       onClose();
       setFirstTeamName("");

@@ -18,7 +18,7 @@ export const exportImg = (Licenses, posters, user, poster,type) => {
     image.appendChild(watermark);
   }
   
-  if (type !== "scalable") {
+ 
     html2canvas(image, { scale: 1.25, useCORS: true, allowTaint: true }).then((canvas) => {
     
       const dataURL = canvas.toDataURL("image/jpeg", 1.0);
@@ -51,52 +51,14 @@ export const exportImg = (Licenses, posters, user, poster,type) => {
       if (Licenses[0].license === "free-trial") {
         document.querySelector(".watermark-img").remove();
       }
+      
       posters.createdDate = Date.now();
       posters.posterId = poster;
       posters.user = user.uid;
       const generatorRef = collection(db, "generated");
       addDoc(generatorRef, posters);
     });
-  }
-  else {
-    html2canvas(image, { scale: 2.5, useCORS: true, allowTaint: true }).then((canvas) => {
-    
-      const dataURL = canvas.toDataURL("image/jpeg", 1.0);
-
-      const link = document.createElement("a");
-      link.download = "image.jpg";
-      link.href = dataURL;
-      link.click();
-    
-
-      const docRef = doc(db, "user", Licenses[0].id);
-      if (Licenses[0].license === "free-trial") {
-        updateDoc(docRef, {
-          numberOfFreeUse: Licenses[0].numberOfFreeUse - 1,
-        });
-      }
-      let checkLicense = [];
-      const colRef = doc(db, "user", Licenses[0].id);
-      getDoc(colRef).then((doc) => {
-        checkLicense.push(doc.data());
-        if (checkLicense[0].license === "free-trial") {
-          if (checkLicense[0].numberOfFreeUse < 1) {
-            updateDoc(docRef, {
-              license: "no-license",
-              numberOfFreeUse: deleteField(),
-            });
-          }
-        }
-      });
-      if (Licenses[0].license === "free-trial") {
-        document.querySelector(".watermark-img").remove();
-      }
-      posters.createdDate = Date.now();
-      posters.posterId = poster;
-      posters.user = user.uid;
-      const generatorRef = collection(db, "generated");
-      addDoc(generatorRef, posters);
-    });
-  }
+ 
+  
   
 };

@@ -30,49 +30,15 @@ export const opponentResult = (fabricRef, props) => {
           if (result.width >= props.coords.yourOpponentResult.ScaleToWidth) {
             result.scaleToWidth(props.coords.yourOpponentResult.ScaleToWidth);
           }
-          if (props.themeOption) {
-            if (
-              props.themeOption.label.split("-")[0] === "biało" ||
-              props.themeOption.label.split("-")[0] === "żółto" ||
-              props.themeOption.label === "biały"
-            ) {
-              result.set({
-                fill: "black",
-              });
-            }
-            if (
-              props.poster === "PmoRESwg91LxFAGFObbZ" ||
-              props.themeOption.label === "biało-czerwono-niebiesko-zielony"
-            ) {
-              result.set({
-                fill: "white",
-              });
-            }
-            if (
-              props.id.theme === "motyw 3" &&
-              props.themeOption.label === "biało-niebieski"
-            ) {
-              result.set({
-                fill: "white",
-              });
-            }
-            if (
-              props.id.theme === "motyw 3" &&
-              props.themeOption.label === "żółto-czarny"
-            ) {
-              result.set({
-                fill: "white",
-              });
-            }
-            if (
-              props.id.theme === "motyw 5" &&
-              (props.themeOption.label === "żółto-czarny" ||
-                props.themeOption.label === "biało-niebieski")
-            ) {
-              result.set({
-                fill: "white",
-              });
-            }
+          
+          if (props.coords.yourOpponentResult.themeOption) {
+            props.coords.yourOpponentResult.themeOption.forEach((theme) => {
+              if (theme.color === props.themeOption.label) {
+                result.set({
+                  fill: theme.Fill
+                })
+              }
+            })
           }
 
           fabricRef.current.add(result);

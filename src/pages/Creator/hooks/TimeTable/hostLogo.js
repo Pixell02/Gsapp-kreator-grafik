@@ -2,7 +2,7 @@ import React from 'react'
 import { fabric } from "fabric";
 
 export default function hostLogo(fabricRef, props, loops) {
-  console.log(props.selectHostLogoValues)
+  
   if (props.selectHostLogoValues && props.coords.yourTeamLogoOne && loops) {
     if (loops) {
       loops.forEach((loop, i) => {

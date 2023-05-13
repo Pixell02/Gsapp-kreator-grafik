@@ -62,7 +62,6 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   },[image])
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(isImage)
     if (!firstPlayerName || !secondPlayerName) {
       alert("puste pole");
     } else {
@@ -106,7 +105,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
                   secondName: secondPlayerName,
                   img: downloadURL,
                   number: number || "",
-                  uid: params ? params.id : user.uid,
+                  team: selectedTeam,
                 });
               })
               .catch((err) => console.log(err));
@@ -119,7 +118,6 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
           secondName: secondPlayerName,
           number: number || "",
           team: selectedTeam,
-          uid: params ? params.id : user.uid,
         });
       }
       onClose();
