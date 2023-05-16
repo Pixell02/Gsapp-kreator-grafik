@@ -77,12 +77,13 @@ export default function GoalPoster(props) {
           className: "yourPlayer",
           selectable: false,
           fontFamily: props.coords.player.FontFamily,
+          fontSize: props.coords.player.FontSize
         });
         playerName.scaleToHeight(props.coords.player.ScaleToHeight);
         if (playerName.width > props.coords.player.ScaleToWidth) {
           playerName.scaleToWidth(props.coords.player.ScaleToWidth);
         }
-        console.log(playerName)
+        
         if (
           poster === "lZP9mhRklsifxKLUvzTd" &&
           props.themeOption.label.split("-")[0] === "żółto"
@@ -110,8 +111,9 @@ export default function GoalPoster(props) {
             fill: "black",
           });
         }
-        console.log(playerName);
+        
         fabricRef.current.add(playerName);
+        fabricRef.current.renderAll();
       });
     }
   };

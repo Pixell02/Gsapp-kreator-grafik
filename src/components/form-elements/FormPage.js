@@ -1,30 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRouter } from "react";
+import { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-import {
-  signInWithPopup,
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  setPersistence,
-  browserSessionPersistence,
-} from "firebase/auth";
+import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { UserAuth } from "../../context/AuthContext";
 
 // import styles and images
 import "./formPage.css";
 import google from "../../img/google.png";
 import facebook from "../../img/fb.png";
-import { FirebaseError } from "firebase/app";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { error, login } = useLogin();
-  const [user, setUser] = useState({});
+
   const { dispatch } = useAuthContext();
 
   const handleSubmit = (e) => {
@@ -99,7 +90,7 @@ function LoginPage(props) {
         <div className="email-container">
           <button className="btn btn-dark button">Zaloguj się</button>
         </div>
-       
+
         <div className="text-left register-container">{props.footer}</div>
         <div className="text-left register-container ml-5 mt-0">
           Nie pamiętasz hasła?{" "}

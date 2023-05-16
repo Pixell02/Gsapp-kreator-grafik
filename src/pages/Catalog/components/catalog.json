@@ -23,6 +23,12 @@
         "id": 5,
         "name": "motyw 5",
         "theme": "motyw 5"
+    },
+    {
+        "id": 6,
+        "name": "motyw 6",
+        "theme": "motyw 6"
     }
+   
    
 ]

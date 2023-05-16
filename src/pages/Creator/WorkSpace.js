@@ -62,13 +62,13 @@ function WorkSpace() {
       setNumberOfMatch(coords.numberOfMatches);
     }
   }, [coords]);
-  const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
-    Array(9).fill()
-  );
+  // const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
+  //   Array(9).fill()
+  // );
   const [yourTeam, teamOption, getTeamOption, yourLogo, yourName] = YourTeamNameAndLogo(Logo);
 
-  const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] =
-    useCreateOpponentGoals(Array(9).fill());
+  // const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] =
+  //   useCreateOpponentGoals(Array(9).fill());
 
   const [reserve, handleReserveChange] = useReservePlayer(Array(9).fill());
   const {
@@ -259,6 +259,7 @@ function WorkSpace() {
       };
     }
   }, [dataURL]);
+  
 
   return (
     <>
@@ -275,7 +276,7 @@ function WorkSpace() {
             <TransformWrapper minScale={0.1} initialScale={initScale} centerOnInit>
               <TransformComponent>
                 <div className="d-flex w-100 h-100">
-                  {coords && dataURL && <Canvas
+                  {fabricRef && dataURL && <Canvas
                     posterBackGround={dataURL}
                     coords={coords}
                     yourLogo={Logo}
@@ -318,7 +319,7 @@ function WorkSpace() {
             </div>
             <div className="ms-5 me-5 mt-3">
               {/* Właściwy workspace */}
-              {fabricRef.current && themeOption && selectThemes && (
+              {coords && fabricRef && themeOption && selectThemes && (
                 <EditPanel
                   coords={coords}
                   fabricRef={fabricRef}

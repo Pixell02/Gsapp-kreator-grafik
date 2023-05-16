@@ -28,6 +28,10 @@
   src: url(./fonts/Poppins-Bold.ttf);
 }
 @font-face {
+  font-family: "Poppins Black";
+  src: url(./fonts/Poppins-Black.ttf);
+}
+@font-face {
   font-family: "Poppins-italic";
   src: url(./fonts/Poppins-BoldItalic.ttf);
 }

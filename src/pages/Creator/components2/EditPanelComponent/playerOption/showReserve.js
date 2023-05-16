@@ -6,6 +6,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper,
   if (reserve && coords.reserveOne) {
     let text = "";
     const innerText = new fabric.Text("");
+    
     reserve.forEach((reserve) => {
       if (reserve) {
         fabricRef.current._objects.forEach((image, i) => {
@@ -22,7 +23,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper,
         }
         if (goalKeeper) {
           goalKeeper.forEach((goalKeeper, i) => {
-            if (goalKeeper == reserve) {
+            if (goalKeeper === reserve) {
               reserve += " (br)"
             }
           })
@@ -45,6 +46,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper,
         } else {
           reserve = reserve.split(".")[2]
         }
+       
         let formatReserve = reserve;
         innerText.set("text", formatReserve + `${coords.reserveOne.Formatter}`);
 
@@ -77,7 +79,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper,
       }
       if (coords.reserveOne.ScaleToHeight) {
         if (reserveText.height > coords.reserveOne.ScaleToHeight) {
-          // reserveText.scaleToHeight(coords.reserveOne.ScaleToHeight);
+          
           reserveText.set({
             fontSize: coords.reserveOne.FontSize - 4
           })

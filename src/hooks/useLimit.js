@@ -116,48 +116,76 @@ export const useSearch = (collectionName, radioValue, searchText) => {
         return unsubscribe;
       } else {
         queryRef = collectionRef;
+        const unsubscribe = onSnapshot(queryRef, async (snapshot) => {
+          let results = [];
+          for (let i = 0; i < snapshot.docs.length; i++) {
+            const doc = snapshot.docs[i];
+            const data = doc.data();
+            const teamRef = collection(db, "email");
+            const teamQuery = query(teamRef, where("uid", "==", data.uid));
+            const teamSnapshot = await getDocs(teamQuery);
+            const teamDoc = teamSnapshot.docs[0];
+            const teamData = teamDoc.data();
+            const licenseRef = collection(db, "user");
+            const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
+            const licenseSnapshot = await getDocs(licenseQuery);
+            const licenseDoc = licenseSnapshot.docs[0];
+            const licenseData = licenseDoc.data();
+            results.push({
+              ...data,
+              id: doc.id,
+              email: teamData.email,
+              license: licenseData.license,
+            });
+          }
+          setDocuments(results);
+        });
+        return unsubscribe;
       }
     }
    
   }, [collectionName, radioValue, searchText]);
-
+  
   useEffect(() => {
     if (!searchText) {
-      let ref = collection(db, "Teams")
-    
-    
-    
-      const unsub = onSnapshot(ref, (snapshot) => {
-        
-        let results = []
-        
-        snapshot.docs.forEach((doc, i) => {
-          results.push({ ...doc.data(), id: doc.id })
-          console.log(results)
-          // const teamRef = collection(db, "email");
-          // const teamQuery = query(teamRef, where("uid", "==", results[i].uid));
-          // // onSnapshot(teamQuery, (emailSnapshot) => {
-          // //   emailSnapshot.docs.forEach(emailDoc => {
-          // //     results[i].email = emailDoc.data().email;
-          // //   });
-          // // });
-          // const licenseRef = collection(db, "user");
-          // const licenseQuery = query(licenseRef, where("uid", "==", results[i].uid));
-          // onSnapshot(licenseQuery, (emailSnapshot) => {
-          //   emailSnapshot.docs.forEach(emailDoc => {
-          //     results[i].email = emailDoc.data().email;
-          //   });
-          // });
+      const ref = collection(db, "Teams");
+      const unsubscribe = onSnapshot(ref, async (snapshot) => {
+        let results = [];
+        for (let i = 0; i < snapshot.docs.length; i++) {
+          const doc = snapshot.docs[i];
+          const data = doc.data();
           
-        })
-        
-        setDocuments(results)
-      })
-    
-      return () => unsub()
-    
+  
+          if (data.uid) {
+            const teamRef = collection(db, "email");
+            const teamQuery = query(teamRef, where("uid", "==", data.uid));
+            const teamSnapshot = await getDocs(teamQuery);
+            const teamDoc = teamSnapshot.docs[0];
+            const teamData = teamDoc?.data()?.email;
+            const licenseRef = collection(db, "user");
+            const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
+            const licenseSnapshot = await getDocs(licenseQuery);
+            const licenseDoc = licenseSnapshot.docs[0];
+            const licenseData = licenseDoc?.data()?.license;
+            
+  
+            results.push({
+              ...data,
+              id: doc.id,
+              email: teamData,
+              license: licenseData,
+            });
+          }
+        }
+  
+        setDocuments(results);
+      });
+  
+      return () => unsubscribe();
     }
-  }, [collectionName, searchText])
+  }, [collectionName, searchText]);
+  
+  
 
   return { documents, loading, error };
 };

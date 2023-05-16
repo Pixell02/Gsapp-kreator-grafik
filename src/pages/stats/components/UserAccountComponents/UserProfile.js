@@ -15,6 +15,7 @@ import AddOpponentWindow from "../../../Opponents/components/addOpponentWindow";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
 import AddTeamWindow from "../../../YourTeamPanel/components/addTeamWindow";
+import LicenseEdit from "./UserAccountComponents/LicenseEdit";
 
 export default function UserProfile(props) {
   const [data, setData] = useState();
@@ -24,6 +25,7 @@ export default function UserProfile(props) {
   const [openPlayerModal, setOpenPlayerModal] = useState(false);
   const [openTeamModal, setOpenTeamModal] = useState(false);
   const [openOpponentModal, setOpenOpponentModal] = useState(false);
+  const [editLicense, setEditLicense] = useState(false);
   const editClick = (e, user, type) => {
     if (type === "player") {
       setOpenEditPlayer(true);
@@ -35,6 +37,10 @@ export default function UserProfile(props) {
 
     setData(user);
   };
+  const handleEditLicense = (e, license) => {
+    setEditLicense(true);
+    setData(license)
+  }
   const [itemToEdit, setItemToEdit] = useState(null);
   const handleDeleteClick = async (id, type) => {
     if (type === "player") {
@@ -45,11 +51,7 @@ export default function UserProfile(props) {
       await deleteDoc(ref);
     }
   };
-  // const handleClickOutside = (e) => {
-  //     if (!hideElement.current.contains(e.target)) {
-  //       setItemToEdit(null);
-  //     }
-  //   };
+  
   const handleClick = (e, item) => {
     setItemToEdit(item);
   };
@@ -84,6 +86,11 @@ export default function UserProfile(props) {
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
           <EditPlayerWindow Teams = {props.user} player={data} open={openEditPlayer} onClose={(e) => setOpenEditPlayer(false)} />
         </div>
+      )}
+      {data && editLicense && (
+         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
+         <LicenseEdit License={data} open={editLicense} onClose={(e) => setEditLicense(false)} />
+       </div>
       )}
 
       <div className="ml-2">
@@ -128,6 +135,7 @@ export default function UserProfile(props) {
         <div>
           <div className="yourPoster-container">
             <Licenses License={props.License} />
+            <button className="btn ml-5 w-25 mt-2" onClick={e => handleEditLicense(e,props.License)}>Edytuj</button>
             <Title title="Motywy użytkownika" />
             <ItemContainer>
               {props.yourPosters &&

@@ -10,7 +10,7 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
   useEffect(() => {
     if (Players) {
       const options = Players.map((player) => ({
-        label: player.number + " " + player.firstName + " " + player.secondName,
+        label: player.number + "." + player.firstName + "." + player.secondName,
         value: player.img + " " + player.firstName + " " + player.secondName,
       }));
 
@@ -19,6 +19,7 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
   }, [Players]);
 
   useEffect(() => {
+    
     if (fabricRef.current && selectedPlayerName !== "") {
       playerName(fabricRef, selectedPlayerName, coords, themeOption, posterBackground)
     }
