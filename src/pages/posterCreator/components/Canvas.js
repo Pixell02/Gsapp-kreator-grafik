@@ -5,24 +5,25 @@ import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { initFabric } from "./hooks/initFabric";
 
 export default function Canvas({ fabricRef }) {
-  const { background } = useContext(BackgroundContext);
+  const { background, color } = useContext(BackgroundContext);
   const {globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
 
   const img = new Image();
+  const image =  background
+  
  
-  console.log(globalProperties)
- 
-  img.src = background;
+  img.src =  background;
+  
   useEffect(() => {
     setWidth(img.width);
     setHeight(img.height);
   }, [img]);
 
   useEffect(() => {
-    initFabric(background, fabricRef);
-  }, [background]);
+    initFabric(image, fabricRef);
+  }, [image]);
 
   return (
     

@@ -34,25 +34,25 @@ export default function opponentNames(fabricRef, props, loops) {
             fabricRef.current.add(teamName);
        
           });
-        } else if (props.radioValues[i] === "radio2") {
+        } else if (props.radioValues[i] !== "radio1") {
           font.load().then(() => {
-       
             const teamName = new fabric.Text(props.selectNamesValues[i] ? props.selectNamesValues[i] : null, {
               selectable: false,
               className: "opponentName",
               top: props.coords.yourTeamNameOne.Top + i * props.coords.yourTeamNameOne.Margin,
-              left: props.coords.yourTeamNameOneLeft,
+              left: props.coords.yourTeamNameOne.Left,
               fontFamily: props.coords.yourTeamNameOne.FontFamily,
               fontSize: props.coords.yourTeamNameOne.FontSize,
               fill: props.coords.yourTeamNameOne.Fill,
               originX: props.coords.yourTeamNameOne.OriginX,
               originY: props.coords.yourTeamNameOne.OriginY
             });
-            if (teamName.width > props.coords.opponentNameOne.ScaleToWidth) {
-              teamName.scaleToWidth(props.coords.opponentNameOne.ScaleToWidth);
+            if (teamName.width > props.coords.yourTeamNameOne.ScaleToWidth) {
+              teamName.scaleToWidth(props.coords.yourTeamNameOne.ScaleToWidth);
             }
+            
             fabricRef.current.add(teamName);
-       
+            fabricRef.current.renderAll();
           });
         }
       }

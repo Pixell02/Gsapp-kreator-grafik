@@ -1,19 +1,28 @@
 import React from "react";
 import "./licenseEdit.css";
 import { useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../firebase/config";
+import { useAuthContext } from "../../../../../hooks/useAuthContext";
 
 
 
-export default function LicenseEdit({ License, open, onClose }) {
-  
+export default function LicenseEdit({email, License, open, onClose }) {
+  const { user } = useAuthContext(); 
   const [expireDate, setExpireDate] = useState(License[0].expireDate)
 
   const handleSave = () => {
     const docRef = doc(db, "user", License[0].id)
     updateDoc(docRef, {
+      license: "full-license",
       expireDate: expireDate
+    })
+    const logRef = collection(db, "logs");
+    addDoc(logRef, {
+      from: user.email,
+      description: `Przyznana licencja do ${expireDate}`,
+      to: email[0].email,
+      date: Date.now()
     })
     onClose();
   }

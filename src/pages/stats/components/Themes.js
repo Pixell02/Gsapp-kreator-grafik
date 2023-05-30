@@ -1,14 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import { useCollection } from "../../../hooks/useCollection";
+import useOrderBy from "../../Catalog/hooks/useOrderBy";
 import ThemesBar from "./ThemesBar";
 import ThemeBlock from "./ThemeBlock";
+import ThemeAddModal from "./ThemeAddModal";
 
 export default function Themes() {
-  const [selectedSportOption, setSelectedSportOption] = useState("football");
+  const [selectedSportOption, setSelectedSportOption] = useState("piłka nożna");
   const [selectedLangOption, setSelectedLangOption] = useState("pl");
+  const [isOpen, setIsOpen] = useState(false);
   const { documents: themes } = useCollection("catalog");
-  const { documents: posters } = useCollection("piecesOfPoster");
+  
+  const { documents: posters } = useOrderBy("piecesOfPoster", "themeId")
+  
 
   const handleSportChange = (e) => {
     setSelectedSportOption(e.value);
@@ -41,10 +46,13 @@ export default function Themes() {
 
   return (
     <div className="w-100 h-100 d-flex flex-column">
-      <ThemesBar handleLangChange={handleLangChange} handleSportChange={handleSportChange} />
+      {isOpen &&<ThemeAddModal setIsOpen={() => setIsOpen(false)} themes={themes} selectedLangOption={selectedLangOption} selectedSportOption={selectedSportOption} /> } 
+      <ThemesBar setIsOpen={() => setIsOpen(true)}  handleLangChange={handleLangChange} handleSportChange={handleSportChange} />
       <div className="d-flex mt-4 flex-column">
         <p>Motywy</p>
-        <ThemeBlock themes={filteredData} />
+        <div>
+        <ThemeBlock themes={filteredData} posters={posters} />
+        </div>
       </div>
     </div>
   );

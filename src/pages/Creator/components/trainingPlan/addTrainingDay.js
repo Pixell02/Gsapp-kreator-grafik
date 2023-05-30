@@ -33,6 +33,7 @@ const addTrainingDay = (fabricRef, coords, weekData) => {
         originX: "center",
         originY: "top",
         className: "text",
+        textAlign: coords.dayOne.TextAlign,
         width: coords.dayOne.Width,
         fontSize: coords.dayOne.FontSize,
         fontFamily: coords.dayOne.FontFamily,
@@ -41,9 +42,17 @@ const addTrainingDay = (fabricRef, coords, weekData) => {
       });
       fabricText._textLines.forEach((lines, i) => {
         const width = fabricText.getLineWidth(i);
-        
-        if (width >= coords.dayOne.ScaleToWidth) {
-          fabricText.scaleToWidth(coords.dayOne.ScaleToWidth);
+
+        while (width > coords.dayOne.ScaleToWidth - 50) {
+          const fontSize = fabricText.get("fontSize");
+          fabricText.set("fontSize", fontSize - 1);
+          const newWidth = fabricText.getLineWidth(i);
+          if (newWidth <= coords.dayOne.ScaleToWidth - 50) {
+            fabricRef.current.add(fabricText);
+           fabricRef.current.renderAll();
+            break;
+          }
+         
         }
       });
       

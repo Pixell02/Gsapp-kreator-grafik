@@ -3,23 +3,24 @@ import { fabric } from 'fabric';
 
 export const initFabric = (background, fabricRef ) => {
   if (background) {
+    
     const img = new Image();
     
     img.src = background;
+    
    
-    fabricRef.current = new fabric.Canvas("canvas", {
-      selection: true,
-      width: img.width,
-      height: img.height,
-    });
+    
+      fabricRef.current = new fabric.Canvas("canvas", {
+        selection: true,
+        width: img.width,
+        height: img.height,
+      });
+    
     const newImage = new Image();
     newImage.src = background;
     newImage.width = img.width;
     newImage.height = img.height;
-    // document.querySelector(".canvas-container").style.display = "flex";
-    // document.querySelector(".canvas-container").style.marginTop = "50px";
-    // document.querySelector(".upper-canvas").width = img.width;
-    // document.querySelector(".upper-canvas").height = img.height;
+   
     
     img.onload = () => {
       const newImg = new fabric.Image.fromURL(img.src, function (img) {

@@ -117,25 +117,6 @@ function OpponentsMainContent() {
                   )}
               </>
             ))}
-          <div className="w-100">brak drużyny</div>
-          {Opponents &&
-            Opponents.map((player) => (
-              <>
-                
-                {player.team === undefined && (
-                  <FilteredBlock
-                    handleClick={handleClick}
-                    handleDeleteClick={handleDeleteClick}
-                    editClick={editClick}
-                    itemToEdit={itemToEdit}
-                    setItemToEdit={setItemToEdit}
-                    item={player}
-                    openEditModal={openEditModal}
-                    Teams={Teams}
-                  />
-                )}
-              </>
-            ))}
         </ItemContainer>
       </div>
       {data && isEditModal && (

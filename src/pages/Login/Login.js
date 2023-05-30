@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import LoginPage from '../../components/form-elements/FormPage';
 import Footer from '../../components/MainFooter';
 import "../../App.css";
+import MainFooter from '../../components/main-content-elements/Footer';
 function Login() {
   
     
@@ -15,8 +16,9 @@ function Login() {
           <span>Nie masz jeszcze konta? 
             <Link to='/register' className='bold-text' > Zarejestruj się</Link>
           </span>}/>
+          </div>
+          <MainFooter />
         </div>
-       </div>
       </div>
     );
 }

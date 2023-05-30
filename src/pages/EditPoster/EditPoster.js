@@ -21,7 +21,7 @@ export default function EditPoster() {
   },[])
   
   const { documents: backgrounds } = useCollection("yourCatalog", ["uuid", "==", params.id])
-  console.log(backgrounds)
+  
   const { documents: coords } = useCollection("coords",["uid", "==", params.id])
   return (
     <div className="page-container">

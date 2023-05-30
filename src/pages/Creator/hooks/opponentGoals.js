@@ -47,8 +47,19 @@ export default function opponentGoals(fabricRef, props) {
       });
       showPlayer._textLines.forEach((lines, i) => {
         const width = showPlayer.getLineWidth(i);
-        if (width >= props.coords.yourPlayerOneGoal.ScaleToWidth) {
-          showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
+
+        while (width > props.coords.yourPlayerOneGoal.ScaleToWidth - 50) {
+          const fontSize = showPlayer.get("fontSize");
+          showPlayer.set("fontSize", fontSize - 1);
+          const newWidth = showPlayer.getLineWidth(i);
+          console.log(showPlayer)
+          if (newWidth <= props.coords.yourPlayerOneGoal.ScaleToWidth - 50) {
+            
+            props.fabricRef.current.add(showPlayer);
+            props.fabricRef.current.renderAll();
+            break;
+          }
+         
         }
       });    
       fabricRef.current.add(showPlayer);

@@ -4,35 +4,35 @@ import originX from './originX'
 import originY from './originY'
 
 export default function TextboxProperties({ coords, handleInputChange, handleSelectChange, handleSelectGroupChange }) {
-  
+  console.log(coords)
   return (
     <div>
     <div>Nazwa obiektu : {coords.className}</div>
     <div className="d-flex">
       <div>
-        X: <input type="number" value={coords.left} className="w-75" name="left" onChange={handleInputChange} />
+        X: <input type="number" value={coords.Left} className="w-75" name="Left" onChange={handleInputChange} />
       </div>
       <div>
-        Y: <input type="number" value={coords.top} className="w-75" name="top" onChange={handleInputChange} />
+        Y: <input type="number" value={coords.Top} className="w-75" name="Top" onChange={handleInputChange} />
       </div>
     </div>
     <div className="d-flex w-100">
       <div>
         sz:
-        <input type="number" value={coords.width} className="w-75" name="width" onChange={handleInputChange} />
+        <input type="number" value={coords.Width} className="w-75" name="Width" onChange={handleInputChange} />
       </div>
       <div>
         w:
-        <input type="number" value={coords.height} className="w-75" name="height" onChange={handleInputChange} />
+        <input type="number" value={coords.Height} className="w-75" name="Height" onChange={handleInputChange} />
         </div>
         <div>
           odstęp między wierszami: 
-          <input type="number" value={coords.lineHeight} step="0.01" className="w-75" name="lineHeight" onChange={handleInputChange} />
+          <input type="number" value={coords.LineHeight} step="0.01" className="w-75" name="LineHeight" onChange={handleInputChange} />
         </div>
     </div>
       <div className="d-flex mx-2 w-100 align-items-center justify-content-start">
         <div className='d-flex w-50'>
-          kolor: <input type="color" value={coords.fill} className="w-50" name="fill" onChange={handleInputChange} />
+          kolor: <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
         </div>
         <div className='d-flex w-50 align-items-center justify-content-start'>
         akapit:
@@ -40,8 +40,8 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
             style={{width: "10px"}}
             name="textAlign"
             className="form-control w-75"
-            value={coords.textAlign}
-            defaultValue={coords.textAlign}
+            value={coords.TextAlign}
+            defaultValue={coords.TextAlign}
             onChange={(e) => handleSelectChange(e)}
         >
           <option value="left">lewy</option>
@@ -52,9 +52,9 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
         <div className='w-100'>
         format: 
         <select
-          name="format"
+          name="Format"
           className='form-control w-75'
-          value={coords.format}
+          value={coords.Format}
           onChange={(e) => handleSelectChange(e)}
         >
           <option value="NumDotSurName">88.Nazwisko</option>
@@ -71,8 +71,8 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
         <select
           name="fontFamily"
           className="form-control w-75"
-          value={coords.fontFamily}
-          defaultValue={coords.fontFamily}
+          value={coords.FontFamily}
+          defaultValue={coords.FontFamily}
           onChange={(e) => handleSelectChange(e)}
         >
           {fonts && fonts.map((team) => <option value={team.value}>{team.label}</option>)}
@@ -80,16 +80,16 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
       </div>
       <div className="w-100 ml-1">
         rozmiar czcionki :{" "}
-        <input type="number" className="w-50" name="fontSize" value={coords.fontSize} onChange={handleInputChange} />
+        <input type="number" className="w-50" name="FontSize" value={coords.FontSize} onChange={handleInputChange} />
       </div>
     </div>
     <div>
       punkt odniesienia X :{" "}
       <select
-        name="originX"
+        name="OriginX"
         className="form-control"
-        value={coords.originX}
-        defaultValue={coords.originX}
+        value={coords.OriginX}
+        defaultValue={coords.OriginX}
         onChange={(e) => handleSelectChange(e)}
       >
         {originX && originX.map((team) => <option value={team.value}>{team.label}</option>)}
@@ -98,10 +98,9 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
     <div>
       punkt odniesienia Y :{" "}
       <select
-        name="originY"
+        name="OriginY"
         className="form-control"
-        value={coords.originY}
-        defaultValue={coords.originY}
+        value={coords.OriginY}
         onChange={(e) => handleSelectChange(e)}
       >
         {originY && originY.map((team) => <option value={team.value}>{team.label}</option>)}

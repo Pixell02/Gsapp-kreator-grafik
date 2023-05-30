@@ -30,15 +30,20 @@ export default function FilteredBlock({type, item, Teams, handleDeleteClick, ope
   const handleClick = (e, item) => {
     setItemToEdit(item);
   };
-  
+  console.log(item)
 
   return (
-    <div>
+    <>
       <div key={item.id} ref={hideElement} className="item-window">
         <div className="name-content">
           <span key={item.id} className="name-content">
+            {item.firstName ? (
+           <>
             {item.firstName + " "}
-            {item.secondName ? item.secondName : null}
+            {item.secondName ? item.secondName : null} 
+            </>
+            )
+           : item.name}
           </span>
           <div className="option-container">
             <button
@@ -72,10 +77,10 @@ export default function FilteredBlock({type, item, Teams, handleDeleteClick, ope
           </div>
         </div>
         <div className="image-content">
-          {item.img !== null && item.img !== "" && <img src={item.img} alt={item.firstName + " " + item.secondName} />}
+          {item.img !== null && item.img !== "" && <img src={item.img ? item.img : (item.src && item.src) ? item.src : null } alt={item.firstName + " " + item.secondName} />}
         </div>
       </div>
 
-    </div>
+    </>
   );
 }

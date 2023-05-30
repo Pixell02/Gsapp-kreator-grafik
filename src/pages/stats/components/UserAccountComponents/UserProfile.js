@@ -89,7 +89,7 @@ export default function UserProfile(props) {
       )}
       {data && editLicense && (
          <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-         <LicenseEdit License={data} open={editLicense} onClose={(e) => setEditLicense(false)} />
+         <LicenseEdit email={props.email} License={data} open={editLicense} onClose={(e) => setEditLicense(false)} />
        </div>
       )}
 
@@ -198,27 +198,6 @@ export default function UserProfile(props) {
                     </div>
                   </>
                 ))}
-              <ItemContainer>
-                <div className="d-flex w-100">bez drużyny</div>
-                <div className="ml-5 w-100 d-flex">
-                {props.players &&
-                  props.players.map((opponent) => (
-                    <>
-                      {opponent.team === undefined && (
-                        <FilteredBlock
-                          type="opponent"
-                          handleClick={handleClick}
-                          editClick={editClick}
-                          itemToEdit={itemToEdit}
-                          setItemToEdit={setItemToEdit}
-                          item={opponent}
-                          handleDeleteClick={handleDeleteClick}
-                        />
-                      )}
-                    </>
-                  ))}
-                </div>
-              </ItemContainer>
             </ItemContainer>
           </div>
           <div className="opponents-container">
@@ -255,28 +234,6 @@ export default function UserProfile(props) {
                   </>
                     
                 ))}
-                
-              <ItemContainer>
-                <div className="d-flex w-100 ml-5">bez drużyny</div>
-                <div className="ml-5 w-100 d-flex">
-                {props.opponents &&
-                  props.opponents.map((opponent) => (
-                    <>
-                      {opponent.team === undefined && (
-                        <FilteredBlock
-                          type="opponent"
-                          handleClick={handleClick}
-                          editClick={editClick}
-                          itemToEdit={itemToEdit}
-                          setItemToEdit={setItemToEdit}
-                          handleDeleteClick={handleDeleteClick}
-                          item={opponent}
-                        />
-                      )}
-                    </>
-                  ))}
-                </div>
-              </ItemContainer>
             </ItemContainer>
           </div>
         </div>

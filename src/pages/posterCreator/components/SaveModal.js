@@ -27,6 +27,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [userPoster, setUserPoster] = useState({
     type: "MATCH-POSTER"
   });
+  console.log(manyBackgrounds)
   
   useEffect(() => {
     setUserPoster((prevState) => ({
@@ -56,7 +57,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
         const metadata = {
           contentType: "image/jpeg",
         };
-        const player = ref(storage, `${globalProperties.uid}/posters/${globalProperties.uid + i + 2}`);
+        const player = ref(storage, `${userPoster.uid}/posters/${globalProperties.uid + i + 2}`);
 
         const uploadTask = uploadBytesResumable(player, background, metadata);
 
@@ -97,13 +98,14 @@ export default function SaveModal({ isOpen, setIsOpen }) {
       };
       const player = ref(storage, `${userPoster.uid}/posters/${userPoster.uuid}`);
 
-      const uploadTask = uploadBytesResumable(player, image, metadata);
+      const uploadTask = uploadBytesResumable(player, image.file, metadata);
 
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
+          setPercentageProgress(progress.toFixed(0))
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -122,7 +124,6 @@ export default function SaveModal({ isOpen, setIsOpen }) {
               color: manyBackgrounds ? "tło 1": null,
               name: userPoster.name,
               src: downloadURL,
-              type: userPoster.type,
               uid: userPoster.uid,
               uuid: userPoster.uuid,
             });
@@ -135,8 +136,6 @@ export default function SaveModal({ isOpen, setIsOpen }) {
           })
         }
       );
-      
-      
       
     }
   };
@@ -158,27 +157,12 @@ export default function SaveModal({ isOpen, setIsOpen }) {
             ...prevState,
             name: e.target.value
           }))} />
-          <label>Typ wzoru</label>
-          <select
-            name="textAlign"
-            className="form-control w-100"
-            defaultValue="MATCH-POSTER"
-            onChange={(e) => setUserPoster((prevState) => ({
-              ...prevState, 
-              type: e.target.value
-            }))}
-          >
-            <option value="MATCH-POSTER">zapowiedź meczu / dzień meczowy</option>
-            <option value="RESULT">wynik</option>
-            <option value="STARTING-SQUAD">skład wyjściowy</option>
-            <option value="GOOOOL">GOL</option>
-          </select>
           {percentageProgress}
           <div className="btn-container justify-content-end h-100 align-items-end mb-3">
             <button onClick={() => setIsOpen(false)} className="btn btn-primary">
               Anuluj
             </button>
-            <button onClick={handleAddDoc} className="btn btn-primary">
+            <button onClick={handleAddDoc} className="btn btn-primary" >
               Zapisz
             </button>
           </div>

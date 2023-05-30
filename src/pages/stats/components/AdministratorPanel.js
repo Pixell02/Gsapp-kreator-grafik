@@ -10,13 +10,15 @@ import Themes from "./Themes";
 import { useSearch } from "../../../hooks/useLimit";
 import PromoCode from "./PromoCode";
 import { useCollection } from "../../../hooks/useCollection";
+import Logs from "./Logs";
+import ToDo from "./ToDo";
 
 export default function AdministratorPanel() {
   const [activeBar, setActiveBar] = useState("users");
-  const [radioValue, setRadioValue] = useState("firstName");
+  const [radioValue, setRadioValue] = useState("full-license");
   const [search, setSearch] = useState("");
-  const { documents: users, loading} = useSearch("Teams", radioValue, search === "" ? null : search);
-  
+  const { documents: users, loading } = useSearch("Teams", radioValue, search === "" ? null : search);
+
   const [dataFiltered, setDataFiltered] = useState([]);
 
   useEffect(() => {
@@ -56,6 +58,20 @@ export default function AdministratorPanel() {
           >
             <span>Statystyki</span>
           </li>
+          <li className={activeBar === "logs" ? "trapezoid-active" : "trapezoid"}
+            onClick={() => {
+            setActiveBar("logs")
+          }}
+          >
+            <span>Logi</span>
+          </li>
+          <li className={activeBar === "toDo" ? "trapezoid-active" : "trapezoid"}
+            onClick={() => {
+            setActiveBar("toDo")
+          }}
+          >
+            <span style={{fontSize: "10px"}}>do zrobienia</span>
+          </li>
         </ul>
         <hr />
 
@@ -84,6 +100,8 @@ export default function AdministratorPanel() {
           </>
         )}
         {activeBar === "themes" && <Themes />}
+        {activeBar === "logs" && <Logs />}
+        {activeBar === "toDo" && <ToDo />}
       </div>
     </div>
   );

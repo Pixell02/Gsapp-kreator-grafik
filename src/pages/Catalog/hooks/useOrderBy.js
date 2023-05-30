@@ -24,7 +24,7 @@ const useOrderBy = (c, o) => {
     };
 
     fetchDocuments();
-  }, [c, o]);
+  }, [c]);
 
   return { documents, loading };
 

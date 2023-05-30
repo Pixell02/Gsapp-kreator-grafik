@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function WorkSpaceNavbar({setHelpLinesModal, helpLinesModal}) {
   return (
@@ -8,7 +9,7 @@ export default function WorkSpaceNavbar({setHelpLinesModal, helpLinesModal}) {
         <div class="navbar-nav d-flex flex-row ml-5" style={{marginLeft: "100px"}}>
           
           <NavDropdown title="obszar roboczy">
-            <NavDropdown.Item >do motywów</NavDropdown.Item>
+            <NavDropdown.Item ><Link style={{color:"black"}} to="/posterCreator/theme">do motywów</Link></NavDropdown.Item>
             <NavDropdown.Item >do GIFów</NavDropdown.Item>
           </NavDropdown>
          

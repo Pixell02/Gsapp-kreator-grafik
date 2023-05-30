@@ -22,9 +22,10 @@ const typeDate = (fabricRef, date, coords, themeOption, posterBackground) => {
       originX: coords.typeData.OriginX,
       originY: coords.typeData.OriginY,
       fontFamily: coords.typeData.FontFamily,
-      charSpacing: coords.typeData.CharSpacing,
+      charSpacing: coords.typeData.CharSpacing ? coords.typeData.CharSpacing : 0,
       fontStyle: coords.typeData.FontStyle ? coords.typeData.FontStyle : "normal",
     });
+    
     if (typeDate.width >= coords.typeData.ScaleToWidth) {
       typeDate.scaleToWidth(coords.typeData.ScaleToWidth);
     }

@@ -4,8 +4,8 @@ import LeftBar from '../../components/Left-Bar';
 import Footer from '../../components/MainFooter';
 import MainAccount from './components/MainAccount';
 
-function Account () {
-
+function Account() {
+  
     return (
         <div className="page-container">
       <div className='content-wrap'>

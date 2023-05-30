@@ -16,13 +16,16 @@ import manyDatas from './hooks/TimeTable/manyDatas';
 import opponentLogos from './hooks/TimeTable/opponentLogos';
 import opponentNames from './hooks/TimeTable/opponentNames';
 
+import { opponentTeamResult, yourTeamResult } from './hooks/ResultTable/manyResults';
+import connectedResults from './hooks/ResultTable/connectedResults';
+
 function Canvas(props) {
   
   const [width, setWidth] = useState()
   const [height, setHeight] = useState();
-  const {initFabric, initFabricScale} = useFabricCanvas(props.fabricRef, props);
+  const {initFabric} = useFabricCanvas(props.fabricRef, props);
   const { loops } = useTimeTable(Array(4).fill({}));
-  const { typePlace, yourKolejka, typeDate, yourLeague } = useText(props.fabricRef, props);
+  const { yourLeague } = useText(props.fabricRef, props);
   
   useEffect(() => {
     const img = new Image();
@@ -33,10 +36,11 @@ function Canvas(props) {
   }, [props.posterBackGround])
   
   useEffect(() => {
+    
     hostLogo(props.fabricRef, props, loops)
     hostName(props.fabricRef, props, loops)
-  },[props.selectHostLogoValues, props.selectHostNameValues, props.selectNamesValues, props.selectLogoValues])
-
+  },[props.selectHostLogoValues, props.selectHostNamesValues, props.selectNamesValues, props.selectLogoValues, loops, props.radioValues])
+  
   useEffect(() => {
     
     if (props.coords.imageType === "withImage") {
@@ -77,7 +81,17 @@ function Canvas(props) {
 
   useEffect(() => {
     typeMonth(props.fabricRef, props);
-  }, [props.month, props.psoterBackGround]);
+  }, [props.month, props.posterBackGround]);
+
+  useEffect(() => {
+    if (props.coords.resultType !== "connected") {
+      yourTeamResult(props.fabricRef, props, loops);
+      opponentTeamResult(props.fabricRef, props, loops);
+    } else {
+      connectedResults(props.fabricRef, props, loops)
+    }
+  },[props.opponentTeamResultsValue, props.yourTeamResultsValue, props.radioValues, loops])
+
 
   return (
     <canvas

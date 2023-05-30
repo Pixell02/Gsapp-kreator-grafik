@@ -20,7 +20,7 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
     if (Players) {
       const options = Players.map((player) => ({
         label: player.number + " " + player.firstName + " " + player.secondName,
-        value: player.firstName + " " + player.secondName,
+        value: player.firstName + "." + player.secondName,
       }));
 
       setPlayerOption(options);
@@ -29,13 +29,13 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
 
   useEffect(() => {
     
-    if (fabricRef.current && yourTeamGoal) {
+    if (fabricRef.current && (yourTeamGoal || yourTeamGoalMinute)) {
       yourTeamResult({ fabricRef, yourTeamGoal, yourTeamGoalMinute, coords, radioChecked, themeOption });
     }
   }, [fabricRef.current, yourTeamGoal, yourTeamGoalMinute, radioChecked, posterBackground]);
 
   useEffect(() => {
-    if (fabricRef.current && opponentGoals) { 
+    if (fabricRef.current && (opponentGoals || opponentGoalMinute )) { 
       
       opponentTeamResult({ fabricRef, opponentGoals, opponentGoalMinute, coords, radioChecked})
     }

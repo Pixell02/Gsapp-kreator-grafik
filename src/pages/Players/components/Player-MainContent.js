@@ -122,24 +122,6 @@ function PlayerMainContent() {
                 </div>
               </>
             ))}
-          <div className="w-100">brak drużyny</div>
-          {Players &&
-            Players.map((player) => (
-              <>
-                {player.team === undefined && (
-                  <FilteredBlock
-                    handleDeleteClick={handleDeleteClick}
-                    handleClick={handleClick}
-                    editClick={editClick}
-                    itemToEdit={itemToEdit}
-                    setItemToEdit={setItemToEdit}
-                    item={player}
-                    openEditModal={openEditModal}
-                    Teams={Teams}
-                  />
-                )}
-              </>
-            ))}
         </ItemContainer>
       </div>
       {data && isEditModal && goodLocation === "players" && (

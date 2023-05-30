@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Canvas from "./components/Canvas";
+import {fabric} from "fabric"
 import EditPanel from "./components/EditPanel";
 import WorkSpaceNavbar from "./components/Navbar";
 import SaveModal from "./components/SaveModal";
@@ -13,7 +14,7 @@ import UpdateModal from "./components/UpdateModal";
 import { ManyBackgroundsContext } from "./Context/ManyBackgroundsContext";
 import HelpLinesModal from "./components/HelpLinesModal";
 import useGuides from "./components/hooks/useGuides";
-import { Layer, Line, Stage } from "react-konva";
+
 import Draggable from "react-draggable";
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
@@ -31,13 +32,14 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
       createDefaultObjects(fabricRef, globalProperties, coords);
     }
   }, [fabricRef]);
+ 
 
-  console.log(lines);
+  
   return (
     <BackgroundContext.Provider value={{ background, setBackground, image, setImage }}>
       <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>
         <ManyBackgroundsContext.Provider value={{ manyBackgrounds, setManyBackgrounds }}>
-          <AddBackgroundWindow backgrounds={backgrounds} />
+          
           {helpLinesModal ? (
             <HelpLinesModal helpLinesModal={helpLinesModal} setHelpLinesModal={setHelpLinesModal} />
           ) : null}
@@ -51,6 +53,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
             />
           )}
           <div className="add-creator-container d-flex h-100">
+            <AddBackgroundWindow backgrounds={backgrounds} />
             <div className="add-preview-container d-flex flex-column h-100 w-100">
               <div className="w-100 d-flex z-index-1000">
                 <WorkSpaceNavbar setHelpLinesModal={setHelpLinesModal} helpLinesModal={helpLinesModal} />

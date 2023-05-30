@@ -19,7 +19,10 @@ export default function ResultTableEdit({
   selectHostLogoValues,
   selectHostNamesValues,
   handleSelectHostChange,
-  concated
+  concated,
+  manyLeaguesValues,
+  setManyLeaguesValues,
+  handleLeagueChange,
 }) {
   const { loops } = useTimeTable(Array(4).fill({}));
 
@@ -30,6 +33,14 @@ export default function ResultTableEdit({
           <div key={i} className="timeTable-container">
             {coords && coords.type !== "league" && (
               <>
+                <>
+                <label className="label-container">Gość{` ${i + 1}`}</label>
+                <Select
+                  className="select-react-container"
+                  options={concated}
+                  onChange={(option) => handleSelectChange(option, i)}
+                />
+              </>
                 <div className="option-container">
                   <div className="input-container">
                     <label className="label-container">
@@ -53,6 +64,18 @@ export default function ResultTableEdit({
                       <span>Gość</span>
                     </label>
                   </div>
+                  {coords && coords.yourLeagueOne && (
+                    <>
+                      <label key={i} className="label-container d-flex align-items-start w-100">
+                        Liga
+                      </label>
+                      <input
+                        type="text"
+                        value={manyLeaguesValues[i]}
+                        onChange={(e) => handleLeagueChange(i, e.target.value)}
+                      />
+                    </>
+                  )}
                 </div>
               </>
             )}

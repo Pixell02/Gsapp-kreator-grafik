@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { langOptions, sportOptions } from '../../../components/options'
 
-export default function ThemesBar({handleLangChange, handleSportChange }) {
+export default function ThemesBar({handleLangChange, handleSportChange, setIsOpen }) {
   return (
     <div className="w-100">
       <div className="d-flex flex-row">
@@ -18,8 +18,10 @@ export default function ThemesBar({handleLangChange, handleSportChange }) {
           {" "}
           wybierz język
           <Select options={langOptions} defaultInputValue='pl'  onChange={handleLangChange} />
-        </label>
-      </div>
+          </label>
+          <button onClick={setIsOpen} className='btn'>Dodaj motyw</button>
+        </div>
+        
       </div>
     </div>
   )

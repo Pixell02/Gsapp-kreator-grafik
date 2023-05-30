@@ -16,7 +16,7 @@ const typePlace = (fabricRef, coords, place, themeOption) => {
     font.load().then(() => {
   const typePlace = new fabric.Text(place, {
     selectable: false,
-    charSpacing: coords.typePlace.CharSpacing,
+    charSpacing: coords.typePlace.CharSpacing ? coords.typePlace.CharSpacing : 0,
     textAlign: "center",
     top: coords.typePlace.Top,
     left: coords.typePlace.Left,

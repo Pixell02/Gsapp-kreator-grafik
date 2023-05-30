@@ -4,7 +4,7 @@ import Draggable from 'react-draggable';
 import { ManyBackgroundsContext } from '../Context/ManyBackgroundsContext';
 
 export default function AddBackgroundWindow({backgrounds}) {
-  const [position, setPosition] = useState({ x: 0, y: -500 });
+  const [position, setPosition] = useState({ x: 100, y: 100 });
   const [defaultBackgrounds, setDefaultBackGroundColor] = useState( backgrounds ? Array.from( backgrounds)  : null);
   
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext)
@@ -24,8 +24,8 @@ export default function AddBackgroundWindow({backgrounds}) {
       axis="both"
       handle=".handle"
       defaultPosition={position}
-      position={null}
-      grid={[2, 1]}
+      position={position}
+      grid={[3, 1]}
       scale={1}
       onDrag={handleDrag}
     >
@@ -54,7 +54,7 @@ export default function AddBackgroundWindow({backgrounds}) {
           ))}
           {manyBackgrounds && manyBackgrounds.map((image) => (
             <div className='d-flex w-100 flex-column'>
-              <div>{image.name}</div>
+              <div> {image.name}</div>
             </div>
           ))}
         </div>

@@ -4,7 +4,7 @@ import { fabric } from "fabric";
 import findThemeOption from '../functions/themeOption';
 export default function opponentTeamResult(props) {
   if (props.opponentGoals) {
-    console.log(props)
+   
     let text = "";
     props.opponentGoals.forEach((opponentGoal, i) => {
       if (opponentGoal || props.opponentGoalMinute[i]) {
@@ -49,10 +49,20 @@ export default function opponentTeamResult(props) {
       });
       showPlayer._textLines.forEach((lines, i) => {
         const width = showPlayer.getLineWidth(i);
-        if (width >= props.coords.yourPlayerOneGoal.ScaleToWidth) {
-          showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
+
+        while (width > props.coords.yourPlayerOneGoal.ScaleToWidth - 20) {
+          const fontSize = showPlayer.get("fontSize");
+          showPlayer.set("fontSize", fontSize - 1);
+          const newWidth = showPlayer.getLineWidth(i);
+          if (newWidth <= props.coords.yourPlayerOneGoal.ScaleToWidth - 20) {
+            
+            props.fabricRef.current.add(showPlayer);
+            props.fabricRef.current.renderAll();
+            break;
+          }
+         
         }
-      });    
+      });     
       props.fabricRef.current.add(showPlayer);
       props.fabricRef.current.renderAll();
     });

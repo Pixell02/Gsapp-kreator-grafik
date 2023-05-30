@@ -16,7 +16,7 @@ export const yourTeamResult = (fabricRef, props, loops) => {
         const font = new FontFaceObserver(props.coords.yourTeamResultsOne.FontFamily);
         font.load().then(() => {
           if (props.radioValues[i] === "radio1") {
-            console.log(props.coords)
+            
             const yourResult = new fabric.Text(props.yourTeamResultsValue[i], {
               top: props.coords.yourTeamResultsOne.Top + i * props.coords.yourTeamResultsOne.Margin,
               left: props.coords.yourTeamResultsOne.Left,

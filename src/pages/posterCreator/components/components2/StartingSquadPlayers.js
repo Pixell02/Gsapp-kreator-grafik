@@ -6,12 +6,12 @@ export default function StartingSquadPlayers({coords}) {
        <div>Nazwa obiektu : {coords.className}</div>
       <div>X: {coords.x}</div>
       <div>Y: {coords.y}</div>
-      <div>szerokość: {(coords.width * coords.scaleX).toFixed(2)}</div>
-      <div>kolor czcionki: {coords.fill}</div>
-      <div>czcionka: {coords.fontFamily}</div>
-      <div>rozmiar czcionki : {coords.fontSize}</div>
-      <div>punkt odniesienia X : {coords.originX} </div>
-      <div>punkt odniesienia Y : {coords.originY} </div>
+      <div>szerokość: {(coords.Width * coords.scaleX).toFixed(2)}</div>
+      <div>kolor czcionki: {coords.Fill}</div>
+      <div>czcionka: {coords.FontFamily}</div>
+      <div>rozmiar czcionki : {coords.FontSize}</div>
+      <div>punkt odniesienia X : {coords.OriginX} </div>
+      <div>punkt odniesienia Y : {coords.OriginY} </div>
     </div>
   )
 }

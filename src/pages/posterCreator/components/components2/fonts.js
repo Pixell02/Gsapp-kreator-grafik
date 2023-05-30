@@ -1,6 +1,12 @@
 const fonts = [
   { label: "Russo_one", value: "Russo_one" },
   { label: "Poppins Regular", value: "Poppins" },
+  { label: "Poppins-ThinItalic", value: "Poppins-ThinItalic" },
+  { label: "Typo_Speed_Black_Italic_Demo", value: "Typo_Speed_Black_Italic_Demo" },
+  { label: "Poppins-ExtraBoldItalic", value: "Poppins-ExtraBoldItalic" },
+  { label: "Bai Jamjuree", value: "Bai Jamjuree" },
+  { label: "BaiJamjuree-BoldItalic", value: "BaiJamjuree-BoldItalic" },
+  { label: "BaiJamjuree-Bold", value: "BaiJamjuree-Bold"},
   { label: "Poppins-italic", value: "Poppins-italic" },
   { label: "Poppins Bold", value: "Poppins Bold" },
   { label: "Baron-Neue-Black", value: "Baron-Neue-Black" },

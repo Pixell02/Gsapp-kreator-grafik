@@ -10,12 +10,9 @@ export default function AdditionalText({ fabricRef, coords, posterBackground}) {
   const { radioChecked } = useContext(radioContext);
   
   useEffect(() => {
-    if (fabricRef.current) {
-    additionalText(fabricRef, coords, radioChecked)
-  }     
-  },[fabricRef.current, posterBackground, radioChecked])
-
-      fabricRef.current._objects.forEach((image, i) => {
+    if (fabricRef.current && coords) {
+    // additionalText(fabricRef, coords, radioChecked)
+       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className === "addedText") {
           fabricRef.current.remove(fabricRef.current.item(i));
         }
@@ -34,10 +31,14 @@ export default function AdditionalText({ fabricRef, coords, posterBackground}) {
         originX: coords.additionalText.OriginX,
         originY: coords.additionalText.OriginY,
       });
-      console.log(text)
+      
       fabricRef.current.add(text);
       fabricRef.current.renderAll();
     });
+  }     
+  },[fabricRef.current, posterBackground, radioChecked])
+
+     
  
   return (
     <></>

@@ -6,7 +6,6 @@ function Creator() {
     return (
         <div className="page-container">
           <div className='content-wrap'>
-            
             <LeftBar />
             <WorkSpace />
           </div>

@@ -13,7 +13,13 @@ export const useAddBackground = () => {
 
   const handleAddBackground = (file) => {
     if (file) {
-      setImage(file)
+      setImage(prev => ({
+        ...prev,
+        file,
+        name: file.name.split('.')[0],
+        preview: URL.createObjectURL(file)
+      }))
+     
       setAddedBackground(file);
     } else {
       setAddedBackground(null)

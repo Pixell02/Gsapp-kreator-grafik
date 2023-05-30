@@ -14,6 +14,7 @@ export const YourTeamNameAndLogo = (Logo) => {
         value: logo.img,
         label: logo.firstName + "." + logo.secondName,
       }));
+      
       setTeamOption(TeamOption);
     }
   }, [Logo]);

@@ -1,4 +1,29 @@
 @font-face {
+  font-family: "Typo_Speed_Black_Italic_Demo";
+  src: url(./fonts/Typo_Speed_Black_Italic_Demo.otf);
+}
+@font-face {
+  font-family: "Poppins-ThinItalic";
+  src: url(./fonts/Poppins-LightItalic.ttf);
+}
+@font-face {
+  font-family: "Poppins-ExtraBoldItalic";
+  src: url(./fonts/Poppins-ExtraBoldItalic.ttf);
+}
+@font-face {
+  font-family: "Bai Jamjuree";
+  src: url(./fonts/BaiJamjuree-Regular.ttf);
+}
+@font-face {
+  font-family: "BaiJamjuree-BoldItalic";
+  src: url(./fonts/BaiJamjuree-BoldItalic.ttf);
+}
+@font-face {
+  font-family: "BaiJamjuree-Bold";
+  src: url(./fonts/BaiJamjuree-Bold.ttf);
+}
+
+@font-face {
   font-family: "Raleway Medium";
   src: url(./fonts/Raleway-Medium.ttf);
 }

@@ -8,10 +8,14 @@ import Select from "react-select";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { sportOptions } from "../../../components/options";
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { LicenseContext } from "../../../context/LicenseContext";
 
 function AddTeamWindow({ open, onClose }) {
   const [firstTeamName, setFirstTeamName] = useState("");
   const [secondTeamName, setSecondTeamName] = useState("");
+  const { license } = useContext(LicenseContext)
+  console.log(license)
   const { id } = useParams()
   const [image, setImage] = useState(null);
   const [sport, setSport] = useState();
@@ -87,6 +91,7 @@ function AddTeamWindow({ open, onClose }) {
                 sport: sport,
                 uid: id ? id : user.uid,
               });
+              
             });
           }
       

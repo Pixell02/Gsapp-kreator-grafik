@@ -99,13 +99,13 @@ export default function StartingSquad({ fabricRef, coords, themeOption, posterBa
 
 <Select options={playerOptions} onChange={getCapitan} />
 
-{young &&
+{/* {young &&
   young.map((young, i) => (
     <>
       <label>Młodzieżowiec {i + 1}</label>
       <Select options={playerOptions} onChange={getYoung} />
     </>
-  ))}
+  ))} */}
           </>
       )}
     </>

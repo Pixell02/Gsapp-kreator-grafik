@@ -1,12 +1,11 @@
 import React from "react";
-
 import "../WorkSpace.css";
 import { useAddBackground } from "./hooks/useAddBackground";
 import Layers from "./Layers";
 import Properties from "./Properties";
 export default function EditPanel({ fabricRef, setIsOpen }) {
   const { handleAddBackground, onButtonClick, fileInputRef } = useAddBackground();
-
+  
   return (
     <div className=" mt-3 h-100 w-100 z-index-100">
       <div className="w-100 d-flex justify-content-around">

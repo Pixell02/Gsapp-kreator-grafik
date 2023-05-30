@@ -24,7 +24,7 @@ export default function TimeTableEdit({
 }) {
   
   const { loops } = useTimeTable({ numberOfMatches });
-  console.log(manyLeaguesValues)
+ 
   return (
     <div>
       {loops &&

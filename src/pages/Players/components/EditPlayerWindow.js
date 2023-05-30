@@ -21,24 +21,22 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
   const [number, setNumber] = useState(player.number);
-  const [isImage, setIsImage] = useState(false);
+  const [isImage, setIsImage] = useState(true);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
   const params = useParams();
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   
-  
+  console.log(image)
 
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
   useEffect(() => {
-    if(image) {
-      setIsImage(true);
-    } else {
+    if(!image) {
       setIsImage(false);
-    }
+    } 
   },[])
   const handleEdit = (e) => {
     setIsImage(false);
@@ -54,20 +52,13 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
     reader.readAsDataURL(file);
     setImage(file);
   };
-  useEffect(() => {
-    
-    if(image === null) {
-      setImage("");
-    }
-  },[image])
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!firstPlayerName || !secondPlayerName) {
       alert("puste pole");
     } else {
-      
-      if (isImage === false) {
-        
+      if (!isImage && image) {
         const storage = getStorage();
         const metadata = {
           contentType: "image/png",
@@ -103,7 +94,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
                 updateDoc(docRef, {
                   firstName: firstPlayerName,
                   secondName: secondPlayerName,
-                  img: downloadURL,
+                  img: downloadURL ? downloadURL : null,
                   number: number || "",
                   team: selectedTeam,
                 });
@@ -116,6 +107,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
         updateDoc(docRef, {
           firstName: firstPlayerName,
           secondName: secondPlayerName,
+          img: image? image : null,
           number: number || "",
           team: selectedTeam,
         });
@@ -191,7 +183,8 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
                 src={bin}
                 onClick={() => {
                   setPreview(null);
-                  setImage("");
+                  setImage(null);
+                  setIsImage(false);
                 }}
               />
             )}

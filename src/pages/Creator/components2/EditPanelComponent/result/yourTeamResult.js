@@ -14,12 +14,12 @@ export default function yourTeamResult(props) {
             props.fabricRef.current.remove(props.fabricRef.current.item(i));
           }
         });
-        console.log(yourTeamGoal)
+        
         let formatText = "";
         if (props.yourTeamGoalMinute[i] !== undefined) {
-          formatText = props.yourTeamGoalMinute[i] + "' " + yourTeamGoal.split(" ")[1]+ " ";
+          formatText = props.yourTeamGoalMinute[i] + "' " + yourTeamGoal?.split(".")[1]+ " ";
         } else {
-          formatText = yourTeamGoal.split(" ")[1] + " ";
+          formatText = yourTeamGoal?.split(".")[1] + " ";
         }
         text += formatText + "\n";
         
@@ -31,8 +31,8 @@ export default function yourTeamResult(props) {
         top: props.coords.yourPlayerOneGoal.Top,
         left: props.radioChecked === "radio1" ? props.coords.yourPlayerOneGoal.Left : props.coords.opponentPlayerOneGoal.Left,
         textAlign: props.radioChecked === "radio1" ? props.coords.yourPlayerOneGoal.TextAlign : props.coords.opponentPlayerOneGoal.TextAlign,
-        lineHeight: props.coords.yourPlayerOneGoal.LineHeight,
-        width: props.coords.yourPlayerOneGoal.ScaleToWidth * 1.4,
+        lineHeight: props.coords.yourPlayerOneGoal.LineHeight ? props.coords.yourPlayerOneGoal.LineHeight : 1,
+        width: props.coords.yourPlayerOneGoal.ScaleToWidth,
         fontFamily: props.coords.yourPlayerOneGoal.FontFamily,
         fontSize: props.coords.yourPlayerOneGoal.FontSize,
         selectable: false,
@@ -44,8 +44,18 @@ export default function yourTeamResult(props) {
 
       showPlayer._textLines.forEach((lines, i) => {
         const width = showPlayer.getLineWidth(i);
-        if (width >= props.coords.yourPlayerOneGoal.ScaleToWidth) {
-          showPlayer.scaleToWidth(props.coords.yourPlayerOneGoal.ScaleToWidth);
+
+        while (width > props.coords.yourPlayerOneGoal.ScaleToWidth - 20) {
+          
+          const fontSize = showPlayer.get("fontSize");
+          showPlayer.set("fontSize", fontSize - 1);
+          const newWidth = showPlayer.getLineWidth(i);
+          if (newWidth <= props.coords.yourPlayerOneGoal.ScaleToWidth - 20) {
+            props.fabricRef.current.add(showPlayer);
+            props.fabricRef.current.renderAll();
+            break;
+          }
+         
         }
       });
       if (props.coords.yourPlayerOneGoal.themeOption) {

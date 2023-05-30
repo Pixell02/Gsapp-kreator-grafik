@@ -3,7 +3,7 @@ import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
 
 export default function additionalText(fabricRef, coords, radioChecked) {
-  console.log(radioChecked)
+  
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "addedText") {
       fabricRef.current.remove(fabricRef.current.item(i));

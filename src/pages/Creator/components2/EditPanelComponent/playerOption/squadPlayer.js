@@ -66,16 +66,18 @@ const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKe
         selectable: false,
         top: coords.playerOne.Top,
         left: coords.playerOne.Left,
-        lineHeight: coords.playerOne.LineHeight,
+        lineHeight: parseFloat(coords.playerOne.LineHeight),
         textAlign: coords.playerOne.TextAlign,
         originX: coords.playerOne.OriginX,
-        width: coords.playerOne.ScaleToWidth * 1.5,
+        originY: "top",
+        width: coords.playerOne.ScaleToWidth,
         fontSize: coords.playerOne.FontSize,
         fill: coords.playerOne.Fill,
         className: "player",
         fontFamily: coords.playerOne.FontFamily,
         splitByGrapheme: true,
       });
+      
       if (coords.playerOne.CharSpacing) {
         showPlayer.set({
           charSpacing: coords.playerOne.CharSpacing,
@@ -84,17 +86,27 @@ const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKe
       if (coords.playerOne.themeOption) {
         findThemeOption(coords.playerOne, themeOption, showPlayer)
       }
-
+      
       showPlayer._textLines.forEach((lines, i) => {
         const width = showPlayer.getLineWidth(i);
-        if (width >= coords.playerOne.ScaleToWidth) {
-          showPlayer.scaleToWidth(coords.playerOne.ScaleToWidth);
+
+        while (width > coords.playerOne.ScaleToWidth - 50) {
+          const fontSize = showPlayer.get("fontSize");
+          showPlayer.set("fontSize", fontSize - 1);
+          const newWidth = showPlayer.getLineWidth(i);
+          if (newWidth <= coords.playerOne.ScaleToWidth - 50) {
+            fabricRef.current.add(showPlayer);
+           fabricRef.current.renderAll();
+            break;
+          }
+         
         }
       });
-
+      
       fabricRef.current.add(showPlayer);
-
-      fabricRef.current.renderAll();
+           fabricRef.current.renderAll();
+      
+      
     });
   }
   

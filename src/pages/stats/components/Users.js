@@ -28,8 +28,18 @@ export default function Users(props) {
           <input type="radio" value="id" onChange={() => props.setRadioValue("id")} checked={props.radioValue === "id"} />
           <span>id</span>
         </label>
-        <span style={{fontSize: "10px"
-        }}>Działa na wszystkich, jak jakiś email od razu nie wyskakuje, to musisz wpisać więcej, bo nie każdy od razu łapie</span>
+        <label>
+        <input type="radio" value="id" onChange={() => props.setRadioValue("full-license")} checked={props.radioValue === "full-license"} />
+          <span>pełna licencja</span>
+        </label>
+        <label>
+        <input type="radio" value="id" onChange={() => props.setRadioValue("no-license")} checked={props.radioValue === "no-license"} />
+          <span>bez licencji</span>
+        </label>
+        <label>
+        <input type="radio" value="id" onChange={() => props.setRadioValue("free-trial")} checked={props.radioValue === "free-trial"} />
+          <span>darmowa licencja</span>
+        </label>
       </div>
       <table>
         <tr>
@@ -40,7 +50,8 @@ export default function Users(props) {
           <th className="dimension">Typ licencji</th>
           <th className="dimension">Szczegóły</th>
         </tr>
-        { 
+        {props.loading && <p>Ładowanie...</p>}
+        { !props.loading &&
           props.users &&
           props.users.map((license) => (
             <>

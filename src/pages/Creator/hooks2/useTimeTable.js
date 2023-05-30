@@ -1,30 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import posterCoords from "../coordinates.json";
 import { useCollection } from "../../../hooks/useCollection";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 export default function useTimeTable() {
+  
   const { poster } = useParams();
-  const [coords, setCoords] = useState();
+  const { user} = useAuthContext()
+  const { documents: Teams} = useCollection("Teams", ["uid", "==", user.uid])
   const { documents: coordinates } = useCollection("coords", ["uid", "==", poster]);
-  useEffect(() => {
-    if (coordinates) {
-      coordinates.map((postersCoords) => {
-        if (postersCoords.id === poster) {
-          setCoords(postersCoords);
-        }
-      });
-    }
-  }, [coordinates]);
+  
 
   const [numberOfMatch, setNumberOfMatch] = useState();
 
   useEffect(() => {
-    if (coords) {
-      setNumberOfMatch(coords.numberOfMatches);
+    if (coordinates) {
+      setNumberOfMatch(coordinates[0].numberOfMatches);
     }
-  }, [coords]);
-
+  }, [coordinates]);
+  
   const [loops, setLoops] = useState();
 
   const [radioValues, setRadioValues] = useState(Array(numberOfMatch).fill("radio1"));
@@ -42,11 +36,12 @@ export default function useTimeTable() {
     setTextInputValues(Array(numberOfMatch).fill(" "));
     setSelectValues(Array(numberOfMatch).fill(" "));
     setSelectNamesValues(Array(numberOfMatch).fill(" "));
+    setSelectHostNamesValues(Array(numberOfMatch).fill(Teams && Teams.length < 2 ? Teams[0].firstName + " " + Teams[0].secondName : ""));
     setSelectLogoValues(Array(numberOfMatch).fill(" "));
     setSelectHostLogoValues(Array(numberOfMatch).fill(" "));
-    setSelectHostNamesValues(Array(numberOfMatch).fill(" "));
     setManyLeaguesValues(Array(numberOfMatch).fill(" "));
-  }, [numberOfMatch]);
+  
+  }, [Teams, numberOfMatch]);
 
   const handleLeagueChange = (i, value) => {
     
@@ -117,6 +112,7 @@ export default function useTimeTable() {
     selectNamesValues,
     selectLogoValues,
     handleSelectHostChange,
+    setSelectHostNamesValues,
     selectHostLogoValues,
     selectHostNamesValues,
     manyLeaguesValues,

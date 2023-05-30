@@ -44,6 +44,10 @@
   animation-duration: 0.2s;
   animation-timing-function: ease-in-out;
 }
+.ml-5 .pt-2 label span {
+  font-size: 10px;
+  color: black;
+}
 
 @keyframes clear-show {
   from {

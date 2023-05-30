@@ -7,6 +7,7 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
   layersName.forEach((layer, i) => {
     for (const key in globalProperties) {
       if (layer.className === key) {
+        console.log(layer)
          if (layer.type === "image") {
           
           fabric.Image.fromURL(layer.image, function (img) {
@@ -37,6 +38,8 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
               fill: globalProperties[key].Fill,
               fontFamily: globalProperties[key].FontFamily,
               format: globalProperties[key].format,
+              originX: globalProperties[key].OriginX,
+              originY: globalProperties[key].OriginY,
               type: "textBox",
             })
             fabricRef.current.add(text);

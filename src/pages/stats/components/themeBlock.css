@@ -9,6 +9,15 @@
   height: 50px;
 }
 .poster-content {
-  height: 200px;
+  height: auto;
   background-color: rgb(231, 231, 231);
+  display: flex;
+}
+.poster-content .block-item {
+  margin-left: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.block-item .link-container {
+  background: none;
 }

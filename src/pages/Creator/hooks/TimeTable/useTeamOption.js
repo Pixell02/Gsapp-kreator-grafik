@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import posterCoords from "../../coords.json";
+
 
 
 export default function useTeamOption(Team, Opponent) {
@@ -10,13 +10,6 @@ export default function useTeamOption(Team, Opponent) {
   const [concated, setConcated] = useState([]);
   const [coords, setCoords] = useState();
 
-  useEffect(() => {
-    posterCoords.map((postersCoords) => {
-      if (postersCoords.id === poster) {
-        setCoords(postersCoords);
-      }
-    });
-  }, []);
 
   const [numberOfMatch, setNumberOfMatch] = useState(0);
 

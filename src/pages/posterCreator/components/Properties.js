@@ -9,7 +9,7 @@ import TextProperties from "./components2/TextProperties";
 import useActiveObjectCoords from "./hooks/useActiveObject";
 
 export default function Properties({ fabricRef }) {
-  const { coords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
+  const { coords, canvasRef, setCoords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
   
   return (
     <div className="overflow-scroll d-flex h-75">
@@ -17,11 +17,11 @@ export default function Properties({ fabricRef }) {
         <ImageProperties coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}
       {coords.type === "text" && (
-        <TextProperties coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
+        <TextProperties coords={coords} canvasRef={canvasRef} setCoords={setCoords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}
       
       {coords.type === "textBox" && (
-        <TextboxProperties handleSelectGroupChange={handleSelectGroupChange} coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
+        <TextboxProperties setCoords={setCoords} handleSelectGroupChange={handleSelectGroupChange} coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}
       {coords.type === "multiply" && (
         <MultiplyProperties handleSelectGroupChange={handleSelectGroupChange} updateActiveGroupObjectCoords={updateActiveGroupObjectCoords} coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange}  />
