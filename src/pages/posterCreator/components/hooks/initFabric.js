@@ -7,27 +7,17 @@ export const initFabric = (background, fabricRef ) => {
     const img = new Image();
     
     img.src = background;
-    
-   
-    
+    img.onload = () => {
       fabricRef.current = new fabric.Canvas("canvas", {
         selection: true,
         width: img.width,
         height: img.height,
       });
-    
-    const newImage = new Image();
-    newImage.src = background;
-    newImage.width = img.width;
-    newImage.height = img.height;
-   
-    
-    img.onload = () => {
-      const newImg = new fabric.Image.fromURL(img.src, function (img) {
-        img.scaleToHeight(newImage.height);
+      fabric.Image.fromURL(img.src, function (img) {
+        img.scaleToHeight(img.height);
         fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
       });
-      
+      console.log(fabricRef.current)
     };
     
   return {fabricRef}
