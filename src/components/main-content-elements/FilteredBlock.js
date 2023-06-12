@@ -1,17 +1,10 @@
-import { deleteDoc, doc } from "firebase/firestore";
+
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { db } from "../../firebase/config";
-import useEditModal from "../../hooks/useEditModal";
-import EditPlayerWindow from "../../pages/Players/components/EditPlayerWindow";
-import EditOpponentWindow from "../../pages/Opponents/components/EditOpponentWindow";
 import * as Icon from "react-bootstrap-icons";
 import "./ItemBlock.css";
 export default function FilteredBlock({type, item, Teams, handleDeleteClick, openEditModal, editClick }) {
   
 
-
-  const [data, setData] = useState();
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
 
@@ -30,7 +23,7 @@ export default function FilteredBlock({type, item, Teams, handleDeleteClick, ope
   const handleClick = (e, item) => {
     setItemToEdit(item);
   };
-  console.log(item)
+
 
   return (
     <>

@@ -6,26 +6,24 @@ import { BackgroundContext } from "../Context/BackgroundContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
+import { update } from "react-spring";
 
 export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
   const navigate = useNavigate();
-  const [id, setId] = useState();
-  const { background, image } = useContext(BackgroundContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState("");
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-
+  const { globalProperties } = useContext(GlobalPropertiesContext);
+  console.log(manyBackgrounds)
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
       color: "tło 1"
     }))
   }, [manyBackgrounds])
-  console.log(backgrounds.length)
   const handleAddDoc = async () => {
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
@@ -34,8 +32,8 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           contentType: "image/jpeg",
         };
         const player = ref(storage, `${defaultBackGround.uid}/posters/${defaultBackGround.uuid + backgrounds.length + i}`);
-
-        const uploadTask = uploadBytesResumable(player, background, metadata);
+        console.log(background.file)
+        const uploadTask = uploadBytesResumable(player, background.file, metadata);
 
         uploadTask.on(
           "state_changed",
@@ -57,7 +55,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               addDoc(collection(db, "yourCatalog"), {
-                color: `tło ${backgrounds.length + i + 1}`,
+                color: background.name,
                 src: downloadURL,
                 uuid: globalProperties.uid,
               });
@@ -65,16 +63,22 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           }
         );
       });
+      updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster)
+    
+      setDoc(doc(collection(db, "coords"), globalProperties.uid), globalProperties);
+      setTimeout(() => {
+        navigate(`/creator/${globalProperties.uid}`)
+      }, 500)
+    } else {
+    
+      updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster)
+    
+      setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
+      // setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
+        navigate(`/creator/${globalProperties.uid}`)
+    
     }
-    
-    updateDoc(doc(db, "yourCatalog", globalProperties.uid), userPoster)
-    
-    updateDoc(doc(db, "coords", globalProperties.uid), globalProperties);
-          setTimeout(() => {
-            navigate(`/creator/${globalProperties.uid}`)
-          },500)
   };
-  
   return (
     <div className={isOpen ? "modal" : "closed-modal"}>
       <div className="modal-window rounded">
@@ -92,23 +96,6 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
               }))
             }
           />
-          <label>Typ wzoru</label>
-          <select
-            name="textAlign"
-            className="form-control w-100"
-            defaultValue={defaultBackGround ? defaultBackGround.type : "MATCH-POSTER"}
-            onChange={(e) =>
-              setUserPoster((prevState) => ({
-                ...prevState,
-                type: e.target.value,
-              }))
-            }
-          >
-            <option value="MATCH-POSTER">zapowiedź meczu / dzień meczowy</option>
-            <option value="RESULT">wynik</option>
-            <option value="STARTING-SQUAD">skład wyjściowy</option>
-            <option value="GOOOOL">GOL</option>
-          </select>
           {progressInfo && <span>{progressInfo}</span>}
           <div className="btn-container justify-content-end h-100 align-items-end mb-3">
             <button onClick={() => setIsOpen(false)} className="btn btn-primary">

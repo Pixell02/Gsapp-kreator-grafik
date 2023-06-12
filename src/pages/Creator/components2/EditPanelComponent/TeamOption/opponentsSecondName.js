@@ -8,6 +8,7 @@ const opponentsSecondName = (fabricRef, opponentName, coords, themeOption, radio
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "opponentsSecondName") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
 

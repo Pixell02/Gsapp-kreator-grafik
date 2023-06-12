@@ -7,6 +7,7 @@ const teamFullName = (fabricRef, yourName, coords, themeOption, radioChecked) =>
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "yourName") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
   const fullName = yourName.split(".")[0] + " " + yourName.split(".")[1];

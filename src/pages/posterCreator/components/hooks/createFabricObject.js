@@ -13,6 +13,7 @@ export const createFabricText = (fabricRef, setFabricObject, name, className) =>
     originY: "center"
   })
   fabricRef.current.add(text);
+  fabricRef.current.renderAll();
   setFabricObject(prevState => [...prevState, { name }])
   ;
 }
@@ -20,7 +21,7 @@ export const createFabricText = (fabricRef, setFabricObject, name, className) =>
 export const createFabricImage = (fabricRef, setFabricObject, name, image) => {
  
   fabric.Image.fromURL(image, function (img) {
-          img.set({
+    img.set({
             top: 400,
             left: 400,
             className: name,
@@ -29,7 +30,8 @@ export const createFabricImage = (fabricRef, setFabricObject, name, image) => {
             type: "image"
           })
           img.scaleToHeight(150)
-          fabricRef.current.add(img);
+    fabricRef.current.add(img);
+    fabricRef.current.renderAll();
         })
   setFabricObject(prevState => [...prevState, { name }])
   ;
@@ -54,6 +56,7 @@ export const createFabricTextBox = (fabricRef, setFabricObject, name, className)
     type: "textBox",
   })
   fabricRef.current.add(text);
+  fabricRef.current.renderAll();
   setFabricObject(prevState => [...prevState, { name }])
   ;
 }
@@ -75,7 +78,7 @@ export const createMultiplyText = (fabricRef, setFabricObject, name, className, 
     type: "textBox",
   })
   fabricRef.current.add(text);
-
+  fabricRef.current.renderAll();
   setFabricObject(prevState => [...prevState, { name }])
   ;
 }

@@ -6,6 +6,7 @@ const teamLogo = (fabricRef, yourLogo, coords, themeOption, radioChecked) => {
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "teamLogo") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
   const img = new Image();

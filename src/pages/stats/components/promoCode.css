@@ -3,6 +3,20 @@
 }
 .promoCode-container .promoCode-content {
   border: 1px solid gray;
-  height: 50%;
   background-color: white;
+}
+.promoCode-container .promoCode-content .code-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.promoCode-container .promoCode-content .code-container .code-value {
+  width: 30%;
+}
+.promoCode-container .promoCode-content .code-container .percentage-value {
+  width: 30%;
+}
+.promoCode-container .promoCode-content .code-container .amount-value {
+  width: 30%;
 }

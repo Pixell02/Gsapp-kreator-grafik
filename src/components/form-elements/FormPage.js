@@ -10,12 +10,13 @@ import { auth } from "../../firebase/config";
 import "./formPage.css";
 import google from "../../img/google.png";
 import facebook from "../../img/fb.png";
+import LanguageOption from "../LanguageOption";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { error, login } = useLogin();
-
+  const { error, login, setError } = useLogin();
+  console.log(error)
   const { dispatch } = useAuthContext();
 
   const handleSubmit = (e) => {
@@ -36,6 +37,7 @@ function LoginPage(props) {
   };
 
   const signInWithGoogle = async () => {
+    setError(null);
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider).then((res) => {
@@ -46,10 +48,13 @@ function LoginPage(props) {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <div className="form">
       <div className="form-group">
         <div className="text-left">
           <p className="login">{props.name}</p>
+        </div>
+        <div>
+          {/* <LanguageOption /> */}
         </div>
         <div className="google-btn">
           <button onClick={signInWithGoogle}>
@@ -61,7 +66,7 @@ function LoginPage(props) {
             </div>
           </button>
         </div>
-        <div className="facebook-btn">
+        {/* <div className="facebook-btn">
           <button onClick={signInWithFacebook}>
             <div className="logo-container">
               <img src={facebook} alt="facebook_logo" className="logo" />
@@ -70,7 +75,7 @@ function LoginPage(props) {
               <span> {props.name} przy pomocy facebooka</span>
             </div>
           </button>
-        </div>
+        </div> */}
         <div className="email-container">
           <input
             type="email"
@@ -88,9 +93,10 @@ function LoginPage(props) {
           value={password}
         />
         <div className="email-container">
-          <button className="btn btn-dark button">Zaloguj się</button>
+          <button type="button" className="btn btn-dark button" onClick={handleSubmit}>Zaloguj się</button>
         </div>
-
+        {error && error ==="Firebase: Error (auth/invalid-email)." && <span style={{color: "red"}}>Zły email</span>}
+        {error && error ==="Firebase: Error (auth/wrong-password)." && <span style={{color: "red"}}>Złe hasło</span>}
         <div className="text-left register-container">{props.footer}</div>
         <div className="text-left register-container ml-5 mt-0">
           Nie pamiętasz hasła?{" "}
@@ -99,7 +105,7 @@ function LoginPage(props) {
           </Link>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

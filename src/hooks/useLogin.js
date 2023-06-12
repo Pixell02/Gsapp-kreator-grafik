@@ -9,7 +9,7 @@ export const useLogin = () => {
     const { dispatch } = useAuthContext()
 
     const login = (email, password) => {
-        setError(null);
+      setError(null);
         signInWithEmailAndPassword(auth, email, password)
           .then((res) => {
             dispatch({type: 'LOGIN', payload: res.user })
@@ -18,5 +18,5 @@ export const useLogin = () => {
             setError(err.message)
           })
     }
-    return { error, login }
+    return { error, setError, login }
 }

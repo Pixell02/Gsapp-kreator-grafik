@@ -97,7 +97,7 @@ function PlayerMainContent() {
               </div>
             </>
           )}
-          {Teams &&
+          {Teams && Teams.length > 1 &&
             Teams.map((teams) => (
               <>
                 <div className="ml-5 mt-3">{teams.firstName + " " + teams.secondName}</div>

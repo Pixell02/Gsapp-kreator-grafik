@@ -59,32 +59,32 @@ export default function UserProfile(props) {
     <div className="main-content">
       {openTeamModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <AddTeamWindow Teams={props.user} open={openTeamModal} onClose={() => setOpenTeamModal(false)} />
+          <AddTeamWindow email={props.email}  Teams={props.user} open={openTeamModal} onClose={() => setOpenTeamModal(false)} />
         </div>
       )}
       {openOpponentModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <AddOpponentWindow Teams={props.user} open={openOpponentModal} onClose={() => setOpenOpponentModal(false)} />
+          <AddOpponentWindow email={props.email}  Teams={props.user} open={openOpponentModal} onClose={() => setOpenOpponentModal(false)} />
         </div>
       )}
       {openPlayerModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <AddPlayerWindow Teams={props.user} open={openPlayerModal} onClose={() => setOpenPlayerModal(false)} />
+          <AddPlayerWindow email={props.email}  Teams={props.user} open={openPlayerModal} onClose={() => setOpenPlayerModal(false)} />
         </div>
       )}
       {data && openEditYourTeam && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <EditYourTeamWindow yourTeam={data} open={openEditYourTeam} onClose={(e) => setOpenEditYourTeam(false)} />
+          <EditYourTeamWindow email={props.email}  yourTeam={data} open={openEditYourTeam} onClose={(e) => setOpenEditYourTeam(false)} />
         </div>
       )}
       {data && openEditOpponent && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <EditOpponentWindow Teams = {props.user} player={data} open={openEditOpponent} onClose={(e) => setOpenEditOpponent(false)} />
+          <EditOpponentWindow email={props.email}  Teams = {props.user} player={data} open={openEditOpponent} onClose={(e) => setOpenEditOpponent(false)} />
         </div>
       )}
       {data && openEditPlayer && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <EditPlayerWindow Teams = {props.user} player={data} open={openEditPlayer} onClose={(e) => setOpenEditPlayer(false)} />
+          <EditPlayerWindow email={props.email}  Teams = {props.user} player={data} open={openEditPlayer} onClose={(e) => setOpenEditPlayer(false)} />
         </div>
       )}
       {data && editLicense && (

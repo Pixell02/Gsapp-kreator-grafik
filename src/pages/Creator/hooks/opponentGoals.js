@@ -10,6 +10,7 @@ export default function opponentGoals(fabricRef, props) {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "opponentGoals") {
             fabricRef.current.remove(fabricRef.current.item(i));
+            fabricRef.current.renderAll();
           }
         });
         let formatText = "";
@@ -63,6 +64,7 @@ export default function opponentGoals(fabricRef, props) {
         }
       });    
       fabricRef.current.add(showPlayer);
+      fabricRef.current.renderAll();
     });
   }
   return { opponentGoals };

@@ -3,22 +3,19 @@ import { fabric } from "fabric";
 import { BackgroundContext } from "../../Context/BackgroundContext";
 import FontFaceObserver from "fontfaceobserver";
 import { GlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
-import { typeData, yourKolejka } from "../objectProperties";
 
 const useActiveObjectCoords = (fabricRef) => {
   const [coords, setCoords] = useState({});
-  const canvasRef = useRef(null);
   const { background, color } = useContext(BackgroundContext);
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  console.log(fabricRef)
   useEffect(() => {
-    if (background) {
-      if (fabricRef && fabricRef.current) {
-        canvasRef.current = fabricRef.current;
+    
+    if ( fabricRef && fabricRef.current?.backgroundImage) {
         const handleObjectModified = () => {
-          const canvas = canvasRef.current;
+          const canvas = fabricRef.current;
           if (canvas) {
             const activeObject = canvas.getActiveObject();
-
             if (activeObject) {
               const newCoords = {
                 Top: parseInt(activeObject.top.toFixed(0)),
@@ -28,7 +25,9 @@ const useActiveObjectCoords = (fabricRef) => {
                 Height: parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)),
                 ScaleToWidth: parseInt((activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0)),
                 ScaleToHeight: parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)),
-                FontSize: activeObject.fontSize ? parseInt(activeObject.fontSize * activeObject.scaleY.toFixed(2)) : null,
+                FontSize: activeObject.fontSize
+                  ? parseInt(activeObject.fontSize * activeObject.scaleY.toFixed(2))
+                  : null,
                 FontFamily:
                   activeObject.className === "opponentPlayerOneGoal"
                     ? globalProperties.yourPlayerOneGoal.fontFamily
@@ -39,7 +38,6 @@ const useActiveObjectCoords = (fabricRef) => {
                 OriginY: activeObject.originY,
                 type: activeObject.type,
                 TextAlign: activeObject.textAlign ? activeObject.textAlign : activeObject.textAlign,
-                
                 Format: activeObject.format,
                 FontStyle: activeObject.fontStyle,
                 LineHeight:
@@ -49,34 +47,35 @@ const useActiveObjectCoords = (fabricRef) => {
                   activeObject.className === "opponentPlayerOneGoal"
                     ? activeObject.lineHeight
                     : undefined,
-                Formatter: activeObject.className === "reserveOne" ? activeObject.Formatter : null
+                Formatter: activeObject.className === "reserveOne" ? activeObject.Formatter : null,
               };
-              
+
               const filteredCoords = Object.entries(newCoords).reduce((acc, [key, value]) => {
-                
                 if (value !== undefined && value !== null) {
                   acc[key] = value;
                 }
                 return acc;
               }, {});
-              
+
               setCoords(filteredCoords);
+            } else {
+              setCoords({})
             }
           }
         };
 
-        canvasRef.current.on("object:modified", handleObjectModified);
-        canvasRef.current.on("mouse:down", handleObjectModified);
-        document.addEventListener("keydown", handleDeleteKeyPress);
-
-        return () => {
-          canvasRef.current.off("object:modified", handleObjectModified);
-          canvasRef.current.off("mouse:down", handleObjectModified);
-          document.removeEventListener("keydown", handleDeleteKeyPress);
-        };
-      }
+        
+          fabricRef.current.on("object:modified", handleObjectModified);
+          fabricRef.current.on("mouse:down", handleObjectModified);
+          document.addEventListener("keydown", handleDeleteKeyPress);
+    
+          return () => {
+            fabricRef.current?.off("object:modified", handleObjectModified);
+            fabricRef.current?.off("mouse:down", handleObjectModified);
+            document.removeEventListener("keydown", handleDeleteKeyPress);
+          };
     }
-  }, [fabricRef, background, globalProperties]);
+  }, [fabricRef.current, background, globalProperties, coords]);
   const handleDeleteKeyPress = (event) => {
     if (event.keyCode === 46) {
       // kod klawisza Delete lub Backspace
@@ -101,9 +100,9 @@ const useActiveObjectCoords = (fabricRef) => {
       }
     }
   };
-  
+
   const updateActiveObjectCoords = (name, value) => {
-    const canvas = canvasRef.current;
+    const canvas = fabricRef.current;
     if (canvas) {
       const activeObject = canvas.getActiveObject();
       if (activeObject) {
@@ -123,25 +122,20 @@ const useActiveObjectCoords = (fabricRef) => {
     }
   };
 
-
   const handleInputChange = (e) => {
-    const canvas = canvasRef.current;
+    const canvas = fabricRef.current;
     const activeObject = canvas.getActiveObject();
     const { name, value } = e.target;
     if (name !== "Fill" && name !== "FontFamily" && name !== "OriginX" && name !== "OriginY") {
-      
       updateActiveObjectCoords(name, Number(value));
     } else {
-      
       updateActiveObjectCoords(name, value.toString());
     }
     setCoords({ ...coords, [name]: value });
   };
 
   useEffect(() => {
-    
     if (coords && coords.className !== undefined) {
-      
       setGlobalProperties((prevState) => {
         const updatedCoords = {
           ...coords,
@@ -157,7 +151,7 @@ const useActiveObjectCoords = (fabricRef) => {
               ],
             }),
         };
-        
+
         return {
           ...prevState,
           [coords.className]: updatedCoords,
@@ -186,7 +180,6 @@ const useActiveObjectCoords = (fabricRef) => {
     updateActiveObjectCoords,
     handleInputChange,
     handleSelectChange,
-    canvasRef
   };
 };
 

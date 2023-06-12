@@ -9,6 +9,7 @@ function additionalText(fabricRef, props) {
       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className === "addedText") {
           fabricRef.current.remove(fabricRef.current.item(i));
+          fabricRef.current.renderAll();
         }
       });
     

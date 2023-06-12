@@ -1,0 +1,58 @@
+.legendary-container {
+  display: flex;
+  flex-direction: row;
+}
+.legendary-container .item {
+  display: flex;
+  align-items: center;
+}
+.legendary-container .item .color {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+li .btn {
+  font-size: 10px;
+  padding: 0 5px 0 5px;
+  margin: 5px;
+}
+
+ul .red-task {
+  color: red;
+}
+ul .yellow-task {
+  color: rgb(208, 135, 1);
+}
+ul .blue-task {
+  color: blue;
+}
+ul .green-task {
+  color: green;
+}
+
+.legendary-container .item .red-color {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  background-color: red;
+}
+.legendary-container .item .green-color {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  background-color: green;
+  margin-right: 10px;
+}
+.legendary-container .item .blue-color {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  background-color: blue;
+  margin-right: 10px;
+}
+.legendary-container .item .yellow-color {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  background-color: rgb(208, 135, 1);
+  margin-right: 10px;
+}

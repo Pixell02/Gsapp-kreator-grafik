@@ -7,7 +7,6 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
   layersName.forEach((layer, i) => {
     for (const key in globalProperties) {
       if (layer.className === key) {
-        console.log(layer)
          if (layer.type === "image") {
           
           fabric.Image.fromURL(layer.image, function (img) {
@@ -20,7 +19,7 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
               type: "image"
             })
             img.scaleToHeight(globalProperties[key].ScaleToHeight)
-            console.log(img)
+           
            
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
@@ -90,7 +89,5 @@ export default function createDefaultObjects(fabricRef, globalProperties, coords
       }
     }
   })
-
-
 
 }

@@ -7,6 +7,7 @@ const teamSecondName = (fabricRef, yourName, coords, themeOption, radioChecked) 
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "yourSecondName") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
 

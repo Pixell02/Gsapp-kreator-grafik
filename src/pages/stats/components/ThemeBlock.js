@@ -68,7 +68,7 @@ export default function ThemeBlock({ themes, posters }) {
                   posters
                     .filter((poster) => poster.themeId === theme.id)
                     .map((poster) => (
-                      <Link to={`/creator/${poster.id}`} className="link-container">
+                      <Link to={`/creator/theme/${poster.id}`} className="link-container">
                         <FilteredBlock item={poster} />
                       </Link>
                     ))}

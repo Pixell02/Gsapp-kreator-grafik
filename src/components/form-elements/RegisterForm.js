@@ -67,7 +67,7 @@ export default function RegisterForm(props) {
             </div>
           </button>
         </div>
-        <div className="facebook-btn">
+        {/* <div className="facebook-btn">
           <button onClick={signUpWithFacebook}>
             <div className="logo-container">
               <img src={facebook} alt="facebook_logo" className="logo" />
@@ -76,7 +76,7 @@ export default function RegisterForm(props) {
               <span> {props.name} przy pomocy facebooka</span>
             </div>
           </button>
-        </div>
+        </div> */}
         <div className="email-container">
           <input
             type="email"

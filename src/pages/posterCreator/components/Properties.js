@@ -9,15 +9,15 @@ import TextProperties from "./components2/TextProperties";
 import useActiveObjectCoords from "./hooks/useActiveObject";
 
 export default function Properties({ fabricRef }) {
-  const { coords, canvasRef, setCoords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
-  
+  const { coords, setCoords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
+
   return (
     <div className="overflow-scroll d-flex h-75">
       {coords.type === "image" && (
         <ImageProperties coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}
       {coords.type === "text" && (
-        <TextProperties coords={coords} canvasRef={canvasRef} setCoords={setCoords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
+        <TextProperties coords={coords} canvasRef={fabricRef} setCoords={setCoords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange} />
       )}
       
       {coords.type === "textBox" && (

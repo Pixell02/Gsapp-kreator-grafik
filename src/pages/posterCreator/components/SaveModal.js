@@ -59,7 +59,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
         };
         const player = ref(storage, `${userPoster.uid}/posters/${globalProperties.uid + i + 2}`);
 
-        const uploadTask = uploadBytesResumable(player, background, metadata);
+        const uploadTask = uploadBytesResumable(player, background.file, metadata);
 
         uploadTask.on(
           "state_changed",
@@ -81,7 +81,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               addDoc(collection(db, "yourCatalog"), {
-                color: `tło ${i + 2}`,
+                color: background.name,
                 src: downloadURL,
                 uuid: globalProperties.uid,
               });

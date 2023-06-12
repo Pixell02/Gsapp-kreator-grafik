@@ -16,12 +16,14 @@ export default function Success() {
   const navigate = useNavigate();
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
   
-  const currentDate = moment().format("MM-DD-YYYY");
+  const [currentDate] = useState(moment().format("MM-DD-YYYY"));
+  
   const handleGetOrder = async () => {
     try {
       const response = await getOrder({ orderId });
       const order = response.data[0];
-      
+      const orderRef = collection(db, "orders");
+      addDoc(orderRef, order);
       if (order.status === "COMPLETED") {
         if (order.description === "Licencja") {
           const newDate = moment(currentDate).add(1, "months").format("MM-DD-YYYY");
@@ -50,7 +52,9 @@ export default function Success() {
 
   useEffect(() => {
     if (orderId && License) {
-      handleGetOrder();
+      if (License.length > 0) {
+        handleGetOrder();
+      }
     }
   }, [License]);
 

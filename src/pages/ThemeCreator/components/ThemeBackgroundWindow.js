@@ -4,14 +4,15 @@ import Draggable from "react-draggable";
 import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext";
 import { fabric } from "fabric";
 import { useEffect } from "react";
+import useDefaultBackgrounds from "../hooks/useDefaultBackgrounds";
 
 export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
   const [position, setPosition] = useState({ x: 0, y: -300 });
-  const [defaultBackgrounds, setDefaultBackgrounds] = useState(backgrounds ? Array.from(backgrounds) : null);
-  const [mainBackground, setMainBackground] = useState();
+ 
+  const { defaultBackgrounds, handleDefaultBackgroundChangeName } = useDefaultBackgrounds(backgrounds?backgrounds:null);
 
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
-  const { image, setImage, color, setColor } = useContext(BackgroundContext);
+  const { image, setImage, setColor } = useContext(BackgroundContext);
 
   function handleFileUpload(e) {
     const files = e.target.files;
@@ -23,7 +24,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     }));
     setManyBackgrounds([...manyBackgrounds, ...updatedBackgrounds]);
   }
-    
+
   const handleMainNameChange = (e) => {
     const newName = e.target.value;
     setImage((prev) => ({
@@ -31,7 +32,6 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
       name: newName,
     }));
   };
-  
 
   function handleNameChange(e, i) {
     const newName = e.target.value;
@@ -44,7 +44,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
   }
   const handleSelectColor = (color) => {
     setColor(color);
-    const newImg = new fabric.Image.fromURL(color.preview, function (img) {
+    fabric.Image.fromURL(color.preview ? color.preview : color.src, function (img) {
       fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
     });
   };
@@ -76,12 +76,15 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
         </div>
         <div className="content w-100 d-flex flex-column justify-content-center">
           {defaultBackgrounds &&
-            defaultBackgrounds.map((image) => (
-              <div className="d-flex w-100 flex-row h-100" key={image.name}>
+            defaultBackgrounds.map((image, i) => (
+              <div className="d-flex w-100 flex-row" key={image.name}>
                 <div className="w-25">
-                  <img src={image.src} style={{ maxWidth: "20px" }} alt="Background" />
+                  <img src={image.src} style={{ maxWidth: "50px" }} alt="Background" />
                 </div>
-                {image.color}
+                <input value={image.color} onChange={(e) => handleDefaultBackgroundChangeName(e, i)} />
+                <button onClick={() => handleSelectColor(image)} className="btn">
+                    wybierz
+                  </button>
               </div>
             ))}
 
@@ -90,28 +93,32 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
               <div className="w-25">
                 <img src={image.preview} style={{ maxWidth: "50px" }} alt="Background" />
               </div>
-
               <input type="text" value={image.name} onChange={handleMainNameChange} className="w-50" />
               <button onClick={() => handleSelectColor(image)} className="btn">
                 wybierz
               </button>
             </div>
           )}
+          <hr />
           {manyBackgrounds &&
             manyBackgrounds.map((image, i) => (
-              <div className="d-flex w-100 flex-column" key={i}>
-                <div className="w-100 flex-row">
-                  {image.preview && <img src={image.preview} style={{ width: "50px" }} alt="Background" />}
+              <div className="d-flex w-100 flex-row" key={i}>
+                <div className="w-25">
+                  {image.preview && (
+                      <img src={image.preview} style={{ maxWidth: "50px" }} alt="Background" />
+                 
+                  )}
                   {!image.preview && (
                     <div className="preview-placeholder" style={{ width: "50px" }}>
                       Brak podglądu
                     </div>
                   )}
-                  <input type="text" value={image.name} onChange={(e) => handleNameChange(e, i)} className="w-50" />
+                </div>
+                <input type="text" value={image.name} onChange={(e) => handleNameChange(e, i)} />
+
                   <button onClick={() => handleSelectColor(image)} className="btn">
                     wybierz
                   </button>
-                </div>
               </div>
             ))}
         </div>

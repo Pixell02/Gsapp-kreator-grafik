@@ -16,11 +16,13 @@ import HelpLinesModal from "./components/HelpLinesModal";
 import useGuides from "./components/hooks/useGuides";
 
 import Draggable from "react-draggable";
+import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   const [background, setBackground] = useState(defaultBackGround ? defaultBackGround.src : null);
   const [image, setImage] = useState(null);
   const [globalProperties, setGlobalProperties] = useState({ coords } ? coords : {});
+  const [color, setColor] = useState();
   const [isOpen, setIsOpen] = useState(true);
   const fabricRef = useRef(null);
   const [manyBackgrounds, setManyBackgrounds] = useState([]);
@@ -28,15 +30,16 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [helpLinesModal, setHelpLinesModal] = useState(false);
 
   useEffect(() => {
-    if (fabricRef) {
+    if (fabricRef.current) {
+      
       createDefaultObjects(fabricRef, globalProperties, coords);
     }
-  }, [fabricRef]);
+  }, [fabricRef.current]);
  
 
   
   return (
-    <BackgroundContext.Provider value={{ background, setBackground, image, setImage }}>
+    <BackgroundContext.Provider value={{ background, setBackground, image, setImage, color, setColor }}>
       <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>
         <ManyBackgroundsContext.Provider value={{ manyBackgrounds, setManyBackgrounds }}>
           
@@ -53,7 +56,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
             />
           )}
           <div className="add-creator-container d-flex h-100">
-            <AddBackgroundWindow backgrounds={backgrounds} />
+            <ThemeBackgroundWindow backgrounds={backgrounds} fabricRef={fabricRef} />
             <div className="add-preview-container d-flex flex-column h-100 w-100">
               <div className="w-100 d-flex z-index-1000">
                 <WorkSpaceNavbar setHelpLinesModal={setHelpLinesModal} helpLinesModal={helpLinesModal} />
@@ -64,7 +67,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
                     <div className="w-100 h-100">
                       <div className="add-preview-container d-flex flex-column h-100 w-100 align-items-center justify-content-center">
                         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
-                          <Canvas fabricRef={fabricRef} />
+                          <Canvas fabricRef={fabricRef} globalProperties={globalProperties} coords={coords} />
                         </div>
                       </div>
                     </div>

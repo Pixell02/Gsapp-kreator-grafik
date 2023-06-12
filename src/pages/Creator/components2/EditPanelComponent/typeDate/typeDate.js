@@ -8,6 +8,7 @@ const typeDate = (fabricRef, date, coords, themeOption, posterBackground) => {
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "typeDate") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
   const font = new FontFaceObserver(coords.typeData.FontFamily);

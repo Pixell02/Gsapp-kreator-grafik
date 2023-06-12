@@ -8,6 +8,7 @@ const typePlace = (fabricRef, coords, place, themeOption) => {
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "typePlace") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
 

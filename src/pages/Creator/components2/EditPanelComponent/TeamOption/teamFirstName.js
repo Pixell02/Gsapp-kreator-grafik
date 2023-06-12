@@ -7,6 +7,7 @@ const teamFirstName = (fabricRef, yourName, coords, themeOption, radioChecked) =
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "yourFirstName") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
   const firstTeamName = yourName.split(".")[0].toUpperCase();

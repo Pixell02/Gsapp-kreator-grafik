@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
 import { addDoc, collection } from "firebase/firestore";
@@ -9,17 +9,20 @@ import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } fr
 import { useCollection } from "../../../hooks/useCollection";
 import Select from "react-select";
 import { useTeams } from "./useTeams";
+import { LicenseContext } from "../../../context/LicenseContext";
+import { addPlayerLog, addPlayerWithImgLog } from "../../stats/components/addLogs";
 
-function AddPlayerWindow({ open, onClose, Teams }) {
+function AddPlayerWindow({ open, onClose, Teams, email }) {
   const { id } = useParams();
   const { user } = useAuthContext();
+  const {license} = useContext(LicenseContext)
   const [firstPlayerName, setFirstPlayerName] = useState("");
   const [secondPlayerName, setSecondPlayerName] = useState("");
   const [number, setNumber] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams);
-  
+  console.log(license)
 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
@@ -85,6 +88,9 @@ function AddPlayerWindow({ open, onClose, Teams }) {
         uid: id ? id : user.uid,
       });
         });
+        if (license.type === "admin") {
+          addPlayerWithImgLog(user, firstPlayerName, secondPlayerName, selectedTeam, email)
+        }
       }
     )
       } else {
@@ -95,7 +101,10 @@ function AddPlayerWindow({ open, onClose, Teams }) {
           number: number || "",
           team: selectedTeam,
           uid: id ? id : user.uid,
-      })
+        })
+        if (license.type === "admin") {
+          addPlayerLog(user, firstPlayerName, secondPlayerName, selectedTeam, email)
+        }
       }
       onClose(true);
       setFirstPlayerName("");

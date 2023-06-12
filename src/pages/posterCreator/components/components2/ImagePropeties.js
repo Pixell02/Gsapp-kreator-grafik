@@ -2,7 +2,7 @@ import React from 'react'
 
 
 export default function ImageProperties({ coords, fabricRef, handleInputChange }) {
-  console.log(coords)
+  
   return (
     <div>
       <div>Nazwa obiektu : {coords.className}</div>

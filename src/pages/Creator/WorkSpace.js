@@ -124,7 +124,6 @@ function WorkSpace() {
 
   const location = useLocation();
   const [hasTheme, setHasTheme] = useState(false);
-
   useEffect(() => {
     const theme = extractThemeFromURL(location.pathname);
     setHasTheme(theme !== null);
@@ -208,7 +207,7 @@ function WorkSpace() {
                 {(user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" ||
                   user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" ||
                   user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2") && (
-                  <button className="btn" onClick={() => navigate(hasTheme ? `/posterCreator/${poster}` : `/posterCreator/theme/${poster}`)}>
+                  <button className="btn" onClick={() => navigate(hasTheme ? `/posterCreator/theme/${poster}` : `/posterCreator/${poster}`)}>
                     Edytuj
                   </button>
                 )}

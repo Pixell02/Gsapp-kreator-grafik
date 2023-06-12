@@ -8,6 +8,7 @@ const opponentsFullName = (fabricRef, opponentName, coords, themeOption, radioCh
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "opponentsName") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
   const fontOpponent = new FontFaceObserver(

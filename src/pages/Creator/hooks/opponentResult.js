@@ -8,6 +8,7 @@ export const opponentResult = (fabricRef, props) => {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "yourOpponentResult") {
             fabricRef.current.remove(fabricRef.current.item(i));
+            fabricRef.current.renderAll();
           }
         });
         const font = new FontFaceObserver(

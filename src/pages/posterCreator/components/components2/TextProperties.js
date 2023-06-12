@@ -13,16 +13,17 @@ export default function TextProperties({ coords, canvasRef, setCoords, handleInp
   const themeOption = themeOptions?.find(option => option.label === color.name);
  
   const fill = themeOption ? themeOption.Fill : coords.Fill;
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    
-    const activeObject = canvas.getActiveObject();
-    if (activeObject) {
-      activeObject.set("fill", fill);
-      canvas.renderAll();
-    }
   
+  useEffect(() => {
+    if (canvasRef.current?.backgroundImage) {
+      const canvas = canvasRef.current;
+    
+      const activeObject = canvas.getActiveObject();
+      if (activeObject) {
+        activeObject.set("fill", fill);
+        canvas.renderAll();
+      }
+    }
   },[fill, color, canvasRef])
   return (
     <div>

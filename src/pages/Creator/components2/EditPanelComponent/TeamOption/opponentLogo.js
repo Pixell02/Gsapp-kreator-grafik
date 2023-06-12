@@ -7,6 +7,7 @@ const opponentLogo = (fabricRef, opponentLogo, coords, themeOption, radioChecked
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "opponentImage") {
       fabricRef.current.remove(fabricRef.current.item(i));
+      fabricRef.current.renderAll();
     }
   });
   const opponentImg = new Image();
