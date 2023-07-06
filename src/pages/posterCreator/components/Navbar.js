@@ -1,15 +1,20 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { useContext } from "react";
+import { NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { LanguageContext } from "../../../context/LanguageContext";
 
-export default function WorkSpaceNavbar({setHelpLinesModal, helpLinesModal}) {
+export default function WorkSpaceNavbar({ setHelpLinesModal, helpLinesModal }) {
+  
+  const {language} = useContext(LanguageContext)
+
   return (
     <div className=" nav-container w-100 bg-light">
       <div class="collapse navbar-collapse d-flex flex-row w-100">
         <div class="navbar-nav d-flex flex-row ml-5" style={{marginLeft: "100px"}}>
           
           <NavDropdown title="obszar roboczy">
-            <NavDropdown.Item ><Link style={{color:"black"}} to="/posterCreator/theme">do motywów</Link></NavDropdown.Item>
+            <NavDropdown.Item ><Link style={{ color: "black" }} to={`/${language}/posterCreator/theme`}>do motywów</Link></NavDropdown.Item>
             <NavDropdown.Item >do GIFów</NavDropdown.Item>
           </NavDropdown>
          

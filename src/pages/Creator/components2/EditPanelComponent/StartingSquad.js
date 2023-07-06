@@ -27,9 +27,7 @@ export default function StartingSquad({ fabricRef, coords, themeOption, posterBa
     // );
     // setSpecialPlayerOption(filtered);
   };
-  const getYoung = (options) => {
-    setYoung((prev) => [...prev, options.value]);
-  };
+  
   const [reserve, handleReserveChange] = useReservePlayer(Array(9).fill());
   const poster = useParams();
 

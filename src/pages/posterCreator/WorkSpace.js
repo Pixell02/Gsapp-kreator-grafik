@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Canvas from "./components/Canvas";
-import {fabric} from "fabric"
 import EditPanel from "./components/EditPanel";
 import WorkSpaceNavbar from "./components/Navbar";
 import SaveModal from "./components/SaveModal";
@@ -19,7 +18,7 @@ import Draggable from "react-draggable";
 import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
-  const [background, setBackground] = useState(defaultBackGround ? defaultBackGround.src : null);
+  const [background, setBackground] = useState(defaultBackGround ? defaultBackGround : null);
   const [image, setImage] = useState(null);
   const [globalProperties, setGlobalProperties] = useState({ coords } ? coords : {});
   const [color, setColor] = useState();
@@ -28,9 +27,8 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [manyBackgrounds, setManyBackgrounds] = useState([]);
   const {lines} = useGuides();
   const [helpLinesModal, setHelpLinesModal] = useState(false);
-
   useEffect(() => {
-    if (fabricRef.current) {
+    if (fabricRef.current?.backgroundImage) {
       
       createDefaultObjects(fabricRef, globalProperties, coords);
     }

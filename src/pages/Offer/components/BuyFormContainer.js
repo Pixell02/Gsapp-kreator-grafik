@@ -8,7 +8,7 @@ import ProductsContainer from "./ProductsContainer";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import useProducts from "../hooks/useProducts";
 import usePromoCode from "../hooks/usePromoCode";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 
 function BuyFormContainer() {
@@ -31,13 +31,11 @@ function BuyFormContainer() {
       const url = new URL(data);
       const searchParams = new URLSearchParams(url.search);
       const orderId = searchParams.get("orderId");
-      const orderRef = collection(db, "orderLogi");
-      addDoc(orderRef, {
-        data: data,
+      const orderRef = doc(db, "orderId", user.uid);
+      setDoc(orderRef, {
         orderId: orderId,
-        userEmail: user.email + " " + user.uid
+        uid:user.uid
       });
-      localStorage.setItem("orderId", orderId);
       window.location.href = data;
     } catch (error) {
       console.error(error);

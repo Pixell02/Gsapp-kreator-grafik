@@ -38,6 +38,7 @@ export default function yourTeamResult(props) {
         selectable: false,
         fill: props.coords.yourPlayerOneGoal.Fill,
         className: "yourTeamGoals",
+        angle: props.coords.yourPlayerOneGoal.Angle ? props.coords.yourPlayerOneGoal.Angle : 0,
         originX: props.radioChecked === "radio1" ? props.coords.yourPlayerOneGoal.OriginX : props.coords.opponentPlayerOneGoal.OriginX,
         originY: "top",
       });

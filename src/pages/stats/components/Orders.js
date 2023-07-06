@@ -17,7 +17,7 @@ export default function Orders(props) {
   };
 
   const [dataFiltered, setDataFiltered] = useState([]);
-
+  console.log(formattedArray)
   useEffect(() => {
     if (user) {
       const filteredData = user.filter((user, index, self) => {
@@ -49,7 +49,7 @@ export default function Orders(props) {
         <table className="table">
           <tr>
             <th>Id zamówienia</th>
-            <th>Logo drużyny</th>
+            <th>Dane kupującego</th>
             <th>Nazwa drużyny(id)</th>
             <th>Opis</th>
             <th>Data</th>
@@ -66,7 +66,12 @@ export default function Orders(props) {
                       .map((user) => (
                         <>
                           <td className="dimension">
-                            <img className="logo-img" src={user.img} />
+                            <ul>
+                              <li>{history.buyer?.firstName}</li>
+                              <li>{history.buyer?.lastName}</li>
+                              <li>{history.buyer?.delivery?.street}</li>
+                              <li>{history.buyer?.delivery?.postalCode + " " + history.buyer?.delivery?.city}</li>
+                            </ul>
                           </td>
                           <td className="dimension">
                             <div>

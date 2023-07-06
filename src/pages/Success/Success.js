@@ -1,29 +1,37 @@
-import axios from "axios";
-import { addDoc, collection, deleteDoc, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+
+import { addDoc, collection, doc,setDoc } from "firebase/firestore";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCollection } from "../../hooks/useCollection";
 import moment from "moment";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { LanguageContext } from "../../context/LanguageContext";
 
 export default function Success() {
   const { user } = useAuthContext();
-  const [orderId, setOrderId] = useState(localStorage.getItem("orderId"));
+  const { documents: ordersId } = useCollection("orderId", ["uid", "==", user.uid])
+  const { language } = useContext(LanguageContext);
   const functions = getFunctions();
   const getOrder = httpsCallable(functions, "getOrder");
+  const createFax = httpsCallable(functions, "createFax");
   const navigate = useNavigate();
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
-  
+  const [orderId, setOrderId] = useState(null);
   const [currentDate] = useState(moment().format("MM-DD-YYYY"));
-  
+  const [isReady, setIsReady] = useState(false);
+  console.log(language)
+  useEffect(() => {
+    if(ordersId?.length > 0)
+    setOrderId(ordersId[0].orderId)
+  },[ordersId])
   const handleGetOrder = async () => {
     try {
       const response = await getOrder({ orderId });
       const order = response.data[0];
-      const orderRef = collection(db, "orders");
-      addDoc(orderRef, order);
+      
+      console.log(order);
       if (order.status === "COMPLETED") {
         if (order.description === "Licencja") {
           const newDate = moment(currentDate).add(1, "months").format("MM-DD-YYYY");
@@ -38,25 +46,32 @@ export default function Success() {
       addDoc(historyRef, {
         uid: user.uid,
         type: order.description,
+        buyer: order.buyer,
+        delivery: order.buyer.delivery,
         orderId: order.orderId,
         products: order.products,
         date: Date.now(),
       });
       }
-      localStorage.removeItem("orderId")
-      navigate("/account")
+      const orderRef = doc(db, "orderId", user.uid);
+      setDoc(orderRef, {
+        orderId: "",
+        uid:user.uid
+      });
+      navigate(`/${language}/account`)
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    if (orderId && License) {
+    if (orderId && License && !isReady) {
       if (License.length > 0) {
         handleGetOrder();
+        setIsReady(true);
       }
     }
-  }, [License]);
+  }, [License, orderId]);
 
   return <div></div>;
 }

@@ -5,11 +5,11 @@ import createDefaultObjects from './createDefaultObjects';
 export const initFabric = (fabricRef, background) => {
   const img = new Image();
     img.src = background;
-    // img.onload = () => {
+    img.onload = () => {
   fabricRef.current = new fabric.Canvas("canvas", {
          selection: true
        });
-    // };
+    };
 
     fabricRef.current.setWidth(img.width);
     fabricRef.current.setHeight(img.height);

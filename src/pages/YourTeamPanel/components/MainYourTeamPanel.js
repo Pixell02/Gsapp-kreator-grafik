@@ -9,33 +9,20 @@ import YourTeamBlock from "./YourTeamBlock";
 import WelcomeModal from "./WelcomeModal";
 import { useContext } from "react";
 import { LicenseContext } from "../../../context/LicenseContext";
+import translate from "./locales/yourTeamPanel.json"
+import { LanguageContext } from "../../../context/LanguageContext"
 // Styles
 import "./MainYourTeamPanel.css";
 function MainYourTeamPanel() {
   const { user } = useAuthContext();
   const { setLicense } = useContext(LicenseContext);
+  const { language } = useContext(LanguageContext);
   const [openModal, setOpenModal] = useState(false);
   const { documents: Team } = useCollection("Teams", ["uid", "==", user.uid]);
-  const { documents: licensed} = useCollection("user", ["uid", "==", user.uid]);
+  const { documents: licensed } = useCollection("user", ["uid", "==", user.uid]);
   useEffect(() => {  
     if (licensed) {
       if (licensed.length > 0) {
-        // const currentStamp = new Date();
-        // const convertedTime = currentStamp.getTime();
-        // const licenseDate = new Date(licensed[0].expireDate);
-        // const formattedLicense = licenseDate.getTime();
-        // const userRef = doc(db, "user", licensed[0].id);
-        // if (licensed[0].license === "full-license") {
-        //   if (convertedTime > formattedLicense) {
-        //     setDoc(userRef, {
-        //       license: "no-license",
-        //       expireDate: "",
-        //       uid: user.uid,
-        //     });
-        //   } else {
-        //     console.log("logged in");
-        //   }
-        // }
         setLicense((prev) => ({ ...prev, type: licensed[0].license }));
       }
     }
@@ -49,17 +36,17 @@ function MainYourTeamPanel() {
         <div className="ml-5 w-100">
           <div className="d-flex align-items-center">
             <div className="w-100">
-              <Title title="Panel drużyny" />
+              <Title title={translate.title[language]} />
             </div>
             <div className="empty-container"></div>
             <div className="d-flex guide-btn-container">
               <button onClick={() => navigate("/guide")} className="btn primary-btn">
-                Samouczek
+              {translate.guide[language]} 
               </button>
             </div>
           </div>
           <button className="btn primary-btn" onClick={() => setOpenModal(true)}>
-            Dodaj drużyne
+          {translate.addTeam[language]} 
           </button>
           <ItemContainer>
             <YourTeamBlock Team={Team} />

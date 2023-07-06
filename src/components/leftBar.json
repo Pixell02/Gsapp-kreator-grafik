@@ -1,0 +1,51 @@
+{
+  "catalog": {
+    "pl": "Katalog",
+    "en": "Catalog",
+    "es": "Catálogo",
+    "de": "Katalog",
+    "fr": "Catalogue"
+  },
+  "yourCatalog": {
+    "pl": "Twój katalog",
+    "en": "Your Catalog",
+    "es": "Tu catálogo",
+    "de": "Dein Katalog",
+    "fr": "Votre catalogue"
+  },
+  "yourTeamPanel": {
+    "pl": "Panel drużyny",
+    "en": "Your Team Panel",
+    "es": "Panel de tu equipo",
+    "de": "Dein Team-Panel",
+    "fr": "Votre panel d'équipe"
+  },
+  "players": {
+    "pl": "Zawodnicy",
+    "en": "Players",
+    "es": "Jugadores",
+    "de": "Spieler",
+    "fr": "Joueurs"
+  },
+  "opponents": {
+    "pl": "Przeciwnicy",
+    "en": "Opponents",
+    "es": "Adversarios",
+    "de": "Gegner",
+    "fr": "Adversaires"
+  },
+  "buyAccess": {
+    "pl": "Kup dostęp",
+    "en": "Buy Access",
+    "es": "Comprar acceso",
+    "de": "Zugang kaufen",
+    "fr": "Acheter l'accès"
+  },
+  "Account": {
+    "pl": "Konto",
+    "en": "Account",
+    "es": "Cuenta",
+    "de": "Konto",
+    "fr": "Compte"
+  }
+}

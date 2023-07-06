@@ -1,0 +1,51 @@
+{
+  "login": {
+    "pl": "zaloguj się",
+    "en": "log in",
+    "es": "iniciar sesión",
+    "de": "anmelden",
+    "fr": "se connecter"
+  },
+  "passwordReset": {
+    "pl": "Zresetuj hasło",
+    "en": "Reset password",
+    "es": "Restablecer contraseña",
+    "de": "Passwort zurücksetzen",
+    "fr": "Réinitialiser le mot de passe"
+  },
+  "email": {
+    "pl": "e-mail *",
+    "en": "email *",
+    "es": "correo electrónico *",
+    "de": "E-Mail *",
+    "fr": "courriel *"
+  },
+  "password": {
+    "pl": "hasło *",
+    "en": "password *",
+    "es": "contraseña *",
+    "de": "Passwort *",
+    "fr": "mot de passe *"
+  },
+  "forgotPassword": {
+    "pl": "Nie pamiętasz hasła?",
+    "en": "Forgot your password?",
+    "es": "¿Olvidaste tu contraseña?",
+    "de": "Passwort vergessen?",
+    "fr": "Mot de passe oublié ?"
+  },
+  "resetPassword": {
+    "pl": "Zresetuj hasło",
+      "en": "Reset password",
+      "es": "Restablecer contraseña",
+      "de": "Passwort zurücksetzen",
+      "fr": "Réinitialiser le mot de passe"
+  },
+  "usingGoogle": {
+    "pl": "za pomocą Google",
+    "en": "using Google",
+    "es": "utilizando Google",
+    "de": "mit Google",
+    "fr": "en utilisant Google"
+  }
+}

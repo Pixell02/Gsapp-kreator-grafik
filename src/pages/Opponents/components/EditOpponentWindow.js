@@ -87,8 +87,8 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               const docRef = doc(db, "Opponents", player.id);
               updateDoc(docRef, {
-                firstName: firstOpponentName,
-                secondName: secondOpponentName,
+                firstName: firstOpponentName.trim(),
+                secondName: secondOpponentName.trim(),
                 img: downloadURL,
                 team: selectedTeam,
               });
@@ -98,8 +98,8 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
       } else {
         const docRef = doc(db, "Opponents", player.id);
         updateDoc(docRef, {
-          firstName: firstOpponentName,
-          secondName: secondOpponentName,
+          firstName: firstOpponentName.trim(),
+          secondName: secondOpponentName.trim(),
           team: selectedTeam,
         });
       }

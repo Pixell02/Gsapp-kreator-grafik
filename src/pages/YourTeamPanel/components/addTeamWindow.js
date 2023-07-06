@@ -10,12 +10,14 @@ import { sportOptions } from "../../../components/options";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { LicenseContext } from "../../../context/LicenseContext";
+import { LanguageContext } from "../../../context/LanguageContext";
+import translate from "./locales/yourTeamPanel.json"
 
 function AddTeamWindow({ open, onClose }) {
   const [firstTeamName, setFirstTeamName] = useState("");
   const [secondTeamName, setSecondTeamName] = useState("");
   const { license } = useContext(LicenseContext)
-  console.log(license)
+  const { language } = useContext(LanguageContext);
   const { id } = useParams()
   const [image, setImage] = useState(null);
   const [sport, setSport] = useState();
@@ -29,13 +31,6 @@ function AddTeamWindow({ open, onClose }) {
   const getSport = (option) => {
     setSport(option.value);
   };
-  const options = [
-    { label: "piłka nożna", value: "piłka nożna" },
-    { label: "siatkówka", value: "siatkówka" },
-    { label: "koszykówka", value: "koszykówka" },
-    { label: "piłka ręczna", value: "piłka ręczna" },
-    { label: "hokej", value: "hokej" },
-  ];
 
   useEffect(() => {
     if (image) {
@@ -85,8 +80,8 @@ function AddTeamWindow({ open, onClose }) {
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               addDoc(collection(db, "Teams"), {
-                firstName: firstTeamName,
-                secondName: secondTeamName,
+                firstName: firstTeamName.trim(),
+                secondName: secondTeamName.trim(),
                 img: downloadURL,
                 sport: sport,
                 uid: id ? id : user.uid,
@@ -98,8 +93,8 @@ function AddTeamWindow({ open, onClose }) {
         )
       } else {
         addDoc(collection(db, "Teams"), {
-          firstName: firstTeamName,
-          secondName: secondTeamName,
+          firstName: firstTeamName.trim(),
+          secondName: secondTeamName.trim(),
           img: "",
           sport: sport,
           uid: id ? id : user.uid,
@@ -116,7 +111,7 @@ function AddTeamWindow({ open, onClose }) {
   return (
     <div className={open ? "active-modal" : "modal"}>
       <div className="add-window yourTeam-panel-window">
-        <label>Pierwsza część nazwy drużyny</label>
+        <label>{translate.firstTeamName[language]}</label>
         <input
           type="text"
           onChange={(e) => setFirstTeamName(e.target.value)}
@@ -124,7 +119,7 @@ function AddTeamWindow({ open, onClose }) {
           className="firstTeamName"
           required
         />
-        <label>Druga część nazwy drużyny</label>
+        <label>{translate.secondTeamName[language]}</label>
         <input
           type="text"
           onChange={(e) => setSecondTeamName(e.target.value)}
@@ -132,10 +127,10 @@ function AddTeamWindow({ open, onClose }) {
           className="secondTeamName"
           required
         />
-        <label>Dyscyplina</label>
+        <label>{translate.discipline[language]}</label>
         <Select options={sportOptions} onChange={getSport} />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
-          Dodaj logo
+        {translate.addLogo[language]}
         </button>
         <input
           type="file"
@@ -169,10 +164,10 @@ function AddTeamWindow({ open, onClose }) {
             }}
             className="btn primary-btn"
           >
-            Anuluj
+            {translate.Cancel[language]}
           </button>
           <button onClick={handleSubmit} className="btn primary-btn">
-            Zapisz
+          {translate.Save[language]}
           </button>
         </div>
       </div>

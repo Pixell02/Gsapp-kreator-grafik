@@ -1,0 +1,24 @@
+{
+    "login": {
+      "pl": "Zaloguj się",
+      "en": "Log in",
+      "es": "Iniciar sesión",
+      "de": "Einloggen",
+      "fr": "Se connecter"
+    },
+    "register": {
+      "pl": "Zarejestruj się",
+      "en": "Register",
+      "es": "Registrarse",
+      "de": "Registrieren",
+      "fr": "S'inscrire"
+    },
+    "noAccount": {
+      "pl": "Nie masz jeszcze konta?",
+      "en": "Don't have an account yet?",
+      "es": "¿No tienes una cuenta aún?",
+      "de": "Du hast noch keinen Account?",
+      "fr": "Vous n'avez pas encore de compte ?"
+    }
+    
+}

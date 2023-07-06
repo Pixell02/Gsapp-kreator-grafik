@@ -27,6 +27,7 @@ const typePlace = (fabricRef, coords, place, themeOption) => {
     originX: coords.typePlace.OriginX,
     originY: coords.typePlace.OriginY,
     fontFamily: coords.typePlace.FontFamily,
+    angle: coords.typePlace.Angle ? coords.typePlace.Angle : 0,
     fontStyle: coords.typePlace.FontStyle ? coords.typePlace.FontStyle : "normal"
   });
       

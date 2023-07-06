@@ -1,9 +1,10 @@
 import yourTeamLogo from "../../img/crest_2.png";
 import opponentTeamLogo from "../../img/crest_1.png";
-
+import playerImg from "../../img/playerImg.png"
 export const layersName = [
   { name: "herb gospodarza", type: "image", image: yourTeamLogo, className: "yourTeamLogo" },
   { name: "herb przeciwnika", type: "image", image: opponentTeamLogo, className: "opponentImage" },
+  { name: "zdjęcie zawodnika (do bazy się nie dodaje jeszcze)", type: "playerImage", image: playerImg, className: "playerImage"},
   { name: "pierwsza część nazwy gospodarza", type: "text", text: "Twoja", className: "yourTeamFirstName" },
   { name: "druga część nazwy gospodarza", type: "text", text: "Drużyna", className: "yourTeamSecondName" },
   { name: "pełna nazwa gospodarza", type: "text", text: "Twoja Drużyna", className: "yourTeamName" },
@@ -42,4 +43,6 @@ export const layersName = [
   { name: "kolejka", type: "text", text: "kolejka", className: "yourKolejka" },
   { name: "miejsce", type: "text", text: "miejsce", className: "typePlace" },
   { name: "data i godzina", type: "text", text: "data i godzina", className: "typeData" },
+  { name: "linia tekstu", type: "text", text: "linia tekstu", className: ""},
+  { name: "pole tekstowe", type: "text", text: "pole tekstowe", className:""}
 ];

@@ -1,0 +1,100 @@
+{
+  "title": {
+    "pl": "Panel drużyny",
+    "en": "Team Panel",
+    "es": "Panel de equipo",
+    "de": "Team-Panel",
+    "fr": "Panel d'équipe"
+  },
+  "guide": {
+    "pl": "Samouczek",
+    "en": "Guide",
+    "es": "Guía",
+    "de": "Anleitung",
+    "fr": "Guide"
+  },
+  "addTeam": {
+    "pl": "Dodaj drużynę",
+    "en": "Add Team",
+    "es": "Agregar equipo",
+    "de": "Team hinzufügen",
+    "fr": "Ajouter une équipe"
+  },
+  "firstTeamName": {
+    "pl": "Pierwsza część nazwy drużyny",
+    "en": "First part of the team name",
+    "es": "Primera parte del nombre del equipo",
+    "de": "Erster Teil des Teamnamens",
+    "fr": "Première partie du nom de l'équipe"
+  },
+  "secondTeamName": {
+    "pl": "Druga część nazwy drużyny",
+    "en": "Second part of the team name",
+    "es": "Segunda parte del nombre del equipo",
+    "de": "Zweiter Teil des Teamnamens",
+    "fr": "Deuxième partie du nom de l'équipe"
+  },
+  "discipline": {
+    "pl": "dyscyplina",
+    "en": "discipline",
+    "es": "disciplina",
+    "de": "Disziplin",
+    "fr": "discipline"
+  },
+  "addLogo": {
+    "pl": "Dodaj logo",
+    "en": "Add Logo",
+    "es": "Agregar logotipo",
+    "de": "Logo hinzufügen",
+    "fr": "Ajouter un logo"
+  },
+  "Cancel": {
+    "pl": "Anuluj",
+    "en": "Cancel",
+    "es": "Cancelar",
+    "de": "Abbrechen",
+    "fr": "Annuler"
+  },
+  "Save": {
+    "pl": "Zapisz",
+    "en": "Save",
+    "es": "Guardar",
+    "de": "Speichern",
+    "fr": "Enregistrer"
+  },
+  "football": {
+    "pl": "piłka nożna",
+    "en": "football",
+    "es": "fútbol",
+    "de": "Fußball",
+    "fr": "football"
+  },
+  "basketball": {
+    "pl": "koszykówka",
+    "en": "basketball",
+    "es": "baloncesto",
+    "de": "Basketball",
+    "fr": "basketball"
+  },
+  "volleyball": {
+    "pl": "siatkówka",
+    "en": "volleyball",
+    "es": "voleibol",
+    "de": "Volleyball",
+    "fr": "volleyball"
+  },
+  "handball": {
+    "pl": "piłka ręczna",
+    "en": "handball",
+    "es": "balonmano",
+    "de": "Handball",
+    "fr": "handball"
+  },
+  "hokey": {
+    "pl": "hokej",
+    "en": "hockey",
+    "es": "hockey",
+    "de": "Hockey",
+    "fr": "hockey"
+  }
+}

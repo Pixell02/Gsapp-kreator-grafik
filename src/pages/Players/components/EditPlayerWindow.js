@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
-import { addDoc, collection, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { doc, updateDoc } from "firebase/firestore";
@@ -12,7 +11,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useTeams } from "./useTeams";
-import Select from "react-select";
 import { useParams } from "react-router-dom";
 
 function EditPlayerWindow({ player, open, onClose, Teams }) {
@@ -92,8 +90,8 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
               .then((downloadURL) => {
                 const docRef = doc(db, "Players", player.id)
                 updateDoc(docRef, {
-                  firstName: firstPlayerName,
-                  secondName: secondPlayerName,
+                  firstName: firstPlayerName.trim(),
+                  secondName: secondPlayerName.trim(),
                   img: downloadURL ? downloadURL : null,
                   number: number || "",
                   team: selectedTeam,
@@ -105,8 +103,8 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
       } else {
         const docRef = doc(db, "Players", player.id);
         updateDoc(docRef, {
-          firstName: firstPlayerName,
-          secondName: secondPlayerName,
+          firstName: firstPlayerName.trim(),
+          secondName: secondPlayerName.trim(),
           img: image? image : null,
           number: number || "",
           team: selectedTeam,

@@ -21,6 +21,7 @@ const opponentLogo = (fabricRef, opponentLogo, coords, themeOption, radioChecked
         className: "opponentImage",
         originX: "center",
         originY: "center",
+        angle: radioChecked === "radio1" ? (coords.opponentImage.Angle || 0) : (coords.yourTeamLogo.Angle || 0),
       });
 
       img.scaleToHeight(parseInt(coords.opponentImage.ScaleToHeight));

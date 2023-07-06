@@ -6,38 +6,35 @@ import createDefaultObjects from "./hooks/createDefaultObjects";
 import useFabric from "./hooks/useFabric";
 
 export default function Canvas(props) {
-  const { background } = useContext(BackgroundContext);
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
-  const [image, setImage] = useState();
-  // console.log(props.fabricRef.current)
 
-  const {initFabric} = useFabric();
+  const { background, setColor, image, setImage } = useContext(BackgroundContext);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  const { initFabric } = useFabric();
+  console.log(image)
   useEffect(() => {
     const img = new Image();
-    img.src = background;
+    img.src = background.src;
     img.onload = () => {
       setImage(img);
     };
   }, [background]);
+
+
   useEffect(() => {
-    console.log(props.fabricRef.current)
-   },[props.fabricRef.current]);
-  
-  // useEffect(() => {
-  //   if (props.fabricRef.current.height && image) {
-  //     fabric.Image.fromURL(image.src, function (img) {
-  //       props.fabricRef.current.setBackgroundImage(
-  //         img,
-  //         props.fabricRef.current.renderAll.bind(props.fabricRef.current)
-  //       );
-  //     });
-  //   }
-  // }, [props.fabricRef,image]);
+    if (props.fabricRef.current && image && !isLoaded) {
+      fabric.Image.fromURL(image.src ? image.src : null, function (img) {
+        props.fabricRef.current.setBackgroundImage(
+          img, props.fabricRef.current.renderAll.bind(props.fabricRef.current)
+        );
+      });
+      setColor(background.color)
+      setIsLoaded(true)
+    }
+  }, [image]);
   useEffect(() => {
     if (image) initFabric(props.fabricRef, image);
   }, [image]);
- 
+
   return <canvas id="canvas" ref={props.fabricRef} width={image?.width} height={image?.height}></canvas>;
 }

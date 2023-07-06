@@ -41,6 +41,7 @@ export default function opponentTeamResult(props) {
         fill: props.coords.yourPlayerOneGoal.Fill,
         className: "opponentGoals",
         splitByGrapheme: true,
+        angle: props.coords.yourPlayerOneGoal.Angle ? props.coords.yourPlayerOneGoal.Angle : 0,
         originX:
           props.radioChecked === "radio1"
             ? props.coords.opponentPlayerOneGoal.OriginX

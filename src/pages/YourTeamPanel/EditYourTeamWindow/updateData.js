@@ -20,7 +20,7 @@ const updateData = async (user, oldName, firstName, secondName) => {
   })
   
   const opponentPromises = opponentSnapshots.docs.map(async (snap) => {
-      const docRef = doc(db, "Opponent", snap.id)
+      const docRef = doc(db, "Opponents", snap.id)
       return await updateDoc(docRef, {
         team: firstName + " " + secondName
       })

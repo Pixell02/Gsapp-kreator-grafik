@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCollection } from "../../../hooks/useCollection";
 import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -6,8 +6,11 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import "./ToDo.css";
 
 export default function ToDo() {
+
+
   const [task, setTask] = useState("");
   const { user } = useAuthContext();
+
 
   const deleteTask = (id) => {
     const ref = doc(db, "todo", id);
@@ -17,7 +20,7 @@ export default function ToDo() {
   const updateTask = (id, lvl) => {
     const ref = doc(db, "todo", id)
     updateDoc(ref, {
-      prioryty:lvl
+      prioryty: lvl
     })
   }
 

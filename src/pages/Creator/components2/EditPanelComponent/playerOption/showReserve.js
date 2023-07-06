@@ -71,6 +71,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper,
         originY: coords.reserveOne.OriginY,
         fontFamily: coords.reserveOne.FontFamily,
         fontSize: coords.reserveOne.FontSize,
+        angle: coords.reserveOne.Angle ? coords.reserveOne.Angle : 0,
         fill: coords.reserveOne.Fill,
       })
       

@@ -10,9 +10,11 @@ import { BackgroundContext } from "../Context/BackgroundContext";
 import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { useNavigate } from "react-router-dom";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
+import {LanguageContext} from "../../../context/LanguageContext"
 
 export default function SaveModal({ isOpen, setIsOpen }) {
   const myId = uuidv4().replace(/-/g, "");
+  const {language} = useContext(LanguageContext)
   const navigate = useNavigate();
   const [id, setId] = useState();
   useEffect(() => {
@@ -27,7 +29,6 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [userPoster, setUserPoster] = useState({
     type: "MATCH-POSTER"
   });
-  console.log(manyBackgrounds)
   
   useEffect(() => {
     setUserPoster((prevState) => ({
@@ -130,7 +131,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
             setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
           }).then(() => {
             setTimeout(() => {
-              navigate(`/creator/${userPoster.uuid}`)
+              navigate(`/${language}/creator/${userPoster.uuid}`)
             },500)
             
           })

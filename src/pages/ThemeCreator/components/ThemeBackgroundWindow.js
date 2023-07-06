@@ -5,15 +5,16 @@ import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext
 import { fabric } from "fabric";
 import { useEffect } from "react";
 import useDefaultBackgrounds from "../hooks/useDefaultBackgrounds";
+import "./themeBackgroundWindow.css";
 
 export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
   const [position, setPosition] = useState({ x: 0, y: -300 });
- 
-  const { defaultBackgrounds, handleDefaultBackgroundChangeName } = useDefaultBackgrounds(backgrounds?backgrounds:null);
+
+  const { defaultBackgrounds, handleDefaultBackgroundChangeName } = useDefaultBackgrounds(backgrounds ? backgrounds : null);
 
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
   const { image, setImage, setColor } = useContext(BackgroundContext);
-
+  
   function handleFileUpload(e) {
     const files = e.target.files;
     const fileList = Array.from(files);
@@ -26,7 +27,9 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
   }
 
   const handleMainNameChange = (e) => {
+    
     const newName = e.target.value;
+    
     setImage((prev) => ({
       ...prev,
       name: newName,
@@ -42,6 +45,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     };
     setManyBackgrounds(updatedManyBackgrounds);
   }
+
   const handleSelectColor = (color) => {
     setColor(color);
     fabric.Image.fromURL(color.preview ? color.preview : color.src, function (img) {
@@ -55,18 +59,11 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
   }
 
   return (
-    <Draggable
-      axis="both"
-      handle=".handle"
-      defaultPosition={position}
-      position={null}
-      grid={[10, 1]}
-      scale={1}
-      onDrag={handleDrag}
-    >
+    <Draggable axis="both" handle=".handle" defaultPosition={position} position={null} grid={[10, 1]} scale={1} onDrag={handleDrag}>
       <div className="window">
         <div className="handle d-flex flex-row">
-          <div className="d-flex align-items-center">tła</div>
+          <div className="d-flex align-items-center"><label htmlFor="layers" className="file-input-label">tła</label></div>
+          <label htmlFor="layers" className="file-input-label">Warstwy</label> <span className="d-flex w-100">nie działa jeszcze</span>
           <div className="w-100 d-flex justify-content-end">
             <label htmlFor="file-input" className="file-input-label">
               Dodaj tła
@@ -74,26 +71,26 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
             <input id="file-input" type="file" multiple onChange={handleFileUpload} className="file-input" />
           </div>
         </div>
-        <div className="content w-100 d-flex flex-column justify-content-center">
+        <div className="content w-100 d-flex flex-column justify-content-center overflow-scroll">
           {defaultBackgrounds &&
-            defaultBackgrounds.map((image, i) => (
-              <div className="d-flex w-100 flex-row" key={image.name}>
+            defaultBackgrounds.map((item, i) => (
+              <div className="d-flex w-100 flex-row" key={item.name}>
                 <div className="w-25">
-                  <img src={image.src} style={{ maxWidth: "50px" }} alt="Background" />
+                  <img src={item.src} style={{ maxWidth: "50px" }} alt="Background" />
                 </div>
-                <input value={image.color} onChange={(e) => handleDefaultBackgroundChangeName(e, i)} />
-                <button onClick={() => handleSelectColor(image)} className="btn">
-                    wybierz
-                  </button>
+                <input value={item.name} onChange={(e) => handleDefaultBackgroundChangeName(e, i)} />
+                <button onClick={() => handleSelectColor(item)} className="btn">
+                  wybierz
+                </button>
               </div>
             ))}
 
           {image && (
-            <div className="d-flex w-100 flex-row h-100" key={image.name}>
+            <div className="d-flex w-100 flex-row">
               <div className="w-25">
                 <img src={image.preview} style={{ maxWidth: "50px" }} alt="Background" />
               </div>
-              <input type="text" value={image.name} onChange={handleMainNameChange} className="w-50" />
+              <input value={image.name} onChange={(e) => handleMainNameChange(e)} className="w-50" />
               <button onClick={() => handleSelectColor(image)} className="btn">
                 wybierz
               </button>
@@ -101,24 +98,22 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
           )}
           <hr />
           {manyBackgrounds &&
-            manyBackgrounds.map((image, i) => (
+            manyBackgrounds.map((item, i) => (
               <div className="d-flex w-100 flex-row" key={i}>
                 <div className="w-25">
-                  {image.preview && (
-                      <img src={image.preview} style={{ maxWidth: "50px" }} alt="Background" />
-                 
-                  )}
-                  {!image.preview && (
+                  {item.preview ? (
+                    <img src={item.preview} style={{ maxWidth: "50px" }} alt="Background" />
+                  ) : (
                     <div className="preview-placeholder" style={{ width: "50px" }}>
                       Brak podglądu
                     </div>
                   )}
                 </div>
-                <input type="text" value={image.name} onChange={(e) => handleNameChange(e, i)} />
+                <input type="text" value={item.name} onChange={(e) => handleNameChange(e, i)} />
 
-                  <button onClick={() => handleSelectColor(image)} className="btn">
-                    wybierz
-                  </button>
+                <button onClick={() => handleSelectColor(item)} className="btn">
+                  wybierz
+                </button>
               </div>
             ))}
         </div>

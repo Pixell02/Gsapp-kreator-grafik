@@ -48,32 +48,32 @@ export default function TextProperties({ coords, canvasRef, setCoords, handleInp
       </div>
       <div className="d-flex mx-2 w-100">
         <div className="d-flex w-100">
-          kolor: <input type="color" value={fill} className="w-50" name="Fill" onChange={handleInputChange} />
-        </div>
-      </div>
-
-      <div className="d-flex w-100 flex-column mt-2" style={{ fontSize: "10px" }}>
-        odstęp między literami:{" "}
+          kolor: <input type="color" value={fill} className="w-25" name="Fill" onChange={handleInputChange} />
+        <span style={{fontSize: "10px", width: "50px"}}>odstęp między literami:</span>
         <input
           type="number"
           value={coords.CharSpacing}
-          className="w-50"
+          className="w-25"
           name="charSpacing"
           onChange={handleInputChange}
         />
+        </div>
+        
+      </div>
+
+      <div className="d-flex w-100 flex-row mt-2" style={{ fontSize: "10px" }}>
+        <div className="w-50 d-flex flex-column">
         styl czcionki:
         <select
           name="fontStyle"
-          className="form-control w-75"
+          className="form-control w-100"
           value={coords.FontStyle}
           onChange={(e) => handleSelectChange(e)}
         >
           <option value="normal">normal</option>
           <option value="italic">italic</option>
         </select>
-      </div>
-
-      <div className="d-flex w-100 mt-2">
+        </div>
         <div className="d-flex flex-column w-100">
           czcionka:
           <select
@@ -86,9 +86,17 @@ export default function TextProperties({ coords, canvasRef, setCoords, handleInp
             {fonts && fonts.map((team) => <option value={team.value}>{team.label}</option>)}
           </select>
         </div>
-        <div className="w-100 ml-1">
-          rozmiar czcionki :{" "}
+      </div>
+
+      <div className="d-flex w-100 mt-2">
+        <div className="w-100 ml-1 d-flex flex-row">
+          <div className="w-50 d-flex flex-column">
+          <span style={{fontSize: "10px"}}>rozmiar czcionki :</span>
           <input type="number" className="w-50" name="FontSize" value={coords.FontSize} onChange={handleInputChange} />
+          </div>
+          <div className='d-flex w-50 flex-column'>
+        <div>kąt: <input type='number' value={coords.Angle} className='w-50' name='Angle' onChange={handleInputChange} /></div>
+      </div>
         </div>
       </div>
       <div>

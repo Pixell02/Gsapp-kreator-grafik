@@ -8,14 +8,14 @@ import color from "./color.json";
 // import posters from "./posters.json";
 import * as Icon from "react-bootstrap-icons";
 import { useCollection } from "../../../hooks/useCollection";
-
+import {LanguageContext} from "../../../context/LanguageContext"
 import useOrderBy from "../hooks/useOrderBy";
+import { useContext } from "react";
+import { lang } from "moment/moment";
 
 function Catalog() {
-
+  const {language} = useContext(LanguageContext)
   const { documents: catalog } = useCollection("catalog", ["public", "==", true]);
-
-
   const [isOpen, setIsOpen] = useState();
   useEffect(() => {
     if (catalog) {
@@ -24,11 +24,8 @@ function Catalog() {
   }, [catalog]);
 
   const { documents: posters } = useOrderBy("piecesOfPoster", "themeId");
-
   
-
   const handleCategory = (i) => {
-    
     setIsOpen((prevOpen) =>
       prevOpen.map((item, index) => ({
         ...item,
@@ -58,14 +55,14 @@ function Catalog() {
         return 0;
       });
     }
-  },[isOpen])
-  console.log(isOpen)
+  }, [isOpen]);
 
   return (
     <>
       <div className="catalog-container">
         {isOpen &&
-          isOpen.map((category, i) => (
+          isOpen.filter((item) => item.lang === language)
+            .map((category, i) => (
             <div className="mg-container">
               <div className="nav-container" onClick={() => handleCategory(i)}>
                 <div className={category.expanded ? "nav-window" : "nav-window-dark"}>
@@ -88,7 +85,7 @@ function Catalog() {
                       .map((poster) => (
                         <>
                           <div className="item-category-window">
-                            <Link to={`/creator/theme/${poster.uid}`}>
+                            <Link to={`/${language}/creator/theme/${poster.uid}`}>
                               <div className="name-content">
                                 <span className="name-content">{poster.name}</span>
                               </div>

@@ -1,11 +1,13 @@
 import { sendPasswordResetEmail } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/config";
-
+import { LanguageContext } from "../../../context/LanguageContext";
+import translation from "./resetPassword.json"
 export default function ResetPassword() {
   const [email, setEmail] = useState();
   const [success, setSuccess] = useState(false);
+  const {language} = useContext(LanguageContext)
   const navigate = useNavigate();
   const handleClick = () => {
     if (email !== " ") {
@@ -13,7 +15,7 @@ export default function ResetPassword() {
         .then(() => {
           setSuccess(true);
           setTimeout(() => {
-            navigate("/login")
+            navigate(`${language}/login`)
           }, [3000]);
         })
         .catch((err) => {
@@ -29,8 +31,8 @@ export default function ResetPassword() {
           <div className="text-left">
             {success === false && (
               <>
-                <p>Zresetuj hasło</p>
-                <label>E-mail</label>
+                <p>{translation.resetPassword[language]}</p>
+                <label>{translation.email[language]}</label>
                 <input
                   type="text"
                   className="form-control"
@@ -41,15 +43,14 @@ export default function ResetPassword() {
             )}
             {success === true && (
               <p>
-                Na podany adres email wysłano wiadomość z możliwościa
-                zrestartowania hasła
+                {translation.emailSend[language]}
               </p>
             )}
           </div>
           {success !== true ? (
             <div className="d-flex justify-content-start w-100 mb-5 mt-3">
               <button onClick={handleClick} className="btn secondary-btn">
-                Resetuj
+                {translation.resetButton[language]}
               </button>
             </div>
           ) : null}

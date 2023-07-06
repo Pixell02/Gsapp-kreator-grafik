@@ -16,11 +16,14 @@ import { YourTeamNameAndLogo } from "./hooks2/useYourTeamLogo";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Canvas from "./Canvas";
 import EditPanel from "./components2/EditPanel";
+import { useContext } from "react";
+import { LanguageContext } from "../../context/LanguageContext";
 
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef();
   const { user } = useAuthContext();
+  const {language} = useContext(LanguageContext)
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
   const { documents: Opponent } = useCollection("Opponents", ["uid", "==", user.uid]);
@@ -207,7 +210,7 @@ function WorkSpace() {
                 {(user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" ||
                   user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" ||
                   user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2") && (
-                  <button className="btn" onClick={() => navigate(hasTheme ? `/posterCreator/theme/${poster}` : `/posterCreator/${poster}`)}>
+                  <button className="btn" onClick={() => navigate(hasTheme ? `/${language}/posterCreator/theme/${poster}` : `/${language}/posterCreator/${poster}`)}>
                     Edytuj
                   </button>
                 )}

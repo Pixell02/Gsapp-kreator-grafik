@@ -29,6 +29,7 @@ const playerName = (fabricRef, selectedPlayerName, coords, themeOption, posterBa
       className: "yourPlayer",
       selectable: false,
       fontFamily: coords.player.FontFamily,
+      angle: coords.player.Angle ? coords.player.Angle : 0,
       fontSize: coords.player.FontSize,
     });
 

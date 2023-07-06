@@ -1,26 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom"
-import Header from "../../components/Header";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import RegisterForm from "../../components/form-elements/RegisterForm";
-import Footer from '../../components/MainFooter';
+import translate from "./register.json";
 import "../../App.css";
+import { LanguageContext } from "../../context/LanguageContext";
 
 function Register() {
-    return (
-      <div className="page-container login-container">
-        <div className="content-wrap">
-          
-          <div className="form-align-center">
+  const { language } = useContext(LanguageContext);
+  return (
+    <div className="page-container login-container">
+      <div className="content-wrap">
+        <div className="form-align-center">
           <RegisterForm
-          name = "Zarejestruj się" footer = {
-          <span>Masz już konto? 
-            <Link to="/login">Zaloguj się</Link>
-          </span>
-        } />
-        </div>
+            name={translate.register[language]}
+            footer={
+              <span>
+                {translate.haveAccount[language]}
+                <Link to={`/${language}/login`}>{translate.login[language]}</Link>
+              </span>
+            }
+          />
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default Register;

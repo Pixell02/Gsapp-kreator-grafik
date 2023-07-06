@@ -23,6 +23,7 @@ const typeLeague = (fabricRef, league, themeOption, coords) => {
         className: "yourLeague",
         originX: coords.yourLeague.OriginX,
         originY: coords.yourLeague.OriginY,
+        angle: (coords.yourLeague.Angle || 0),
         fontStyle: coords.yourLeague.FontStyle ? coords.yourLeague.FontStyle : "normal",
       });
 

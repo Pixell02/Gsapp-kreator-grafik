@@ -26,6 +26,7 @@ const opponentsFirstName = (fabricRef, opponentName, coords, themeOption, radioC
       fill: coords.opponentFirstName.Fill,
       className: "opponentsFirstName",
       fontFamily: coords.opponentFirstName.FontFamily,
+      angle: radioChecked === "radio1" ? (coords.opponentFirstName.Angle || 0) : (coords.yourTeamFirstName.Angle || 0),
       fontStyle: coords.opponentFirstName.FontStyle ? coords.opponentFirstName.FontStyle : "normal"
     });
                    

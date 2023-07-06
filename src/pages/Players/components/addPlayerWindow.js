@@ -80,8 +80,8 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
       async() => {
         await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
            addDoc(collection(db, "Players"), {
-        firstName: firstPlayerName,
-        secondName: secondPlayerName,
+        firstName: firstPlayerName.trim(),
+        secondName: secondPlayerName.trim(),
         img: downloadURL || "",
         number: number || "",
         team: selectedTeam,
@@ -95,8 +95,8 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
     )
       } else {
         addDoc(collection(db, "Players"), {
-          firstName: firstPlayerName,
-          secondName: secondPlayerName,
+          firstName: firstPlayerName.trim(),
+          secondName: secondPlayerName.trim(),
           img: "",
           number: number || "",
           team: selectedTeam,

@@ -21,6 +21,7 @@ const yourResult = (fabricRef, yourTeamResult, coords, themeOption, radioChecked
       selectable: false,
       fill: coords.yourTeamResult.Fill,
       className: "yourTeamResult",
+      angle: coords.yourTeamResult.Angle ? coords.yourTeamResult.Angle : 0,
       originX: radioChecked === "radio1" ? coords.yourTeamResult.OriginX : coords.yourOpponentResult.OriginX,
       originY: radioChecked === "radio1" ? coords.yourTeamResult.OriginY : coords.yourOpponentResult.OriginY,
     });

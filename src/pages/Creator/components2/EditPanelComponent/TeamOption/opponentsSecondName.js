@@ -27,6 +27,7 @@ const opponentsSecondName = (fabricRef, opponentName, coords, themeOption, radio
       fill: coords.opponentSecondName.Fill,
       className: "opponentsSecondName",
       fontFamily: coords.opponentSecondName.FontFamily,
+      angle: radioChecked === "radio1" ? (coords.opponentSecondName.Angle || 0) : (coords.yourTeamSecondName.Angle || 0),
       fontStyle: coords.opponentSecondName.FontStyle ? coords.opponentSecondName.FontStyle : "normal"
     });
                    

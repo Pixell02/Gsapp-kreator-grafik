@@ -16,6 +16,9 @@ import {
 } from "firebase/storage";
 import useEditModal from "../../../hooks/useEditModal";
 import updateData from "../EditYourTeamWindow/updateData";
+import { useContext } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
+import translate from "./locales/yourTeamPanel.json"
 
 const options = [
   { value: "piłka nożna", label: "piłka nożna" },
@@ -25,8 +28,7 @@ const options = [
   { value: "hokej", label: "hokej" },
 ];
 function EditYourTeamWindow({ yourTeam, open, onClose }) {
-  
-  const { id } = useParams();
+  const { language } = useContext(LanguageContext);
   const { user } = useAuthContext();
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
@@ -98,12 +100,12 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
               (downloadURL) => {
                 const docRef = doc(db, "Teams", yourTeam.id);
                 updateDoc(docRef, {
-                  firstName: firstTeamName,
-                  secondName: secondTeamName,
+                  firstName: firstTeamName.trim(),
+                  secondName: secondTeamName.trim(),
                   img: downloadURL,
                   sport: sport,
                 });
-                updateData(user.uid, firstTeamName, secondTeamName)
+                updateData(user.uid, oldName, firstTeamName, secondTeamName)
               }
             );
           }
@@ -111,8 +113,8 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
       } else {
         const docRef = doc(db, "Teams", yourTeam.id);
         updateDoc(docRef, {
-          firstName: firstTeamName,
-          secondName: secondTeamName,
+          firstName: firstTeamName.trim(),
+          secondName: secondTeamName.trim(),
           sport: sport,
         });
         updateData(user.uid, oldName, firstTeamName, secondTeamName);
@@ -124,14 +126,10 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
     }
   };
 
-  const getSport = (option) => {
-    setSport(option.value);
-  };
-
   return (
     <div className={open ? "active-modal mg-edit" : "modal"}>
       <div className="add-window mt-5">
-        <label>Pierwsza część nazwy drużyny</label>
+        <label>{translate.firstTeamName[language]}</label>
         <input
           type="text"
           onChange={(e) => setFirstTeamName(e.target.value)}
@@ -139,14 +137,14 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
           className="firstPlayerName"
         />
 
-        <label>Druga część nazwy drużyny</label>
+        <label>{translate.secondTeamName[language]}</label>
         <input
           type="text"
           onChange={(e) => setSecondTeamName(e.target.value)}
           value={secondTeamName}
           className="Number"
         />
-        <label>Dyscyplina</label>
+        <label>{translate.discipline[language]}</label>
 
         <select
           name="country"
@@ -161,7 +159,7 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
         </select>
 
         <button onClick={onButtonClick} className="btn primary-btn add-img">
-          Dodaj Zdjęcie
+        {translate.addLogo[language]}
         </button>
         <input
           type="file"
@@ -190,10 +188,10 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
             }}
             className="btn primary-btn"
           >
-            Anuluj
+            {translate.Cancel[language]}
           </button>
           <button onClick={handleSubmit} className="btn primary-btn">
-            Zapisz
+          {translate.Save[language]}
           </button>
         </div>
       </div>

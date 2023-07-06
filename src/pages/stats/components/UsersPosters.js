@@ -1,5 +1,5 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import * as Icon from "react-bootstrap-icons";
@@ -8,9 +8,11 @@ import Title from "../../../components/main-content-elements/Title";
 import { db } from "../../../firebase/config";
 import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 export default function UsersPosters() {
   const navigate = useNavigate();
+  const {language} = useContext(LanguageContext)
   const { documents: userPosters } = useCollection("yourCatalog");
   const { documents: Teams } = useCollection("Teams");
   const [users, setUsers] = useState("");
@@ -105,7 +107,7 @@ export default function UsersPosters() {
                                 </div>
                               )}
                             </div>
-                            <Link to={`/creator/${userPoster.uuid}`}>
+                            <Link to={`/${language}/creator/${userPoster.uuid}`}>
                               <div className="image-category-content">
                                 {userPoster.src && (
                                   <img src={userPoster.src} alt={userPoster.firstName + " " + userPoster.secondName} />

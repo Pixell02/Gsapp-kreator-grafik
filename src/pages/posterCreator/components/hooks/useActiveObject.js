@@ -8,7 +8,7 @@ const useActiveObjectCoords = (fabricRef) => {
   const [coords, setCoords] = useState({});
   const { background, color } = useContext(BackgroundContext);
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-  console.log(fabricRef)
+  
   useEffect(() => {
     
     if ( fabricRef && fabricRef.current?.backgroundImage) {
@@ -21,10 +21,11 @@ const useActiveObjectCoords = (fabricRef) => {
                 Top: parseInt(activeObject.top.toFixed(0)),
                 Left: parseInt(activeObject.left.toFixed(0)),
                 className: activeObject.className,
+                Angle: parseInt(activeObject.angle),
                 Width: parseInt((activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0)),
                 Height: parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)),
                 ScaleToWidth: parseInt((activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0)),
-                ScaleToHeight: parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)),
+                ScaleToHeight: activeObject.className !== "playerImage" ? parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)) : undefined,
                 FontSize: activeObject.fontSize
                   ? parseInt(activeObject.fontSize * activeObject.scaleY.toFixed(2))
                   : null,
@@ -100,22 +101,24 @@ const useActiveObjectCoords = (fabricRef) => {
       }
     }
   };
-
+  console.log(globalProperties)
   const updateActiveObjectCoords = (name, value) => {
     const canvas = fabricRef.current;
     if (canvas) {
       const activeObject = canvas.getActiveObject();
       if (activeObject) {
-        if (name !== "width" && name !== "height") {
+        if (name !== "Width" && name !== "Height") {
           activeObject.set(name.charAt(0).toLowerCase() + name.slice(1), value);
           canvas.renderAll();
         } else {
-          if (name === "width") {
+          if (name === "Width") {
             activeObject.set("scaleX", Number(value) / activeObject.width);
             canvas.renderAll();
-          } else {
+          } else if (name === "Height") {
             activeObject.set("scaleY", Number(value) / activeObject.width);
             canvas.renderAll();
+          } else if (name === "angle") {
+            activeObject.set("angle", Number(value)); 
           }
         }
       }
@@ -123,8 +126,6 @@ const useActiveObjectCoords = (fabricRef) => {
   };
 
   const handleInputChange = (e) => {
-    const canvas = fabricRef.current;
-    const activeObject = canvas.getActiveObject();
     const { name, value } = e.target;
     if (name !== "Fill" && name !== "FontFamily" && name !== "OriginX" && name !== "OriginY") {
       updateActiveObjectCoords(name, Number(value));

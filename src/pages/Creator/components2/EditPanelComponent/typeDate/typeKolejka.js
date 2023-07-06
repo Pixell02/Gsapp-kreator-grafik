@@ -22,6 +22,7 @@ const typeKolejka = (fabricRef, typeRound, coords, themeOption) => {
       className: "yourRound",
       originX: coords.yourKolejka.OriginX,
       originY: coords.yourKolejka.OriginY,
+      angle: (coords.yourKolejka.Angle || 0),
       fontStyle: coords.yourKolejka.FontStyle ? coords.yourKolejka.FontStyle : "normal",
     });
     if (yourKolejka.width > coords.yourKolejka.ScaleToWidth) {

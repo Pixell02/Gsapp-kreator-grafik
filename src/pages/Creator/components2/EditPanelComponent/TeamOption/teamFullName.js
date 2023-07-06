@@ -24,6 +24,7 @@ const teamFullName = (fabricRef, yourName, coords, themeOption, radioChecked) =>
       fill: coords.yourTeamName.Fill,
       fontSize: coords.yourTeamName.FontSize,
       fontFamily: coords.yourTeamName.FontFamily,
+      angle: radioChecked === "radio1" ? (coords.yourTeamName.Angle || 0) : (coords.opponentName.Angle || 0),
       className: "yourName",
     });
     if (

@@ -81,8 +81,8 @@ function AddOpponentWindow({ open, onClose, Teams }) {
           await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             const docRef = collection(db, "Opponents");
             addDoc(docRef, {
-              firstName: firstOpponentName,
-              secondName: secondOpponentName,
+              firstName: firstOpponentName.trim(),
+              secondName: secondOpponentName.trim(),
               img: downloadURL,
               uid: id ? id : user.uid,
               team: selectedTeam

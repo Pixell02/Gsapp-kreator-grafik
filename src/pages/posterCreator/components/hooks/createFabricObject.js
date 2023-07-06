@@ -33,8 +33,27 @@ export const createFabricImage = (fabricRef, setFabricObject, name, image) => {
     fabricRef.current.add(img);
     fabricRef.current.renderAll();
         })
-  setFabricObject(prevState => [...prevState, { name }])
-  ;
+  setFabricObject(prevState => [...prevState, { name }]);
+}
+
+export const createPlayerImage = (fabricRef, setFabricObject, name, image) => {
+
+  fabric.Image.fromURL(image, function (img) {
+    img.set({
+            top: 400,
+            left: 400,
+            className: name,
+            originX: "center",
+            originY: "center",
+            type: "image"
+          })
+          img.scaleToHeight(150)
+    fabricRef.current.add(img);
+    fabricRef.current.renderAll();
+        })
+  setFabricObject(prevState => [...prevState, { name }]);
+
+
 }
 
 export const createFabricTextBox = (fabricRef, setFabricObject, name, className) => {

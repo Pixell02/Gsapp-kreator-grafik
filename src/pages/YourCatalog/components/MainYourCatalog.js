@@ -5,9 +5,11 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useCollection } from "../../../hooks/useCollection";
 import { Link } from "react-router-dom";
 import "./MainYourCatalog.css";
+import { useContext } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
 export default function MainYourCatalog() {
   const { user } = useAuthContext();
-  
+  const {language} = useContext(LanguageContext)
   const { documents: yourPoster} = useCollection("yourCatalog",["uid","==", user.uid]);
   
   return (
@@ -21,7 +23,7 @@ export default function MainYourCatalog() {
           {yourPoster && yourPoster.map((poster) => (
             <>
             <div className="item-category-window">
-              <Link to={`/creator/${poster.uuid}`}>
+              <Link to={`/${language}/creator/${poster.uuid}`}>
                 <div className="name-content">
                   <span className="name-content">
                     {poster.name}

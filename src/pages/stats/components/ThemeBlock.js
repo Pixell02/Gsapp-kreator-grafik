@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./themeBlock.css";
 import Toggle from "react-toggle";
 import { useState } from "react";
@@ -6,12 +6,13 @@ import { Switch } from "antd";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import FilteredBlock from "../../../components/main-content-elements/FilteredBlock";
+import {LanguageContext} from "../../../context/LanguageContext"
 import { Link } from "react-router-dom";
 
 
 export default function ThemeBlock({ themes, posters }) {
   const [isCheckedArray, setIsCheckedArray] = useState([]);
-  
+  const {language} = useContext(LanguageContext)
   useEffect(() => {
     const newIsCheckedArray = themes.map((theme) => {
       return theme && theme.public ? theme.public : false;
@@ -68,7 +69,7 @@ export default function ThemeBlock({ themes, posters }) {
                   posters
                     .filter((poster) => poster.themeId === theme.id)
                     .map((poster) => (
-                      <Link to={`/creator/theme/${poster.id}`} className="link-container">
+                      <Link to={`/${language}/creator/theme/${poster.id}`} className="link-container">
                         <FilteredBlock item={poster} />
                       </Link>
                     ))}

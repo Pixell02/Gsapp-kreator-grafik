@@ -59,6 +59,7 @@ const typeMonth = (fabricRef, month, themeOption, coords) => {
       width: coords.typeMonth.ScaleToWidth,
       fill: "white",
       textAlign: "center",
+      angle: (coords.typeMonth.Angle || 0),
       originX: coords.typeMonth.OriginX,
       originY: coords.typeMonth.OriginY
     })

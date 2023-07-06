@@ -20,6 +20,7 @@ const opponentResult = (fabricRef, yourOpponentResult, coords, themeOption, radi
       fill: coords.yourOpponentResult.Fill,
       fontSize: coords.yourTeamResult.FontSize,
       className: "yourOpponentResult",
+      angle: radioChecked === "radio1" ? (coords.yourOpponentResult.Angle || 0) : (coords.yourTeamResult.Angle || 0),
       originX: radioChecked === "radio1" ? coords.yourOpponentResult.OriginX : coords.yourTeamResult.OriginX,
       originY: radioChecked === "radio1" ? coords.yourOpponentResult.OriginY : coords.yourTeamResult.OriginY,
     });

@@ -26,7 +26,9 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
         <input type="number" value={coords.Height} className="w-75" name="Height" onChange={handleInputChange} />
         </div>
         <div>
+          <span style={{fontSize: "10px"}}>
           odstęp między wierszami: 
+          </span>
           <input type="number" value={coords.LineHeight} step="0.01" className="w-75" name="LineHeight" onChange={handleInputChange} />
         </div>
     </div>
@@ -34,6 +36,9 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
         <div className='d-flex w-50'>
           kolor: <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
         </div>
+        <div className='d-flex'>
+        <div>kąt: <input type='number' value={coords.Angle} className='w-50' name='Angle' onChange={handleInputChange} /></div>
+      </div>
         <div className='d-flex w-50 align-items-center justify-content-start'>
         akapit:
           <select

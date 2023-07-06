@@ -10,9 +10,11 @@ import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
 import { update } from "react-spring";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
   const navigate = useNavigate();
+  const { language } = useContext(LanguageContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState("");
@@ -67,7 +69,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
     
       setDoc(doc(collection(db, "coords"), globalProperties.uid), globalProperties);
       setTimeout(() => {
-        navigate(`/creator/${globalProperties.uid}`)
+        navigate(`/${language}/creator/${globalProperties.uid}`)
       }, 500)
     } else {
     
@@ -75,7 +77,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
     
       setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
       // setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
-        navigate(`/creator/${globalProperties.uid}`)
+        navigate(`/${language}/creator/${globalProperties.uid}`)
     
     }
   };

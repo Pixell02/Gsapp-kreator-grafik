@@ -75,6 +75,7 @@ const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKe
         fill: coords.playerOne.Fill,
         className: "player",
         fontFamily: coords.playerOne.FontFamily,
+        angle: coords.playerOne.Angle ? coords.playerOne.Angle : 0,
         splitByGrapheme: true,
       });
       
