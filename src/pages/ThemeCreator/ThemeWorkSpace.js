@@ -15,12 +15,12 @@ import UpdateThemeModal from "./components/UpdateThemeModal";
 
 export default function ThemeWorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   const fabricRef = useRef(null);
-  const [background, setBackground] = useState(defaultBackGround ? defaultBackGround.src : null);
+  // const [background, setBackground] = useState(defaultBackGround ? defaultBackGround.src : null);
   const [globalProperties, setGlobalProperties] = useState({ coords } ? coords : {});
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(defaultBackGround ? defaultBackGround : null);
   const [color, setColor] = useState();
   const [isOpen, setIsOpen] = useState(true);
-
+  
   
   useEffect(() => {
     if (fabricRef.current?.backgroundImage) {
@@ -28,7 +28,7 @@ export default function ThemeWorkSpace({ coords, defaultBackGround, id, backgrou
     };
   },[fabricRef.current])
   return (
-    <BackgroundContext.Provider value={{ background, setBackground, image, setImage, color, setColor }}>
+    <BackgroundContext.Provider value={{image, setImage, color, setColor }}>
       <GlobalPropertiesContext.Provider value={{globalProperties, setGlobalProperties}}>
         <ManyBackgroundsProvider>
           {!isOpen && !id && <SaveThemeModal isOpen={isOpen} setIsOpen={() => setIsOpen(true)} />}
@@ -39,7 +39,7 @@ export default function ThemeWorkSpace({ coords, defaultBackGround, id, backgrou
               <div className="w-100 d-flex z-index-1000">
                 <WorkSpaceNavbar />
               </div>
-              {background && (
+              {image && (
                 <TransformWrapper minScale={0.1} initialScale={1} panning={{ disabled: true }} centerOnInit>
                   <TransformComponent>
                     <div className="w-100 h-100">

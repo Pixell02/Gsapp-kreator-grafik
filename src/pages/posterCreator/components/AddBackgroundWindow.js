@@ -54,11 +54,10 @@ export default function AddBackgroundWindow({backgrounds}) {
           ))}
           {manyBackgrounds && manyBackgrounds.map((image) => (
             <div className='d-flex w-100 flex-column'>
-              <div> {image.name}</div>
+              <div> {image.color}</div>
             </div>
           ))}
         </div>
-        
       </div>
     </Draggable>
   );

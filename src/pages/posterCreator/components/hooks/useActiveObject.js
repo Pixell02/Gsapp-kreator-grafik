@@ -11,11 +11,12 @@ const useActiveObjectCoords = (fabricRef) => {
   
   useEffect(() => {
     
-    if ( fabricRef && fabricRef.current?.backgroundImage) {
+    if (fabricRef.current?.backgroundImage) {
         const handleObjectModified = () => {
           const canvas = fabricRef.current;
           if (canvas) {
             const activeObject = canvas.getActiveObject();
+            
             if (activeObject) {
               const newCoords = {
                 Top: parseInt(activeObject.top.toFixed(0)),
@@ -41,6 +42,7 @@ const useActiveObjectCoords = (fabricRef) => {
                 TextAlign: activeObject.textAlign ? activeObject.textAlign : activeObject.textAlign,
                 Format: activeObject.format,
                 FontStyle: activeObject.fontStyle,
+                Margin: activeObject.margin,
                 LineHeight:
                   activeObject.className === "playerOne" ||
                   activeObject.className === "reserveOne" ||
@@ -66,7 +68,7 @@ const useActiveObjectCoords = (fabricRef) => {
         };
 
         
-          fabricRef.current.on("object:modified", handleObjectModified);
+          fabricRef.current?.on("object:modified", handleObjectModified);
           fabricRef.current.on("mouse:down", handleObjectModified);
           document.addEventListener("keydown", handleDeleteKeyPress);
     
@@ -76,7 +78,7 @@ const useActiveObjectCoords = (fabricRef) => {
             document.removeEventListener("keydown", handleDeleteKeyPress);
           };
     }
-  }, [fabricRef.current, background, globalProperties, coords]);
+  }, [fabricRef.current, globalProperties, coords, color]);
   const handleDeleteKeyPress = (event) => {
     if (event.keyCode === 46) {
       // kod klawisza Delete lub Backspace

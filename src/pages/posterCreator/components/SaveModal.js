@@ -29,11 +29,11 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [userPoster, setUserPoster] = useState({
     type: "MATCH-POSTER"
   });
-  
+  console.log(manyBackgrounds)
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
-      src: background,
+      src: image,
       uuid: id,
       uid: radioValue
     }));
@@ -82,7 +82,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               addDoc(collection(db, "yourCatalog"), {
-                color: background.name,
+                color: background.color,
                 src: downloadURL,
                 uuid: globalProperties.uid,
               });

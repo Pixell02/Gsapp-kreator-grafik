@@ -2,7 +2,7 @@ import React from 'react'
 import { layersName } from '../../layersName'
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
-export default function createDefaultObjects(fabricRef, globalProperties, coords) {
+export default function createDefaultObjects(fabricRef, globalProperties) {
  
   layersName.forEach((layer, i) => {
     for (const key in globalProperties) {

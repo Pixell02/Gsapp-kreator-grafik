@@ -4,7 +4,7 @@ import { useAddBackground } from "./hooks/useAddBackground";
 import Layers from "./Layers";
 import Properties from "./Properties";
 export default function EditPanel({ fabricRef, setIsOpen }) {
-  const { handleAddBackground, onButtonClick, fileInputRef } = useAddBackground();
+  const { handleAddBackground, onButtonClick, fileInputRef } = useAddBackground(fabricRef);
   
   return (
     <div className=" mt-3 h-100 w-100 z-index-100">
@@ -15,7 +15,6 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
         <button onClick={setIsOpen} className="btn ">
           Zapisz
         </button>
-
         <input
           type="file"
           style={{ display: "none" }}
@@ -26,7 +25,6 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
           }}
         />
       </div>
-
       <div className="add-properties-container ml-5 pt-2">
         <p>Właściwości</p>
         <Properties fabricRef={fabricRef} />

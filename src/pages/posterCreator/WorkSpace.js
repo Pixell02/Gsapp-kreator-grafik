@@ -8,18 +8,16 @@ import { GlobalPropertiesContext } from "./Context/GlobalProperitesContext";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import "./WorkSpace.css";
 import createDefaultObjects from "./components/hooks/createDefaultObjects";
-import AddBackgroundWindow from "./components/AddBackgroundWindow";
 import UpdateModal from "./components/UpdateModal";
 import { ManyBackgroundsContext } from "./Context/ManyBackgroundsContext";
 import HelpLinesModal from "./components/HelpLinesModal";
 import useGuides from "./components/hooks/useGuides";
-
-import Draggable from "react-draggable";
 import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
+import GuideLines from "./components/GuideLines";
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
-  const [background, setBackground] = useState(defaultBackGround ? defaultBackGround : null);
-  const [image, setImage] = useState(null);
+  
+  const [image, setImage] = useState(defaultBackGround ? defaultBackGround : null);
   const [globalProperties, setGlobalProperties] = useState({ coords } ? coords : {});
   const [color, setColor] = useState();
   const [isOpen, setIsOpen] = useState(true);
@@ -29,15 +27,15 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [helpLinesModal, setHelpLinesModal] = useState(false);
   useEffect(() => {
     if (fabricRef.current?.backgroundImage) {
-      
-      createDefaultObjects(fabricRef, globalProperties, coords);
+      createDefaultObjects(fabricRef, globalProperties);
     }
   }, [fabricRef.current]);
+
  
 
   
   return (
-    <BackgroundContext.Provider value={{ background, setBackground, image, setImage, color, setColor }}>
+    <BackgroundContext.Provider value={{image, setImage, color, setColor }}>
       <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>
         <ManyBackgroundsContext.Provider value={{ manyBackgrounds, setManyBackgrounds }}>
           
@@ -59,10 +57,12 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
               <div className="w-100 d-flex z-index-1000">
                 <WorkSpaceNavbar setHelpLinesModal={setHelpLinesModal} helpLinesModal={helpLinesModal} />
               </div>
-              {background && (
+              
+              {image && (
                 <TransformWrapper minScale={0.1} initialScale={1} panning={{ disabled: true }} centerOnInit>
                   <TransformComponent>
                     <div className="w-100 h-100">
+                      {/* <GuideLines /> */}
                       <div className="add-preview-container d-flex flex-column h-100 w-100 align-items-center justify-content-center">
                         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
                           <Canvas fabricRef={fabricRef} globalProperties={globalProperties} coords={coords} />

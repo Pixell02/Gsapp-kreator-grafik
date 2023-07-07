@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { fabric } from "fabric";
-import createDefaultObjects from "./createDefaultObjects";
+import { BackgroundContext } from "../../Context/BackgroundContext";
+
 
 const useFabric = () => {
+  const { setColor } = useContext(BackgroundContext);
+
+
   const initFabric = (fabricRef, img) => {
-    fabricRef.current = new fabric.Canvas("canvas", {
-      selection: true,
-      width: img.width,
-      height: img.height,
-    });
     
-    const newImg = new fabric.Image.fromURL(img.src, function (img) {
-      fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
-    });
-      
-    // createDefaultObjects(fabricRef, globalProperties, coords);
+      fabricRef.current = new fabric.Canvas("canvas", {
+        selection: true,
+        width: img.width,
+        height: img.height,
+      });
+      fabric.Image.fromURL(img.src, function (img) {
+        fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
+      });
+    setColor(img.color);
     return { fabricRef }
   };
   

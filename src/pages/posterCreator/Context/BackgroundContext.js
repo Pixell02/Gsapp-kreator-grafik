@@ -1,14 +1,33 @@
+import { doc, getDoc } from 'firebase/firestore';
 import React, { createContext, useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { db } from '../../../firebase/config';
+import { useCollection } from '../../../hooks/useCollection';
 
 export const BackgroundContext = createContext();
 
-export function BackgroundProvider(props) {
+export function BackgroundProvider({ children }) {
+  const params = useParams();
+  const [defaultBackground, setDefaultBackGround] = useState({});
+  useEffect(() => {
+   const docRef = doc(db, "yourCatalog", params.id)
+  getDoc(docRef)
+    .then((doc) => {
+     setDefaultBackGround(doc.data())
+   }) 
+  },[])
+  
+  const { documents: backgrounds } = useCollection("yourCatalog", ["uuid", "==", params.id])
+  const { documents: coords } = useCollection("coords", ["uid", "==", params.id])
+  
+
   const [background, setBackground] = useState([]);
   const [image, setImage] = useState([]);
   const [color, setColor] = useState(null);
   return (
     <BackgroundContext.Provider value={{color, setColor,  background, setBackground, image, setImage }}>
-      {props.children}
+      {children}
     </BackgroundContext.Provider>
   );
 }

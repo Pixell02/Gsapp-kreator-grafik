@@ -14,14 +14,13 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
 
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
   const { image, setImage, setColor } = useContext(BackgroundContext);
-  
   function handleFileUpload(e) {
     const files = e.target.files;
     const fileList = Array.from(files);
     const updatedBackgrounds = fileList.map((file) => ({
       file,
-      name: file.name.split(".")[0],
-      preview: URL.createObjectURL(file), // Create preview URL
+      color: file.name.split(".")[0],
+      src: URL.createObjectURL(file), // Create preview URL
     }));
     setManyBackgrounds([...manyBackgrounds, ...updatedBackgrounds]);
   }
@@ -32,7 +31,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     
     setImage((prev) => ({
       ...prev,
-      name: newName,
+      color: newName,
     }));
   };
 
@@ -41,7 +40,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     const updatedManyBackgrounds = [...manyBackgrounds];
     updatedManyBackgrounds[i] = {
       ...updatedManyBackgrounds[i],
-      name: newName,
+      color: newName,
     };
     setManyBackgrounds(updatedManyBackgrounds);
   }
@@ -57,7 +56,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     const { x, y } = ui;
     setPosition({ x, y });
   }
-
+  console.log(image)
   return (
     <Draggable axis="both" handle=".handle" defaultPosition={position} position={null} grid={[10, 1]} scale={1} onDrag={handleDrag}>
       <div className="window">
@@ -71,14 +70,15 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
             <input id="file-input" type="file" multiple onChange={handleFileUpload} className="file-input" />
           </div>
         </div>
-        <div className="content w-100 d-flex flex-column justify-content-center overflow-scroll">
+        <div className="content w-100 d-flex flex-column overflow-scroll">
+          
           {defaultBackgrounds &&
             defaultBackgrounds.map((item, i) => (
               <div className="d-flex w-100 flex-row" key={item.name}>
                 <div className="w-25">
                   <img src={item.src} style={{ maxWidth: "50px" }} alt="Background" />
                 </div>
-                <input value={item.name} onChange={(e) => handleDefaultBackgroundChangeName(e, i)} />
+                <input value={item.color} onChange={(e) => handleDefaultBackgroundChangeName(e, i)} />
                 <button onClick={() => handleSelectColor(item)} className="btn">
                   wybierz
                 </button>
@@ -88,9 +88,9 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
           {image && (
             <div className="d-flex w-100 flex-row">
               <div className="w-25">
-                <img src={image.preview} style={{ maxWidth: "50px" }} alt="Background" />
+                <img src={image.src} style={{ maxWidth: "50px" }} alt="Background" />
               </div>
-              <input value={image.name} onChange={(e) => handleMainNameChange(e)} className="w-50" />
+              <input value={image.color} onChange={(e) => handleMainNameChange(e)} className="w-50" />
               <button onClick={() => handleSelectColor(image)} className="btn">
                 wybierz
               </button>
@@ -101,15 +101,15 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
             manyBackgrounds.map((item, i) => (
               <div className="d-flex w-100 flex-row" key={i}>
                 <div className="w-25">
-                  {item.preview ? (
-                    <img src={item.preview} style={{ maxWidth: "50px" }} alt="Background" />
+                  {item.src ? (
+                    <img src={item.src} style={{ maxWidth: "50px" }} alt="Background" />
                   ) : (
                     <div className="preview-placeholder" style={{ width: "50px" }}>
                       Brak podglądu
                     </div>
                   )}
                 </div>
-                <input type="text" value={item.name} onChange={(e) => handleNameChange(e, i)} />
+                <input type="text" value={item.color} onChange={(e) => handleNameChange(e, i)} />
 
                 <button onClick={() => handleSelectColor(item)} className="btn">
                   wybierz

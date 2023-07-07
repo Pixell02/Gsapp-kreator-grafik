@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useRef } from 'react'
 import { BackgroundContext } from '../../Context/BackgroundContext';
+import useFabric from './useFabric';
 
-export const useAddBackground = () => {
-  const { background, setBackground, image, setImage } = useContext(BackgroundContext);
-  
-  const [addedBackground, setAddedBackground] = useState()
+export const useAddBackground = (fabricRef) => {
+  const { image, setImage } = useContext(BackgroundContext);
   const fileInputRef = useRef(null);
-
+  const { initFabric } = useFabric();
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -16,26 +15,27 @@ export const useAddBackground = () => {
       setImage(prev => ({
         ...prev,
         file,
-        name: file.name.split('.')[0],
-        preview: URL.createObjectURL(file)
+        color: file.name.split('.')[0],
+        src: URL.createObjectURL(file)
       }))
-     
-      setAddedBackground(file);
-    } else {
-      setAddedBackground(null)
-    }
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const image = {
+          src: img.src,
+          width: img.width,
+          height: img.height,
+          color: file.name.split('.')[0],
+        }
+        initFabric(fabricRef, image)
+      }
+      
+      
+    } 
   }
 
-  useEffect(() => {
-    if (addedBackground) { 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setBackground(reader.result)
-    }
-    reader.readAsDataURL(addedBackground)
-  }
-  }, [addedBackground])
+  
 
 
-  return {background, handleAddBackground, onButtonClick, fileInputRef, image}
+  return {handleAddBackground, onButtonClick, fileInputRef, image}
 }

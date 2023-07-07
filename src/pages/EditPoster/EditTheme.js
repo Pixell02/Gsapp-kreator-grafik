@@ -18,7 +18,7 @@ export default function EditTheme() {
       setDefaultBackGround(defaultTheme[0])
     }
   }, [defaultTheme])
-  
+   
   return (
     <div className="page-container">
   <div className='content-wrap'>

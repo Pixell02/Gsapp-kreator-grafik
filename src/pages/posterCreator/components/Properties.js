@@ -10,7 +10,7 @@ import useActiveObjectCoords from "./hooks/useActiveObject";
 
 export default function Properties({ fabricRef }) {
   const { coords, setCoords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
-
+  
   return (
     <div className="overflow-scroll d-flex h-75">
       {coords.type === "image" && (
