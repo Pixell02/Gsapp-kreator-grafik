@@ -8,7 +8,7 @@ const useFabric = () => {
 
 
   const initFabric = (fabricRef, img) => {
-    
+      console.log(img)
       fabricRef.current = new fabric.Canvas("canvas", {
         selection: true,
         width: img.width,

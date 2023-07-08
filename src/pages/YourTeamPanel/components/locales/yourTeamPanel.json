@@ -48,6 +48,13 @@
     "de": "Logo hinzufügen",
     "fr": "Ajouter un logo"
   },
+  "delete": {
+  "pl": "Usuń",
+  "en": "Delete",
+  "es": "Eliminar",
+  "de": "Löschen",
+  "fr": "Supprimer"
+  },
   "Cancel": {
     "pl": "Anuluj",
     "en": "Cancel",

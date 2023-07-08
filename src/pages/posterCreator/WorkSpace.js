@@ -14,6 +14,7 @@ import HelpLinesModal from "./components/HelpLinesModal";
 import useGuides from "./components/hooks/useGuides";
 import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
 import GuideLines from "./components/GuideLines";
+import useFabric from "./components/hooks/useFabric";
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   
@@ -31,6 +32,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
     }
   }, [fabricRef.current]);
 
+ 
  
 
   
@@ -65,7 +67,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
                       {/* <GuideLines /> */}
                       <div className="add-preview-container d-flex flex-column h-100 w-100 align-items-center justify-content-center">
                         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
-                          <Canvas fabricRef={fabricRef} globalProperties={globalProperties} coords={coords} />
+                          <Canvas fabricRef={fabricRef} defaultBackGround={defaultBackGround} globalProperties={globalProperties} coords={coords} />
                         </div>
                       </div>
                     </div>

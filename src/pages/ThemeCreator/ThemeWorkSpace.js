@@ -45,7 +45,7 @@ export default function ThemeWorkSpace({ coords, defaultBackGround, id, backgrou
                     <div className="w-100 h-100">
                       <div className="add-preview-container d-flex flex-column h-100 w-100 align-items-center justify-content-center">
                         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
-                          <Canvas fabricRef={fabricRef} globalProperties={globalProperties} coords={coords} />
+                          <Canvas fabricRef={fabricRef} globalProperties={globalProperties} defaultBackGround={defaultBackGround} coords={coords} />
                         </div>
                       </div>
                     </div>

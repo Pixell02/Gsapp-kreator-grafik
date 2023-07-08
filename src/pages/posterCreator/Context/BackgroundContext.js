@@ -9,12 +9,12 @@ export const BackgroundContext = createContext();
 
 export function BackgroundProvider({ children }) {
   const params = useParams();
-  const [defaultBackground, setDefaultBackGround] = useState({});
+  const [image, setImage] = useState({});
   useEffect(() => {
    const docRef = doc(db, "yourCatalog", params.id)
   getDoc(docRef)
     .then((doc) => {
-     setDefaultBackGround(doc.data())
+     setImage(doc.data())
    }) 
   },[])
   
@@ -23,7 +23,7 @@ export function BackgroundProvider({ children }) {
   
 
   const [background, setBackground] = useState([]);
-  const [image, setImage] = useState([]);
+  
   const [color, setColor] = useState(null);
   return (
     <BackgroundContext.Provider value={{color, setColor,  background, setBackground, image, setImage }}>

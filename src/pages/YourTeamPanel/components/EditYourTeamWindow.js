@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import "./addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
@@ -19,6 +19,7 @@ import updateData from "../EditYourTeamWindow/updateData";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
 import translate from "./locales/yourTeamPanel.json"
+import deleteData from "../EditYourTeamWindow/deleteData";
 
 const options = [
   { value: "piłka nożna", label: "piłka nożna" },
@@ -38,7 +39,7 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
   const [image, setImage] = useState(yourTeam.img);
   const [preview, setPreview] = useState(yourTeam.img);
   const [oldName] = useState(yourTeam.firstName + " " + yourTeam.secondName);
-
+  
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
@@ -179,6 +180,15 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
           </div>
         </div>
         <div className="buttons-container">
+          <button className="btn" onClick={() => {
+            deleteData(user.uid, firstTeamName, secondTeamName);
+            const docRef = doc(db, "Teams", yourTeam.id);
+            deleteDoc(docRef);
+            onClose();
+            setFirstTeamName("");
+              setSecondTeamName("");
+              setImage(null);
+          }}>{translate.delete[language]}</button>
           <button
             onClick={() => {
               onClose();
