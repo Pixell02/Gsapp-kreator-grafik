@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useCreateOpponentGoals from "../../hooks2/useCreateOpponentGoals";
-import useCreateYourTeamGoals from "../../hooks2/useCreateYourTeamGoals";
+import useCreateOpponentGoals from "../../../hooks2/useCreateOpponentGoals";
+import useCreateYourTeamGoals from "../../../hooks2/useCreateYourTeamGoals";
 import Select from "react-select";
 import yourTeamResult from "./result/yourTeamResult";
 import { useContext } from "react";
-import radioContext from "../../context/radioContext";
+import radioContext from "../../../context/radioContext";
 import opponentTeamResult from "./result/opponentTeamResult";
 
 export default function PlayersGoals({ fabricRef, coords, themeOption, posterBackground, Players }) {

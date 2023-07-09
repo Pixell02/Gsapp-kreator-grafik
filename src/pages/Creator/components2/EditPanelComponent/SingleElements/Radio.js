@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react';
-import radioContext from '../../context/radioContext';
+import radioContext from '../../../context/radioContext';
 
 export default function Radio() {
   const { radioChecked, setRadioChecked } = useContext(radioContext);

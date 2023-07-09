@@ -145,10 +145,10 @@ const useActiveObjectCoords = (fabricRef) => {
           ...(coords.type !== "image" &&
             color && {
               themeOption: [
-                ...(prevState[coords.className]?.themeOption || []).filter((option) => option.label !== color.name),
+                ...(prevState[coords.className]?.themeOption || []).filter((option) => option.label !== color),
                 {
                   // ...prevState[coords.className]?.themeOption[color.name],
-                  label: color.name,
+                  label: color,
                   Fill: coords.Fill,
                 },
               ],

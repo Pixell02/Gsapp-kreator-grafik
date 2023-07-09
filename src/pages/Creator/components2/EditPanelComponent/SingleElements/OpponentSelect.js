@@ -4,7 +4,7 @@ import { useState } from "react";
 import Select from "react-select";
 import opponentLogo from "./TeamOption/opponentLogo";
 import { useContext } from "react";
-import radioContext from "../../context/radioContext";
+import radioContext from "../../../context/radioContext";
 import opponentsFullName from "./TeamOption/opponentsFullName";
 import opponentsFirstName from "./TeamOption/opponentsFirstName";
 import opponentsSecondName from "./TeamOption/opponentsSecondName";

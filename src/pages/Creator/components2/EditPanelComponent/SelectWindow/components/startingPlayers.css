@@ -1,0 +1,18 @@
+.w-100 .checkbox-container {
+  display: flex;
+  align-items: center;
+}
+.w-100 .player-image {
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(213, 213, 213);
+  height: 40px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.w-100 .player-image img {
+  height: 100%;
+}

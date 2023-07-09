@@ -2,7 +2,7 @@
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 import findThemeOption from "../functions/themeOption";
-const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper, capitan, poster) => {
+const showReserve = (fabricRef, reserve, coords, themeOption) => {
   if (reserve && coords.reserveOne) {
     let text = "";
     const innerText = new fabric.Text("");
@@ -14,37 +14,17 @@ const showReserve = (fabricRef, reserve, coords, themeOption, young, goalKeeper,
             fabricRef.current.remove(fabricRef.current.item(i));
           }
         });
-        if (young) {
-          young.forEach((young, i) => {
-            if (young === reserve) {
-              reserve += " (m)"
-            }
-          })
-        }
-        if (goalKeeper) {
-          goalKeeper.forEach((goalKeeper, i) => {
-            if (goalKeeper === reserve) {
-              reserve += " (br)"
-            }
-          })
-        }
-         if (capitan === reserve) {
-          if (poster !== "3be4e46594d747bebe89a8145edf8edc"){
-          reserve += "(c)";
-          } else {
-            reserve += "(k)";
-          }
-        }
+        
         if (coords.playerOne.format === "NumDotSurName") {
-          reserve = reserve.split(".")[0] + "." + reserve.split(".")[2];
+          reserve = (reserve.number || "") + "." + reserve.secondName;
         } else if (coords.playerOne.format === "NumSurName") {
-         reserve =reserve.split(".")[0] + " " +reserve.split(".")[2];
+         reserve =(reserve.number || "") + "." +reserve.secondName;
         } else if (coords.playerOne.format === "dotted") {
-          reserve = reserve.split(".")[0] + "." + reserve.split(".")[1][0] + "." + reserve.split(".")[2]; 
+          reserve = (reserve.number || "") + "." + reserve.firstName[0] + "." + reserve.secondName; 
         } else if (coords.playerOne.format === "oneDot") {
-          reserve = reserve.split(".")[0] + "." + reserve.split(".")[1][0] + "." + reserve.split(".")[2];
+          reserve = (reserve.number || "") + "." + reserve.firstName[0] + "." + reserve.secondName;
         } else {
-          reserve = reserve.split(".")[2]
+          reserve = reserve.secondName
         }
        
         let formatReserve = reserve;

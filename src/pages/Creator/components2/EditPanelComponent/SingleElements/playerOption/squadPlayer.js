@@ -2,7 +2,7 @@ import findThemeOption from "../functions/themeOption";
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 
-const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKeeper, capitan, poster) => {
+const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, capitan) => {
   if (squadPlayers && coords.playerOne) {
     let text = "";
     squadPlayers.forEach((player) => {
@@ -13,51 +13,32 @@ const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKe
           }
         });
         let formatPlayer;
-
         if (coords.playerOne.format === "NumDotSurName") {
-          formatPlayer = player.split(".")[0] + "." + player.split(".")[2];
+          formatPlayer = (player.number ? player.number : "") + "." + player.secondName;
         } else if (coords.playerOne.format === "NumSurName") {
-          formatPlayer = player.split(".")[0] + " " + player.split(".")[2];
+          formatPlayer = (player.number ? player.number : "") + " " + player.secondName;
         } else if (coords.playerOne.format === "dotted") {
-          formatPlayer = player.split(".")[0] + "." + player.split(".")[1][0] + "." + player.split(".")[2];
+          formatPlayer = (player.number ? player.number : "") + "." + player.firstName[0] + "." + player.secondName;
         } else if (coords.playerOne.format === "oneDot") {
-          formatPlayer = player.split(".")[0] + " " + player.split(".")[1][0] + "." + player.split(".")[2];
+          formatPlayer = (player.number ? player.number : "") + " " + player.firstName[0] + "." + player.secondName;
         } else {
-          formatPlayer = player.split(".")[2];
+          formatPlayer = player.secondName;
         }
-        if (young) {
-          young.forEach((young, i) => {
-            if (young === player) {
-              formatPlayer += " (m)"
-            }
-          })
-        }
-        
-        if (goalKeeper) {
-          goalKeeper.forEach((goalKeeper, i) => {
-            if (goalKeeper === player) {
-              if(poster === "3be4e46594d747bebe89a8145edf8edc")
-                formatPlayer += " (br)"
-              else {
-                formatPlayer += " (gk)"
-              }
-            }
-          })
-        } if (capitan === player) {
-          if (poster !== "3be4e46594d747bebe89a8145edf8edc") {
-            formatPlayer += " (c)";
-          } else {
-            formatPlayer += " (k)";
+
+        console.log(goalKeeper, (player.number || "") + " " + player.firstName + " " + player.secondName)
+          if (goalKeeper === (player.number || "") + " " + player.firstName + " " + player.secondName) {
+            formatPlayer += " (gk)";
           }
+        if (capitan === (player.number || "") + " " + player.firstName + " " + player.secondName) {
+          formatPlayer += " (c)";
         } else {
           formatPlayer = formatPlayer;
         }
         if (coords.playerOne.textType === "upper") {
           formatPlayer = formatPlayer.toUpperCase();
         }
-        
+
         text = text + " " + formatPlayer + "\n";
-        
       }
     });
     const font = new FontFaceObserver(coords.playerOne.FontFamily);
@@ -78,16 +59,16 @@ const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKe
         angle: coords.playerOne.Angle ? coords.playerOne.Angle : 0,
         splitByGrapheme: true,
       });
-      
+
       if (coords.playerOne.CharSpacing) {
         showPlayer.set({
           charSpacing: coords.playerOne.CharSpacing,
         });
       }
       if (coords.playerOne.themeOption) {
-        findThemeOption(coords.playerOne, themeOption, showPlayer)
+        findThemeOption(coords.playerOne, themeOption, showPlayer);
       }
-      
+
       showPlayer._textLines.forEach((lines, i) => {
         const width = showPlayer.getLineWidth(i);
 
@@ -97,20 +78,16 @@ const squadPlayer = (fabricRef, squadPlayers, themeOption, coords, young, goalKe
           const newWidth = showPlayer.getLineWidth(i);
           if (newWidth <= coords.playerOne.ScaleToWidth - 50) {
             fabricRef.current.add(showPlayer);
-           fabricRef.current.renderAll();
+            fabricRef.current.renderAll();
             break;
           }
-         
         }
       });
-      
+
       fabricRef.current.add(showPlayer);
-           fabricRef.current.renderAll();
-      
-      
+      fabricRef.current.renderAll();
     });
   }
-  
 };
 
 export default squadPlayer;

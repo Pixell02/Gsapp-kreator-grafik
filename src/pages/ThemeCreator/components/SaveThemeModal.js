@@ -40,7 +40,7 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
     setSelectedTheme(option.value);
     setSavedThemeName(option.label);
   };
-  console.log(globalProperties);
+  
 
   useEffect(() => {
     if (catalog) {
@@ -51,7 +51,7 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
       setCatalogOption(options);
     }
   }, [catalog]);
-
+  
   const handleAddDoc = async () => {
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
@@ -142,6 +142,8 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
             });
         }
       );
+    } else {
+
     }
   };
 

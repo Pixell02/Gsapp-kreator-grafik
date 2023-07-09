@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
 import MainContentOffer from './components/MainContentOffer';
 import "../../App.css";

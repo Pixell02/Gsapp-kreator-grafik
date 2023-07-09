@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { YourTeamNameAndLogo } from '../../hooks2/useYourTeamLogo';
+import { YourTeamNameAndLogo } from '../../../hooks2/useYourTeamLogo';
 import Select from 'react-select';
-import { useCollection } from '../../../../hooks/useCollection';
-import { useAuthContext } from '../../../../hooks/useAuthContext';
+import { useCollection } from '../../../../../hooks/useCollection';
+import { useAuthContext } from '../../../../../hooks/useAuthContext';
 import teamLogo from './TeamOption/teamLogo';
 import { useContext } from 'react';
-import radioContext from '../../context/radioContext';
+import radioContext from '../../../context/radioContext';
 import teamFullName from './TeamOption/teamFullName';
 import teamFirstName from './TeamOption/teamFirstName';
 import teamSecondName from './TeamOption/teamSecondName';
@@ -23,7 +23,7 @@ export default function TeamOption({ fabricRef, coords, themeOption, posterBackg
     if (fabricRef.current && posterBackground) {
       teamLogo(fabricRef, yourLogo, coords, themeOption, radioChecked)
     }
-  }, [fabricRef.current, posterBackground, yourLogo, radioChecked])
+  }, [fabricRef.current, yourLogo, radioChecked])
   useEffect(() => {
     if (fabricRef.current && posterBackground && yourName) {
       if (coords.yourTeamName) {
@@ -36,7 +36,7 @@ export default function TeamOption({ fabricRef, coords, themeOption, posterBackg
         teamSecondName(fabricRef, yourName, coords, themeOption, radioChecked)
        }
     }
-  }, [fabricRef.current, posterBackground, yourName, radioChecked])
+  }, [fabricRef.current, yourName, radioChecked, posterBackground])
   
   return (
     <div>

@@ -19,16 +19,14 @@ const UpdateThemeModal = ({ isOpen, setIsOpen, defaultBackGround }) => {
   const { globalProperties } = useContext(GlobalPropertiesContext);
   const [percentageProgress, setPercentageProgress] = useState();
   const [catalog, setCatalog] = useState();
-  console.log(globalProperties)
   useEffect(() => {
     const docRef = doc(db, "catalog", userPoster.themeId);
     getDoc(docRef).then((doc) => {
       setCatalog(doc.data());
     });
   }, [userPoster]);
-  console.log(manyBackgrounds)
   const handleAddDoc = async () => {
-    if (manyBackgrounds) {
+    if (manyBackgrounds?.length > 0) {
       manyBackgrounds.forEach((background, i) => {
         const storage = getStorage();
         const metadata = {
@@ -70,11 +68,9 @@ const UpdateThemeModal = ({ isOpen, setIsOpen, defaultBackGround }) => {
         );
       });
     }
-
-    updateDoc(
-      doc(collection(db, "coords"), globalProperties.uid),
-      globalProperties ? globalProperties : { uid: globalProperties.uid }
-    );
+    const docRef = doc(db, "coords", globalProperties.id)
+    const data = globalProperties ? globalProperties : { uid: globalProperties.id };
+    setDoc(docRef, data);
     setTimeout(() => {
       navigate(`/creator/theme/${globalProperties.uid}`);
     }, 500);

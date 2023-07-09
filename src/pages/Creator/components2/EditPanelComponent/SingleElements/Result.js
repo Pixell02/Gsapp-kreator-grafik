@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import yourResult from "./result/yourResult";
 import opponentResult from "./result/opponentResult";
 import { useContext } from "react";
-import radioContext from "../../context/radioContext";
+import radioContext from "../../../context/radioContext";
 
 export default function Result({ fabricRef, coords, posterBackground, themeOption}) {
   const [yourTeamResult, setYourTeamResult] = useState("");

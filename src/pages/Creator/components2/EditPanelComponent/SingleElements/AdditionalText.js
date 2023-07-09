@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
-import { useAuthContext } from '../../../../hooks/useAuthContext';
-import radioContext from '../../context/radioContext';
+
+import radioContext from '../../../context/radioContext';
 import { useEffect } from 'react';
-import additionalText from './functions/additionalText';
+
 
 export default function AdditionalText({ fabricRef, coords, posterBackground}) {
   const { radioChecked } = useContext(radioContext);

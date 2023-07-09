@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import typeMonth from "./typeDate/typeMonth";
 
+
 export default function TypeMonth({ fabricRef, coords, themeOption, posterBackground }) {
   const [month, setMonth] = useState("");
   

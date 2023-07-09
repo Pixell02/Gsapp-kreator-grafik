@@ -56,7 +56,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     const { x, y } = ui;
     setPosition({ x, y });
   }
-  console.log(image)
+  
   return (
     <Draggable axis="both" handle=".handle" defaultPosition={position} position={null} grid={[10, 1]} scale={1} onDrag={handleDrag}>
       <div className="window">

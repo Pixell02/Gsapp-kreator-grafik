@@ -17,6 +17,7 @@ const useFabric = () => {
       fabric.Image.fromURL(img.src, function (img) {
         fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
       });
+    
     setColor(img.color);
     return { fabricRef }
   };
