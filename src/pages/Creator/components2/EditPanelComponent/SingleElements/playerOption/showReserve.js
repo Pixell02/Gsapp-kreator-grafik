@@ -15,13 +15,13 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
           }
         });
         
-        if (coords.playerOne.format === "NumDotSurName") {
+        if (coords.reserveOne.format === "NumDotSurName") {
           reserve = (reserve.number || "") + "." + reserve.secondName;
-        } else if (coords.playerOne.format === "NumSurName") {
+        } else if (coords.reserveOne.format === "NumSurName") {
          reserve =(reserve.number || "") + "." +reserve.secondName;
-        } else if (coords.playerOne.format === "dotted") {
+        } else if (coords.reserveOne.format === "dotted") {
           reserve = (reserve.number || "") + "." + reserve.firstName[0] + "." + reserve.secondName; 
-        } else if (coords.playerOne.format === "oneDot") {
+        } else if (coords.reserveOne.format === "oneDot") {
           reserve = (reserve.number || "") + "." + reserve.firstName[0] + "." + reserve.secondName;
         } else {
           reserve = reserve.secondName
@@ -30,11 +30,11 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
         let formatReserve = reserve;
         innerText.set("text", formatReserve + `${coords.reserveOne.Formatter}`);
 
-          text = text + " " + formatReserve + ` ${coords.reserveOne.Formatter}`;
+          text = text + " " + formatReserve + `${coords.reserveOne.Formatter} `;
         
       }
     });
-    if (coords.playerOne.textType === "upper") {
+    if (coords.playerOne?.textType === "upper") {
       text = text.toUpperCase();
     }
     

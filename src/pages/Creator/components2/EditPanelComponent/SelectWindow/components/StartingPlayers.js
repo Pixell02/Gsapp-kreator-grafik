@@ -11,7 +11,7 @@ const StartingPlayers = ({fabricRef, coords, themeOption}) => {
   const [playerSelect, setPlayerSelect] = useState();
   useEffect(() => {
    
-    if (fabricRef.current && selectedPlayers) {
+    if (fabricRef.current?.backgroundImage && selectedPlayers) {
       squadPlayer(fabricRef, selectedPlayers, coords, themeOption, goalkeeper, capitan)
     }
   }, [selectedPlayers, goalkeeper, capitan])

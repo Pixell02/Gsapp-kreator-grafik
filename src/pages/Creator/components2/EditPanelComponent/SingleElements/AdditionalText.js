@@ -10,7 +10,7 @@ export default function AdditionalText({ fabricRef, coords, posterBackground}) {
   const { radioChecked } = useContext(radioContext);
   
   useEffect(() => {
-    if (fabricRef.current && coords) {
+    if (fabricRef.current?.backgroundImage && coords) {
     // additionalText(fabricRef, coords, radioChecked)
        fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className === "addedText") {

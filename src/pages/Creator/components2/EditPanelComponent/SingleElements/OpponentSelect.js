@@ -41,13 +41,13 @@ const OpponentSelect = ({ Opponents, fabricRef, coords, posterBackground, themeO
     setOpponentsName(option.label);
   };
   useEffect(() => {
-    if (fabricRef.current && opponentsLogo) {
+    if (fabricRef.current?.backgroundImage && opponentsLogo) {
       opponentLogo(fabricRef, opponentsLogo, coords, themeOption, radioChecked);
     }
   }, [fabricRef.current, coords, posterBackground, themeOption, opponentsLogo, radioChecked]);
 
   useEffect(() => {
-    if (fabricRef.current && opponentsName !== "") {
+    if (fabricRef.current?.backgroundImage && opponentsName !== "") {
       if (coords.opponentFirstName) {
         opponentsFirstName(fabricRef, opponentsName, coords, themeOption, radioChecked);
       }

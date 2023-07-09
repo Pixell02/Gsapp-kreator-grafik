@@ -7,7 +7,7 @@ export default function TypePlace({ fabricRef, coords, themeOption, posterBackgr
   const [place, setPlace] = useState("");
  
   useEffect(() => {
-    if (fabricRef.current && place !== "") {
+    if (fabricRef.current?.backgroundImage && place !== "") {
       
       typePlace(fabricRef, coords, place, themeOption)
     }

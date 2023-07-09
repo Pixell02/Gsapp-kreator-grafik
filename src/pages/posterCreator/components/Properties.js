@@ -7,6 +7,7 @@ import TextboxProperties from "./components2/TextboxProperties";
 import TextProperties from "./components2/TextProperties";
 
 import useActiveObjectCoords from "./hooks/useActiveObject";
+import PlayerNameProperties from "./components2/PlayerNameProperties";
 
 export default function Properties({ fabricRef }) {
   const { coords, setCoords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
@@ -25,6 +26,9 @@ export default function Properties({ fabricRef }) {
       )}
       {coords.type === "multiply" && (
         <MultiplyProperties handleSelectGroupChange={handleSelectGroupChange} updateActiveGroupObjectCoords={updateActiveGroupObjectCoords} coords={coords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange}  />
+      )}
+      {coords.type === "playerGoal" && (
+        <PlayerNameProperties coords={coords} canvasRef={fabricRef} setCoords={setCoords} handleSelectChange={handleSelectChange} handleInputChange={handleInputChange}  />
       )}
      
     </div>

@@ -29,13 +29,13 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
 
   useEffect(() => {
     
-    if (fabricRef.current && (yourTeamGoal || yourTeamGoalMinute)) {
+    if (fabricRef.current?.backgroundImage && (yourTeamGoal || yourTeamGoalMinute)) {
       yourTeamResult({ fabricRef, yourTeamGoal, yourTeamGoalMinute, coords, radioChecked, themeOption });
     }
   }, [fabricRef.current, yourTeamGoal, yourTeamGoalMinute, radioChecked, posterBackground]);
 
   useEffect(() => {
-    if (fabricRef.current && (opponentGoals || opponentGoalMinute )) { 
+    if (fabricRef.current?.backgroundImage && (opponentGoals || opponentGoalMinute )) { 
       
       opponentTeamResult({ fabricRef, opponentGoals, opponentGoalMinute, coords, radioChecked})
     }

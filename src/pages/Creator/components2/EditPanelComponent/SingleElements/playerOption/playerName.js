@@ -3,7 +3,7 @@ import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
 import findThemeOption from "../functions/themeOption";
 
-const playerName = (fabricRef, selectedPlayerName, coords, themeOption, posterBackground) => {
+const playerName = (fabricRef, selectedPlayerName, coords, themeOption) => {
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "yourPlayer") {
       fabricRef.current.remove(fabricRef.current.item(i));

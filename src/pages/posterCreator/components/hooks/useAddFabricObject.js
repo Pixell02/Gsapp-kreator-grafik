@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import { createFabricImage, createFabricText, createFabricTextBox, createMultiplyText, createPlayerImage } from "./createFabricObject";
+import { createFabricImage, createFabricText, createFabricTextBox, createMultiplyText, createPlayerImage, createPlayerNameText } from "./createFabricObject";
 
 export const useAddFabricObject = (fabricRef) => {
   const [fabricObject, setFabricObject] = useState([]);
-  const [fabricObjectProperties, setFabricObjectProperties] = useState({});
+  
   
   const handleAddObject = (e,layer) => {
     
@@ -16,7 +16,10 @@ export const useAddFabricObject = (fabricRef) => {
       createFabricTextBox(fabricRef, setFabricObject, layer.text, layer.className)
     } else if (layer.type === "playerImage") {
       createPlayerImage(fabricRef, setFabricObject,layer.className,layer.image)
-    } else {
+    } else if (layer.type === "playerGoal") {
+      createPlayerNameText(fabricRef, setFabricObject, layer.text, layer.className)
+    }
+    else {
       createMultiplyText(fabricRef, setFabricObject, layer.text, layer.className, layer.loops)
     }
     e.target.blur();

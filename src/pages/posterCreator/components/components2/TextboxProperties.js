@@ -4,7 +4,7 @@ import originX from './originX'
 import originY from './originY'
 
 export default function TextboxProperties({ coords, handleInputChange, handleSelectChange, handleSelectGroupChange }) {
-  console.log(coords)
+  
   return (
     <div>
     <div>Nazwa obiektu : {coords.className}</div>
@@ -60,7 +60,7 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
           name="Format"
           className='form-control w-75'
           value={coords.Format}
-          onChange={(e) => handleSelectChange(e)}
+          onChange={(e) => handleSelectChange(e, coords)}
         >
           <option value="NumDotSurName">88.Nazwisko</option>
           <option value="NumSurName">88 Nazwisko</option>

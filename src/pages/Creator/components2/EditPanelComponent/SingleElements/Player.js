@@ -20,10 +20,10 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
 
   useEffect(() => {
     
-    if (fabricRef.current && selectedPlayerName !== "") {
+    if (fabricRef.current?.backgroundImage && selectedPlayerName !== "") {
       playerName(fabricRef, selectedPlayerName, coords, themeOption, posterBackground)
     }
-    if (fabricRef.current && selectedPlayerImage.split(" ")[0] !== "" && coords.playerImage) {
+    if (fabricRef.current?.backgroundImage && selectedPlayerImage.split(" ")[0] !== "" && coords.playerImage) {
       
     }
   }, [fabricRef.current, themeOption, posterBackground, selectedPlayerName, selectedPlayerImage]);

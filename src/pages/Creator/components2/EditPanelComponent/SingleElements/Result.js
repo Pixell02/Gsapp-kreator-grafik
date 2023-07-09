@@ -10,12 +10,12 @@ export default function Result({ fabricRef, coords, posterBackground, themeOptio
   const { radioChecked } = useContext(radioContext);
   
   useEffect(() => {
-    if(fabricRef && yourTeamResult !== "")
+    if(fabricRef.current?.backgroundImage && yourTeamResult !== "")
     yourResult(fabricRef, yourTeamResult, coords, themeOption, radioChecked)
   }, [fabricRef.current, yourTeamResult, posterBackground, themeOption, radioChecked])
   
   useEffect(() => {
-    if (fabricRef && yourOpponentResult !== "")
+    if (fabricRef.current?.backgroundImage && yourOpponentResult !== "")
       opponentResult(fabricRef, yourOpponentResult, coords, themeOption, radioChecked)
   },[fabricRef.current, yourOpponentResult, posterBackground, themeOption, radioChecked])
 

@@ -103,7 +103,7 @@ const useActiveObjectCoords = (fabricRef) => {
       }
     }
   };
-  console.log(globalProperties)
+  
   const updateActiveObjectCoords = (name, value) => {
     const canvas = fabricRef.current;
     if (canvas) {
@@ -121,11 +121,52 @@ const useActiveObjectCoords = (fabricRef) => {
             canvas.renderAll();
           } else if (name === "angle") {
             activeObject.set("angle", Number(value)); 
+            canvas.renderAll();
           }
         }
       }
     }
   };
+
+  const updateFormat = (value, className) => {
+    
+    const canvas = fabricRef.current;
+    if (canvas) {
+      const activeObject = canvas.getActiveObject();
+      if (activeObject) {
+        if (className === "player") {
+          if (value === "dotted") {
+            activeObject.set("text", "I.Nazwisko");
+            canvas.renderAll();
+          } else if(value === "NumSurName") {
+            activeObject.set("text", "Imie Nazwisko");
+            canvas.renderAll();
+          } else {
+            activeObject.set("text", "Nazwisko");
+            canvas.renderAll();
+          }
+        } else if (className === "playerOne") {
+          console.log(value)
+          if (value === "dotted") {
+            activeObject.set("text", "88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko");
+            canvas.renderAll();
+          } else if (value === "NumSurName") {
+            activeObject.set("text", "88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko");
+            canvas.renderAll();
+          } else if (value === "NumDotSurName") {
+            activeObject.set("text", "88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko");
+            canvas.renderAll();
+          } else if (value === "oneDot") {
+            activeObject.set("text", "88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko");
+            canvas.renderAll();
+          } else {
+            activeObject.set("text", "Nazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko");
+            canvas.renderAll();
+          }
+        }
+      }
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -163,14 +204,18 @@ const useActiveObjectCoords = (fabricRef) => {
     }
   }, [coords]);
 
-  const handleSelectChange = (e) => {
+  const handleSelectChange = (e, coords) => {
     const { value, name } = e.target;
+    
     if (name === "fontFamily") {
       const font = new FontFaceObserver(value);
       font.load().then(() => {
         updateActiveObjectCoords(name, value);
         setCoords({ ...coords, [name]: value });
       });
+    } else if (name === "Format") {
+      updateFormat(value, coords.className)
+      setCoords({ ...coords, [name]: value });
     } else {
       updateActiveObjectCoords(name, value);
       setCoords({ ...coords, [name]: value });

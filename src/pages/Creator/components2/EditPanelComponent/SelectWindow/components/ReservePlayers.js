@@ -9,7 +9,7 @@ const ReservePlayers = ({ fabricRef, coords, themeOption }) => {
   const { reservePlayers, selectedReserve, handleReserveChecked } = useTeamContext();
   
   useEffect(() => {
-    if (fabricRef.current && selectedReserve) {
+    if (fabricRef.current?.backgroundImage && selectedReserve) {
       showReserve(fabricRef, selectedReserve, coords, themeOption)
     }
   },[selectedReserve])

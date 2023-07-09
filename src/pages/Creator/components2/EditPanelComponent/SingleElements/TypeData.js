@@ -7,7 +7,7 @@ export default function TypeData({ fabricRef, coords, themeOption, posterBackgro
   const [Date, setTypeDate] = useState("");
 
   useEffect(() => {
-    if (fabricRef.current && Date !== "") {
+    if (fabricRef.current?.backgroundImage && Date !== "") {
         typeDate(fabricRef, Date, coords, themeOption, posterBackground)
     }
   },[fabricRef.current,Date, posterBackground])

@@ -8,7 +8,7 @@ export default function Round({ fabricRef, coords, themeOption, posterBackground
   const [typeRound, setTypeRound] = useState("")
 
   useEffect(() => {
-    if (fabricRef.current && typeRound !== "") {
+    if (fabricRef.current?.backgroundImage && typeRound !== "") {
         typeKolejka(fabricRef, typeRound, coords, themeOption)
      }
 

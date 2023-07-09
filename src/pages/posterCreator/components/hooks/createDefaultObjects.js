@@ -85,7 +85,23 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
             fabricRef.current.add(text);
             fabricRef.current.renderAll();
           })
-        } 
+         } else if (layer.type === "playerGoal") {
+          const text = new fabric.IText(layer.text, {
+            top: globalProperties[key].Top,
+            left: globalProperties[key].Left,
+            fontSize: globalProperties[key].FontSize,
+            width: globalProperties[key].width,
+            originX: globalProperties[key].OriginX,
+            originY: globalProperties[key].OriginY,
+            className: "player",
+            fill: globalProperties[key].Fill,
+            fontFamily: globalProperties[key].FontFamily,
+            format: globalProperties[key].Format,
+            type: globalProperties[key].Type,
+          })
+          fabricRef.current.add(text);
+          fabricRef.current.renderAll();
+        }
       }
     }
   })

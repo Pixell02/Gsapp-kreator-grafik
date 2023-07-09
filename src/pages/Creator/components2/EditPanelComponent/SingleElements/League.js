@@ -7,7 +7,7 @@ export default function League({ fabricRef, coords, themeOption, posterBackgroun
   const [league, setLeague] = useState("");
 
   useEffect(() => {
-    if (fabricRef.current && league !== "") {
+    if (fabricRef.current?.backgroundImage && league !== "") {
       typeLeague(fabricRef, league, themeOption, coords)
     }
   },[fabricRef.current, league, themeOption, posterBackground]);
