@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./MainContentOffer.css";
 import { countries } from "./countries";
 import Input from "./Input";
+import translate from "../locales/translate.json";
+import {LanguageContext} from "../../../context/LanguageContext";
+
 const zipCodeRegex = /^\d{2}-\d{3}$/;
 const nipRegex = /^\d{10}$/;
 
@@ -16,6 +19,9 @@ export default function Form({
   isLoading
 }) {
   const [isActiveButton, setActiveButton] = useState(false);
+
+  const {language} = useContext(LanguageContext)
+
   useEffect(() => {
     if (paymentData.companyName) {
       setIsChecked(true);
@@ -55,7 +61,7 @@ export default function Form({
   return (
     <>
       <div className="fax-container">
-        <p className="form-title">Dane do faktury</p>
+        <p className="form-title">{translate.billing[language] }</p>
 
         <select
           name="countryCode"
@@ -75,14 +81,14 @@ export default function Form({
         <div className="fullName-content">
           <Input
             key={1}
-            title="Imię"
+            title={translate.firstName[language]}
             name="firstName"
             value={paymentData.buyer.firstName}
             handleDataChange={(e) => handleDataChange(e)}
           />
           <Input
             key={2}
-            title="Nazwisko"
+            title={translate.lastName[language]}
             name="lastName"
             value={paymentData.buyer.lastName}
             handleDataChange={(e) => handleDataChange(e)}
@@ -91,7 +97,7 @@ export default function Form({
 
         <Input
           key={3}
-          title="E-mail"
+          title={translate.email[language]}
           name="email"
           value={paymentData.buyer.email}
           handleDataChange={(e) => handleDataChange(e)}
@@ -99,7 +105,7 @@ export default function Form({
 
         <Input
           key={4}
-          title="Adres"
+          title={translate.street[language]}
           name="street"
           value={paymentData.buyer.delivery.street}
           handleDataChange={(e) => handleDeliveryDataChange(e)}
@@ -107,7 +113,7 @@ export default function Form({
 
         <Input
           key={5}
-          title="Kod pocztowy"
+          title={translate.postalCode[language]}
           name="postalCode"
           value={paymentData.buyer.delivery.postalCode}
           handleDataChange={(e) => handleDeliveryDataChange(e)}
@@ -115,7 +121,7 @@ export default function Form({
 
         <Input
           key={6}
-          title="Miasto"
+          title={translate.city[language]}
           name="city"
           value={paymentData.buyer.delivery.city}
           handleDataChange={(e) => handleDeliveryDataChange(e)}
@@ -123,15 +129,15 @@ export default function Form({
         <div className="checkbox-container" style={{ marginBottom: "20px" }}>
           <label>
             <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
-            <span>Dane firmowe</span>
+            <span>{translate.companyData[language]}</span>
           </label>
         </div>
         {isChecked && (
           <div className="data-content">
-            <Input key={7} title="NIP" name="NIP" value={paymentData.NIP} handleDataChange={(e) => handleChange(e)} />
+            <Input key={7} title={translate.vatId[language]} name="NIP" value={paymentData.NIP} handleDataChange={(e) => handleChange(e)} />
             <Input
               key={8}
-              title="Nazwa Firmy"
+              title={translate.companyName[language]}
               name="companyName"
               value={paymentData.companyName}
               handleDataChange={(e) => handleChange(e)}
@@ -145,9 +151,9 @@ export default function Form({
           style={{ width: "200px" }}
           disabled={!isActiveButton}
         >
-          Kup
+          {translate.buy[language]}
         </button>
-        {isLoading && <p>...Przetwarzanie</p>}
+        {isLoading && <p>...{translate.loading[language]}</p>}
       </div>
     </>
   );

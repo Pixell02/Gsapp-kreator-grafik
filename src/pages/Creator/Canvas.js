@@ -43,7 +43,7 @@ function Canvas(props) {
   }, [props.posterBackGround]);
 
   useEffect(() => {
-    if (props.coords.yourTeamLogoOne && props.fabricRef.current?.backgroundImage) {
+    if (props.coords?.yourTeamLogoOne && props.fabricRef.current?.backgroundImage) {
       hostLogo(props.fabricRef, props, loops);
       hostName(props.fabricRef, props, loops);
     }
@@ -57,7 +57,7 @@ function Canvas(props) {
   ]);
 
   useEffect(() => {
-    if (props.coords.imageType === "withImage" && props.fabricRef.current?.backgroundImage) {
+    if (props.coords?.imageType === "withImage" && props.fabricRef.current?.backgroundImage) {
       if (props.coords.type !== "yourLogo") {
         teamLogos(props.fabricRef, props, loops);
       } else {
@@ -89,10 +89,10 @@ function Canvas(props) {
   }, [props.selectHostNameValues, props.selectNamesValues, props.radioValues]);
 
   useEffect(() => {
-    if (props.coords.opponentNameOne && props.fabricRef.current?.backgroundImage) {
+    if (props.coords?.opponentNameOne && props.fabricRef.current?.backgroundImage) {
       opponentNames(props.fabricRef, props, loops);
     }
-    if (props.coords.opponentImageOne && props.fabricRef.current?.backgroundImage)
+    if (props.coords?.opponentImageOne && props.fabricRef.current?.backgroundImage)
       opponentLogos(props.fabricRef, props, loops);
   }, [
     props.selectHostLogoValues,
@@ -114,7 +114,7 @@ function Canvas(props) {
   }, [props.month, props.posterBackGround]);
 
   useEffect(() => {
-    if (props.coords.resultType !== "connected" && props.fabricRef.current?.backgroundImage) {
+    if (props.coords?.resultType !== "connected" && props.fabricRef.current?.backgroundImage) {
       yourTeamResult(props.fabricRef, props, loops);
       opponentTeamResult(props.fabricRef, props, loops);
     } else {

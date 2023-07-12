@@ -6,7 +6,6 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Select from "react-select";
 import background from "../../img/back.png";
 import { exportImg } from "./components/exportImg";
-import useReservePlayer from "./hooks2/useReservePlayer";
 import useTimeTable from "./hooks2/useTimeTable";
 import TimeTableEdit from "./components/TimeTableEdit";
 import ResultTableEdit from "./components/ResultTableEdit";
@@ -18,12 +17,12 @@ import Canvas from "./Canvas";
 import EditPanel from "./components2/EditPanel";
 import { useContext } from "react";
 import { LanguageContext } from "../../context/LanguageContext";
-
+import translate from "./locales/translate.json";
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef();
   const { user } = useAuthContext();
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext);
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
   const { documents: Opponent } = useCollection("Opponents", ["uid", "==", user.uid]);
@@ -124,7 +123,6 @@ function WorkSpace() {
     }
   }, [selectThemes]);
 
-
   const location = useLocation();
   const [hasTheme, setHasTheme] = useState(false);
   useEffect(() => {
@@ -133,14 +131,14 @@ function WorkSpace() {
   }, [location]);
 
   const extractThemeFromURL = (pathname) => {
-    const parts = pathname.split('/');
-    const themeIndex = parts.indexOf('theme');
+    const parts = pathname.split("/");
+    const themeIndex = parts.indexOf("theme");
     if (themeIndex !== -1 && themeIndex < parts.length - 1) {
       return parts[themeIndex + 1];
     }
     return null; // Jeśli nie znaleziono wartości theme w adresie URL
   };
-  
+
   // GOOOL
 
   const [radioChecked, setRadioChecked] = useState("radio1");
@@ -210,7 +208,14 @@ function WorkSpace() {
                 {(user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" ||
                   user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" ||
                   user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2") && (
-                  <button className="btn" onClick={() => navigate(hasTheme ? `/${language}/posterCreator/theme/${poster}` : `/${language}/posterCreator/${poster}`)}>
+                  <button
+                    className="btn"
+                    onClick={() =>
+                      navigate(
+                        hasTheme ? `/${language}/posterCreator/theme/${poster}` : `/${language}/posterCreator/${poster}`
+                      )
+                    }
+                  >
                     Edytuj
                   </button>
                 )}
@@ -234,7 +239,7 @@ function WorkSpace() {
                 <>
                   {teamOption && teamOption.length > 1 && (
                     <>
-                      <label>Twoje drużyny</label>
+                      <label>{translate.yourTeam[language]}</label>
                       <Select options={teamOption} onChange={getTeamOption} />
                     </>
                   )}
@@ -294,26 +299,21 @@ function WorkSpace() {
                 />
               )}
 
-              {/* GOL zawodnika */}
-              {/* {coords && coords.player && (
-                <>
-                  <label>Zawodnik</label>
-                  <Select options={playerOptions} onChange={getYourPlayer} />
-                </>
-              )} */}
-
               <button
                 className="btn primary-btn save"
                 onClick={() => {
                   exportImg(Licenses, selectThemes, user, poster, coords.type);
                 }}
               >
-                Zapisz
+                {translate.save[language]}
               </button>
             </div>
             {Licenses && Licenses[0].license === "free-trial" && (
               <div className="license-place">
-                <span className="license-content">Masz jeszcze {Licenses[0].numberOfFreeUse} darmowych użyć</span>
+                <span className="license-content">
+                  {translate.freeUsesFirstPart[language]} {Licenses[0].numberOfFreeUse}{" "}
+                  {translate.freeUsesLastPart[language]}
+                </span>
               </div>
             )}
 

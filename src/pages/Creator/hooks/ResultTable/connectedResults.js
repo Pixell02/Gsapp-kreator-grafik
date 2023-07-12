@@ -3,7 +3,7 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 export default function connectedResults(fabricRef, props, loops) {
   
-  if (loops) {
+  if (loops && props.coords.yourTeamResultsOne) {
     loops.forEach((loop, i) => {
       if (props.coords.yourTeamResultsOne && props.yourTeamResultsValue[i]) {
         fabricRef.current._objects.forEach((image, i) => {

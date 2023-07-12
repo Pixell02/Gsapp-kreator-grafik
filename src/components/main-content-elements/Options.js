@@ -10,6 +10,11 @@ import "./Block.css";
 
 export default function Options({ team }) {
   
+  console.log(team)
+
+  const handleEdit = () => {
+
+  }
 
   const handleClick = async (id) => {
     const ref = doc(db, "Players", id);
@@ -19,12 +24,12 @@ export default function Options({ team }) {
   return (
     <div className="show-list">
       <div className="edit-element">
-        <button key={team.id} >
+        <button onClick={() => handleEdit(team)}  >
           Edytuj
         </button>
       </div>
       <div className="delete-element">
-        <button key={team.id} onClick={() => handleClick(team.id)}>
+        <button onClick={() => handleClick(team.id)}>
           Usuń
         </button>
       </div>

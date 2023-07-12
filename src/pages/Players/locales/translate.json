@@ -1,0 +1,87 @@
+{
+  "players": {
+    "pl": "Zawodnicy",
+    "en": "Players",
+    "de": "Spieler",
+    "es": "Jugadores",
+    "fr": "Joueurs"
+  },
+  "addPlayer": {
+    "pl": "Dodaj zawodnika",
+    "en": "Add Player",
+    "de": "Spieler hinzufügen",
+    "es": "Agregar jugador",
+    "fr": "Ajouter un joueur"
+  },
+  "firstName": {
+    "pl": "Imię",
+    "en": "First Name",
+    "de": "Vorname",
+    "es": "Nombre",
+    "fr": "Prénom"
+  },
+  "lastName": {
+    "pl": "Nazwisko",
+    "en": "Last Name",
+    "de": "Nachname",
+    "es": "Apellido",
+    "fr": "Nom de famille"
+  },
+  "number": {
+    "pl": "Numer zawodnika",
+    "en": "Player Number",
+    "de": "Spielernummer",
+    "es": "Número de jugador",
+    "fr": "Numéro du joueur"
+  },
+  "team": {
+    "pl": "Drużyna",
+    "en": "Team",
+    "de": "Mannschaft",
+    "es": "Equipo",
+    "fr": "Équipe"
+  },
+  "emptyField": {
+    "pl": "Puste pole",
+    "en": "Empty field",
+    "de": "Leeres Feld",
+    "es": "Campo vacío",
+    "fr": "Champ vide"
+  },
+  "addPhoto": {
+    "pl": "Dodaj zdjęcie",
+    "en": "Add Photo",
+    "de": "Foto hinzufügen",
+    "es": "Agregar foto",
+    "fr": "Ajouter une photo"
+  },
+  "noTeam": {
+    "pl": "Nie wybrano drużyny",
+    "en": "No team selected",
+    "de": "Keine Mannschaft ausgewählt",
+    "es": "Ningún equipo seleccionado",
+    "fr": "Aucune équipe sélectionnée"
+  },
+  "cancel": {
+    "pl": "Anuluj",
+    "en": "Cancel",
+    "de": "Abbrechen",
+    "es": "Cancelar",
+    "fr": "Annuler"
+  },
+  "save": {
+    "pl": "Zapisz",
+    "en": "Save",
+    "de": "Speichern",
+    "es": "Guardar",
+    "fr": "Enregistrer"
+  },
+  "maxSize": {
+    "pl": "Maksymalny rozmiar obrazu to 2MB",
+    "en": "Maximum image size is 2MB",
+    "de": "Die maximale Bildgröße beträgt 2 MB",
+    "es": "El tamaño máximo de la imagen es de 2 MB",
+    "fr": "La taille maximale de l'image est de 2 Mo"
+  }
+  
+}

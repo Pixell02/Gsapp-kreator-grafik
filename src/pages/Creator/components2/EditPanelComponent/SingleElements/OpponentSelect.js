@@ -8,13 +8,15 @@ import radioContext from "../../../context/radioContext";
 import opponentsFullName from "./TeamOption/opponentsFullName";
 import opponentsFirstName from "./TeamOption/opponentsFirstName";
 import opponentsSecondName from "./TeamOption/opponentsSecondName";
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 const OpponentSelect = ({ Opponents, fabricRef, coords, posterBackground, themeOption }) => {
   const [opponentsName, setOpponentsName] = useState("");
   const [opponentsLogo, setOpponentsLogo] = useState("");
   const [options, setOptions] = useState([]);
   const { radioChecked } = useContext(radioContext);
-
+  const {language} = useContext(LanguageContext)
  
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const OpponentSelect = ({ Opponents, fabricRef, coords, posterBackground, themeO
 
   return (
     <>
-      <label>Przeciwnicy</label>
+      <label>{translate.Opponents[language]}</label>
       {Opponents && <Select options={options} onChange={setOpponent} />}
     </>
   );

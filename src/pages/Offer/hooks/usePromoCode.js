@@ -1,8 +1,13 @@
-import { collection, deleteDoc, doc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
-import React, { useState } from 'react'
+import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import React, { useContext, useState } from 'react'
 import { db } from '../../../firebase/config';
+import { LanguageContext } from '../../../context/LanguageContext';
+import translate from "../locales/translate.json"
 
 const usePromoCode = () => {
+
+  const {language} = useContext(LanguageContext)
+
   const [promoCode, setPromoCode] = useState({
     code: ""
   });
@@ -27,13 +32,13 @@ const usePromoCode = () => {
             amount: results[0].amount - 1 
           });
           setPromoCode(results[0]);
-        setAlert("użyto pomyślnie");
+        setAlert(translate.success[language]);
         } else if (results[0].amount === 0) {
           await deleteDoc(docRef);
-          setAlert("kod został zużyty lub nie istnieje");
+          setAlert(translate.codeUsed[language]);
         }
       } else {
-        setAlert("kod nie istnieje");
+        setAlert(translate.doesntExist[language]);
       }
     } catch (error) {
       // Handle error

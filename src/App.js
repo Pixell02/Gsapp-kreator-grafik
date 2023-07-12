@@ -34,8 +34,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to={`/${language}/login`} />} />
           <Route path="/:lang/resetPassword" element={<ResetPassword />} />
-          <Route path="/:lang/login" element={!user ? <Login /> : <Navigate to={`/${language}/yourTeamPanel`} />} />
-          <Route path="/:lang/register" element={!user ? <Register /> : <Navigate to={`/${language}/yourTeamPanel`} />} />
+          <Route path="/:lang/login" element={!user ? <Login /> : <Navigate to={`/${language}/yourCatalog`} />} />
+          <Route path="/:lang/register" element={!user ? <Register /> : <Navigate to={`/${language}/yourCatalog`} />} />
           <Route path="/:lang/yourCatalog" element={user ? <YourCatalog /> : <Navigate to={`/${language}/login`}  />} />
           <Route path="/:lang/catalog" element={user ? <Catalog /> : <Navigate to={`/${language}/login`}  />} />
           <Route path="/:lang/yourTeamPanel" element={user ? <YourTeamPanel /> : <Navigate to={`/${language}/login`}  />} />
@@ -50,7 +50,8 @@ function App() {
           <Route path="/:lang/creator/:poster" element={user ? <Creator /> : <Navigate to={`/${language}/login`}  />} />
           <Route path="/:lang/creator/theme/:poster" element={user ? <Creator /> : <Navigate to={`/${language}/login`} />} />
           <Route path="/:lang/catalog/*" element={user ? <Catalog /> : <Navigate to={`/${language}/login`}  />} />
-
+          <Route path="/:lang/guide" element={user ? <Guide /> : <Navigate to={`/${language}/login`} />} />
+          <Route path="/:lang/dataPrivacy" element={<DataPrivacy />} />
           <Route path="/:lang/stats" element={user ? <Stats /> : <Navigate to={`/${language}/login`}  />} />
           {user && (user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" || user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" ||  user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2") && (
             <>
@@ -62,8 +63,7 @@ function App() {
               <Route path="/:lang/posterCreator/theme/:id" element={user ? <EditTheme /> : <Navigate to={`/${language}/login`}  />} />
             </>
           )}
-          <Route path="/:lang/guide" element={user ? <Guide /> : <Navigate to="/login" />} />
-          <Route path="/:lang/dataPrivacy" element={<DataPrivacy />} />
+          
           <Route path="/*" element={<Navigate to={`/${language}/login`} />} />
         </Routes>
       )}

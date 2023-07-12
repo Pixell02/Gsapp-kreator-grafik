@@ -6,6 +6,8 @@ import yourTeamResult from "./result/yourTeamResult";
 import { useContext } from "react";
 import radioContext from "../../../context/radioContext";
 import opponentTeamResult from "./result/opponentTeamResult";
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function PlayersGoals({ fabricRef, coords, themeOption, posterBackground, Players }) {
   const [playerOptions, setPlayerOption] = useState([]);
@@ -15,7 +17,7 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
     Array(9).fill()
   );
   const { radioChecked } = useContext(radioContext);
-
+  const {language} = useContext(LanguageContext)
   useEffect(() => {
     if (Players) {
       const options = Players.map((player) => ({

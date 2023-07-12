@@ -1,20 +1,18 @@
-import { useState } from "react";
-import MainFooter from "../../../components/MainFooter";
+import { useContext, useState } from "react";
 import Title from "../../../components/main-content-elements/Title";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import "./MainAccount.css";
 import { useCollection } from "../../../hooks/useCollection";
-import verified from "../../../img/verified.png";
-import discard from "../../../img/discard.png";
-import { Link } from "react-router-dom";
-import CountryOption from "../../Offer/components/countryOption";
-import { auth, db } from "../../../firebase/config";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import {  db } from "../../../firebase/config";
+import { doc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
 import useUserInformation from "../../../hooks/useUserInformation";
 import { countries } from "./countries";
 import Licenses from "./Licenses";
 import UserInformation from "./UserInformation";
+import ReturnButton from "../../../components/ReturnButton";
+import translate from "../locales/translate.json"
+import { LanguageContext } from "../../../context/LanguageContext";
 
 const zipCodeRegex = /^\d{2}-\d{3}$/;
 const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
@@ -26,18 +24,8 @@ function MainAccount() {
   const [userEmail, setUserEmail] = useState(user.email);
   const [isChecked, setIsChecked] = useState(false);
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
-  
+  const { language } = useContext(LanguageContext);
 
-  const { documents: Transactions } = useCollection("transaction", ["uid", "==", user.uid]);
-
-  useEffect(() => {
-    if (Transactions) {
-      if (Transactions.length > 0) {
-        const ref = doc(db, "transaction", Transactions[0].id);
-        deleteDoc(ref);
-      }
-    }
-  }, [Transactions]);
 
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
@@ -146,19 +134,18 @@ function MainAccount() {
   return (
     <div className="main-content">
       <div className="ml-5">
+        <ReturnButton />
         <div className="account-content">
-          <Title title="Konto" />
+          <Title title={translate.account[language]} />
           <div className="account-items">
             <UserInformation user={user} userEmail={userEmail} userCreatedAt={userCreatedAt} />
-            
             <Licenses License={License} />
-
             <form onSubmit={handleSubmit} className="fax-container">
-              <p className="form-title">Dane do faktury</p>
+              <p className="form-title">{translate.billing[language]}</p>
               <div className="inner-content-country-label">
                 <div className="label-content">
                   <label className="country">
-                    Państwo<span style={{ color: "red" }}>*</span>
+                    {translate.country[language]}<span style={{ color: "red" }}>*</span>
                   </label>
 
                   <select
@@ -178,7 +165,7 @@ function MainAccount() {
               <div className="fullName-content">
                 <div className="inner-label-containers">
                   <div className="label-content">
-                    <label>Imię</label>
+                    <label>{translate.firstName[language]}</label>
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
@@ -193,7 +180,7 @@ function MainAccount() {
                 </div>
                 <div className="label-content">
                   <div className="inner-label-containers">
-                    <label>Nazwisko</label>
+                    <label>{translate.lastName[language]}</label>
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
@@ -210,7 +197,7 @@ function MainAccount() {
               <div className="data-content">
                 <div className="label-content">
                   <div className="label-name">
-                    <label>Adres</label>
+                    <label>{translate.adress[language]}</label>
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
@@ -225,7 +212,7 @@ function MainAccount() {
                 </div>
                 <div className="label-content">
                   <div className="label-name">
-                    <label>Kod pocztowy</label>
+                    <label>{translate.postalCode[language]}</label>
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
@@ -240,7 +227,7 @@ function MainAccount() {
                 </div>
                 <div className="label-content">
                   <div className="label-name">
-                    <label>Miasto</label>
+                    <label>{translate.city[language] }</label>
                     <span style={{ color: "red" }}>*</span>
                   </div>
                   <input
@@ -257,14 +244,14 @@ function MainAccount() {
               <div className="checkbox-container" style={{ marginBottom: "20px" }}>
                 <label>
                   <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
-                  <span>Dane firmowe</span>
+                  <span>{translate.companyData[language]}</span>
                 </label>
               </div>
               {isChecked && (
                 <div className="data-content">
                   <div className="label-content">
                     <div className="label-name">
-                      <label>NIP</label>
+                      <label>{translate.vatId[language]}</label>
                       <span style={{ color: "red" }}>*</span>
                     </div>
                     <input
@@ -279,7 +266,7 @@ function MainAccount() {
                   </div>
                   <div className="label-content">
                     <div className="label-name">
-                      <label>Nazwa Firmy</label>
+                      <label>{translate.companyName[language]}</label>
                       <span style={{ color: "red" }}>*</span>
                     </div>
                     <input
@@ -296,7 +283,7 @@ function MainAccount() {
               )}
               <div className="btn-container">
                 <button className="btn btn-primary save-btn" type="submit">
-                  Zapisz{" "}
+                  {translate.save[language]}
                 </button>
               </div>
             </form>

@@ -3,12 +3,14 @@ import yourResult from "./result/yourResult";
 import opponentResult from "./result/opponentResult";
 import { useContext } from "react";
 import radioContext from "../../../context/radioContext";
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function Result({ fabricRef, coords, posterBackground, themeOption}) {
   const [yourTeamResult, setYourTeamResult] = useState("");
   const [yourOpponentResult, setYourOpponentResult] = useState("");
   const { radioChecked } = useContext(radioContext);
-  
+  const {language} = useContext(LanguageContext)
   useEffect(() => {
     if(fabricRef.current?.backgroundImage && yourTeamResult !== "")
     yourResult(fabricRef, yourTeamResult, coords, themeOption, radioChecked)

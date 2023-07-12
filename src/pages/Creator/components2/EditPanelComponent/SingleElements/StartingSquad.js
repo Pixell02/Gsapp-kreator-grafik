@@ -1,30 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+import translate from "../../../locales/translate.json";
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
-
-export default function StartingSquad({coords, setIsModalOpen}) {
- 
+export default function StartingSquad({ coords, setIsModalOpen }) {
+  const { language } = useContext(LanguageContext);
   return (
     <div className="d-flex flex-column mt-5">
       {coords && coords.playerOne && (
-        <button className="btn" onClick={() => setIsModalOpen({id: 1, open:true})}>
-          Wyjściowa 11
+        <button className="btn" onClick={() => setIsModalOpen({ id: 1, open: true })}>
+         {translate.addPlayers[language]}
         </button>
       )}
       {coords && coords.reserveOne && (
- 
-          <button className="btn mt-3" onClick={() => setIsModalOpen({id: 2, open:true})}>Dodaj Rezerwowych</button>        
+        <button className="btn mt-3" onClick={() => setIsModalOpen({ id: 2, open: true })}>
+         {translate.addReserve[language]}
+        </button>
       )}
-      {/* {coords && (coords.reserveOne || coords.playerOne) && (
-        <>
-          <label>Bramkarz 1</label>
-
-          <Select options={playerOptions} onChange={getGoalKeeper} />
-
-          <label>Kapitan</label>
-
-          <Select options={playerOptions} onChange={getCapitan} />
-        </>
-      )} */}
     </div>
   );
 }

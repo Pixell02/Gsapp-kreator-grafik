@@ -11,7 +11,7 @@ import PlayerNameProperties from "./components2/PlayerNameProperties";
 
 export default function Properties({ fabricRef }) {
   const { coords, setCoords, handleInputChange, handleSelectChange, updateActiveGroupObjectCoords, handleSelectGroupChange } = useActiveObjectCoords(fabricRef);
-  
+  console.log(coords)
   return (
     <div className="overflow-scroll d-flex h-75">
       {coords.type === "image" && (

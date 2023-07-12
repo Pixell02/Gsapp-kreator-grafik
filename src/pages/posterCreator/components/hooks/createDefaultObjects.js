@@ -24,10 +24,24 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
           })
-        } else if (layer.type === "textBox") {
+         } else if (layer.type === "textBox") {
+           let value;
+           if (layer.className === "playerOne") {
+             if (globalProperties[key].Format === "dotted") {
+              value = "88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko";
+             } else if (globalProperties[key].Format === "NumSurName") {
+              value = "88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko\n88 Nazwisko";
+             } else if (globalProperties[key].Format === "NumDotSurName") {
+              value = "88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko\n88.Nazwisko";
+             } else if (globalProperties[key].Format === "oneDot") {
+              value = "88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko";
+             } else if (globalProperties[key].Format === "SurName") {
+              value = "Nazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko";
+             }
+           }
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
           font.load().then(() => {
-            const text = new fabric.Textbox(layer.text, {
+            const text = new fabric.Textbox(value, {
               top: globalProperties[key].Top,
               left: globalProperties[key].Left,
               fontSize: globalProperties[key].FontSize,
@@ -86,7 +100,15 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
             fabricRef.current.renderAll();
           })
          } else if (layer.type === "playerGoal") {
-          const text = new fabric.IText(layer.text, {
+           let value;
+           if (globalProperties[key].Format === "dotted") {
+             value = "I.Nazwisko";
+           } else if (globalProperties[key].Format === "NumSurName") {
+            value = "Imie Nazwisko";
+           } else if (globalProperties[key].Format === "SurName") {
+            value = "Nazwisko";
+           }
+          const text = new fabric.IText(value, {
             top: globalProperties[key].Top,
             left: globalProperties[key].Left,
             fontSize: globalProperties[key].FontSize,

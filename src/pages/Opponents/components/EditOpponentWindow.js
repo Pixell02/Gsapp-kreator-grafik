@@ -1,17 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
-import { addDoc, collection, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useParams } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
-import updatePlayer from "../../../hooks/UpdatePlayer";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { useTeams } from "../../Players/components/useTeams";
+import translate from "../locales/locales.json";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 function EditOpponentWindow({ player, open, onClose, Teams }) {
-  
+  const { language } = useContext(LanguageContext);
   const [firstOpponentName, setFirstOpponentName] = useState(player.firstName);
   const [secondOpponentName, setSecondOpponentName] = useState(player.secondName);
   const [image, setImage] = useState(player.img);
@@ -23,7 +22,6 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
-  console.log(Teams);
 
   useEffect(() => {
     if (!image) {
@@ -35,7 +33,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
     const file = e.target.files[0];
     setIsImage(false);
     if (file.size > 1000000) {
-      alert("Maksymalny rozmiar obrazu to 1MB");
+      alert(translate.maxSize[language]);
       return;
     }
     const reader = new FileReader();
@@ -48,14 +46,10 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstOpponentName) {
-      alert("brak pierwszej części nazwy drużyny");
-    } else if (!secondOpponentName) {
-      alert("brak drugiej części nazwy drużyny");
+    if (!firstOpponentName || !secondOpponentName) {
+      alert(translate.emptyField[language]);
     } else if (!selectedTeam) {
-      alert("nie wybrano drużyny");
-    } else if (!preview) {
-      alert("brak zdjecia");
+      alert(translate.noTeam[language]);
     } else {
       if (!isImage) {
         const storage = getStorage();
@@ -113,21 +107,21 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
   return (
     <div className={open ? "active-modal m-edit" : "modal"}>
       <div className="add-window">
-        <label>Pierwsza część nazwy przeciwnika</label>
+        <label>{translate.firstOpponentName[language]}</label>
         <input
           type="text"
           onChange={(e) => setFirstOpponentName(e.target.value)}
           value={firstOpponentName}
           className="firstPlayerName"
         />
-        <label>Druga część nazwy przeciwnika</label>
+        <label>{translate.secondOpponentName[language]}</label>
         <input
           type="text"
           onChange={(e) => setSecondOpponentName(e.target.value)}
           value={secondOpponentName}
           className="secondPlayerName"
         />
-        <label>Drużyna</label>
+        <label>{translate.team[language]}</label>
         <select
           name="country"
           className="form-control"
@@ -139,7 +133,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
           {teamOptions && teamOptions.map((team) => <option value={team.value}>{team.label}</option>)}
         </select>
         <button onClick={onButtonClick} className="btn primary-btn add-img">
-          Dodaj Zdjęcie
+          {translate.addCrest[language]}
         </button>
         <input
           type="file"
@@ -164,10 +158,10 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
             }}
             className="btn primary-btn"
           >
-            Anuluj
+            {translate.cancel[language]}
           </button>
           <button onClick={handleSubmit} className="btn primary-btn">
-            Zapisz
+            {translate.save[language]}
           </button>
         </div>
       </div>

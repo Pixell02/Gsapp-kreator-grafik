@@ -12,9 +12,9 @@ export default function useTimeTable() {
   
 
   const [numberOfMatch, setNumberOfMatch] = useState();
-
+  
   useEffect(() => {
-    if (coordinates) {
+    if (coordinates && coordinates[0]?.numberOfMatches) {
       setNumberOfMatch(coordinates[0].numberOfMatches);
     }
   }, [coordinates]);

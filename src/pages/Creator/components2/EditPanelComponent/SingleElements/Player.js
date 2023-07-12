@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import playerName from "./playerOption/playerName";
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function Player({ fabricRef, coords, themeOption, posterBackground, Players }) {
   const [playerOptions, setPlayerOption] = useState([]);
   const [selectedPlayerName, setSelectedPlayerName] = useState("");
   const [selectedPlayerImage, setSelectedPlayerImage] = useState("");
-
+  const {language} = useContext(LanguageContext)
   useEffect(() => {
     if (Players) {
       const options = Players.map((player) => ({
@@ -37,7 +39,7 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
     <>
       {playerOptions && (
         <>
-          <label>Zawodnik</label>
+          <label>{translate.player[language] }</label>
           <Select options={playerOptions} onChange={handleSelectPlayer} />
         </>
       )}

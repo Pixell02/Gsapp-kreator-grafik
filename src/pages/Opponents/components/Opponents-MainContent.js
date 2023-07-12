@@ -13,23 +13,27 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import useEditModal from "../../../hooks/useEditModal";
 import EditOpponentWindow from "./EditOpponentWindow";
+import ReturnButton from "../../../components/ReturnButton";
+import translate from "../locales/locales.json";
 import "./opponents.css";
+import { useContext } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 function OpponentsMainContent() {
   const { user } = useAuthContext();
   const { id } = useParams();
-
+  const { language } = useContext(LanguageContext);
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const location = useLocation();
-  const goodLocation = location.pathname.split("/")[1];
+  const goodLocation = location.pathname.split("/")[2];
 
   const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
   const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid]);
-  const handleDeleteClick = async (id) => {
-    if (goodLocation === "players") {
+  const handleDeleteClick = async (id, location) => {
+    if (location === "players") {
       const ref = doc(db, "Players", id);
       await deleteDoc(ref);
-    } else if (goodLocation === "opponents") {
+    } else if (location === "opponents") {
       const ref = doc(db, "Opponents", id);
       await deleteDoc(ref);
     }
@@ -65,9 +69,10 @@ function OpponentsMainContent() {
     <div className="main-content">
       {openModal && <AddOpponentWindow Teams={Teams} open={openModal} onClose={() => setOpenModal(false)} />}
       <div className="ml-5">
-        <Title title="Przeciwnicy" />
+        <ReturnButton />
+        <Title title={translate.opponents[language]} />
         <button onClick={() => setOpenModal(true)} className="btn primary-btn">
-          Dodaj przeciwnika
+          {translate.addOpponent[language]}
         </button>
         <ItemContainer>
           <div ref={hideElement} className="catalog-container">
@@ -85,6 +90,7 @@ function OpponentsMainContent() {
                         setItemToEdit={setItemToEdit}
                         handleDeleteClick={handleDeleteClick}
                         item={player}
+                        type={goodLocation}
                         openEditModal={openEditModal}
                         Teams={Teams}
                       />
@@ -109,6 +115,7 @@ function OpponentsMainContent() {
                           itemToEdit={itemToEdit}
                           setItemToEdit={setItemToEdit}
                           item={player}
+                          type={goodLocation}
                           openEditModal={openEditModal}
                           Teams={Teams}
                         />

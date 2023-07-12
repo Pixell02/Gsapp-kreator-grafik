@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
 import { db } from "../../../firebase/config";
@@ -12,9 +12,11 @@ import {
 } from "firebase/storage";
 import { useTeams } from "./useTeams";
 import { useParams } from "react-router-dom";
+import { LanguageContext } from "../../../context/LanguageContext";
+import translate from "../locales/translate.json"
 
 function EditPlayerWindow({ player, open, onClose, Teams }) {
-  
+  const { language } = useContext(LanguageContext);
   const [firstPlayerName, setFirstPlayerName] = useState(player.firstName);
   const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
@@ -26,7 +28,6 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   
-  console.log(image)
 
   const onButtonClick = () => {
     fileInputRef.current.click();
@@ -40,7 +41,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
     setIsImage(false);
     const file = e.target.files[0];
     if (file.size > 2000000) {
-      alert("Maksymalny rozmiar obrazu to 2MB");
+      alert(translate.maxSize[language]);
       return;
     }
     const reader = new FileReader();
@@ -54,7 +55,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!firstPlayerName || !secondPlayerName) {
-      alert("puste pole");
+      alert(translate.emptyField[language]);
     } else {
       if (!isImage && image) {
         const storage = getStorage();
@@ -121,28 +122,28 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   return (
     <div className={open ? "active-modal m-edit" : "modal"}>
       <div className="add-window">
-        <label>Imię</label>
+        <label>{translate.firstName[language]}</label>
         <input
           type="text"
           onChange={(e) => setFirstPlayerName(e.target.value)}
           value={firstPlayerName}
           className="firstPlayerName"
         />
-        <label>Nazwisko</label>
+        <label>{translate.lastName[language]}</label>
         <input
           type="text"
           onChange={(e) => setSecondPlayerName(e.target.value)}
           value={secondPlayerName}
           className="secondPlayerName"
         />
-        <label>Numer zawodnika</label>
+        <label>{translate.number[language]}</label>
         <input
           type="number"
           onChange={(e) => setNumber(e.target.value)}
           value={number}
           className="Number"
         />
-        <label>Drużyna</label>
+        <label>{translate.team[language]}</label>
         
         {/* <Select value={selectedTeam} options={teamOptions} onChange={(option) => handleTeamChange(option.value)} /> */}
         <select 
@@ -160,7 +161,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
         </select>
         <br />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
-          Dodaj Zdjęcie
+         {translate.addPhoto[language]}
         </button>
         <input
           type="file"
@@ -198,10 +199,10 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
             }}
             className="btn primary-btn"
           >
-            Anuluj
+            {translate.cancel[language]}
           </button>
           <button onClick={handleSubmit} className="btn primary-btn">
-            Zapisz
+           {translate.save[language]}
           </button>
         </div>
       </div>

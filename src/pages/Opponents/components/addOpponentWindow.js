@@ -1,20 +1,21 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { useTeams } from "../../Players/components/useTeams";
 import Select from "react-select";
+import { LanguageContext } from "../../../context/LanguageContext";
+import translate from "../locales/locales.json";
 
 function AddOpponentWindow({ open, onClose, Teams }) {
   const { id } = useParams();
-
+  const { language } = useContext(LanguageContext);
   const [firstOpponentName, setFirstOpponentName] = useState("");
   const [secondOpponentName, setSecondOpponentName] = useState("");
-  const [number, setNumber] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams);
@@ -24,7 +25,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
-  
+
   useEffect(() => {
     if (image) {
       if (Math.round(image.size / 1024) < 1000) {
@@ -35,7 +36,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
         reader.readAsDataURL(image);
       } else {
         setPreview(null);
-        alert("maksymalna wielkość obrazu to 1MB");
+        alert(translate.maxSize[language]);
       }
     } else {
       setPreview(null);
@@ -45,51 +46,59 @@ function AddOpponentWindow({ open, onClose, Teams }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!firstOpponentName || !secondOpponentName) {
-      alert("puste pole");
+      alert(translate.emptyField[language]);
     } else if (!selectedTeam) {
-      alert("nie wybrano drużyny")
-    }
-    else if (!preview) {
-      alert("brak obrazu");
+      alert(translate.noTeam[language]);
     } else {
-      const storage = getStorage();
-      const metadata = {
-        contentType: "image/png",
-      };
-      const storageRef = ref(storage, `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`);
+      if (preview) {
+        const storage = getStorage();
+        const metadata = {
+          contentType: "image/png",
+        };
+        const storageRef = ref(storage, `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+        const uploadTask = uploadBytesResumable(storageRef, image, metadata);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        async () => {
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            const docRef = collection(db, "Opponents");
-            addDoc(docRef, {
-              firstName: firstOpponentName.trim(),
-              secondName: secondOpponentName.trim(),
-              img: downloadURL,
-              uid: id ? id : user.uid,
-              team: selectedTeam
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              const docRef = collection(db, "Opponents");
+              addDoc(docRef, {
+                firstName: firstOpponentName.trim(),
+                secondName: secondOpponentName.trim(),
+                img: downloadURL,
+                uid: id ? id : user.uid,
+                team: selectedTeam,
+              });
             });
-          });
-        }
-      );
+          }
+        );
+      } else {
+        const docRef = collection(db, "Opponents");
+        addDoc(docRef, {
+          firstName: firstOpponentName.trim(),
+          secondName: secondOpponentName.trim(),
+          img: "",
+          uid: id ? id : user.uid,
+          team: selectedTeam,
+        });
+      }
       onClose(true);
       setFirstOpponentName("");
       setSecondOpponentName("");
@@ -99,7 +108,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
   return (
     <div className={open ? "active-modal" : "modal"}>
       <div className="add-window">
-        <label>Pierwsza część nazwy przeciwnika</label>
+        <label>{translate.firstOpponentName[language] }</label>
         <input
           type="text"
           onChange={(e) => setFirstOpponentName(e.target.value)}
@@ -107,7 +116,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
           className="firstOpponentName"
           required
         />
-        <label>Druga część nazwy przeciwnika</label>
+        <label>{translate.secondOpponentName[language] }</label>
         <input
           type="text"
           onChange={(e) => setSecondOpponentName(e.target.value)}
@@ -115,14 +124,14 @@ function AddOpponentWindow({ open, onClose, Teams }) {
           className="secondOpponentName"
           required
         />
-        
-          <>
-            <label>Drużyna</label>
-            <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
-          </>
-       
+
+        <>
+          <label>{translate.team[language]}</label>
+          <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
+        </>
+
         <button onClick={onButtonClick} className="btn primary-btn add-img">
-          Dodaj Logo
+          {translate.addCrest[language]}
         </button>
         <input
           type="file"
@@ -153,10 +162,10 @@ function AddOpponentWindow({ open, onClose, Teams }) {
             }}
             className="btn primary-btn"
           >
-            Anuluj
+            {translate.cancel[language]}
           </button>
           <button onClick={handleSubmit} className="btn primary-btn">
-            Zapisz
+            {translate.save[language]}
           </button>
         </div>
       </div>

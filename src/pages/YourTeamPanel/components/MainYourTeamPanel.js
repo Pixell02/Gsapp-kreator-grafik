@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import AddTeamWindow from "./addTeamWindow";
 import YourTeamBlock from "./YourTeamBlock";
-import WelcomeModal from "./WelcomeModal";
 import { useContext } from "react";
 import { LicenseContext } from "../../../context/LicenseContext";
 import translate from "./locales/yourTeamPanel.json"
 import { LanguageContext } from "../../../context/LanguageContext"
 // Styles
 import "./MainYourTeamPanel.css";
+import ReturnButton from "../../../components/ReturnButton";
 function MainYourTeamPanel() {
   const { user } = useAuthContext();
   const { setLicense } = useContext(LicenseContext);
@@ -29,19 +29,19 @@ function MainYourTeamPanel() {
   }, [licensed]);
 
   const navigate = useNavigate();
-
   return (
     <>
       <div className="main-content">
         <div className="ml-5 w-100">
+          <ReturnButton />
           <div className="d-flex align-items-center">
             <div className="w-100">
               <Title title={translate.title[language]} />
             </div>
             <div className="empty-container"></div>
             <div className="d-flex guide-btn-container">
-              <button onClick={() => navigate("/guide")} className="btn primary-btn">
-              {translate.guide[language]} 
+              <button onClick={() => navigate(`/${language}/guide`)} className="btn primary-btn">
+                {translate.guide[language]} 
               </button>
             </div>
           </div>

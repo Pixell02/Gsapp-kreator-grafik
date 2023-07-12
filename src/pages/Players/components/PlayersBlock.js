@@ -24,8 +24,7 @@ export default function PlayersBlock({ players }) {
               <button onClick={(e) => {}}>
                 <Icon.ThreeDotsVertical style={{ margin: "5px 0 0 0" }} />
               </button>
-
-             {showHide && <Options /> }
+             {showHide && <Options team={player} /> }
             </div>
           </div>
           <div className="image-content">

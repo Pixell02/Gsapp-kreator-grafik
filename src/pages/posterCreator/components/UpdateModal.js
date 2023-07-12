@@ -4,7 +4,7 @@ import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { useEffect } from "react";
 import { BackgroundContext } from "../Context/BackgroundContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -14,18 +14,26 @@ import { LanguageContext } from "../../../context/LanguageContext";
 
 export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
   const navigate = useNavigate();
+  const params = useParams();
   const { language } = useContext(LanguageContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState("");
-  const { globalProperties } = useContext(GlobalPropertiesContext);
-  console.log(manyBackgrounds)
+  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  console.log(params);
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
       color: "tło 1"
     }))
   }, [manyBackgrounds])
+  useEffect(() => {
+    setGlobalProperties(prev => ({
+      ...prev,
+      uid: params.id
+    }))
+  }, [])
+  console.log(globalProperties)
   const handleAddDoc = async () => {
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
@@ -73,7 +81,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
       }, 500)
     } else {
     
-      updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster)
+      // updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster)
     
       setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
       // setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });

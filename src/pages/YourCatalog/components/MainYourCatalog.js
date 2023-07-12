@@ -1,56 +1,30 @@
 import React from "react";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useCollection } from "../../../hooks/useCollection";
-import { Link } from "react-router-dom";
 import "./MainYourCatalog.css";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
+import IndividualPosters from "./IndividualPosters";
+import translate from "../locales/translate.json"
+import Navbar from "./Navbar";
 export default function MainYourCatalog() {
-  const { user } = useAuthContext();
-  const {language} = useContext(LanguageContext)
-  const { documents: yourPoster} = useCollection("yourCatalog",["uid","==", user.uid]);
-  
+ 
+  const { language } = useContext(LanguageContext);
+
   return (
     <div className="main-content d-flex flex-column">
-      <Title title="Twój katalog" />
+      <Title title={translate.yourCatalog[language]} />
+      <div className="ml-5 w-100">
+        <Navbar />
+      </div>
       <div className="ml-5 d-flex flex-column">
+        <IndividualPosters />
         <div style={{ fontSize: "25px", marginBottom: "20px" }}>
-          Twoje plakaty
-        </div>
-        <ItemContainer>
-          {yourPoster && yourPoster.map((poster) => (
-            <>
-            <div className="item-category-window">
-              <Link to={`/${language}/creator/${poster.uuid}`}>
-                <div className="name-content">
-                  <span className="name-content">
-                    {poster.name}
-                  </span>
-                </div>
-                <div className="image-category-content">
-                  {poster.src && (
-                    <img
-                      src={poster.src}
-                      alt={
-                        poster.firstName + " " + poster.secondName
-                      }
-                    />
-                  )}
-                </div>
-              </Link>
-            </div>
-          </>
-          ))}
-          {!yourPoster && <p>Brak zawartości</p>}
-        </ItemContainer>
-        <div style={{ fontSize: "25px", marginBottom: "20px" }}>
-          Twoje Ulubione
+          {translate.yourfavorites[language]}
         </div>
         <ItemContainer>
           <p style={{ color: "gray", fontSize: "15px" }}>
-            Funkcja obecnie niedostępna
+            {translate.notAvailable[language]}
           </p>
         </ItemContainer>
       </div>

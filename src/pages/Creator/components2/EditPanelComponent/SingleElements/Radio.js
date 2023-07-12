@@ -1,9 +1,12 @@
 import React from 'react'
 import { useContext } from 'react';
 import radioContext from '../../../context/radioContext';
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function Radio() {
   const { radioChecked, setRadioChecked } = useContext(radioContext);
+  const {language} = useContext(LanguageContext)
   return (
     <div className="option-container">
     <div className="input-container">
@@ -14,7 +17,7 @@ export default function Radio() {
           onChange={(e) => setRadioChecked(e.target.value)}
           checked={radioChecked === "radio1"}
         />
-        <span>Gospodarz</span>
+          <span>{translate.host[language]}</span>
       </label>
     </div>
     <div className="input-container">
@@ -25,7 +28,7 @@ export default function Radio() {
           onChange={(e) => setRadioChecked(e.target.value)}
           checked={radioChecked === "radio2"}
         />
-        <span className="guest">Gość</span>
+          <span className="guest">{translate.guest[language]}</span>
       </label>
     </div>
   </div>

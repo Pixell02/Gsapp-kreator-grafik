@@ -2,20 +2,26 @@ import React from "react";
 import logo from "../../../img/2.png";
 import CodeInput from "./CodeInput";
 import { useEffect } from "react";
-const services = [
-  { id: 3, name: "grafika indywidualna Dzień meczowy", price: "7000" },
-  { id: 4, name: "grafika indywidualna Zapowiedź meczu", price: "7000" },
-  { id: 5, name: "grafika indywidualna GOOOL", price: "7000" },
-  { id: 6, name: "grafika indywidualna Skład wyjściowy", price: "7000" },
-  { id: 7, name: "grafika indywidualna wynik", price: "7000" },
-  { id: 8, name: "wycinanie herbów z tła (cała liga)", price: "5000" },
-  { id: 9, name: "wycinanie zawodników z tła ( do 25 osób)", price: "15000" },
-];
+import { useContext } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
+import translate from "../locales/translate.json";
 
 export default function ProductsContainer(props) {
+
+  const {language} = useContext(LanguageContext)
+  
+  const services = [
+  { id: 3, name: translate.matchDay[language], price: "7000" },
+  { id: 4, name: translate.eventAnnouncement[language], price: "7000" },
+  { id: 5, name: translate.gool[language], price: "7000" },
+  { id: 6, name: translate.startingXI[language], price: "7000" },
+  { id: 7, name: translate.gool[language], price: "7000" },
+  { id: 8, name: translate.crest[language], price: "5000" },
+  { id: 9, name: translate.players[language], price: "15000" },
+];
   
   useEffect(() => {
-    console.log(props.promoCode);
+    
     if (props.promoCode.products >= 3) {
       const updatedProducts = props.products.map((product) => {
         const matchingService = services.find((item) => item.id === props.promoCode.products && item.name === product.name);
@@ -83,7 +89,7 @@ export default function ProductsContainer(props) {
             checked={props.radioType === "Licencja MAX 1 miesiąc"}
             defaultChecked
           />
-          <span>1 miesiąc</span>
+          <span>{translate.month[language]}</span>
         </label>
 
         <label>
@@ -98,7 +104,7 @@ export default function ProductsContainer(props) {
             }}
             checked={props.radioType === "other"}
           />
-          <span>Usługi</span>
+          <span>{translate.services[language]}</span>
         </label>
       </div>
       <label>

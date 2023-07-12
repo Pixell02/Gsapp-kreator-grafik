@@ -8,7 +8,7 @@ const useActiveObjectCoords = (fabricRef) => {
   const [coords, setCoords] = useState({});
   const { background, color } = useContext(BackgroundContext);
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-  
+   
   useEffect(() => {
     
     if (fabricRef.current?.backgroundImage) {
@@ -146,7 +146,6 @@ const useActiveObjectCoords = (fabricRef) => {
             canvas.renderAll();
           }
         } else if (className === "playerOne") {
-          console.log(value)
           if (value === "dotted") {
             activeObject.set("text", "88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko");
             canvas.renderAll();

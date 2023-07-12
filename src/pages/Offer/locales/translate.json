@@ -1,0 +1,209 @@
+{
+  "use": {
+    "pl": "Użyj"
+  },
+  "billing": {
+    "pl": "Dane do faktury",
+    "de": "Rechnungsdaten",
+    "en": "Billing Information",
+    "fr": "Informations de facturation",
+    "es": "Información de facturación"
+    },
+    "country": {
+    "pl": "Państwo",
+    "de": "Land",
+    "en": "Country",
+    "fr": "Pays",
+    "es": "País"
+    },
+    "firstName": {
+    "pl": "Imię",
+    "de": "Vorname",
+    "en": "First Name",
+    "fr": "Prénom",
+    "es": "Nombre"
+    },
+    "lastName": {
+    "pl": "Nazwisko",
+    "de": "Nachname",
+    "en": "Last Name",
+    "fr": "Nom de famille",
+    "es": "Apellido"
+    },
+    "adress": {
+    "pl": "Adres",
+    "de": "Adresse",
+    "en": "Address",
+    "fr": "Adresse",
+    "es": "Dirección"
+    },
+    "street": {
+      "pl": "Ulica",
+      "en": "Street",
+      "de": "Straße",
+      "fr": "rue",
+      "es": "calle"
+    },
+    "postalCode": {
+    "pl": "Kod pocztowy",
+    "de": "Postleitzahl",
+    "en": "Postal Code",
+    "fr": "Code postal",
+    "es": "Código Postal"
+    },
+    "city": {
+    "pl": "Miasto",
+    "de": "Stadt",
+    "en": "City",
+    "fr": "Ville",
+    "es": "Ciudad"
+    },
+    "email": {
+      "pl": "Email",
+      "de": "Email",
+    "en": "Email",
+    "fr": "Email",
+    "es": "Email"
+    },
+    "companyData": {
+    "pl": "Dane firmowe",
+    "de": "Firmendaten",
+    "en": "Company Information",
+    "fr": "Informations de l'entreprise",
+    "es": "Información de la empresa"
+    },
+    "vatId": {
+    "pl": "NIP",
+    "de": "USt-IdNr.",
+    "en": "VAT ID",
+    "fr": "Numéro de TVA",
+    "es": "Número de IVA"
+    },
+    "companyName": {
+    "pl": "Nazwa firmy",
+    "de": "Firmenname",
+    "en": "Company Name",
+    "fr": "Nom de l'entreprise",
+    "es": "Nombre de la empresa"
+    },
+    "buy": {
+      "pl": "Kup",
+      "en": "Buy",
+      "es": "Comprar",
+      "fr": "Acheter",
+      "de": "Besorgen"
+    },
+    "loading": {
+      "pl": "Przetwarzanie",
+      "de": "Laden",
+      "en": "Loading",
+      "fr": "Chargement",
+      "es": "Cargando"
+      },
+      "matchDay": {
+        "pl": "grafika indywidualna Dzień meczowy",
+        "es": "gráfica personalizada Día de partido",
+        "fr": "graphique personnalisée Jour de match",
+        "de": "individuelle Grafik Spieltag",
+        "en": "custom graphic Match Day"
+        },
+        "eventAnnouncement": {
+        "pl": "grafika indywidualna Zapowiedź meczu",
+        "es": "gráfica personalizada Anuncio de evento",
+        "fr": "graphique personnalisée Annonce d'événement",
+        "de": "individuelle Grafik Veranstaltungsankündigung",
+        "en": "custom graphic Event Announcement"
+        },
+        "gool": {
+        "pl": "grafika indywidualna GOOOL",
+        "es": "gráfica personalizada GOOOL",
+        "fr": "graphique personnalisée GOOOL",
+        "de": "individuelle Grafik GOOOL",
+        "en": "custom graphic GOAL"
+        },
+        "startingXI": {
+        "pl": "grafika indywidualna Skład wyjściowy",
+        "es": "gráfica personalizada Once inicial",
+        "fr": "graphique personnalisée Composition de départ",
+        "de": "individuelle Grafik Aufstellung",
+        "en": "custom graphic Starting XI"
+        },
+        "result": {
+        "pl": "grafika indywidualna wynik",
+        "es": "gráfica personalizada Resultado",
+        "fr": "graphique personnalisée Résultat",
+        "de": "individuelle Grafik Ergebnis",
+        "en": "custom graphic Result"
+        },
+        "crest": {
+        "pl": "wycinanie herbów z tła (cała liga)",
+        "es": "recorte de escudos (liga completa)",
+        "fr": "découpe des blasons (ligue entière)",
+        "de": "Wappen ausschneiden (gesamte Liga)",
+        "en": "crest cropping (entire league)"
+        },
+        "players": {
+        "pl": "wycinanie zawodników z tła ( do 25 osób)",
+        "es": "recorte de jugadores (hasta 25 individuos)",
+        "fr": "découpe des joueurs (jusqu'à 25 personnes)",
+        "de": "Spieler ausschneiden (bis zu 25 Personen)",
+        "en": "player cropping (up to 25 individuals)"
+        },
+        "month": {
+          "pl": "1 miesiąc",
+          "es": "1 mes",
+          "fr": "1 mois",
+          "de": "1 Monat",
+          "en": "1 month"
+          },
+          "services": {
+          "pl": "Usługi",
+          "es": "Servicios",
+          "fr": "Services",
+          "de": "Dienstleistungen",
+          "en": "Services"
+          },
+          "discountCode": {
+          "pl": "Kod rabatowy",
+          "es": "Código de descuento",
+          "fr": "Code de réduction",
+          "de": "Rabattcode",
+          "en": "Discount code"
+          },
+          "use": {
+          "pl": "Użyj",
+          "es": "Usar",
+          "fr": "Utiliser",
+          "de": "Verwenden",
+          "en": "Use"
+          },
+          "buyAccess": {
+          "pl": "Kup dostęp",
+          "es": "Comprar acceso",
+          "fr": "Acheter l'accès",
+          "de": "Zugang kaufen",
+          "en": "Buy access"
+          },
+          "success": {
+          "pl": "użyto pomyślnie",
+          "es": "usado exitosamente",
+          "fr": "utilisé avec succès",
+          "de": "erfolgreich verwendet",
+          "en": "successfully used"
+          },
+          "doesntExist": {
+          "pl": "kod nie istnieje",
+          "es": "el código no existe",
+          "fr": "le code n'existe pas",
+          "de": "der Code existiert nicht",
+          "en": "code doesn't exist"
+          },
+          "codeUsed": {
+          "pl": "kod został zużyty lub nie istnieje",
+          "es": "el código ha sido utilizado o no existe",
+          "fr": "le code a été utilisé ou n'existe pas",
+          "de": "der Code wurde verwendet oder existiert nicht",
+          "en": "code has been used or doesn't exist"
+          }
+      
+}

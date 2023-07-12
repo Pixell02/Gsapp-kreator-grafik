@@ -1,0 +1,44 @@
+.navbar-content {
+  margin-left: 30px;
+}
+.navbar-content .d-flex .nav-item-container {
+  width: 200px;
+  height: 150px;
+}
+.navbar-content .d-flex a {
+  background: none;
+  width: 200px;
+  height: 150px;
+  margin: 20px 40px 40px 40px;
+}
+
+.navbar-content .d-flex a .nav-item-container {
+  background: none;
+  color: white;
+  font-family: Poppins Bold;
+  font-size: 20px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: 0.2s ease-in-out;
+}
+.navbar-content .d-flex a {
+  transition: 0.2s ease-in-out;
+}
+.navbar-content .d-flex a:hover {
+  transition: 0.2s ease-in-out;
+  filter: brightness(70%);
+}
+.navbar-content .d-flex a .sign-container {
+  margin-right: 15px;
+  margin-top: 10px;
+}
+.navbar-content .d-flex a span {
+  width: 170px;
+  text-align: right;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  line-height: 25px;
+  letter-spacing: 2px;
+}

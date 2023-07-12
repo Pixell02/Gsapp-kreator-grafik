@@ -9,10 +9,12 @@ import radioContext from '../../../context/radioContext';
 import teamFullName from './TeamOption/teamFullName';
 import teamFirstName from './TeamOption/teamFirstName';
 import teamSecondName from './TeamOption/teamSecondName';
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 
 export default function TeamOption({ fabricRef, coords, themeOption, posterBackground }) {
-  
+  const {language} = useContext(LanguageContext)
   const { user } = useAuthContext();
   const { documents: Logo } = useCollection("Teams", ["uid", "==", user.uid]);
   const { radioChecked } = useContext(radioContext)
@@ -42,7 +44,7 @@ export default function TeamOption({ fabricRef, coords, themeOption, posterBackg
     <div>
       {teamOption && teamOption.length > 1 && (
                 <>
-                  <label>Twoje drużyny</label>
+          <label>{translate.yourTeam[language]}</label>
                   <Select options={teamOption} onChange={getTeamOption} />
                 </>
               )}

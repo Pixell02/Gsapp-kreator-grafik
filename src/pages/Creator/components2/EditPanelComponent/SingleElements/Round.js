@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import typeKolejka from "./typeDate/typeKolejka";
+import translate from "../../../locales/translate.json"
+import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function Round({ fabricRef, coords, themeOption, posterBackground }) {
-  
+  const {language} = useContext(LanguageContext)
   const [typeRound, setTypeRound] = useState("")
 
   useEffect(() => {
@@ -16,7 +18,7 @@ export default function Round({ fabricRef, coords, themeOption, posterBackground
 
   return (
     <>
-      <label>Kolejka</label>
+      <label>{translate.typeRound[language]}</label>
       <input type="text" value={typeRound} onChange={e => setTypeRound(e.target.value)} />
     </>
   );

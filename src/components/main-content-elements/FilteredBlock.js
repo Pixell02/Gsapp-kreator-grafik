@@ -4,7 +4,8 @@ import * as Icon from "react-bootstrap-icons";
 import "./ItemBlock.css";
 export default function FilteredBlock({type, item, Teams, handleDeleteClick, openEditModal, editClick }) {
   
-
+  console.log(type);
+  
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
 
@@ -23,7 +24,7 @@ export default function FilteredBlock({type, item, Teams, handleDeleteClick, ope
   const handleClick = (e, item) => {
     setItemToEdit(item);
   };
-
+  
 
   return (
     <>

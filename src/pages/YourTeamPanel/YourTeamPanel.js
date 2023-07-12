@@ -8,7 +8,7 @@ import UpdateModal from "./components/UpdateModal";
 
 function YourTeamPanel() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  
   useEffect(() => {
     const firstTime = localStorage.getItem("first");
     if (firstTime === null) {
@@ -17,19 +17,11 @@ function YourTeamPanel() {
       console.log("not-first-time");
     }
   }, []);
-  useEffect(() => {
-    const update = localStorage.getItem("update3.0");
-    if (update === null) {
-      setIsUpdateOpen(true);
-    } else {
-      console.log("update-showed");
-    }
-  },[isOpen])
+ 
 
   return (
     <div className="page-container">
       <WelcomeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      {/* <UpdateModal isOpen={isUpdateOpen} onClose={() => setIsUpdateOpen(false)} /> */}
       <div className="content-wrap">
         <LeftBar />
         <MainYourTeamPanel />

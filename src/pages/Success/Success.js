@@ -21,7 +21,6 @@ export default function Success() {
   const [orderId, setOrderId] = useState(null);
   const [currentDate] = useState(moment().format("MM-DD-YYYY"));
   const [isReady, setIsReady] = useState(false);
-  console.log(language)
   useEffect(() => {
     if(ordersId?.length > 0)
     setOrderId(ordersId[0].orderId)
@@ -30,8 +29,6 @@ export default function Success() {
     try {
       const response = await getOrder({ orderId });
       const order = response.data[0];
-      
-      console.log(order);
       if (order.status === "COMPLETED") {
         if (order.description === "Licencja") {
           const newDate = moment(currentDate).add(1, "months").format("MM-DD-YYYY");
@@ -41,7 +38,9 @@ export default function Success() {
             uid: user.uid,
             expireDate: newDate,
           });
-        } 
+        }
+        const res = await createFax({ order })
+        console.log(res);
       const historyRef = collection(db, "history");
       addDoc(historyRef, {
         uid: user.uid,

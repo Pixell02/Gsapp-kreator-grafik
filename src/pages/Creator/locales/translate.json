@@ -1,0 +1,230 @@
+{
+  "editPanel": {
+    "pl": "Panel Edycji",
+    "en": "Edit Panel",
+    "es": "Panel de Edición",
+    "de": "Bearbeitungs-Panel",
+    "fr": "Panneau d'édition"
+  },
+  "themes": {
+    "pl": "Motywy kolorystyczne",
+    "en": "Color themes",
+    "es": "Temas de color",
+    "de": "Farbthemen",
+    "fr": "Thèmes de couleur"
+  },
+  "typeDate": {
+    "pl": "Data i godzina",
+    "en": "Date and time",
+    "es": "Fecha y Hora",
+    "de": "Datum und Uhrzeit",
+    "fr": "Date et heure"
+  },
+  "typePlace": {
+    "pl": "Miejsce",
+    "en": "Place",
+    "es": "Lugar",
+    "de": "Ort",
+    "fr": "Lieu"
+  },
+  "typeLeague": {
+    "pl": "Liga",
+    "en": "League",
+    "es": "Liga",
+    "de": "Liga",
+    "fr": "Ligue"
+  },
+  "typeRound": {
+    "pl": "Kolejka",
+    "en": "Round",
+    "es": "Ronda",
+    "de": "Runde",
+    "fr": "Tour"
+  },
+  "typeMonth": {
+    "pl": "Miesiąc",
+    "en": "Month",
+    "es": "Mes",
+    "de": "Monat",
+    "fr": "Mois"
+  },
+  "yourTeam": {
+    "pl": "Twoje drużyny",
+    "en": "Your Teams",
+    "es": "Tus equipos",
+    "de": "Deine Teams",
+    "fr": "Vos équipes"
+  },
+  "host": {
+    "pl": "Gospodarz",
+    "en": "Host",
+    "es": "Anfitrión",
+    "de": "Gastgeber",
+    "fr": "Hôte"
+  },
+  "guest": {
+    "pl": "Gość",
+    "en": "Guest",
+    "es": "Invitado",
+    "de": "Gast",
+    "fr": "Invité"
+  },
+  "Opponents": {
+    "pl": "Przeciwnicy",
+    "en": "Opponents",
+    "es": "Oponentes",
+    "de": "Gegner",
+    "fr": "Adversaires"
+  },
+  "addPlayers": {
+    "pl": "Wyjściowa 11",
+    "en": "Starting XI",
+    "es": "Añadir jugadores titulares",
+    "de": "Startelf hinzufügen",
+    "fr": "Ajouter les joueurs titulaires"
+  },
+  "addReserve": {
+    "pl": "Dodaj rezerwowych",
+    "en": "Add reserve players",
+    "es": "Añadir jugadores de reserva",
+    "de": "Ersatzspieler hinzufügen",
+    "fr": "Ajouter les joueurs de réserve"
+  },
+  "addYourTeamGoals": {
+    "pl": "Dodaj gole zawodników",
+    "en": "Add players goals",
+    "es": "Añadir goles de tus jugadores",
+    "de": "Tore von deinen Spielern hinzufügen",
+    "fr": "Ajouter les buts de vos joueurs"
+  },
+  "addOpponentTeamGoals": {
+    "pl": "Dodaj gole przeciwników",
+    "en": "Add opponent goals",
+    "es": "Añadir goles de los oponentes",
+    "de": "Gegentore hinzufügen",
+    "fr": "Ajouter les buts des adversaires"
+  },
+  "setRules": {
+    "pl": "Ustaw role graczy",
+    "en": "Set Players roles",
+    "es": "Establecer roles de los jugadores",
+    "de": "Spielerrrollen festlegen",
+    "fr": "Définir les rôles des joueurs"
+  },
+  "save": {
+    "pl": "Zapisz",
+    "en": "Save",
+    "es": "Guardar",
+    "de": "Speichern",
+    "fr": "Enregistrer"
+  },
+  "close": {
+    "pl": "Zamknij",
+    "en": "Close",
+    "es": "Cerrar",
+    "de": "Schließen",
+    "fr": "Fermer"
+  },
+  "players": {
+    "pl": "Wyjściowa 11",
+    "en": "Starting XI",
+    "es": "Jugadores titulares",
+    "de": "Startelf",
+    "fr": "Joueurs titulaires"
+  },
+  "roles": {
+    "pl": "Role",
+    "en": "Roles",
+    "es": "Roles",
+    "de": "Rollen",
+    "fr": "Rôles"
+  },
+  "reserve": {
+    "pl": "Rezerwowi",
+    "en": "Reserve Players",
+    "es": "Jugadores de reserva",
+    "de": "Ersatzspieler",
+    "fr": "Joueurs de réserve"
+  },
+  "yourTeamGoals": {
+    "pl": "Gole zawodników",
+    "en": "Your goals",
+    "es": "Tus goles",
+    "de": "Deine Tore",
+    "fr": "Vos buts"
+  },
+  "freeUsesFirstPart": {
+    "pl": "Zostało ci",
+    "es": "Te quedan",
+    "en": "You have",
+    "de": "Du hast noch",
+    "fr": "Il vous reste"
+  },
+  "freeUsesLastPart": {
+    "pl": "darmowych użyć",
+    "es": "usos gratuitos",
+    "en": "free uses",
+    "de": "kostenlose Verwendungen",
+    "fr": "utilisations gratuites"
+  },
+  "elevenAlert": {
+    "pl": "Wybrano już 11 zawodników",
+    "es": "Ya se han seleccionado 11 jugadores",
+    "en": "11 players already selected",
+    "de": "Es wurden bereits 11 Spieler ausgewählt",
+    "fr": "11 joueurs ont déjà été sélectionnés"
+  },
+  "nineAlert": {
+    "pl": "Wybrano już 9 rezerwowych",
+    "es": "Ya se han seleccionado 9 jugadores de reserva",
+    "en": "9 reserve players already selected",
+    "de": "Es wurden bereits 9 Ersatzspieler ausgewählt",
+    "fr": "9 joueurs de réserve ont déjà été sélectionnés"
+  },
+  "capitan": {
+    "pl": "Kapitan",
+    "en": "Capitan",
+    "es": "Capitán",
+    "de": "Kapitän",
+    "fr": "Capitaine"
+  },
+  "goalkeeper": {
+    "pl": "Bramkarz",
+    "en": "Goalkeeper",
+    "es": "Portero",
+    "de": "Torwart",
+    "fr": "Gardien de but"
+  },
+  "opponentTeamGoals": {
+    "pl": "Gole przeciwników",
+    "en": "Opponent goals",
+    "es": "Goles de los oponentes",
+    "de": "Gegentore",
+    "fr": "Buts des adversaires"
+  },
+  "noPlayers": {
+    "pl": "Brak zawodników",
+    "en": "No Players",
+    "es": "No hay jugadores",
+    "de": "Keine Spieler",
+    "fr": "Aucun joueur"
+  },
+  "hostResult": {
+    "pl": "Wynik gospodarza",
+    "en": "Host result",
+    "es": "Resultado del anfitrión",
+    "de": "Ergebnis Gastgeber",
+    "fr": "Résultat de l'hôte"
+  },
+  "opponentResult": {
+    "pl": "Wynik gościa",
+    "en": "Guest result",
+    "es": "Resultado del invitado",
+    "de": "Ergebnis Gast",
+    "fr": "Résultat de l'invité"
+  },
+  "player": {
+    "pl": "Zawodnik",
+    "en": "Player"
+  }
+}

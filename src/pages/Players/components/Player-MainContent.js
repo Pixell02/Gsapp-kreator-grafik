@@ -1,10 +1,7 @@
 import { useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import MainFooter from "../../../components/MainFooter";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
-import PlayersBlock from "./PlayersBlock";
-import ItemBlock from "../../../components/main-content-elements/ItemBlock";
 import AddPlayerWindow from "./addPlayerWindow";
 import EditPlayerWindow from "./EditPlayerWindow";
 import useEditModal from "../../../hooks/useEditModal";
@@ -13,26 +10,29 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import "../../../App.css";
 import { useEffect } from "react";
 import { db } from "../../../firebase/config";
-import { collection, onSnapshot, where, query, getDocs, doc, deleteDoc } from "firebase/firestore";
-import { useFilter } from "../../../hooks/useFilter";
+import { doc, deleteDoc } from "firebase/firestore";
+import ReturnButton from "../../../components/ReturnButton";
 import FilteredBlock from "../../../components/main-content-elements/FilteredBlock";
+import { useContext } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
+import translate from "../locales/translate.json";
 
 function PlayerMainContent() {
   const { user } = useAuthContext();
-
+  const { language } = useContext(LanguageContext);
   const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
   const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid]);
 
   const [openModal, setOpenModal] = useState(false);
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const location = useLocation();
-  const goodLocation = location.pathname.split("/")[1];
+  const goodLocation = location.pathname.split("/")[2];
 
-  const handleDeleteClick = async (id) => {
-    if (goodLocation === "players") {
+  const handleDeleteClick = async (id, location) => {
+    if (location === "players") {
       const ref = doc(db, "Players", id);
       await deleteDoc(ref);
-    } else if (goodLocation === "opponents") {
+    } else if (location === "opponents") {
       const ref = doc(db, "Opponents", id);
       await deleteDoc(ref);
     }
@@ -63,41 +63,41 @@ function PlayerMainContent() {
     setItemToEdit(null);
   };
   return (
-    <div className="main-content">
-      <AddPlayerWindow Teams={Teams} open={openModal} onClose={() => setOpenModal(false)} />
-
+    <div className="main-content" ref={hideElement}>
+      <AddPlayerWindow Teams={Teams} open={openModal} onClose={setOpenModal} />
       <div className="ml-5">
-        <Title title="Zawodnicy" />
+        <ReturnButton />
+        <Title title={translate.players[language]} />
         <button className="btn primary-btn" onClick={() => setOpenModal(true)}>
-          Dodaj zawodnika
+          {translate.addPlayer[language]}
         </button>
         <ItemContainer>
           {Teams && Teams.length === 1 && (
             <>
               <div className="d-flex flew-row">
-                <div ref={hideElement} className="catalog-container">
+                <div className="catalog-container">
                   {Players &&
                     Players.map((player) => (
                       <>
-                        
-                          <FilteredBlock
-                            handleDeleteClick={handleDeleteClick}
-                            handleClick={handleClick}
-                            editClick={editClick}
-                            itemToEdit={itemToEdit}
-                            setItemToEdit={setItemToEdit}
-                            item={player}
-                            openEditModal={openEditModal}
-                            Teams={Teams}
-                          />
-                       
+                        <FilteredBlock
+                          handleDeleteClick={handleDeleteClick}
+                          handleClick={handleClick}
+                          editClick={editClick}
+                          itemToEdit={itemToEdit}
+                          setItemToEdit={setItemToEdit}
+                          item={player}
+                          type={goodLocation}
+                          openEditModal={openEditModal}
+                          Teams={Teams}
+                        />
                       </>
                     ))}
                 </div>
               </div>
             </>
           )}
-          {Teams && Teams.length > 1 &&
+          {Teams &&
+            Teams.length > 1 &&
             Teams.map((teams) => (
               <>
                 <div className="ml-5 mt-3">{teams.firstName + " " + teams.secondName}</div>
@@ -111,6 +111,7 @@ function PlayerMainContent() {
                             handleClick={handleClick}
                             editClick={editClick}
                             itemToEdit={itemToEdit}
+                            type={goodLocation}
                             setItemToEdit={setItemToEdit}
                             item={player}
                             openEditModal={openEditModal}

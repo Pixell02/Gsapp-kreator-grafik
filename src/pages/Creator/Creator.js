@@ -1,4 +1,3 @@
-import Header from '../../components/Header';
 import LeftBar from '../../components/Left-Bar';
 import WorkSpace from './WorkSpace';
 function Creator() {
