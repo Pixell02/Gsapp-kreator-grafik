@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useCollection } from "../../../hooks/useCollection";
 import "./MainContentOffer.css";
@@ -7,9 +7,10 @@ import Form from "./Form";
 import ProductsContainer from "./ProductsContainer";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import useProducts from "../hooks/useProducts";
-import usePromoCode from "../hooks/usePromoCode";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { PromoCodeContext } from "../context/PromoCodeContext";
+import PromoCodeInformation from "./PromoCodeInformation";
 
 function BuyFormContainer() {
   const { user } = useAuthContext();
@@ -17,9 +18,18 @@ function BuyFormContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const { paymentData, handleChange, handleDataChange, handleDeliveryDataChange, setPaymentData } =
     usePaymentData(userData);
-  const { radioType, products, setProducts, setRadioType, unitPrice, setUnitPrice, isChecked, setIsChecked, handleCheckboxChange } =
-    useProducts(setPaymentData);
-  const { promoCode, alert, handleUseCode, usedCode, setUsedCode} = usePromoCode()
+  const {
+    radioType,
+    products,
+    setProducts,
+    setRadioType,
+    unitPrice,
+    setUnitPrice,
+    isChecked,
+    setIsChecked,
+    handleCheckboxChange,
+  } = useProducts(setPaymentData);
+  const { promoCode, alert, handleUseCode, usedCode, setUsedCode } = useContext(PromoCodeContext);
   const functions = getFunctions();
 
   const payUPayment = httpsCallable(functions, "PayUPayment");
@@ -34,7 +44,7 @@ function BuyFormContainer() {
       const orderRef = doc(db, "orderId", user.uid);
       setDoc(orderRef, {
         orderId: orderId,
-        uid:user.uid
+        uid: user.uid,
       });
       window.location.href = data;
     } catch (error) {
@@ -59,6 +69,7 @@ function BuyFormContainer() {
         products={products}
         setProducts={setProducts}
       />
+      <PromoCodeInformation />
       <div className="fax-container">
         <Form
           handleSave={handleSave}

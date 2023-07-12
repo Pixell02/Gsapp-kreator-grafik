@@ -11,12 +11,15 @@
   width: 100%;
 }
 
-.promoCode-container .promoCode-content .code-container .code-value {
-  width: 30%;
+.promoCode-container .promoCode-content .code-container .code-value,
+.promoCode-container .promoCode-content .code-container .percentage-value,
+.promoCode-container .promoCode-content .code-container .amount-value,
+.promoCode-container .promoCode-content .code-container .product,
+.promoCode-container .promoCode-content .code-container .delete-btn-container {
+  width: 15%;
+  display: flex;
+  align-items: center;
 }
-.promoCode-container .promoCode-content .code-container .percentage-value {
-  width: 30%;
-}
-.promoCode-container .promoCode-content .code-container .amount-value {
-  width: 30%;
+.promoCode-container .promoCode-content .code-container .expire-date {
+  width: 20%;
 }

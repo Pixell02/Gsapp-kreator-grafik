@@ -1,138 +1,136 @@
-
 .form-container {
-    margin: 100px auto 100px auto;
-    width: 95%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
+  margin: 80px auto 80px auto;
+  width: 95%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
 }
 .form-container .form {
-    box-shadow: none;
-    margin-bottom: 50px;
+  box-shadow: none;
+  margin-bottom: 50px;
 }
 .form-container .form input,
 .form-container .form .buy-btn {
-    width: 100%;
-    height: 40px;
-    margin: 10px 0 10px 0;
+  width: 100%;
+  height: 40px;
+  margin: 10px 0 10px 0;
 }
 .form-container .form .buy-btn {
-    margin-top: 40px !important;
+  margin-top: 40px !important;
 }
 .logo-container {
-    font-size: 50px;
-    margin: 40px 0 40px 0;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  font-size: 50px;
+  margin: 40px 0 40px 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
- .logo-block {
-    margin: 20px 0 0 0;
+.logo-block {
+  margin: 20px 0 0 0;
 }
 .logo-image {
-    width: 200px;
-    height: 200px;
+  width: 200px;
+  height: 200px;
 }
 .fullName-content {
-    display: flex;
-    width: 100%;
-   
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+
+  justify-content: space-between;
 }
 .fullName-content .fullName {
-    width: 90% !important;
+  width: 90% !important;
 }
 
 .label-content {
-    width: 100%;
+  width: 100%;
 }
 .data-content {
-    display: flex;
-    flex-direction: column;
-    
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
 }
 
 .inner-content-label .label-content .fullName {
-    width: 50%;
+  width: 50%;
 }
 .inner-content-country-label {
-    width: 100%;
+  width: 100%;
 }
 .inner-content-country-label .form-control {
-    width: 98%;
+  width: 98%;
 }
 
 .inner-label-containers {
-    width: 100%;
+  width: 100%;
 }
 .radio-container {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 50px;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
 }
 .radio-container label {
-    width: 50%;
+  width: 50%;
 }
 .payment-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .services-container {
-    border-radius: 5px;
-    max-width: 500px;
-    border: 1px solid rgb(0, 0, 0);
-    height: auto;
+  border-radius: 5px;
+  max-width: 500px;
+  border: 1px solid rgb(0, 0, 0);
+  height: auto;
 }
 .services-container .service-content {
-    max-width: 100%;
-    height: 50px;
-    border-bottom: 1px solid rgb(0, 0, 0);
-    justify-content: space-between;
+  max-width: 100%;
+  height: 50px;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  justify-content: space-between;
 }
-.services-container  :last-child {
-    border-bottom: 0 ;
-    
+.services-container :last-child {
+  border-bottom: 0;
 }
 .services-container .service-content .checkbox-container {
-    border-right: 1px solid black;
-    height: 100%;
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border-right: 1px solid black;
+  height: 100%;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .services-container .service-content .checkbox-container label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 .services-container .service-content .checkbox-container input[type="checkbox"] {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 .services-container .service-content .service-name-container {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-    justify-content: flex-start;
-    border-right: 1px solid black;
-    width: 90%;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  justify-content: flex-start;
+  border-right: 1px solid black;
+  width: 90%;
 }
 .services-container .service-content .service-price-container {
-    display: flex;
-    width: 50px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  width: 50px;
+  justify-content: center;
+  align-items: center;
 }
 @media only screen and (max-width: 1250px) {
-    .main-content {
-        width: 100%;
-    }
+  .main-content {
+    width: 100%;
+  }
 }

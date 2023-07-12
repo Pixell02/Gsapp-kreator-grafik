@@ -9,7 +9,8 @@ const usePromoCode = () => {
     code: "",
     percentage: null,
     amount: 1,
-    products: 1
+    products: 1,
+    expireDate: 1
   });
   const [generatedCode] = useState(shortid.generate().substring(0, 6));
   
@@ -28,7 +29,8 @@ const usePromoCode = () => {
       code: promoCode.code ? promoCode.code : generatedCode,
       percentage: promoCode.percentage,
       amount: promoCode.amount,
-      products: promoCode.products
+      products: promoCode.products,
+      expireDate: promoCode.expireDate !== 0 ? promoCode.expireDate : null
 
     })
   }

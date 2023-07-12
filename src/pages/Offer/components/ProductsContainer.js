@@ -15,10 +15,11 @@ export default function ProductsContainer(props) {
   { id: 4, name: translate.eventAnnouncement[language], price: "7000" },
   { id: 5, name: translate.gool[language], price: "7000" },
   { id: 6, name: translate.startingXI[language], price: "7000" },
-  { id: 7, name: translate.gool[language], price: "7000" },
+  { id: 7, name: translate.result[language], price: "7000" },
   { id: 8, name: translate.crest[language], price: "5000" },
   { id: 9, name: translate.players[language], price: "15000" },
-];
+  ];
+  
   
   useEffect(() => {
     
@@ -61,7 +62,7 @@ export default function ProductsContainer(props) {
     if (props.promoCode.products === 1 && props.radioType === "Licencja MAX 1 miesiąc") {
       const updatedProducts = [...props.products];
       const product = updatedProducts[0];
-      if (product.name === "Licencja MAX 1 miesiąc") { // Zastąp "desired_product_name" nazwą pożądanego produktu
+      if (product?.name === "Licencja MAX 1 miesiąc") { // Zastąp "desired_product_name" nazwą pożądanego produktu
         product.unitPrice = 5000 * (1 - props.promoCode.percentage / 100);
       }
       props.setProducts(updatedProducts);
