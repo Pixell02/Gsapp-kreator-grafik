@@ -5,14 +5,22 @@ import "../../../components/main-content-elements/Main.css";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
 import ReturnButton from "../../../components/ReturnButton";
+import { TeamContext } from "../../../context/TeamContext";
+import Select from "react-select";
 
 function MainCatalog() {
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext)
+  const { sportOptions, setSelectedSportKeys, selectedSportKeys } = useContext(TeamContext);
+ 
   return (
     <div className="main-content">
       <div className="ml-5">
         <ReturnButton />
         <Title title={translate.title[language]} />
+        {sportOptions?.length > 1 && (
+           <Select options={sportOptions} defaultValue={selectedSportKeys} onChange={(option) => setSelectedSportKeys(option.value)} />
+        )}
+       
         <div className="item-container">
           <Catalog />
         </div>

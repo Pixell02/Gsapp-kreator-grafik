@@ -16,7 +16,7 @@ export default function Licenses({ License }) {
           <div className="license-content">
             <img src={verified} className="icon-verified" />{" "}
             <span>
-              {translate.youHave[language]} {License[0].numberOfFreeUse} {translate.freeUses[language]}
+              {translate.youHave[language]} {License[0]?.numberOfFreeUse} {translate.freeUses[language]}
             </span>
           </div>
         </div>

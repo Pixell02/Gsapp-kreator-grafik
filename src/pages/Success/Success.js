@@ -20,6 +20,7 @@ export default function Success() {
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
   const [orderId, setOrderId] = useState(null);
   const [currentDate] = useState(moment().format("MM-DD-YYYY"));
+  const [status, setStatus] = useState(null);
   const [isReady, setIsReady] = useState(false);
   useEffect(() => {
     if(ordersId?.length > 0)
@@ -72,5 +73,13 @@ export default function Success() {
     }
   }, [License, orderId]);
 
-  return <div></div>;
+  return (
+    <div className="d-flex w-100 h-100">
+      {/* {orderId && (
+        <div>
+          <span>Pobieramy status zamówienia {orderId}</span>
+        </div>
+      )} */}
+    </div>
+  );
 }

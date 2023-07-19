@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
 import translate from "../locales/translate.json";
+import { Link } from "react-router-dom";
 
 export default function ProductsContainer(props) {
 
@@ -112,31 +113,9 @@ export default function ProductsContainer(props) {
         <input type="radio" />
       </label>
       {props.radioType && props.radioType === "other" && (
-        <>
-          <div className="services-container mt-5 d-flex flex-column ">
-            {services.map((service, i) => (
-              <div key={i} className="service-content d-flex flex-row">
-                <div className="checkbox-container">
-                  <label style={{ height: "50px", width: "50px" }}>
-                    <input
-                      type="checkbox"
-                      onChange={props.handleCheckboxChange}
-                      name={service.name}
-                      value={service.price}
-                    />
-                    <span></span>
-                  </label>
-                </div>
-                <div className="service-name-container">
-                  <div>{service.name}</div>
-                </div>
-                <div className="service-price-container">
-                  <div>{service.price / 100}zł</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
+        <div className="mt-3">
+          <a href="http://grafika-sportowa.pl/sklep/">Zakup usług dostępne pod linkiem</a>
+        </div>
       )}
       <CodeInput
         usedCode={props.usedCode}

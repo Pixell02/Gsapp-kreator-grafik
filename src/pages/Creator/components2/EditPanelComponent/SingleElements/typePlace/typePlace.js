@@ -27,14 +27,16 @@ const typePlace = (fabricRef, coords, place, themeOption) => {
     originX: coords.typePlace.OriginX,
     originY: coords.typePlace.OriginY,
     fontFamily: coords.typePlace.FontFamily,
-    angle: coords.typePlace.Angle ? coords.typePlace.Angle : 0,
+    angle: coords.typePlace.Angle ? Number(coords.typePlace.Angle) : 0,
     fontStyle: coords.typePlace.FontStyle ? coords.typePlace.FontStyle : "normal"
   });
-      
+    
   if (typePlace.width >= coords.typePlace.ScaleToWidth) {
     typePlace.scaleToWidth(coords.typePlace.ScaleToWidth);
+    if (coords.typePlace?.Angle) {
+        typePlace.scaleToHeight(coords.typePlace.ScaleToWidth);
       }
-      
+      }
       if (coords.typePlace.themeOption) {
         findThemeOption(coords.typePlace,themeOption, typePlace)
       }

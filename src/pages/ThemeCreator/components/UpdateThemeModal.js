@@ -10,9 +10,11 @@ import { db } from "../../../firebase/config";
 import { useCollection } from "../../../hooks/useCollection";
 import "./saveThemeModal.css";
 import { useEffect } from "react";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 const UpdateThemeModal = ({ isOpen, setIsOpen, defaultBackGround }) => {
   const navigate = useNavigate();
+  const { language } = useContext(LanguageContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState();
@@ -72,7 +74,7 @@ const UpdateThemeModal = ({ isOpen, setIsOpen, defaultBackGround }) => {
     const data = globalProperties ? globalProperties : { uid: globalProperties.id };
     setDoc(docRef, data);
     setTimeout(() => {
-      navigate(`/creator/theme/${globalProperties.uid}`);
+      navigate(`/${language}/creator/theme/${globalProperties.uid}`);
     }, 500);
   };
 

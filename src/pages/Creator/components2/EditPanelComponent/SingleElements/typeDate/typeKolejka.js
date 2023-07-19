@@ -27,6 +27,9 @@ const typeKolejka = (fabricRef, typeRound, coords, themeOption) => {
     });
     if (yourKolejka.width > coords.yourKolejka.ScaleToWidth) {
       yourKolejka.scaleToWidth(coords.yourKolejka.ScaleToWidth);
+      if (coords.yourKolejka?.Angle) {
+        yourKolejka.scaleToHeight(coords.yourKolejka.ScaleToWidth);
+      }
     }
     if (coords.yourKolejka.themeOption) {
       findThemeOption(coords.yourKolejka, themeOption, yourKolejka)

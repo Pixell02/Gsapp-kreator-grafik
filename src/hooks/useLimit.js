@@ -62,7 +62,7 @@ export const useSearch = (collectionName, radioValue, searchText) => {
             const teamQuery = query(teamRef, where("uid", "==", data.uid));
             const teamSnapshot = await getDocs(teamQuery);
             const teamDoc = teamSnapshot.docs[0];
-            const teamData = teamDoc.data();
+            const teamData = teamDoc?.data();
             const licenseRef = collection(db, "user");
             const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
             const licenseSnapshot = await getDocs(licenseQuery);
@@ -72,10 +72,10 @@ export const useSearch = (collectionName, radioValue, searchText) => {
               ...data,
               id: doc.id,
               license: licenseData.license,
-              firstName: teamData.firstName,
-              secondName: teamData.secondName,
-              img: teamData.img,
-              sport: teamData.sport,
+              firstName: teamData?.firstName,
+              secondName: teamData?.secondName,
+              img: teamData?.img,
+              sport: teamData?.sport,
             });
           }
           setDocuments(results);

@@ -1,29 +1,29 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
-import { useAuthContext } from "../../../hooks/useAuthContext";
+import { Link } from "react-router-dom";
 import "../../../components/main-content-elements/Block.css";
-// import catalog from "./catalog.json";
-import color from "./color.json";
-// import posters from "./posters.json";
 import * as Icon from "react-bootstrap-icons";
-import { useCollection } from "../../../hooks/useCollection";
-import {LanguageContext} from "../../../context/LanguageContext"
+import { LanguageContext } from "../../../context/LanguageContext";
 import useOrderBy from "../hooks/useOrderBy";
 import { useContext } from "react";
-import { lang } from "moment/moment";
+import { TeamContext } from "../../../context/TeamContext";
+import useSelectSport from "../hooks/useSelectSport";
+import useCatalog from "../hooks/useCatalog";
 
 function Catalog() {
-  const {language} = useContext(LanguageContext)
-  const { documents: catalog } = useCollection("catalog", ["public", "==", true]);
+  const { language } = useContext(LanguageContext);
+  const { selectedSportKeys } = useContext(TeamContext);
+  
+  const { data: catalog, posters } = useCatalog();
+
   const [isOpen, setIsOpen] = useState();
   useEffect(() => {
     if (catalog) {
       setIsOpen(catalog);
     }
   }, [catalog]);
-
-  const { documents: posters } = useOrderBy("piecesOfPoster", "themeId");
+  
+  
   
   const handleCategory = (i) => {
     setIsOpen((prevOpen) =>
@@ -61,47 +61,47 @@ function Catalog() {
     <>
       <div className="catalog-container">
         {isOpen &&
-          isOpen.filter((item) => item.lang === language)
+          isOpen
             .map((category, i) => (
-            <div className="mg-container">
-              <div className="nav-container" onClick={() => handleCategory(i)}>
-                <div className={category.expanded ? "nav-window" : "nav-window-dark"}>
-                  <div className="category-icon-container">
-                    <Icon.ChevronCompactDown
-                      className={category.expanded ? "extend-icon-open" : "extend-icon-close"}
-                      style={{ marginLeft: "20px" }}
-                    />
+              <div className="mg-container">
+                <div className="nav-container" onClick={() => handleCategory(i)}>
+                  <div className={category.expanded ? "nav-window" : "nav-window-dark"}>
+                    <div className="category-icon-container">
+                      <Icon.ChevronCompactDown
+                        className={category.expanded ? "extend-icon-open" : "extend-icon-close"}
+                        style={{ marginLeft: "20px" }}
+                      />
+                    </div>
+                    <span>{category.theme} </span>
+                    <div className="empty-container"></div>
                   </div>
-                  <span>{category.theme} </span>
-                  <div className="empty-container"></div>
+                </div>
+
+                <div className={category.expanded ? "poster-container-close" : "poster-container-open"}>
+                  <>
+                    {posters &&
+                      posters
+                        .filter((poster) => poster.themeId === category.id)
+                        .map((poster) => (
+                          <>
+                            <div className="item-category-window">
+                              <Link to={`/${language}/creator/theme/${poster.uid}`}>
+                                <div className="name-content">
+                                  <span className="name-content">{poster.name}</span>
+                                </div>
+                                <div className="image-category-content">
+                                  {poster.src && (
+                                    <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />
+                                  )}
+                                </div>
+                              </Link>
+                            </div>
+                          </>
+                        ))}
+                  </>
                 </div>
               </div>
-
-              <div className={category.expanded ? "poster-container-close" : "poster-container-open"}>
-                <>
-                  {posters &&
-                    posters
-                      .filter((poster) => poster.themeId === category.id)
-                      .map((poster) => (
-                        <>
-                          <div className="item-category-window">
-                            <Link to={`/${language}/creator/theme/${poster.uid}`}>
-                              <div className="name-content">
-                                <span className="name-content">{poster.name}</span>
-                              </div>
-                              <div className="image-category-content">
-                                {poster.src && (
-                                  <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />
-                                )}
-                              </div>
-                            </Link>
-                          </div>
-                        </>
-                      ))}
-                </>
-              </div>
-            </div>
-          ))}
+            ))}
       </div>
     </>
   );

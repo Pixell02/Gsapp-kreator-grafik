@@ -24,7 +24,7 @@ const Navbar = () => {
     { name: translate.addPlayer[language], link: `/${language}/players`, image: addPlayer, sign: plusSign},
     { name: translate.addOpponent[language], link: `/${language}/opponents`, image: addOpponent, sign: plusSign},
     { name: translate.generate[language], link: `/${language}/catalog`, image: generate, sign: arrowSign},
-    { name: translate.order[language], link: `/${language}/offer`, image: orderGraphic, sign: arrowSign},
+    { name: translate.order[language], link: `http://grafika-sportowa.pl/sklep/`, image: orderGraphic, sign: arrowSign},
   ]
   
   return (

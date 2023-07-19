@@ -29,6 +29,9 @@ const typeLeague = (fabricRef, league, themeOption, coords) => {
 
       if (yourLeague.width > coords.yourLeague.ScaleToWidth) {
         yourLeague.scaleToWidth(coords.yourLeague.ScaleToWidth);
+        if (coords.yourLeague?.Angle) {
+          yourLeague.scaleToHeight(coords.yourLeague.ScaleToWidth);
+        }
       }
       if (coords.yourLeague.themeOption) {
         findThemeOption(coords.yourLeague, themeOption, yourLeague);

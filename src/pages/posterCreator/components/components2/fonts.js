@@ -25,6 +25,7 @@ const fonts = [
   { label: "Now Light", value: "Now Light" },
   { label: "Now Black", value: "Now Black" },
   { label: "Teko-SemiBold", value: "Teko-SemiBold" },
+  { label: "gravtrac", value: "gravtrac"}
 ]
 
 export default fonts;

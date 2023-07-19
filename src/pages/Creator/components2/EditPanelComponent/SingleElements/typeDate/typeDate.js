@@ -30,6 +30,9 @@ const typeDate = (fabricRef, date, coords, themeOption, posterBackground) => {
     
     if (typeDate.width >= coords.typeData.ScaleToWidth) {
       typeDate.scaleToWidth(coords.typeData.ScaleToWidth);
+      if (coords.typeDate?.Angle) {
+        typeDate.scaleToHeight(coords.typeDate.ScaleToWidth);
+      }
     }
     if (coords.typeData.themeOption) {
       findThemeOption(coords.typeData, themeOption, typeDate);

@@ -19,14 +19,6 @@ export default function MainYourCatalog() {
       </div>
       <div className="ml-5 d-flex flex-column">
         <IndividualPosters />
-        <div style={{ fontSize: "25px", marginBottom: "20px" }}>
-          {translate.yourfavorites[language]}
-        </div>
-        <ItemContainer>
-          <p style={{ color: "gray", fontSize: "15px" }}>
-            {translate.notAvailable[language]}
-          </p>
-        </ItemContainer>
       </div>
     </div>
   );

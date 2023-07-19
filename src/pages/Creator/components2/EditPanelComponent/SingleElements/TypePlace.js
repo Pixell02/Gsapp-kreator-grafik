@@ -7,7 +7,14 @@ import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function TypePlace({ fabricRef, coords, themeOption, posterBackground }) {
   const [place, setPlace] = useState("");
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext)
+  
+  useEffect(() => {
+    setTimeout(() => {
+      setPlace("Boisko w");
+    },500)
+  }, [fabricRef.current?.backgroundImage]);
+
   useEffect(() => {
     if (fabricRef.current?.backgroundImage && place !== "") {
       

@@ -22,6 +22,10 @@
   font-family: "BaiJamjuree-Bold";
   src: url(./fonts/BaiJamjuree-Bold.ttf);
 }
+@font-face {
+  font-family: "gravtrac";
+  src: url(./fonts/gravtrac-condensed-bd.ttf);
+}
 
 @font-face {
   font-family: "Raleway Medium";

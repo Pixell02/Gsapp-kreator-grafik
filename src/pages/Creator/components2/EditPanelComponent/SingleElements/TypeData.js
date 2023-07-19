@@ -4,10 +4,20 @@ import { useState } from "react";
 import typeDate from "./typeDate/typeDate"
 import translate from "../../../locales/translate.json"
 import { LanguageContext } from "../../../../../context/LanguageContext";
+import moment from "moment/moment";
 
 export default function TypeData({ fabricRef, coords, themeOption, posterBackground }) {
   const [Date, setTypeDate] = useState("");
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext)
+  
+  useEffect(() => {
+    setTimeout(() => {
+      setTypeDate(moment().format("DD.MM.YYYY"));
+    },500)
+  }, [fabricRef.current?.backgroundImage]);
+
+
+
   useEffect(() => {
     if (fabricRef.current?.backgroundImage && Date !== "") {
         typeDate(fabricRef, Date, coords, themeOption, posterBackground)

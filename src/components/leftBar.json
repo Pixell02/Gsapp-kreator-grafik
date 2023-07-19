@@ -1,10 +1,10 @@
 {
   "catalog": {
-    "pl": "Katalog",
-    "en": "Catalog",
-    "es": "Catálogo",
-    "de": "Katalog",
-    "fr": "Catalogue"
+    "pl": "Szablony",
+    "en": "Templates",
+    "es": "Plantillas",
+    "de": "Vorlagen",
+    "fr": "Modèles"
   },
   "yourCatalog": {
     "pl": "Twój katalog",

@@ -49,6 +49,6 @@ export const layersName = [
   { name: "kolejka", type: "text", text: "kolejka", className: "yourKolejka" },
   { name: "miejsce", type: "text", text: "miejsce", className: "typePlace" },
   { name: "data i godzina", type: "text", text: "data i godzina", className: "typeData" },
-  { name: "linia tekstu", type: "text", text: "linia tekstu", className: "" },
-  { name: "pole tekstowe", type: "text", text: "pole tekstowe", className: "" },
+  { name: "linia tekstu", type: "universalText", text: "linia tekstu", className: "" },
+  { name: "pole tekstowe", type: "universalTextBox", text: "pole tekstowe", className: "" },
 ];

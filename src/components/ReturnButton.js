@@ -9,7 +9,7 @@ const ReturnButton = () => {
   const { language } = useContext(LanguageContext);
   return (
     <div className="return-container">
-      <Link to={`${language}/yourCatalog`}>{"<"}{translate.return[language]}</Link>
+      <Link to={`/${language}/yourCatalog`}>{"<"}{translate.return[language]}</Link>
     </div>
   );
 };

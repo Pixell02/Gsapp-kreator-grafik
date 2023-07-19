@@ -7,7 +7,14 @@ import { LanguageContext } from "../../../../../context/LanguageContext";
 
 export default function League({ fabricRef, coords, themeOption, posterBackground }) {
   const [league, setLeague] = useState("");
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLeague("Liga");
+    },500)
+  }, [fabricRef.current?.backgroundImage]);
+
 
   useEffect(() => {
     if (fabricRef.current?.backgroundImage && league !== "") {

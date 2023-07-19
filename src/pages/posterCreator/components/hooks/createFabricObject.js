@@ -97,28 +97,39 @@ export const createPlayerNameText = (fabricRef, setFabricObject, name, className
   fabricRef.current.renderAll();
   setFabricObject(prevState => [...prevState, { name }])
 
- }
-
-
-export const createMultiplyText = (fabricRef, setFabricObject, name, className, loops) => {
-  
+}
+ 
+export const createUniversalText = (fabricRef, setFabricObject, name, className) => {
+  const text = new fabric.IText(name, {
+    top: 400,
+    left: 400,
+    fontSize: 25,
+    width: 500,
+    originX: "center",
+    originY: "center",
+    className: className,
+    fill: "#000000",
+    fontFamily: "Poppins",
+    type: "universalText",
+  });
+  fabricRef.current.add(text);
+  fabricRef.current.renderAll();
+  setFabricObject(prevState => [...prevState, { name }])
+}
+export const createUniversalTextBox = (fabricRef, setFabricObject, name, className) => {
   const text = new fabric.Textbox(name, {
     top: 400,
     left: 400,
     fontSize: 25,
-    lineHeight: 1,
     width: 500,
     originX: "center",
-    originY: "top",
+    originY: "center",
     className: className,
     fill: "#000000",
     fontFamily: "Poppins",
-    format: "NumDotSurName",
-    Formatter: className === "reserveOne" ? "," : undefined,
-    type: "textBox",
-  })
+    type: "universalTextBox",
+  });
   fabricRef.current.add(text);
   fabricRef.current.renderAll();
   setFabricObject(prevState => [...prevState, { name }])
-  ;
 }

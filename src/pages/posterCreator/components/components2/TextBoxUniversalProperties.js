@@ -1,12 +1,21 @@
-import React from "react";
-import fonts from "./fonts";
-import originX from "./originX";
-import originY from "./originY";
+import React from 'react'
+import fonts from './fonts'
+import originX from './originX'
+import originY from './originY'
 
-export default function TextboxProperties({ coords, handleInputChange, handleSelectChange, handleSelectGroupChange }) {
+const TextBoxUniversalProperties = ({ coords, fabricRef, setCoords, handleSelectChange, handleInputChange }) => {
   return (
     <div>
-      <div>Nazwa obiektu : {coords.className}</div>
+      <div className="d-flex align-items-center">
+        <span className="mx-2">Nazwa obiektu</span>{" "}
+        <input
+          className="w-50"
+          type="text"
+          name="className"
+          value={coords.className}
+          onChange={handleInputChange}
+        />
+      </div>
       <div className="d-flex">
         <div>
           X: <input type="number" value={coords.Left} className="w-75" name="Left" onChange={handleInputChange} />
@@ -113,5 +122,7 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
         </select>{" "}
       </div>
     </div>
-  );
+  )
 }
+
+export default TextBoxUniversalProperties

@@ -12,9 +12,11 @@ import { ManyBackgroundsContext } from "../../posterCreator/Context/ManyBackgrou
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { LanguageContext } from "../../../context/LanguageContext";
 
 export default function SaveThemeModal({ isOpen, setIsOpen }) {
   const { documents: catalog } = useCollection("catalog");
+  const { language } = useContext(LanguageContext);
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   const { background, image } = useContext(BackgroundContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
@@ -137,7 +139,7 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
             })
             .then(() => {
               setTimeout(() => {
-                navigate(`/creator/theme/${globalProperties.uid}`);
+                navigate(`/${language}/creator/theme/${globalProperties.uid}`);
               }, 500);
             });
         }

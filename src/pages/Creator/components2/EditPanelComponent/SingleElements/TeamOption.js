@@ -22,23 +22,24 @@ export default function TeamOption({ fabricRef, coords, themeOption, posterBackg
   const [yourTeam, teamOption, getTeamOption, yourLogo, yourName] = YourTeamNameAndLogo(Logo);
   
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && posterBackground) {
+    if (fabricRef.current?.backgroundImage) {
       teamLogo(fabricRef, yourLogo, coords, themeOption, radioChecked)
     }
   }, [fabricRef.current, yourLogo, radioChecked])
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && posterBackground && yourName) {
-      if (coords.yourTeamName) {
+    
+    if (fabricRef.current?.backgroundImage) {
+      if (coords?.yourTeamName) {
         teamFullName(fabricRef, yourName, coords, themeOption, radioChecked)
       } 
-      if (coords.yourTeamFirstName) {
+      if (coords?.yourTeamFirstName) {
         teamFirstName(fabricRef, yourName, coords, themeOption, radioChecked)
       }
-      if (coords.yourTeamSecondName) {
+      if (coords?.yourTeamSecondName) {
         teamSecondName(fabricRef, yourName, coords, themeOption, radioChecked)
        }
     }
-  }, [fabricRef.current, yourName, radioChecked, posterBackground])
+  }, [fabricRef.current?.backgroundImage,yourName, radioChecked, posterBackground])
   
   return (
     <div>
