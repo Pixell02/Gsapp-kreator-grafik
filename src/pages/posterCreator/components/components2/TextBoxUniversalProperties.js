@@ -69,21 +69,6 @@ const TextBoxUniversalProperties = ({ coords, fabricRef, setCoords, handleSelect
             <option value="right">prawo</option>
           </select>
         </div>
-        <div className="w-100">
-          format:
-          <select
-            name="Format"
-            className="form-control w-75"
-            value={coords.Format}
-            onChange={(e) => handleSelectChange(e, coords)}
-          >
-            <option value="NumDotSurName">88.Nazwisko</option>
-            <option value="NumSurName">88 Nazwisko</option>
-            <option value="dotted">88.I.Nazwisko</option>
-            <option value="oneDot">88 I.Nazwisko</option>
-            <option value="SurName">Nazwisko</option>
-          </select>
-        </div>
       </div>
       <div className="d-flex w-100 mt-2">
         <div className="d-flex flex-column w-100">

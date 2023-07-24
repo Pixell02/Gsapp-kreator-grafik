@@ -3,8 +3,6 @@ import { useState } from 'react'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { countries } from '../components/countries'
 
-
-
 const usePaymentData = (userData) => {
   
   const { user } = useAuthContext()

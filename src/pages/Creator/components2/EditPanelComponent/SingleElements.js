@@ -13,6 +13,8 @@ import Player from "./SingleElements/Player";
 import PlayersGoals from "./SingleElements/PlayersGoals";
 import StartingSquad from "./SingleElements/StartingSquad";
 import Result from "./SingleElements/Result";
+import TextInput from "./SingleElements/TextInput";
+import TextBoxInput from "./SingleElements/TextBoxInput";
 
 const SingleElements = ({
   coords,
@@ -27,23 +29,22 @@ const SingleElements = ({
 }) => {
   return (
     <div>
-      {coords && coords.opponentImage && <Radio fabricRef={fabricRef} coords={coords} />}
+      {coords.opponentImage && <Radio fabricRef={fabricRef} coords={coords} />}
       {themeOptions && (
         <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />
       )}
-      {coords && coords.additionalText && (
+      {coords.additionalText && (
         <AdditionalText fabricRef={fabricRef} coords={coords} posterBackground={posterBackground} />
       )}
-      {coords &&
-        (coords.yourTeamLogo || coords.yourTeamFirstName || coords.yourTeamSecondName || coords.yourTeamName) && (
-          <TeamOption
-            fabricRef={fabricRef}
-            coords={coords}
-            themeOption={themeOption}
-            posterBackground={posterBackground}
-          />
-        )}
-      {coords && coords.typeMonth && (
+      {(coords.yourTeamLogo || coords.yourTeamFirstName || coords.yourTeamSecondName || coords.yourTeamName) && (
+        <TeamOption
+          fabricRef={fabricRef}
+          coords={coords}
+          themeOption={themeOption}
+          posterBackground={posterBackground}
+        />
+      )}
+      {coords.typeMonth && (
         <TypeMonth
           fabricRef={fabricRef}
           coords={coords}
@@ -51,7 +52,7 @@ const SingleElements = ({
           posterBackground={posterBackground}
         />
       )}
-      {coords && coords.typePlace && (
+      {coords.typePlace && (
         <TypePlace
           fabricRef={fabricRef}
           coords={coords}
@@ -59,16 +60,16 @@ const SingleElements = ({
           posterBackground={posterBackground}
         />
       )}
-      {coords && coords.typeData && (
+      {coords.typeData && (
         <TypeData fabricRef={fabricRef} coords={coords} themeOption={themeOption} posterBackground={posterBackground} />
       )}
-      {coords && coords.yourKolejka && (
+      {coords.yourKolejka && (
         <Round fabricRef={fabricRef} coords={coords} themeOption={themeOption} posterBackground={posterBackground} />
       )}
-      {coords && coords.yourLeague && (
+      {coords.yourLeague && (
         <League fabricRef={fabricRef} coords={coords} themeOption={themeOption} posterBackground={posterBackground} />
       )}
-      {coords && coords.opponentImage && (
+      {coords.opponentImage && (
         <OpponentSelect
           fabricRef={fabricRef}
           coords={coords}
@@ -77,7 +78,10 @@ const SingleElements = ({
           Opponents={Opponents}
         />
       )}
-      {coords && coords.player && (
+      {coords.yourTeamResult && (
+        <Result fabricRef={fabricRef} coords={coords} posterBackground={posterBackground} themeOption={themeOption} />
+      )}
+      {coords.player && (
         <Player
           fabricRef={fabricRef}
           coords={coords}
@@ -86,7 +90,25 @@ const SingleElements = ({
           Players={Players}
         />
       )}
-      {coords && coords.yourPlayerOneGoal && (
+      {coords.Text &&
+        coords.Text.map((coords) => (
+          <TextInput
+            fabricRef={fabricRef}
+            coords={coords}
+            themeOption={themeOption}
+            posterBackground={posterBackground}
+          />
+        ))}
+      {coords.TextBox && coords.TextBox.map((coords) => (
+        <TextBoxInput
+        fabricRef={fabricRef}
+        coords={coords}
+        themeOption={themeOption}
+        posterBackground={posterBackground}
+        />
+      ))}
+
+      {coords.yourPlayerOneGoal && (
         <PlayersGoals
           fabricRef={fabricRef}
           coords={coords}
@@ -95,14 +117,7 @@ const SingleElements = ({
           Players={Players}
         />
       )}
-      <StartingSquad
-        setIsModalOpen={setIsModalOpen}
-        coords={coords}
-        
-      />
-      {coords && coords.yourTeamResult && (
-        <Result fabricRef={fabricRef} coords={coords} posterBackground={posterBackground} themeOption={themeOption} />
-      )}
+      <StartingSquad setIsModalOpen={setIsModalOpen} coords={coords} />
     </div>
   );
 };

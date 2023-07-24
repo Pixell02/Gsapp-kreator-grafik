@@ -39,7 +39,7 @@ const useActiveObjectCoords = (fabricRef) => {
               OriginY: activeObject.originY,
               type: activeObject.type,
               TextAlign: activeObject.textAlign ? activeObject.textAlign : activeObject.textAlign,
-              Format: activeObject.format,
+              format: activeObject.format,
               FontStyle: activeObject.fontStyle,
               Margin: activeObject.margin,
               LineHeight:
@@ -94,14 +94,28 @@ const useActiveObjectCoords = (fabricRef) => {
       } else {
         // Przeszukaj tablicę Text w poszukiwaniu indeksu pasującego obiektu
         const newTextProperties = [...globalProperties.Text];
-        const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
+        
+        if (newTextProperties.length > 0) {
+          const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
   
-        if (indexToRemove !== -1) {
-          // Jeśli znaleziono pasujący obiekt, usuń go z tablicy Text i z fabric canvas
-          newTextProperties.splice(indexToRemove, 1);
-          setGlobalProperties({ ...globalProperties, Text: newTextProperties });
-          fabricRef.current.remove(activeObject);
-          fabricRef.current.renderAll();
+          if (indexToRemove !== -1) {
+            // Jeśli znaleziono pasujący obiekt, usuń go z tablicy Text i z fabric canvas
+            newTextProperties.splice(indexToRemove, 1);
+            setGlobalProperties({ ...globalProperties, Text: newTextProperties });
+            fabricRef.current.remove(activeObject);
+            fabricRef.current.renderAll();
+          }
+        } else {
+          const newTextProperties = [...globalProperties.TextBox];
+          const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
+  
+          if (indexToRemove !== -1) {
+            // Jeśli znaleziono pasujący obiekt, usuń go z tablicy Text i z fabric canvas
+            newTextProperties.splice(indexToRemove, 1);
+            setGlobalProperties({ ...globalProperties, TextBox: newTextProperties });
+            fabricRef.current.remove(activeObject);
+            fabricRef.current.renderAll();
+          }
         }
       }
     }
@@ -201,14 +215,13 @@ const useActiveObjectCoords = (fabricRef) => {
     if (coords && coords.className !== undefined) {
       setGlobalProperties((prevState) => {
         const updatedCoords = {
-          ...(coords.type !== "universalText" && coords),
+          ...((coords.type !== "universalText" && coords.type !== "universalTextBox") && coords),
           ...(coords.type === "universalText" && {
             Text: getUniqueTextArray([...(prevState.Text || []), coords]),
           }),
-          ...(coords.type === "universalTextBox" && [
-            ...(prevState[coords.className]?.TextBox || []).filter((text) => text.className !== coords.className),
-            coords,
-          ]),
+          ...(coords.type === "universalTextBox" && {
+            TextBox: getUniqueTextArray([...(prevState.TextBox || []), coords]),
+          }),
           ...(coords.type !== "image" &&
             color && {
               themeOption: [
@@ -221,7 +234,9 @@ const useActiveObjectCoords = (fabricRef) => {
             }),
         };
         function getUniqueTextArray(array) {
+         
           const uniqueClasses = new Set();
+          array.reverse();
           return array.filter((item) => {
             if (
               !uniqueClasses.has(item.className) &&
@@ -235,15 +250,17 @@ const useActiveObjectCoords = (fabricRef) => {
         }
 
         // Filter out duplicate elements based on className
+        
         if (coords.type === "universalText") {
           return {
             ...prevState,
-            ...updatedCoords,
+            Text: updatedCoords.Text,
           };
         } else if (coords.type === "universalTextBox") {
           return {
             ...prevState,
-            TextBox: [...prevState.TextBox, ...updatedCoords],
+            TextBox: updatedCoords.TextBox,
+
           };
         } else {
           return {

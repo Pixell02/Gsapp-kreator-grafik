@@ -210,9 +210,17 @@
     "en": "code has been used or doesn't exist"
   },
   "youAreUsing": {
-    "pl": "Używasz kodu"
+    "pl": "Używasz kodu",
+    "en": "You are using the code",
+    "de": "Du verwendest den Code",
+    "fr": "Vous utilisez le code",
+    "es": "Estás utilizando el código"
   },
   "whichIsValid": {
-    "pl": "który jest ważny do"
+    "pl": "który jest ważny do",
+    "en": "which is valid until",
+    "de": "der bis gültig ist",
+    "fr": "qui est valide jusqu'au",
+    "es": "que es válido hasta"
   }
 }

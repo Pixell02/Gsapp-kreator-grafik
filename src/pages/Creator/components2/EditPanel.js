@@ -41,7 +41,7 @@ export default function EditPanel({ fabricRef, coords, themeOption, setSelectThe
             Players={Players}
             setIsModalOpen={setIsModalOpen}
           />
-          {coords && coords.dayOne && <TrainingPlan fabricRef={fabricRef} coords={coords} />}
+          {coords.dayOne && <TrainingPlan fabricRef={fabricRef} coords={coords} />}
         </div>
       </TeamProvider>
     </RadioProvider>
