@@ -45,6 +45,19 @@ const TextBoxUniversalProperties = ({ coords, fabricRef, setCoords, handleSelect
           />
         </div>
       </div>
+      akapit:
+          <select
+            style={{ width: "10px" }}
+            name="textAlign"
+            className="form-control w-75"
+            value={coords.TextAlign}
+            defaultValue={coords.TextAlign}
+            onChange={(e) => handleSelectChange(e)}
+          >
+            <option value="left">lewy</option>
+            <option value="center">środek</option>
+            <option value="right">prawo</option>
+          </select>
       <div className="d-flex mx-2 w-100 align-items-center justify-content-start">
         <div className="d-flex w-50">
           kolor: <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />

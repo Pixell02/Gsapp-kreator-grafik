@@ -89,6 +89,32 @@
   src: url(./fonts/kenyan\ coffee\ rg.otf);
 }
 @font-face {
+  font-family: "paladins expanded";
+  src: url(./fonts/paladinsexpand.ttf);
+}
+
+/* NOWE */
+
+@font-face {
+  font-family: "kenyan coffee italic";
+  src: url(./fonts/kenyan\ coffee\ rg\ it.otf);
+}
+@font-face {
+  font-family: "kenyan coffee bold";
+  src: url(./fonts/kenyan\ coffee\ bd.otf);
+}
+@font-face {
+  font-family: "kenyan coffee bold italic";
+  src: url(./fonts/kenyan\ coffee\ bd\ it.otf);
+}
+@font-face {
+  font-family: "Nexa-trial-Heavy";
+  src: url(./fonts/Nexa-Heavy.ttf);
+}
+
+/* NOWE */
+
+@font-face {
   font-family: "Made Outer Sans Black";
   src: url(./fonts/MADE\ Outer\ Sans\ Black\ PERSONAL\ USE.otf);
 }

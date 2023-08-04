@@ -1,7 +1,7 @@
 import React from "react";
 import Title from "../../../components/main-content-elements/Title";
 import "../Stats.css";
-import UserButton from "./subComponents/UserButton";
+import User from "./Users/User";
 export default function Users(props) {
  
   return (
@@ -50,32 +50,24 @@ export default function Users(props) {
           <th className="dimension">Typ licencji</th>
           <th className="dimension">Szczegóły</th>
         </tr>
-        {props.loading && <p>Ładowanie...</p>}
-        { !props.loading &&
-          props.users &&
-          props.users.map((license) => (
-            <>
-              <tr>
-                <td className="dimension">
-                  {license.email}
-                  <p style={{ fontSize: "10px" }}>({license.uid})</p>
-                </td>
-                <>
-                  <td className="dimension">
-                    <img src={license.img} className="logo-img" alt={license.firstName + " " + license.secondName} />
-                  </td>
-                  <td className="dimension">{license.firstName + " " + license.secondName}</td>
-                  <td className="dimension">{license.sport}</td>
-                </>
-
-                <td className="dimension">{license.license}</td>
-                <td className="dimension">
-                  <UserButton user={license.uid} />
-                </td>
-              </tr>
+        {(props.radioValue === "firstName" || props.radioValue === "email" || props.radioValue === "id") && (
+          <>
+          { props.loading && <p>Ładowanie...</p> }
+            {!props.loading &&
+              props.users &&
+              props.users.map((license) => (
+                <User license={license} />
+              ))
+            }
             </>
+        )}
+        {(props.radioValue === "full-license" || props.radioValue === "free-trial" || props.radioValue === "no-license") && (
+          props.allUsers?.filter((user) => props.radioValue === user.license)
+            .map((license) => (
+            <User license={license} />
           ))
-        }
+        )}
+        
       </table>
     </div>
   );

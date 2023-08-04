@@ -17,7 +17,7 @@ export default function AdministratorPanel() {
   const [activeBar, setActiveBar] = useState("users");
   const [radioValue, setRadioValue] = useState("full-license");
   const [search, setSearch] = useState("");
-  const { documents: users, loading } = useSearch("Teams", radioValue, search === "" ? null : search);
+  const { documents: users, loading, allUsers } = useSearch("Teams", radioValue, search === "" ? null : search);
 
   const [dataFiltered, setDataFiltered] = useState([]);
 
@@ -90,6 +90,7 @@ export default function AdministratorPanel() {
             <PromoCode />
             <UsersPosters />
             <Users
+              allUsers={allUsers}
               users={dataFiltered}
               loading={loading}
               search={search}

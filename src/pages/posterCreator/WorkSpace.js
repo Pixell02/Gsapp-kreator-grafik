@@ -24,18 +24,12 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [isOpen, setIsOpen] = useState(true);
   const fabricRef = useRef(null);
   const [manyBackgrounds, setManyBackgrounds] = useState([]);
-  const {lines} = useGuides();
   const [helpLinesModal, setHelpLinesModal] = useState(false);
   useEffect(() => {
     if (fabricRef.current?.backgroundImage) {
       createDefaultObjects(fabricRef, globalProperties);
     }
-  }, [fabricRef.current]);
-
- 
- 
-
-  
+  }, [fabricRef.current]);  
   return (
     <BackgroundContext.Provider value={{image, setImage, color, setColor }}>
       <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>

@@ -301,9 +301,7 @@ function WorkSpace() {
 
               <button
                 className="btn primary-btn save"
-                onClick={() => {
-                  exportImg(Licenses, selectThemes, user, poster, coords.type);
-                }}
+                onClick={() => exportImg(Licenses, selectThemes, user, poster, coords.type)}
               >
                 {translate.save[language]}
               </button>

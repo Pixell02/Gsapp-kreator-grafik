@@ -7,15 +7,15 @@ import { fabric } from "fabric";
 const useTextBoxLayer = (coords, fabricRef) => {
 
   const [textValue, setTextValue] = useState(null);
-  
+
   useEffect(() => {
     if (textValue && fabricRef.current) {
-      fabricRef.current._objects.forEach((image, i) => {
-        if (fabricRef.current.item(i).className === coords.className) {
-          fabricRef.current.remove(fabricRef.current.item(i));
-          fabricRef.current.renderAll();
-        }
+      fabricRef.current._objects.forEach((item, i) => {
+      if (item.className === coords.className) {
+          fabricRef.current.remove(item);
+      }
       });
+      fabricRef.current.renderAll();
       const font = new FontFaceObserver(coords.FontFamily);
       font.load().then(() => {
         const typeDate = new fabric.Textbox(textValue, {
@@ -28,6 +28,7 @@ const useTextBoxLayer = (coords, fabricRef) => {
           fill: coords.Fill,
           originX: coords.OriginX,
           originY: coords.OriginY,
+          textAlign: coords.TextAlign,
           splitByGrapheme: true,
           fontFamily: coords.FontFamily,
           angle: (coords.Angle || 0),
@@ -41,21 +42,21 @@ const useTextBoxLayer = (coords, fabricRef) => {
             typeDate.scaleToHeight(coords.ScaleToWidth);
           }
         }
-        
-        typeDate._textLines.forEach((lines, i) => {
-          const height = typeDate.height;
-          while (height > coords.ScaleToHeight - 50) {
-            const fontSize = typeDate.get("fontSize");
-            typeDate.set("fontSize", fontSize - 1);
-            const newheight = typeDate.height;
-            if (newheight <= coords.ScaleToHeight - 50) {
-              fabricRef.current.add(typeDate);
-              fabricRef.current.renderAll();
-              break;
+        if (typeDate.height >= coords.ScaleToHeight) {
+          // typeDate.scaleToHeight(coords.ScaleToHeight);
+          typeDate._textLines.forEach((lines, i) => {
+            const height = typeDate.height;
+            while (height > coords.ScaleToHeight) {
+              const fontSize = typeDate.get("fontSize");
+              typeDate.set("fontSize", fontSize - 1);
+              const newheight = typeDate.height;
+              if (newheight <= coords.ScaleToHeight) {
+                fabricRef.current.renderAll();
+                break;
+              }
             }
-          }
-        });
-        
+          });
+        }
         fabricRef.current.add(typeDate);
         fabricRef.current.renderAll();
       });

@@ -13,6 +13,9 @@ import UserInformation from "./UserInformation";
 import ReturnButton from "../../../components/ReturnButton";
 import translate from "../locales/translate.json"
 import { LanguageContext } from "../../../context/LanguageContext";
+import MultiAccountContainer from "./MultiAccountContainer";
+import { useDoc } from "../../../hooks/useDoc";
+import { useNavigate } from "react-router-dom";
 
 const zipCodeRegex = /^\d{2}-\d{3}$/;
 const nipRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$/;
@@ -25,8 +28,8 @@ function MainAccount() {
   const [isChecked, setIsChecked] = useState(false);
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
   const { language } = useContext(LanguageContext);
-
-
+  const { documents: orderId } = useDoc("orderId", ["uid", "==", user.uid]);
+  
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [address, setAddress] = useState();
@@ -130,7 +133,8 @@ function MainAccount() {
       });
     }
   };
-
+  const navigate = useNavigate();
+  console.log(orderId)
   return (
     <div className="main-content">
       <div className="ml-5">
@@ -140,6 +144,17 @@ function MainAccount() {
           <div className="account-items">
             <UserInformation user={user} userEmail={userEmail} userCreatedAt={userCreatedAt} />
             <Licenses License={License} />
+            {orderId?.orderId && (
+              <div className="mt-3">
+                <button className="btn" onClick={() => navigate("/success")}>
+                  Przenieś
+                </button>
+                <span>
+                Twoja licencja nie zaskoczyła? kliknij przycisk
+                </span>
+              </div>
+            )}
+            <MultiAccountContainer />
             <form onSubmit={handleSubmit} className="fax-container">
               <p className="form-title">{translate.billing[language]}</p>
               <div className="inner-content-country-label">

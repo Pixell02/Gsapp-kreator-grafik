@@ -2,21 +2,40 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { BackgroundContext } from "../../Context/BackgroundContext";
 import FontFaceObserver from "fontfaceobserver";
 import { GlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
+import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 
 const useActiveObjectCoords = (fabricRef) => {
   const [coords, setCoords] = useState({});
   const { background, color } = useContext(BackgroundContext);
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-
+  const { properties, setProperties } = useMultiPropertiesContext();
   useEffect(() => {
     if (fabricRef.current?.backgroundImage) {
       const handleObjectModified = () => {
         const canvas = fabricRef.current;
         if (canvas) {
           const activeObject = canvas.getActiveObject();
-
-          if (activeObject) {
-            const newCoords = {
+        
+          
+          if (activeObject) { 
+            let iteration = 0;
+    let objectProperties = new Object();
+    fabricRef.current._objects.forEach((object) => {
+      if (object.className === "yourTeamLogoOne") {
+        if (iteration !== 0) {
+          object.set("top", properties.orientation === "vertically" ? objectProperties?.top + iteration * properties.Margin : objectProperties?.top);
+          object.set("left", properties.orientation === "horizontally" ? objectProperties?.left + iteration * properties.Margin : objectProperties?.left);
+        } else {
+          objectProperties = {
+            top: object.top,
+            left: object.left,
+          }
+        }
+        iteration++;
+      }
+      fabricRef.current.renderAll();
+    })
+              const newCoords = {
               Top: parseInt(activeObject.top.toFixed(0)),
               Left: parseInt(activeObject.left.toFixed(0)),
               className: activeObject.className,
@@ -77,14 +96,16 @@ const useActiveObjectCoords = (fabricRef) => {
       };
     }
   }, [fabricRef.current, globalProperties, coords, color]);
+ 
   const handleDeleteKeyPress = (event) => {
     if (event.keyCode === 46) {
       // Kod klawisza Delete lub Backspace
   
       const activeObject = fabricRef.current.getActiveObject();
       const key = Object.keys(globalProperties).find((prop) => activeObject.className.includes(prop));
-  
+      
       if (activeObject && key) {
+        
         // Jeśli klucz został znaleziony w globalProperties, usuń obiekt związany z kluczem
         const objectToRemove = activeObject;
         const { [key]: value, ...rest } = globalProperties;
@@ -93,9 +114,10 @@ const useActiveObjectCoords = (fabricRef) => {
         fabricRef.current.renderAll();
       } else {
         // Przeszukaj tablicę Text w poszukiwaniu indeksu pasującego obiektu
-        const newTextProperties = [...globalProperties.Text];
         
-        if (newTextProperties.length > 0) {
+        
+        if (globalProperties.Text?.length > 0) {
+          const newTextProperties = [...globalProperties.Text];
           const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
   
           if (indexToRemove !== -1) {
@@ -105,7 +127,7 @@ const useActiveObjectCoords = (fabricRef) => {
             fabricRef.current.remove(activeObject);
             fabricRef.current.renderAll();
           }
-        } else {
+        } if (globalProperties.TextBox?.length > 0) {
           const newTextProperties = [...globalProperties.TextBox];
           const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
   
@@ -116,7 +138,7 @@ const useActiveObjectCoords = (fabricRef) => {
             fabricRef.current.remove(activeObject);
             fabricRef.current.renderAll();
           }
-        }
+        } 
       }
     }
   };
@@ -127,7 +149,7 @@ const useActiveObjectCoords = (fabricRef) => {
       const activeObject = canvas.getActiveObject();
       if (activeObject) {
         if (name !== "Width" && name !== "Height") {
-          console.log(name.charAt(0).toLowerCase() + name.slice(1), value.toString());
+          
           activeObject.set(name.charAt(0).toLowerCase() + name.slice(1), value);
           canvas.renderAll();
         } else {
@@ -209,7 +231,7 @@ const useActiveObjectCoords = (fabricRef) => {
     setCoords({ ...coords, [name]: value });
   };
 
-  console.log(globalProperties);
+ 
 
   useEffect(() => {
     if (coords && coords.className !== undefined) {

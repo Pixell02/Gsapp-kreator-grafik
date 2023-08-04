@@ -53,6 +53,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
         fontSize: coords.reserveOne.FontSize,
         angle: coords.reserveOne.Angle ? coords.reserveOne.Angle : 0,
         fill: coords.reserveOne.Fill,
+        fontStyle: (coords.playerOne.FontStyle || "normal"),
       })
       
       if (reserveText.width > coords.reserveOne.ScaleToWidth) {

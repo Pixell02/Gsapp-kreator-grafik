@@ -6,12 +6,57 @@ export const useSearch = (collectionName, radioValue, searchText) => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [allUsers, setAllUsers] = useState(null);
+  console.log(documents);
   useEffect(() => {
     setLoading(true);
     setError(null);
     let collectionRef = collection(db, collectionName);
     let queryRef;
+
+    const fetchData = async (queryRef) => {
+      const snapshot = await getDocs(queryRef);
+      const results = [];
+
+      for (const doc of snapshot.docs) {
+        const data = doc.data();
+        const uid = data.uid;
+        const teamRef = collection(db, "Teams");
+        const teamQuery = query(teamRef, where("uid", "==", uid));
+        const teamSnapshot = await getDocs(teamQuery);
+        const teamData = teamSnapshot.docs[0]?.data();
+
+        const emailRef = collection(db, "email");
+        const emailQuery = query(emailRef, where("uid", "==", uid));
+        const emailSnapshot = await getDocs(emailQuery);
+        const emailData = emailSnapshot.docs[0]?.data();
+
+        const licenseRef = collection(db, "user");
+        const licenseQuery = query(licenseRef, where("uid", "==", uid));
+        const licenseSnapshot = await getDocs(licenseQuery);
+        const licenseData = licenseSnapshot.docs[0]?.data();
+
+        const result = {
+          ...data,
+          id: doc.id,
+          email: emailData?.email,
+          license: licenseData?.license,
+          team: {
+            firstName: teamData?.firstName,
+          secondName: teamData?.secondName,
+          img: teamData?.img,
+          sport: teamData?.sport,
+          }
+          
+        };
+
+        results.push(result);
+      }
+
+      setDocuments(results);
+      setLoading(false);
+    };
+
     if (searchText) {
       if (radioValue === "firstName") {
         queryRef = query(
@@ -19,218 +64,79 @@ export const useSearch = (collectionName, radioValue, searchText) => {
           where("firstName", ">=", searchText),
           where("firstName", "<=", searchText + "\uf8ff")
         );
-        const unsubscribe = onSnapshot(queryRef, async (snapshot) => {
-          let results = [];
-          for (let i = 0; i < snapshot.docs.length; i++) {
-            const doc = snapshot.docs[i];
-            const data = doc.data();
-            const emailRef = collection(db, "email");
-            const emailQuery = query(emailRef, where("uid", "==", data.uid));
-            const emailSnapshot = await getDocs(emailQuery);
-            const emailDoc = emailSnapshot.docs[0];
-            const emailData = emailDoc.data();
-            const licenseRef = collection(db, "user");
-            const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
-            const licenseSnapshot = await getDocs(licenseQuery);
-            const licenseDoc = licenseSnapshot.docs[0];
-            const licenseData = licenseDoc.data();
-            results.push({
-              ...data,
-              id: doc.id,
-              email: emailData.email,
-              license: licenseData.license,
-            });
-          }
-          setDocuments(results);
-        });
-
-        setLoading(false);
-
-        return unsubscribe;
       } else if (radioValue === "email") {
         queryRef = query(
           collection(db, "email"),
           where("email", ">=", searchText),
           where("email", "<=", searchText + "\uf8ff")
         );
-        const unsubscribe = onSnapshot(queryRef, async (snapshot) => {
-          let results = [];
-          for (let i = 0; i < snapshot.docs.length; i++) {
-            const doc = snapshot.docs[i];
-            const data = doc.data();
-            const teamRef = collection(db, "Teams");
-            const teamQuery = query(teamRef, where("uid", "==", data.uid));
-            const teamSnapshot = await getDocs(teamQuery);
-            const teamDoc = teamSnapshot.docs[0];
-            const teamData = teamDoc?.data();
-            const licenseRef = collection(db, "user");
-            const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
-            const licenseSnapshot = await getDocs(licenseQuery);
-            const licenseDoc = licenseSnapshot.docs[0];
-            const licenseData = licenseDoc.data();
-            results.push({
-              ...data,
-              id: doc.id,
-              license: licenseData.license,
-              firstName: teamData?.firstName,
-              secondName: teamData?.secondName,
-              img: teamData?.img,
-              sport: teamData?.sport,
-            });
-          }
-          setDocuments(results);
-        });
-
-        setLoading(false);
-
-        return unsubscribe;
       } else if (radioValue === "id") {
         queryRef = query(collectionRef, where("uid", ">=", searchText), where("uid", "<=", searchText + "\uf8ff"));
-        const unsubscribe = onSnapshot(queryRef, async (snapshot) => {
-          let results = [];
-          for (let i = 0; i < snapshot.docs.length; i++) {
-            const doc = snapshot.docs[i];
-            const data = doc.data();
-            const teamRef = collection(db, "email");
-            const teamQuery = query(teamRef, where("uid", "==", data.uid));
-            const teamSnapshot = await getDocs(teamQuery);
-            const teamDoc = teamSnapshot.docs[0];
-            const teamData = teamDoc.data();
-            const licenseRef = collection(db, "user");
-            const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
-            const licenseSnapshot = await getDocs(licenseQuery);
-            const licenseDoc = licenseSnapshot.docs[0];
-            const licenseData = licenseDoc.data();
-            results.push({
-              ...data,
-              id: doc.id,
-              email: teamData.email,
-              license: licenseData.license,
-            });
-          }
-          setDocuments(results);
-        });
-
-        setLoading(false);
-
-        return unsubscribe;
       } else {
         queryRef = collectionRef;
-        const unsubscribe = onSnapshot(queryRef, async (snapshot) => {
-          let results = [];
-          for (let i = 0; i < snapshot.docs.length; i++) {
-            const doc = snapshot.docs[i];
-            const data = doc.data();
-            const teamRef = collection(db, "email");
-            const teamQuery = query(teamRef, where("uid", "==", data.uid));
-            const teamSnapshot = await getDocs(teamQuery);
-            const teamDoc = teamSnapshot.docs[0];
-            const teamData = teamDoc.data();
-            const licenseRef = collection(db, "user");
-            const licenseQuery = query(licenseRef, where("uid", "==", data.uid));
-            const licenseSnapshot = await getDocs(licenseQuery);
-            const licenseDoc = licenseSnapshot.docs[0];
-            const licenseData = licenseDoc.data();
-            results.push({
-              ...data,
-              id: doc.id,
-              email: teamData.email,
-              license: licenseData.license,
-            });
-          }
-          setDocuments(results);
-        });
-        return unsubscribe;
       }
+
+      const unsubscribe = onSnapshot(queryRef, (snapshot) => fetchData(queryRef));
+      return unsubscribe;
     }
-   
   }, [collectionName, radioValue, searchText]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       
-      if (!searchText) {
-        if (radioValue === "firstName") {
-          const teamRef = collection(db, "Teams");
-          const unsubscribe = onSnapshot(teamRef, async (snapshot) => {
-            let results = [];
-  
-            for (let i = 0; i < snapshot.docs.length; i++) {
-              const doc = snapshot.docs[i];
-              const data = doc.data();
-  
-              if (data.uid) {
-                const teamQuery = query(collection(db, "email"), where("uid", "==", data.uid));
-                const teamSnapshot = await getDocs(teamQuery);
-                const teamDoc = teamSnapshot.docs[0];
-                const teamData = teamDoc?.data()?.email;
-  
-                const licenseQuery = query(collection(db, "user"), where("uid", "==", data.uid));
-                const licenseSnapshot = await getDocs(licenseQuery);
-                const licenseDoc = licenseSnapshot.docs[0];
-                const licenseData = licenseDoc?.data()?.license;
-  
-                results.push({
-                  ...data,
-                  id: doc.id,
-                  email: teamData,
-                  license: licenseData,
-                });
-              }
-            }
-  
-            setDocuments(results);
+        let queryRef;
+        let unsubscribe;
+
+        queryRef = collection(db, "user");
+        let results = [];
+        unsubscribe = onSnapshot(queryRef, async (snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            results.push({...doc.data() });
           });
-  
-          return () => unsubscribe();
-        } else if (radioValue === "full-license" || radioValue === "no-license" || radioValue === "free-trial") {
-          const licenseQuery = query(collection(db, "user"), where("license", "==", radioValue));
-          const unsubscribe = onSnapshot(licenseQuery, async (snapshot) => {
-            let results = [];
-  
-            for (let i = 0; i < snapshot.docs.length; i++) {
-              const doc = snapshot.docs[i];
-              const data = doc.data();
-  
-              if (data.uid) {
-                const teamQuery = query(collection(db, "email"), where("uid", "==", data.uid));
-                const teamSnapshot = await getDocs(teamQuery);
-                const teamDoc = teamSnapshot.docs[0];
-                const teamData = teamDoc?.data()?.email;
-  
-                const teamsQuery = query(collection(db, "Teams"), where("uid", "==", data.uid));
-                const teamsSnapshot = await getDocs(teamsQuery);
-                const teamsDoc = teamsSnapshot.docs[0];
-                const teamsData = teamsDoc?.data();
-  
-                results.push({
-                  ...data,
-                  id: doc.id,
-                  firstName: teamsData?.firstName,
-                  secondName: teamsData?.secondName,
-                  sport: teamsData?.sport,
-                  img: teamsData?.img,
-                  email: teamData ? teamData : null,
-                });
-              }
-            }
-  
-            setDocuments(results);
-          });
-  
-          return () => unsubscribe();
-        }
-      }
+        });
+        let emailResults = [];
+        const teamSnapshot = await getDocs(query(collection(db, "email")));
+        teamSnapshot.docs.forEach((doc) => {
+          emailResults.push({ id: doc.id,...doc.data() });
+         });
+        let TeamsResults = [];
+        const teamsSnapshot = await getDocs(query(collection(db, "Teams")));
+        teamsSnapshot.docs.forEach((doc) => {
+          TeamsResults.push({ id: doc.id, ...doc.data() });
+        })
+        console.log(results)
+        // setDocuments(results);
+        const users = results.map((user) => {
+          const userEmail = emailResults.find((emailUser) => emailUser.uid === user.uid);
+          const userTeam = TeamsResults.find((teamUser) => teamUser.uid === user.uid);
+        
+          return {
+            ...user,
+            email: userEmail ? userEmail?.email : "",
+            team: userTeam
+              ? {
+                  firstName: userTeam?.firstName,
+                  secondName: userTeam?.secondName,
+                  img: userTeam?.img,
+                  sport: userTeam?.sport,
+                }
+              : null,
+          };
+        });
+      setAllUsers(users);
+
+        return () => unsubscribe();
+     
     };
-  
+
     fetchData();
-  }, [collectionName, searchText, radioValue]);
-  
+  }, []);
+
   useEffect(() => {
     if (documents) {
       setLoading(false);
     }
-  },[documents])
+  }, [documents]);
 
-  return { documents, loading, error };
+  return { documents, loading, error, allUsers };
 };

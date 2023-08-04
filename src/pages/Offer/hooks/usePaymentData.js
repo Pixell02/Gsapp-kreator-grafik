@@ -20,7 +20,7 @@ const usePaymentData = (userData) => {
         street: '',
         postalCode: '',
         city: '',
-        countryCode: ''
+        countryCode: 'PL'
       }
     }
   })

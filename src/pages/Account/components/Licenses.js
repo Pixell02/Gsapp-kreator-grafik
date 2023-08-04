@@ -8,10 +8,10 @@ import translate from "../locales/translate.json";
 
 export default function Licenses({ License }) {
   const { language } = useContext(LanguageContext);
-
+  console.log(License)
   return (
     <div>
-      {License && License[0].license === "free-trial" && (
+      {License && License[0]?.license === "free-trial" && (
         <div className="license-container">
           <div className="license-content">
             <img src={verified} className="icon-verified" />{" "}
@@ -21,7 +21,7 @@ export default function Licenses({ License }) {
           </div>
         </div>
       )}
-      {License && License[0].license === "no-license" && (
+      {License && License[0]?.license === "no-license" && (
         <div className="license-container">
           <div className="license-content">
             <img src={discard} className="icon-verified" />{" "}
@@ -32,7 +32,7 @@ export default function Licenses({ License }) {
           </div>
         </div>
       )}
-      {License && License[0].license === "full-license" && (
+      {License && License[0]?.license === "full-license" && (
         <div className="license-container ">
           <p style={{ marginLeft: "20px" }}>{translate.license[language]}</p>
           <div className="license-type">

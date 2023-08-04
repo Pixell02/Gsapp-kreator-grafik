@@ -19,7 +19,7 @@ export default function Properties({ fabricRef }) {
   } = useActiveObjectCoords(fabricRef);
 
   return (
-    <div className="overflow-scroll d-flex h-75">
+    <div className="overflow-scroll d-flex h-100">
       {coords.type === "image" && (
         <ImageProperties
           coords={coords}

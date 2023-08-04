@@ -57,6 +57,7 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
         className: "player",
         fontFamily: coords.playerOne.FontFamily,
         angle: coords.playerOne.Angle ? coords.playerOne.Angle : 0,
+        fontStyle: (coords.playerOne.FontStyle || "normal"),
         splitByGrapheme: true,
       });
 

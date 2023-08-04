@@ -7,6 +7,7 @@ import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { MultiPropertiesProvider } from '../posterCreator/Context/MultiPropertiesContext';
 
 export default function EditPoster() {
   
@@ -25,6 +26,7 @@ export default function EditPoster() {
   
 
   return (
+    <MultiPropertiesProvider>
     <div className="page-container">
       <div className='content-wrap'>
         <LeftBar />
@@ -35,8 +37,8 @@ export default function EditPoster() {
             defaultBackGround={defaultBackground ? defaultBackground : null}
             coords={coords ? coords[0] : null} />
         )}
-        
       </div>
     </div>
+    </MultiPropertiesProvider>
   )
 }

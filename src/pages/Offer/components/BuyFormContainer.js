@@ -33,11 +33,21 @@ function BuyFormContainer() {
   const functions = getFunctions();
 
   const payUPayment = httpsCallable(functions, "PayUPayment");
-
+  const createTransactionInfo = httpsCallable(functions, "createTransactionInfo");
+  
   const handleSave = async () => {
     setIsLoading(true);
+   
     try {
+      const response = await createTransactionInfo({
+        user: {
+          email: user.email,
+          uid: user.uid
+      }});
+      console.log(response)
       const { data } = await payUPayment(paymentData);
+      
+      
       const url = new URL(data);
       const searchParams = new URLSearchParams(url.search);
       const orderId = searchParams.get("orderId");
@@ -46,6 +56,7 @@ function BuyFormContainer() {
         orderId: orderId,
         uid: user.uid,
       });
+      
       window.location.href = data;
     } catch (error) {
       console.error(error);

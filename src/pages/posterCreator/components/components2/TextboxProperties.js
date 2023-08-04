@@ -35,7 +35,19 @@ export default function TextboxProperties({ coords, handleInputChange, handleSel
             onChange={handleInputChange}
           />
         </div>
-      </div>
+        
+      </div><div className="w-50 d-flex flex-column">
+        styl czcionki:
+        <select
+          name="fontStyle"
+          className="form-control w-100"
+          value={coords.FontStyle}
+          onChange={(e) => handleSelectChange(e)}
+        >
+          <option value="normal">normal</option>
+          <option value="italic">italic</option>
+        </select>
+        </div>
       <div className="d-flex mx-2 w-100 align-items-center justify-content-start">
         <div className="d-flex w-50">
           kolor: <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
