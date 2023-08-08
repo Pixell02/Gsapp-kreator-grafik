@@ -9,10 +9,11 @@ import { db } from "../../../firebase/config";
 import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
 import { LanguageContext } from "../../../context/LanguageContext";
+import PosterLinkBlock from "../../../components/main-content-elements/PosterLinkBlock";
 
 export default function UsersPosters() {
   const navigate = useNavigate();
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext);
   const { documents: userPosters } = useCollection("yourCatalog");
   const { documents: Teams } = useCollection("Teams");
   const [users, setUsers] = useState("");
@@ -46,7 +47,7 @@ export default function UsersPosters() {
   const editClick = (e, item) => {
     setData(item);
     setItemToEdit(null);
-    navigate(`/posterCreator/${item.uuid}`)
+    navigate(`/posterCreator/${item.uuid}`);
   };
   useEffect(() => {
     if (userPosters) {
@@ -78,44 +79,15 @@ export default function UsersPosters() {
                     .filter((userPoster) => userPoster.uid === user)
                     .map((userPoster) => (
                       <>
-                        {userPoster && userPoster.uid !== undefined ? (
-                          <div className="item-category-window">
-                            <div className="name-content">
-                              <span className="name-content" style={{ width: "80%" }}>
-                                {userPoster.name}
-                              </span>
-                              <button className="button-option" onClick={(e) => handleClick(e, userPoster)}>
-                                <Icon.ThreeDotsVertical style={{ marginTop: "5px" }} />
-                              </button>
-                              {itemToEdit === userPoster && (
-                                <div className="show-list">
-                                  <div className="edit-element">
-                                    <button
-                                      key={userPoster.uid}
-                                      onClick={(e) => {
-                                        editClick(e, userPoster);
-                                      }}
-                                    >
-                                      Edytuj
-                                    </button>
-                                  </div>
-                                  <div className="delete-element">
-                                    <button key={userPoster.uid} onClick={() => handleDeleteClick(userPoster.uuid)}>
-                                      Usuń
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                            <Link to={`/${language}/creator/${userPoster.uuid}`}>
-                              <div className="image-category-content">
-                                {userPoster.src && (
-                                  <img src={userPoster.src} alt={userPoster.firstName + " " + userPoster.secondName} />
-                                )}
-                              </div>
-                            </Link>
-                          </div>
-                        ) : null}
+                        {userPoster?.uid && (
+                          <PosterLinkBlock
+                            userPoster={userPoster}
+                            itemToEdit={itemToEdit}
+                            editClick={editClick}
+                            handleClick={handleClick}
+                            handleDeleteClick={handleDeleteClick}
+                          />
+                        )}
                       </>
                     ))}
               </div>

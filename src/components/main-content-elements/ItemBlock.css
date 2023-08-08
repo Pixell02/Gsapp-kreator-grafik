@@ -102,6 +102,7 @@
 }
 .option-container {
   border: 0 !important;
+  z-index: 100 !important;
   background: none;
   display: flex;
   justify-content: right;

@@ -39,7 +39,13 @@ function PlayerMainContent() {
   };
 
   const [data, setData] = useState();
+
   const [itemToEdit, setItemToEdit] = useState(null);
+  
+  const handleClick = (e, item) => {
+    setItemToEdit(item);
+  };
+
   const hideElement = useRef(null);
 
   const handleClickOutside = (e) => {
@@ -54,9 +60,7 @@ function PlayerMainContent() {
     };
   }, [setItemToEdit]);
 
-  const handleClick = (e, item) => {
-    setItemToEdit(item);
-  };
+  
   const editClick = (e, item) => {
     setData(item);
     openEditModal();
@@ -72,7 +76,7 @@ function PlayerMainContent() {
           {translate.addPlayer[language]}
         </button>
         <ItemContainer>
-          {Teams && Teams.length === 1 && (
+          {Teams?.length > 0 && (
             <>
               <div className="d-flex flew-row">
                 <div className="catalog-container">
@@ -96,33 +100,6 @@ function PlayerMainContent() {
               </div>
             </>
           )}
-          {Teams &&
-            Teams.length > 1 &&
-            Teams.map((teams) => (
-              <>
-                <div className="ml-5 mt-3">{teams.firstName + " " + teams.secondName}</div>
-                <div className="d-flex flew-row flex-wrap w-100">
-                  {Players &&
-                    Players.filter((player) => player.team === teams.firstName + " " + teams.secondName).map(
-                      (player) => (
-                        <>
-                          <FilteredBlock
-                            handleDeleteClick={handleDeleteClick}
-                            handleClick={handleClick}
-                            editClick={editClick}
-                            itemToEdit={itemToEdit}
-                            type={goodLocation}
-                            setItemToEdit={setItemToEdit}
-                            item={player}
-                            openEditModal={openEditModal}
-                            Teams={Teams}
-                          />
-                        </>
-                      )
-                    )}
-                </div>
-              </>
-            ))}
         </ItemContainer>
       </div>
       {data && isEditModal && goodLocation === "players" && (

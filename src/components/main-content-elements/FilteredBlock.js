@@ -4,7 +4,7 @@ import * as Icon from "react-bootstrap-icons";
 import "./ItemBlock.css";
 export default function FilteredBlock({type, item, Teams, handleDeleteClick, openEditModal, editClick }) {
   
-  console.log(type);
+ 
   
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
@@ -47,7 +47,7 @@ export default function FilteredBlock({type, item, Teams, handleDeleteClick, ope
                 handleClick(e, item);
               }}
             >
-              <Icon.ThreeDotsVertical style={{ margin: "5px 0 0 0", zIndex: "-1" }} />
+              <Icon.ThreeDotsVertical style={{ margin: "5px 0 0 0", zIndex: "1" }} />
             </button>
             {itemToEdit === item && (
               <div className="show-list">

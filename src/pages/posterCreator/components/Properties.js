@@ -17,7 +17,7 @@ export default function Properties({ fabricRef }) {
     updateActiveGroupObjectCoords,
     handleSelectGroupChange,
   } = useActiveObjectCoords(fabricRef);
-
+  
   return (
     <div className="overflow-scroll d-flex h-100">
       {coords.type === "image" && (

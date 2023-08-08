@@ -37,7 +37,7 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
   const [selectedTheme, setSelectedTheme] = useState();
   const [themeName, setThemeName] = useState("");
   const [percentageProgress, setPercentageProgress] = useState();
-
+  console.log(background)
   const handleThemeSelect = (option) => {
     setSelectedTheme(option.value);
     setSavedThemeName(option.label);
@@ -125,7 +125,7 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
           await getDownloadURL(uploadTask.snapshot.ref)
             .then((downloadURL) => {
               setDoc(doc(collection(db, "piecesOfPoster"), globalProperties.uid), {
-                color: image.name,
+                color: image.color,
                 name: themeName,
                 src: downloadURL,
                 themeId: selectedTheme,

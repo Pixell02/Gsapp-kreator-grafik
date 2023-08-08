@@ -110,6 +110,8 @@ const useActiveObjectCoords = (fabricRef) => {
     }
   }, [fabricRef.current, globalProperties, coords, color]);
 
+  console.log(globalProperties)
+
   const handleDeleteKeyPress = (event) => {
     if (event.keyCode === 46) {
       // Kod klawisza Delete lub Backspace

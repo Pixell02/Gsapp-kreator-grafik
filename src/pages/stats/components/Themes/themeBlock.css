@@ -5,11 +5,16 @@
   border: rgb(228, 228, 228);
   flex-direction: column;
 }
+.block-item .link-container {
+  width: 200px;
+  height: 150px;
+  background: none;
+}
 .theme-container .theme-content {
   height: 50px;
 }
 .poster-content {
-  height: auto;
+  height: 220px;
   background-color: rgb(231, 231, 231);
   display: flex;
 }
@@ -19,5 +24,5 @@
   flex-wrap: wrap;
 }
 .block-item .link-container {
-  background: none;
+  margin: 0 20px 0 20px;
 }

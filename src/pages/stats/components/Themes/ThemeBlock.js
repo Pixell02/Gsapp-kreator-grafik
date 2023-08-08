@@ -3,15 +3,19 @@ import "./themeBlock.css";
 import Toggle from "react-toggle";
 import { useState } from "react";
 import { Switch } from "antd";
-import { doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
 import FilteredBlock from "../../../../components/main-content-elements/FilteredBlock";
 import { LanguageContext } from "../../../../context/LanguageContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import PosterLinkBlock from "../../../../components/main-content-elements/PosterLinkBlock";
+import { useRef } from "react";
 
 export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedTheme }) {
   const [isCheckedArray, setIsCheckedArray] = useState([]);
+  const navigate = useNavigate();
   const { language } = useContext(LanguageContext);
+  const hideElement = useRef(null);
   useEffect(() => {
     const newIsCheckedArray = themes.map((theme) => {
       return theme && theme.public ? theme.public : false;
@@ -19,6 +23,11 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
 
     setIsCheckedArray(newIsCheckedArray);
   }, [themes]);
+  const [itemToEdit, setItemToEdit] = useState(null);
+
+  const handleClick = (e, item) => {
+    setItemToEdit(item);
+  };
 
   const handleToggle = (theme) => {
     const docRef = doc(db, "catalog", theme.id);
@@ -52,12 +61,24 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
 
   const handleClickEdit = (e, theme) => {
     setIsOpen({ isOpen: true, type: "edit" });
-    setSelectedTheme(theme)
-  }
+    setSelectedTheme(theme);
+  };
   const handleClickDelete = (e, theme) => {
     setIsOpen({ isOpen: true, type: "delete" });
     setSelectedTheme(theme);
-  }
+  };
+  const editClick = (e, item) => {
+    setItemToEdit(null);
+    navigate(`/posterCreator/${item.uuid}`);
+  };
+  const handleDeleteClick = async (id) => {
+    console.log(id)
+    const Pref = doc(db, "piecesOfPoster", id);
+    await deleteDoc(Pref);
+
+    const Cref = doc(db, "coords", id);
+    await deleteDoc(Cref);
+  };
 
   return (
     <>
@@ -68,12 +89,15 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
               <div className="theme-name">
                 {theme.theme}{" "}
                 <div>
-                  <button className="btn" onClick={(e) => handleClickEdit(e, theme)}>Edytuj nazwę</button>
+                  <button className="btn" onClick={(e) => handleClickEdit(e, theme)}>
+                    Edytuj nazwę
+                  </button>
                 </div>
               </div>
-
               <div className="d-flex w-100 justify-content-end mt-3 mx-2">
-                <button className="btn mx-3" onClick={(e) => handleClickDelete(e, theme)}>Usuń</button>
+                <button className="btn mx-3" onClick={(e) => handleClickDelete(e, theme)}>
+                  Usuń
+                </button>
                 {theme.public ? <span>Publiczny</span> : <span>Prywatny</span>}{" "}
                 <Switch checked={theme.public} onChange={() => handleToggle(theme)} />
               </div>
@@ -84,9 +108,13 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
                   posters
                     .filter((poster) => poster.themeId === theme.id)
                     .map((poster) => (
-                      <Link to={`/${language}/creator/theme/${poster.id}`} className="link-container">
-                        <FilteredBlock item={poster} />
-                      </Link>
+                      <PosterLinkBlock
+                        userPoster={poster}
+                        itemToEdit={itemToEdit}
+                        editClick={editClick}
+                        handleClick={handleClick}
+                        handleDeleteClick={handleDeleteClick}
+                      />
                     ))}
               </div>
             </div>
