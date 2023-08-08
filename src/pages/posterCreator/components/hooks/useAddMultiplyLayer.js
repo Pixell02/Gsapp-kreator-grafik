@@ -10,16 +10,17 @@ const useAddMultiplyLayer = (fabricRef) => {
     
     const loadedImage = (img) => {
       img.set({
-        top: properties.orientation === "vertically" ? object.top + properties.Margin : object.top,
-        left: properties.orientation === "horizontally" ? object.left + properties.Margin : object.left,
+        top: properties.orientation === "vertically" ? parseFloat(object.top + properties.Margin) : parseFloat(object.top),
+        left: properties.orientation === "horizontally" ? parseFloat(object.left + properties.Margin) : parseFloat(object.left),
         className: object.className,
         originX: 'center',
         originY: 'center',
+        scaleX: object.scaleX,
+        scaleY: object.scaleY,
         type: 'multiplyimage',
         index: object.index + 1,
         selectable: false
       });
-      img.scaleToHeight(150);
       fabricRef.current.add(img);
       fabricRef.current.renderAll();
     }
