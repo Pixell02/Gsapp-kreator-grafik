@@ -8,7 +8,6 @@ export const MultiPropertiesProvider = ({ children }) => {
   const [properties, setProperties] = useState({
     numberOfMatches: 4,
     orientation: 'horizontal',
-    numberOfColumns: 1,
     Margin: 100
   })
   return (
