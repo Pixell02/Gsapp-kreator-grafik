@@ -11,10 +11,8 @@ import createDefaultObjects from "./components/hooks/createDefaultObjects";
 import UpdateModal from "./components/UpdateModal";
 import { ManyBackgroundsContext } from "./Context/ManyBackgroundsContext";
 import HelpLinesModal from "./components/HelpLinesModal";
-import useGuides from "./components/hooks/useGuides";
 import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
-import GuideLines from "./components/GuideLines";
-import useFabric from "./components/hooks/useFabric";
+
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   
