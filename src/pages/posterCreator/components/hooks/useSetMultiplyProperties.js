@@ -9,35 +9,42 @@ const useSetMultiplyProperties = (fabricRef) => {
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   const { properties, setProperties } = useMultiPropertiesContext();
   const { handleCreateImage, handleCreateText } = useAddMultiplyLayer(fabricRef);
-
+  console.log(globalProperties, properties)
   useEffect(() => {
-    let iteration = 1;
     let objectProperties = new Object();
     fabricRef.current._objects.forEach((object) => {
-      if (object.className === "yourTeamLogoOne") {
-        if (iteration !== 1) {
+      if (object.type === "multiplyimage" || object.type === "multiplyText") {
+     
+        if (object.index !== 1) {
           object.set(
             "top",
             properties.orientation === "vertically"
-              ? objectProperties?.top + iteration * properties.Margin
+              ? objectProperties?.top + (object.index - 1) * properties.Margin
               : objectProperties?.top
           );
           object.set(
             "left",
             properties.orientation === "horizontally"
-              ? objectProperties?.left + iteration * properties.Margin
+              ? objectProperties?.left + (object.index - 1) * properties.Margin
               : objectProperties?.left
           );
+          object.set("scaleX", objectProperties.scaleX);
+          object.set("scaleY", objectProperties.scaleY);
         } else {
           objectProperties = {
             top: object.top,
             left: object.left,
+            scaleX: object.scaleX,
+            scaleY: object.scaleY
           };
         }
-        iteration++;
       }
       fabricRef.current.renderAll();
     });
+    setGlobalProperties((prev) => ({
+      ...prev,
+      ...properties
+    }))
   }, [properties]);
 
   const handleNumberOfMatchesChange = (e) => {
@@ -68,14 +75,24 @@ const useSetMultiplyProperties = (fabricRef) => {
     }
   };
   const handleMarginChange = (e) => {
-    setProperties((prev) => ({ ...prev, Margin: e.target.value }));
+    setProperties((prev) => ({ ...prev, Margin: parseInt(e.target.value) }));
     let startPosition;
-    fabricRef.current._objects.forEach((object, i) => {
-      if (i === 0) {
-        startPosition = object.top;
-      }
-      object.set("top", startPosition + e.target.value * i);
+    fabricRef.current._objects.forEach((object) => {
+      if (object.index === 1) {
+        if (properties.orientation === "vertically") {
+          startPosition = object.top;
+        } else {
+          startPosition = object.left;
+        }
+      } else {
+        if (properties.orientation === "vertically") {
+          object.set("top", startPosition + e.target.value * (object.index - 1));
+        } else {
+          object.set("left", startPosition + e.target.value * (object.index - 1));
+        }
       fabricRef.current.renderAll();
+      }
+      
     });
   };
   const handleOrientationChange = (option) => {
