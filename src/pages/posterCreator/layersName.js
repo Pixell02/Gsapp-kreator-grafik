@@ -1,15 +1,17 @@
 import yourTeamLogo from "../../img/crest_2.png";
 import opponentTeamLogo from "../../img/crest_1.png";
 import playerImg from "../../img/playerImg.png";
+import image from "../../img/image.jpg";
 export const layersName = [
   { name: "herb gospodarza", type: "image", image: yourTeamLogo, className: "yourTeamLogo" },
   { name: "herb przeciwnika", type: "image", image: opponentTeamLogo, className: "opponentImage" },
   {
-    name: "zdjęcie zawodnika (do bazy się nie dodaje jeszcze)",
+    name: "zdjęcie zawodnika",
     type: "playerImage",
     image: playerImg,
     className: "playerImage",
   },
+  { name: "zdjęcie", type: "FilteredImage", image: image, className: "image"},
   { name: "pierwsza część nazwy gospodarza", type: "text", text: "Twoja", className: "yourTeamFirstName" },
   { name: "druga część nazwy gospodarza", type: "text", text: "Drużyna", className: "yourTeamSecondName" },
   { name: "pełna nazwa gospodarza", type: "text", text: "Twoja Drużyna", className: "yourTeamName" },
