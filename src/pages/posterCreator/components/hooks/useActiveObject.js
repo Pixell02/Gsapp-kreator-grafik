@@ -15,27 +15,9 @@ const useActiveObjectCoords = (fabricRef) => {
         const canvas = fabricRef.current;
         if (canvas) {
           const activeObject = canvas.getActiveObject();
-        
-          
-          if (activeObject) { 
-            let iteration = 0;
-    let objectProperties = new Object();
-    fabricRef.current._objects.forEach((object) => {
-      if (object.className === "yourTeamLogoOne") {
-        if (iteration !== 0) {
-          object.set("top", properties.orientation === "vertically" ? objectProperties?.top + iteration * properties.Margin : objectProperties?.top);
-          object.set("left", properties.orientation === "horizontally" ? objectProperties?.left + iteration * properties.Margin : objectProperties?.left);
-        } else {
-          objectProperties = {
-            top: object.top,
-            left: object.left,
-          }
-        }
-        iteration++;
-      }
-      fabricRef.current.renderAll();
-    })
-              const newCoords = {
+
+          if (activeObject) {
+            const newCoords = {
               Top: parseInt(activeObject.top.toFixed(0)),
               Left: parseInt(activeObject.left.toFixed(0)),
               className: activeObject.className,
@@ -70,6 +52,37 @@ const useActiveObjectCoords = (fabricRef) => {
                   : undefined,
               Formatter: activeObject.className === "reserveOne" ? activeObject.Formatter : null,
             };
+            let objectProperties = new Object();
+            fabricRef.current._objects.forEach((object) => {
+              if (object.type === "multiplyimage" || object.type === "multiplyText") {
+                if (object.className === activeObject.className) {
+                  if (object.index !== 1) {
+                    object.set(
+                      "top",
+                      properties.orientation === "vertically"
+                        ? objectProperties?.top + (object.index - 1) * properties.Margin
+                        : objectProperties?.top
+                    );
+                    object.set(
+                      "left",
+                      properties.orientation === "horizontally"
+                        ? objectProperties?.left + (object.index - 1) * properties.Margin
+                        : objectProperties?.left
+                    );
+                    object.set("scaleX", objectProperties.scaleX);
+                    object.set("scaleY", objectProperties.scaleY);
+                  } else {
+                    objectProperties = {
+                      top: object.top,
+                      left: object.left,
+                      scaleX: object.scaleX,
+                      scaleY: object.scaleY,
+                    };
+                  }
+                }
+              }
+              fabricRef.current.renderAll();
+            });
 
             const filteredCoords = Object.entries(newCoords).reduce((acc, [key, value]) => {
               if (value !== undefined && value !== null) {
@@ -96,16 +109,15 @@ const useActiveObjectCoords = (fabricRef) => {
       };
     }
   }, [fabricRef.current, globalProperties, coords, color]);
- 
+
   const handleDeleteKeyPress = (event) => {
     if (event.keyCode === 46) {
       // Kod klawisza Delete lub Backspace
-  
+
       const activeObject = fabricRef.current.getActiveObject();
       const key = Object.keys(globalProperties).find((prop) => activeObject.className.includes(prop));
-      
+
       if (activeObject && key) {
-        
         // Jeśli klucz został znaleziony w globalProperties, usuń obiekt związany z kluczem
         const objectToRemove = activeObject;
         const { [key]: value, ...rest } = globalProperties;
@@ -114,12 +126,11 @@ const useActiveObjectCoords = (fabricRef) => {
         fabricRef.current.renderAll();
       } else {
         // Przeszukaj tablicę Text w poszukiwaniu indeksu pasującego obiektu
-        
-        
+
         if (globalProperties.Text?.length > 0) {
           const newTextProperties = [...globalProperties.Text];
           const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
-  
+
           if (indexToRemove !== -1) {
             // Jeśli znaleziono pasujący obiekt, usuń go z tablicy Text i z fabric canvas
             newTextProperties.splice(indexToRemove, 1);
@@ -127,10 +138,11 @@ const useActiveObjectCoords = (fabricRef) => {
             fabricRef.current.remove(activeObject);
             fabricRef.current.renderAll();
           }
-        } if (globalProperties.TextBox?.length > 0) {
+        }
+        if (globalProperties.TextBox?.length > 0) {
           const newTextProperties = [...globalProperties.TextBox];
           const indexToRemove = newTextProperties.findIndex((prop) => prop.className === activeObject.className);
-  
+
           if (indexToRemove !== -1) {
             // Jeśli znaleziono pasujący obiekt, usuń go z tablicy Text i z fabric canvas
             newTextProperties.splice(indexToRemove, 1);
@@ -138,7 +150,7 @@ const useActiveObjectCoords = (fabricRef) => {
             fabricRef.current.remove(activeObject);
             fabricRef.current.renderAll();
           }
-        } 
+        }
       }
     }
   };
@@ -149,7 +161,6 @@ const useActiveObjectCoords = (fabricRef) => {
       const activeObject = canvas.getActiveObject();
       if (activeObject) {
         if (name !== "Width" && name !== "Height") {
-          
           activeObject.set(name.charAt(0).toLowerCase() + name.slice(1), value);
           canvas.renderAll();
         } else {
@@ -231,13 +242,11 @@ const useActiveObjectCoords = (fabricRef) => {
     setCoords({ ...coords, [name]: value });
   };
 
- 
-
   useEffect(() => {
     if (coords && coords.className !== undefined) {
       setGlobalProperties((prevState) => {
         const updatedCoords = {
-          ...((coords.type !== "universalText" && coords.type !== "universalTextBox") && coords),
+          ...(coords.type !== "universalText" && coords.type !== "universalTextBox" && coords),
           ...(coords.type === "universalText" && {
             Text: getUniqueTextArray([...(prevState.Text || []), coords]),
           }),
@@ -256,7 +265,6 @@ const useActiveObjectCoords = (fabricRef) => {
             }),
         };
         function getUniqueTextArray(array) {
-         
           const uniqueClasses = new Set();
           array.reverse();
           return array.filter((item) => {
@@ -272,7 +280,7 @@ const useActiveObjectCoords = (fabricRef) => {
         }
 
         // Filter out duplicate elements based on className
-        
+
         if (coords.type === "universalText") {
           return {
             ...prevState,
@@ -282,7 +290,6 @@ const useActiveObjectCoords = (fabricRef) => {
           return {
             ...prevState,
             TextBox: updatedCoords.TextBox,
-
           };
         } else {
           return {
