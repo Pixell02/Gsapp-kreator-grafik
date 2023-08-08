@@ -18,10 +18,10 @@ const MultiProperties = ({ fabricRef }) => {
         <label>kierunek</label>
         <Select onChange={(option) => handleOrientationChange(option)} options={options} />
       </div>
-      <div className='d-flex flex-column w-50'>
+      {/* <div className='d-flex flex-column w-50'>
         <label>ilość kolumn</label>
         <input type='number' value={properties.numberOfColumns} className='h-50' />
-      </div>
+      </div> */}
       <div className='d-flex flex-column w-50'>
         <label>odstęp</label>
         <input type='number' value={properties.Margin} onChange={(e) => handleMarginChange(e)} className='h-50' />
