@@ -2,18 +2,21 @@ import React from "react";
 import { useState } from "react";
 import { useCollection } from "../../../hooks/useCollection";
 import useOrderBy from "../../Catalog/hooks/useOrderBy";
-import ThemesBar from "./ThemesBar";
-import ThemeBlock from "./ThemeBlock";
-import ThemeAddModal from "./ThemeAddModal";
+import ThemesBar from "./Themes/ThemesBar";
+import ThemeBlock from "./Themes/ThemeBlock";
+import ThemeAddModal from "./Themes/Modals/ThemeAddModal";
+import Modals from "./Themes/Modals";
 
 export default function Themes() {
   const [selectedSportOption, setSelectedSportOption] = useState("piłka nożna");
   const [selectedLangOption, setSelectedLangOption] = useState("pl");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState({
+    isOpen: false,
+    type: "",
+  });
   const { documents: themes } = useCollection("catalog");
-  
-  const { documents: posters } = useOrderBy("piecesOfPoster", "themeId")
-  
+  const { documents: posters } = useOrderBy("piecesOfPoster", "themeId");
+  const [selectedTheme, setSelectedTheme] = useState(null);
 
   const handleSportChange = (e) => {
     setSelectedSportOption(e.value);
@@ -34,24 +37,32 @@ export default function Themes() {
       })
     : [];
 
-  const filteredPosters = posters
-    ? posters.filter((item) => {
-        if (!posters.themeId) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-    : [];
-
   return (
     <div className="w-100 h-100 d-flex flex-column">
-      {isOpen &&<ThemeAddModal setIsOpen={() => setIsOpen(false)} themes={themes} selectedLangOption={selectedLangOption} selectedSportOption={selectedSportOption} /> } 
-      <ThemesBar setIsOpen={() => setIsOpen(true)}  handleLangChange={handleLangChange} handleSportChange={handleSportChange} />
+      {isOpen?.isOpen && (
+        <Modals
+          isOpen={isOpen}
+          selectedTheme={selectedTheme}
+          setIsOpen={() => setIsOpen({ isOpen: false, type: "" })}
+          themes={themes}
+          selectedLangOption={selectedLangOption}
+          selectedSportOption={selectedSportOption}
+        />
+      )}
+      <ThemesBar
+        setIsOpen={() => setIsOpen({ isOpen: true, type: "add" })}
+        handleLangChange={handleLangChange}
+        handleSportChange={handleSportChange}
+      />
       <div className="d-flex mt-4 flex-column">
         <p>Motywy</p>
         <div>
-        <ThemeBlock themes={filteredData} posters={posters} />
+          <ThemeBlock
+            setSelectedTheme={setSelectedTheme}
+            setIsOpen={setIsOpen}
+            themes={filteredData}
+            posters={posters}
+          />
         </div>
       </div>
     </div>
