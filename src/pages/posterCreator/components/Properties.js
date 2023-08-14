@@ -7,6 +7,7 @@ import useActiveObjectCoords from "./hooks/useActiveObject";
 import PlayerNameProperties from "./components2/PlayerNameProperties";
 import TextUniversalProperties from "./components2/TextUniversalProperties";
 import TextBoxUniversalProperties from "./components2/TextBoxUniversalProperties";
+import ImageFilterProperties from "./components2/ImageFilterProperties";
 
 export default function Properties({ fabricRef }) {
   const {
@@ -25,6 +26,13 @@ export default function Properties({ fabricRef }) {
           coords={coords}
           handleSelectChange={handleSelectChange}
           handleInputChange={handleInputChange}
+        />
+      )}
+      {coords.type === "FilteredImage" && (
+        <ImageFilterProperties
+          coords={coords}
+          handleInputChange={handleInputChange}
+          fabricRef={fabricRef}
         />
       )}
       {coords.type === "text" && (

@@ -50,7 +50,38 @@ export const createMultiplyImage = (fabricRef, setFabricObject, name, image) => 
   }
 };
 
-export const createFabricImage = (fabricRef, setFabricObject, name, image) => {
+export const createMultiplyText = (fabricRef, setFabricObject, name, image) => {
+  const objectsToAdd = [];
+  const totalImages = 4;
+  let loadedImages = 0;
+
+  const onImageLoaded = (img) => {
+
+    
+    // img.set({
+    //   top: 200 + loadedImages * 100,
+    //   left: 200,
+    //   className: name,
+    //   originX: 'center',
+    //   originY: 'center',
+    //   type: 'multiplyimage',
+    //   index: loadedImages + 1,
+    //   selectable: loadedImages > 0 ? false : true
+    // });
+    // img.scaleToHeight(150);
+    // objectsToAdd.push(img);
+
+    // loadedImages++;
+    //   fabricRef.current.add(img);
+    //   fabricRef.current.renderAll();
+  };
+
+  for (let i = 0; i < totalImages; i++) {
+      const text = new fabric.Text()
+  }
+};
+
+export const createFabricImage = (fabricRef, setFabricObject, name, image, type) => {
   fabric.Image.fromURL(image, function (img) {
     img.set({
       top: 400,
@@ -58,7 +89,7 @@ export const createFabricImage = (fabricRef, setFabricObject, name, image) => {
       className: name,
       originX: "center",
       originY: "center",
-      type: "image",
+      type: type,
     });
     img.scaleToHeight(150);
     fabricRef.current.add(img);

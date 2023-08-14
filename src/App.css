@@ -113,6 +113,10 @@
 }
 
 /* NOWE */
+@font-face {
+  font-family: "motorblock";
+  src: url(./fonts/Motorblock.ttf);
+}
 
 @font-face {
   font-family: "Made Outer Sans Black";
@@ -130,6 +134,14 @@
 @font-face {
   font-family: "helvetica";
   src: url(./fonts/unicode.helvetic.ttf);
+}
+@font-face {
+  font-family: "Now Regular";
+  src: url(./fonts/Now-Regular.otf);
+}
+@font-face {
+  font-family: "Now Medium";
+  src: url(./fonts/Now-Medium.otf);
 }
 @font-face {
   font-family: "Now Black";

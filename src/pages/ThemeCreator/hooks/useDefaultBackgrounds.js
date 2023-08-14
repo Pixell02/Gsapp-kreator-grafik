@@ -13,7 +13,7 @@ const useDefaultBackgrounds = (backgrounds) => {
   }
 
   
-  return {defaultBackgrounds, handleDefaultBackgroundChangeName}
+  return {defaultBackgrounds, handleDefaultBackgroundChangeName, setDefaultBackgrounds}
 }
 
 export default useDefaultBackgrounds

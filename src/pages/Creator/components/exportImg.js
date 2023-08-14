@@ -19,7 +19,7 @@ export const exportImg = (Licenses, posters, user, poster,type) => {
   }
   
  
-    html2canvas(image, { scale: 1.25, useCORS: true, allowTaint: true }).then((canvas) => {
+    html2canvas(image, { scale: 1 }).then((canvas) => {
     
       const dataURL = canvas.toDataURL("image/jpeg", 1.0);
 

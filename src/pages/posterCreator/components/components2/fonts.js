@@ -30,7 +30,8 @@ const fonts = [
   { label: "Teko-SemiBold", value: "Teko-SemiBold" },
   { label: "gravtrac", value: "gravtrac" },
   { label: "Nexa-Heavy", value: "Nexa-trial-Heavy" },
-  {label: "paladins expanded", value: "paladins expanded"}
+  { label: "paladins expanded", value: "paladins expanded"},
+  { label: "motorblock", value: "motorblock" },
 ]
 
 export default fonts;

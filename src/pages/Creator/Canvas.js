@@ -43,8 +43,10 @@ function Canvas(props) {
   }, [props.posterBackGround]);
 
   useEffect(() => {
-    if (props.coords?.yourTeamLogoOne && props.fabricRef.current?.backgroundImage) {
-      hostLogo(props.fabricRef, props, loops);
+    if (props.fabricRef.current?.backgroundImage) {
+      if(props.coords?.yourTeamLogoOne)
+        hostLogo(props.fabricRef, props, loops);
+      if(props.coords?.yourTeamNameOne)
       hostName(props.fabricRef, props, loops);
     }
   }, [
@@ -126,7 +128,6 @@ function Canvas(props) {
     <canvas
       id="canvas"
       className="resposive-canvas"
-      crossOrigin="anonymous"
       ref={props.fabricRef}
       width={width}
       height={height}

@@ -27,9 +27,10 @@ const SingleElements = ({
   Players,
   setIsModalOpen,
 }) => {
+  console.log(coords)
   return (
     <div>
-      {coords.opponentImage && <Radio fabricRef={fabricRef} coords={coords} />}
+      {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && <Radio fabricRef={fabricRef} coords={coords} />}
       {themeOptions && (
         <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />
       )}
@@ -69,7 +70,7 @@ const SingleElements = ({
       {coords.yourLeague && (
         <League fabricRef={fabricRef} coords={coords} themeOption={themeOption} posterBackground={posterBackground} />
       )}
-      {coords.opponentImage && (
+      {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
         <OpponentSelect
           fabricRef={fabricRef}
           coords={coords}

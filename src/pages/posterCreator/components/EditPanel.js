@@ -38,7 +38,7 @@ export default function EditPanel({ fabricRef, setIsOpen }) {
         </div>
       )}
 
-      <div className="add-layers-container ml-5">
+      <div className="add-layers-container ml-5 mt-5">
         <p>Warstwy</p>
         <Layers fabricRef={fabricRef} />
       </div>

@@ -7,12 +7,12 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
     
     for (const key in globalProperties) {
       if (layer.className === key) {
-        console.log(layer.type, globalProperties[key])
+        console.log(key, layer.type)
         if (layer.type === "image") {
           fabric.Image.fromURL(layer.image, function (img) {
             img.set({
-              top: globalProperties[key].Top,
-              left: globalProperties[key].Left,
+              top: globalProperties[key]?.Top,
+              left: globalProperties[key]?.Left,
               className: layer.className,
               selectable: true,
               angle: globalProperties[key]?.Angle,
@@ -20,8 +20,7 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
               originY: "center",
               type: "image",
             });
-            img.scaleToHeight(globalProperties[key].ScaleToHeight);
-
+            img.scaleToHeight(globalProperties[key]?.ScaleToHeight);
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
           });
@@ -79,6 +78,7 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
               width: globalProperties[key]?.ScaleToWidth,
               charSpacing: (globalProperties[key]?.CharSpacing || 0),
               fontSize: globalProperties[key]?.FontSize,
+              textAlign: globalProperties[key]?.TextAlign,
               className: layer.className,
               angle: globalProperties[key]?.Angle,
               fill: globalProperties[key]?.Fill,
@@ -87,9 +87,11 @@ export default function createDefaultObjects(fabricRef, globalProperties) {
               originY: "center",
               originX: globalProperties[key]?.OriginX,
             });
+            
             text.set({
               scaleX: globalProperties[key]?.ScaleToWidth / text.width,
             });
+            console.log(text) 
             fabricRef.current.add(text);
             fabricRef.current.renderAll();
           });

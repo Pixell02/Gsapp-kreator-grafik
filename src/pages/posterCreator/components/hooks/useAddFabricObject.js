@@ -16,8 +16,11 @@ export const useAddFabricObject = (fabricRef) => {
   const [fabricObject, setFabricObject] = useState([]);
   const { setIsMany } = useMultiPropertiesContext();
   const handleAddObject = (e, layer) => {
+    console.log(layer)
     if (layer.type === "image") {
-      createFabricImage(fabricRef, setFabricObject, layer.className, layer.image);
+      createFabricImage(fabricRef, setFabricObject, layer.className, layer.image, layer.type);
+    } else if (layer.type === "FilteredImage") {
+      createFabricImage(fabricRef, setFabricObject, layer.className, layer.image, layer.type);
     } else if (layer.type === "text") {
       createFabricText(fabricRef, setFabricObject, layer.text, layer.className);
     } else if (layer.type === "textBox") {
