@@ -1,19 +1,13 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState} from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
-import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useParams } from "react-router-dom";
 import { doc, updateDoc  } from "firebase/firestore";
-import updatePlayer from "../../../hooks/UpdatePlayer";
 
 function EditPlayerWindow({ player, open, onClose }) {
   const [SponsorsName, setSponsorsName] = useState(player.firstName);
   const [number, setNumber] = useState(player.number);
-  const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
-  const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
@@ -52,7 +46,6 @@ function EditPlayerWindow({ player, open, onClose }) {
       onClose();
       setSponsorsName("");
       setNumber(null);
-      setImage(null);
     }
     
   };
@@ -89,16 +82,15 @@ function EditPlayerWindow({ player, open, onClose }) {
         />
         <div className="add-logo-window">
           <div className="image-container">
-            {preview && <img src={preview} />}
+            {preview && <img src={preview} alt="error" />}
           </div>
-          <div className="bin-container">{preview && <img src={bin} onClick= {() => setPreview(null) } />}</div>
+          <div className="bin-container">{preview && <img src={bin} onClick= {() => setPreview(null) } alt="error" />}</div>
         </div>
         <div className="buttons-container">
           <button
             onClick={() => {
               onClose();
               setSponsorsName("");
-              setImage(null);
             }}
             className="btn primary-btn"
           >

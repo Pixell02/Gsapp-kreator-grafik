@@ -14,12 +14,12 @@ export default function TypeMonth({ fabricRef, coords, themeOption, posterBackgr
     setTimeout(() => {
       setMonth(moment().locale("pl").format("MMMM"));
     },500)
-  }, [fabricRef.current?.backgroundImage]);
+  }, [fabricRef.current?._objects]);
 
 
 
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && month !== "") typeMonth(fabricRef, month, themeOption, coords);
+    if (fabricRef.current?._objects && month !== "") typeMonth(fabricRef, month, themeOption, coords);
   }, [fabricRef.current, themeOption, posterBackground, month]);
 
   return (

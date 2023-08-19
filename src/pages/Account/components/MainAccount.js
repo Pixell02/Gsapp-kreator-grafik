@@ -24,7 +24,7 @@ function MainAccount() {
   const { user } = useAuthContext();
   const { usersEmail, userCreatedAt } = useUserInformation(user.uid);
   const { documents: userData } = useCollection("userData", ["uid", "==", user.uid]);
-  const [userEmail, setUserEmail] = useState(user.email);
+  const [userEmail] = useState(user.email);
   const [isChecked, setIsChecked] = useState(false);
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
   const { language } = useContext(LanguageContext);
@@ -35,29 +35,12 @@ function MainAccount() {
   const [address, setAddress] = useState();
   const [postCode, setPostCode] = useState();
   const [country, setCountry] = useState("Afghanistan");
-  const [countryCode, setCountryCode] = useState("AF");
   const [city, setCity] = useState();
   const [nip, setNip] = useState();
   const [companyName, setCompanyName] = useState();
-  const [postCodeError, setPostCodeError] = useState("");
-  const [nipError, setNipError] = useState("");
 
-  const validatePostCode = (postCode) => {
-    if (!zipCodeRegex.test(postCode)) {
-      setPostCodeError("Niepoprawny kod pocztowy");
-      return false;
-    }
-    setPostCodeError("");
-    return true;
-  };
-  const validateNip = (nip) => {
-    if (!nipRegex.test(nip)) {
-      setNipError("Niepoprawny nip");
-      return false;
-    }
-    setNipError("");
-    return true;
-  };
+  
+  
   useEffect(() => {
     if (userData) {
       if (userData.length > 0) {
@@ -134,7 +117,6 @@ function MainAccount() {
     }
   };
   const navigate = useNavigate();
-  console.log(orderId)
   return (
     <div className="main-content">
       <div className="ml-5">

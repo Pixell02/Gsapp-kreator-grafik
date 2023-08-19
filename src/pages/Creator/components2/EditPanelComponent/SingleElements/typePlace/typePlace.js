@@ -22,6 +22,7 @@ const typePlace = (fabricRef, coords, place, themeOption) => {
     top: coords.typePlace.Top,
     left: coords.typePlace.Left,
     className: "typePlace",
+    zIndex: 5,
     fontSize: coords.typePlace.FontSize,
     fill: coords.typePlace.Fill,
     originX: coords.typePlace.OriginX,

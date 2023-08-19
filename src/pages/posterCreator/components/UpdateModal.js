@@ -2,14 +2,12 @@ import React from "react";
 import { useContext } from "react";
 import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { useEffect } from "react";
-import { BackgroundContext } from "../Context/BackgroundContext";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
-import { update } from "react-spring";
 import { LanguageContext } from "../../../context/LanguageContext";
 
 export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
@@ -20,7 +18,6 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState("");
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-  console.log(params);
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
@@ -32,8 +29,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
       ...prev,
       uid: params.id
     }))
-  }, [])
-  console.log(globalProperties)
+  }, [setGlobalProperties, params])
   const handleAddDoc = async () => {
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
@@ -42,7 +38,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           contentType: "image/jpeg",
         };
         const player = ref(storage, `${defaultBackGround.uid}/posters/${defaultBackGround.uuid + backgrounds.length + i}`);
-        console.log(background.file)
+        
         const uploadTask = uploadBytesResumable(player, background.file, metadata);
 
         uploadTask.on(
@@ -55,8 +51,9 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
                 setProgress("Upload is paused");
                 break;
               case "running":
-                setProgress("dodawanie...");
+                setProgress("Upload is " + progress + "% done");
                 break;
+              default: console.log("default");
             }
           },
           (error) => {
@@ -65,7 +62,7 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               addDoc(collection(db, "yourCatalog"), {
-                color: background.name,
+                color: background.color,
                 src: downloadURL,
                 uuid: globalProperties.uid,
               });

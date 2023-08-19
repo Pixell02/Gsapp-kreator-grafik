@@ -1,10 +1,7 @@
 import React from "react";
-import Title from "../../../components/main-content-elements/Title";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
-import { useCollection } from "../../../hooks/useCollection";
-import { useAuthContext } from "../../../hooks/useAuthContext";
 import translate from "../locales/translate.json";
 import addTeam from "../assets/addTeam.png";
 import addPlayer from "../assets/addPlayer.png";

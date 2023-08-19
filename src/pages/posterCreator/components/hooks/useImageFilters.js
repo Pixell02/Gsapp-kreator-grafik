@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import useActiveObjectFilters from "./useActiveObjectFilters";
-import { useContext } from "react";
-import { GlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
+
 
 const useImageFilters = (fabricRef) => {
 
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-  const [imageProperties, setImageProperties] = useState(null)
+
   const [elements] = useState([
     { className: "brightness", name: "jasność" },
     { className: "contrast", name: "kontraskt" },
@@ -27,13 +25,24 @@ const useImageFilters = (fabricRef) => {
     },
   });
 
-  useEffect(() => {
-    const coords = {
+  // useEffect(() => {
+  //   const activeFilters = Object.keys(filters).reduce((acc, filterName) => {
+  //     const { value, active, blendMode, alpha } = filters[filterName];
+  //     if (active) {
+  //       const filter = addFilter(filterName, value, blendMode, alpha);
 
-      filters: filters
-    }
+  //       if (filter) {
+  //         acc.push(filter);
+  //       }
+  //     }
+  //     return acc;
+  //   }, []);
+  //   const coords = {
 
-  },[filters])
+  //     filters: activeFilters
+  //   }
+
+  // },[filters])
 
   useEffect(() => {
     if (!objectFilters?.length) return;
@@ -52,7 +61,7 @@ const useImageFilters = (fabricRef) => {
     });
 
     setFilters(updatedFilters);
-  }, [objectFilters])
+  }, [objectFilters, filters])
 
   const handleAlphaChange = (className, alpha) => {
     setFilters((prev) => ({
@@ -113,11 +122,10 @@ const useImageFilters = (fabricRef) => {
       }
       return acc;
     }, []);
-    console.log(activeFilters)
     activeObject.filters = activeFilters;
     activeObject.applyFilters();
     canvas.renderAll();
-  }, [filters]);
+  }, [filters, fabricRef]);
 
   return { filters, handleCheckFilter, handleValuesChange, elements, handleModeChange, handleAlphaChange };
 };

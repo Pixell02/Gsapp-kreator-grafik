@@ -1,16 +1,9 @@
 import { db } from "../../firebase/config";
 import { doc, deleteDoc } from "firebase/firestore";
-import { useState } from "react";
-import AddTeamWindow from "../../pages/YourTeamPanel/components/addTeamWindow";
-import { useParams } from "react-router-dom";
-import EditPlayerWindow from "../../pages/Players/components/EditPlayerWindow";
-import useEditModal from "../../hooks/useEditModal";
-import * as Icon from "react-bootstrap-icons";
 import "./Block.css";
 
 export default function Options({ team }) {
   
-  console.log(team)
 
   const handleEdit = () => {
 

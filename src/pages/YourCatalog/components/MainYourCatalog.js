@@ -1,5 +1,4 @@
 import React from "react";
-import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
 import "./MainYourCatalog.css";
 import { useContext } from "react";

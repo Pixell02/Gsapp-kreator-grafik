@@ -4,9 +4,7 @@ import {
   getAuth,
   setPersistence,
   browserSessionPersistence,
-  inMemoryPersistence,
 } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDmqmCgUHChFn88wr71Rzos0S2K__Wovp4",
@@ -23,7 +21,6 @@ initializeApp(firebaseConfig);
 
 // init firestore
 const db = getFirestore();
-const storage = getStorage();
 
 const auth = getAuth();
 setPersistence(auth, browserSessionPersistence);

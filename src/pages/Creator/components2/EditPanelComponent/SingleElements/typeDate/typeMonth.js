@@ -55,6 +55,7 @@ const typeMonth = (fabricRef, month, themeOption, coords) => {
         fontSize: coords.typeMonth.FontSize,
         stroke: "white",
         strokeWidth: 20,
+        zIndex:5,
         strokeUniform: true,
         width: coords.typeMonth.ScaleToWidth,
         fill: "white",

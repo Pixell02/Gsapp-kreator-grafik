@@ -9,7 +9,6 @@ import UsersCountry from "./UsersCountry";
 import Themes from "./Themes";
 import { useSearch } from "../../../hooks/useLimit";
 import PromoCode from "./PromoCode";
-import { useCollection } from "../../../hooks/useCollection";
 import Logs from "./Logs";
 import ToDo from "./ToDo";
 

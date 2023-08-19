@@ -4,7 +4,6 @@ import { useCollection } from "../../../hooks/useCollection";
 import useOrderBy from "../../Catalog/hooks/useOrderBy";
 import ThemesBar from "./Themes/ThemesBar";
 import ThemeBlock from "./Themes/ThemeBlock";
-import ThemeAddModal from "./Themes/Modals/ThemeAddModal";
 import Modals from "./Themes/Modals";
 
 export default function Themes() {

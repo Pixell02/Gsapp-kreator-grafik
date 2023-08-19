@@ -19,7 +19,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [id, setId] = useState();
   useEffect(() => {
     setId(myId);
-  }, [])
+  }, [myId])
   const [percentageProgress, setPercentageProgress] = useState();
   const [query, setQuery] = useState("");
   const [users, loading, error] = useSearchTeam(query);
@@ -29,7 +29,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [userPoster, setUserPoster] = useState({
     type: "MATCH-POSTER"
   });
-  console.log(manyBackgrounds)
+  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
@@ -41,9 +41,9 @@ export default function SaveModal({ isOpen, setIsOpen }) {
       ...prevState,
       uid: id
     }));
-  }, [background, id, radioValue]);
+  }, [background, id, radioValue, setGlobalProperties, image]);
     
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  
   
   
   const handleQueryChange = (e) => {
@@ -74,6 +74,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
               case "running":
                 console.log("dodawanie...");
                 break;
+            default: console.log("default");
             }
           },
           (error) => {
@@ -114,6 +115,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
             case "running":
               console.log("Upload is running");
               break;
+            default: console.log("default");
           }
         },
         (error) => {

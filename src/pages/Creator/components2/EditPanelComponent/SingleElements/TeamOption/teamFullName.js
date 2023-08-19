@@ -22,6 +22,7 @@ const teamFullName = (fabricRef, yourName, coords, themeOption, radioChecked) =>
       top: radioChecked === "radio1" ? coords.yourTeamName.Top : coords.opponentName.Top,
       left: radioChecked === "radio1" ? coords.yourTeamName.Left : coords.opponentName.Left,
       fill: coords.yourTeamName.Fill,
+      zIndex:5,
       fontSize: coords.yourTeamName.FontSize,
       fontFamily: coords.yourTeamName.FontFamily,
       angle: radioChecked === "radio1" ? (coords.yourTeamName.Angle || 0) : (coords.opponentName.Angle || 0),

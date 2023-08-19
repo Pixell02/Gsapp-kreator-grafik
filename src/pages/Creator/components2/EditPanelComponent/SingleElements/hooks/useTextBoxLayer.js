@@ -27,6 +27,7 @@ const useTextBoxLayer = (coords, fabricRef) => {
           width: coords.ScaleToWidth,
           fill: coords.Fill,
           originX: coords.OriginX,
+          zIndex: 5,
           originY: coords.OriginY,
           textAlign: coords.TextAlign,
           splitByGrapheme: true,

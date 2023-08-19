@@ -11,7 +11,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useTeams } from "./useTeams";
-import { useParams } from "react-router-dom";
 import { LanguageContext } from "../../../context/LanguageContext";
 import translate from "../locales/translate.json"
 
@@ -24,7 +23,6 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   const [isImage, setIsImage] = useState(true);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
-  const params = useParams();
   const { user } = useAuthContext();
   const fileInputRef = useRef(null);
   
@@ -33,10 +31,8 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
     fileInputRef.current.click();
   };
   useEffect(() => {
-    if(!image) {
-      setIsImage(false);
-    } 
-  },[])
+    if(!image)  setIsImage(false);
+  },[image])
   const handleEdit = (e) => {
     setIsImage(false);
     const file = e.target.files[0];
@@ -81,6 +77,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
               case "running":
                 console.log("Upload is running");
                 break;
+              default: console.log("default");
             }
           },
           (error) => {
@@ -174,7 +171,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
         />
         <div className="add-logo-window">
           <div className="image-container">
-            {preview && <img src={preview} />}
+            {preview && <img src={preview} alt="error" />}
           </div>
           <div className="bin-container">
             {preview && (
@@ -185,6 +182,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
                   setImage(null);
                   setIsImage(false);
                 }}
+                alt="error"
               />
             )}
           </div>

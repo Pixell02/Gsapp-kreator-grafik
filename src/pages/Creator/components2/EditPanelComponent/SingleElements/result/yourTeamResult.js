@@ -36,6 +36,7 @@ export default function yourTeamResult(props) {
         fontFamily: props.coords.yourPlayerOneGoal.FontFamily,
         fontSize: props.coords.yourPlayerOneGoal.FontSize,
         selectable: false,
+        zIndex: 3,
         fill: props.coords.yourPlayerOneGoal.Fill,
         className: "yourTeamGoals",
         angle: props.coords.yourPlayerOneGoal.Angle ? props.coords.yourPlayerOneGoal.Angle : 0,

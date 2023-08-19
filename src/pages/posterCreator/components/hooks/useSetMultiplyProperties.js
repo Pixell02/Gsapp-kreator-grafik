@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { useState } from "react";
 import { GlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
 import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 import useAddMultiplyLayer from "./useAddMultiplyLayer";
@@ -8,12 +7,17 @@ import { layersName } from "../../layersName";
 const useSetMultiplyProperties = (fabricRef) => {
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   const { properties, setProperties } = useMultiPropertiesContext();
-  const { handleCreateImage, handleCreateText } = useAddMultiplyLayer(fabricRef);
-  console.log(globalProperties, properties)
+  const { handleCreateImage, handleCreateText, handleCreateUniversalText } = useAddMultiplyLayer(fabricRef);
+  
   useEffect(() => {
-    let objectProperties = new Object();
+    const objectProperties = {
+      top: null,
+      left: null,
+      scaleX: null,
+      scaleY: null 
+    };
     fabricRef.current._objects.forEach((object) => {
-      if (object.type === "multiplyimage" || object.type === "multiplyText") {
+      if (object.type === "multiplyimage" || object.type === "multiplyText" || object.type === "multiplyUniversalText") {
      
         if (object.index !== 1) {
           object.set(
@@ -31,12 +35,10 @@ const useSetMultiplyProperties = (fabricRef) => {
           object.set("scaleX", objectProperties.scaleX);
           object.set("scaleY", objectProperties.scaleY);
         } else {
-          objectProperties = {
-            top: object.top,
-            left: object.left,
-            scaleX: object.scaleX,
-            scaleY: object.scaleY
-          };
+          objectProperties.top = object.top;
+          objectProperties.left = object.left;
+          objectProperties.scaleX = object.scaleX;
+          objectProperties.scaleY = object.scaleY;
         }
       }
       fabricRef.current.renderAll();
@@ -45,7 +47,7 @@ const useSetMultiplyProperties = (fabricRef) => {
       ...prev,
       ...properties
     }))
-  }, [properties]);
+  }, [properties, fabricRef, setGlobalProperties]);
 
   const handleNumberOfMatchesChange = (e) => {
     const newNumberOfMatches = parseInt(e.target.value, 10);
@@ -55,7 +57,6 @@ const useSetMultiplyProperties = (fabricRef) => {
     const multiplyObject = canvasObjects.filter((object) => {
       return object.index === properties.numberOfMatches;
     });
-
     const length = multiplyObject[0].index;
     if (newNumberOfMatches < length) {
       const objectsToRemove = multiplyObject;
@@ -68,7 +69,10 @@ const useSetMultiplyProperties = (fabricRef) => {
             if (object.type === "multiplyimage" && object.className === layer.className) {
               handleCreateImage(layer.image, object);
             } else if (object.type === "multiplyText" && object.className === layer.className) {
-            }
+              handleCreateText(layer.text, object);
+            } else if (object.type === "multiplyUniversalText" && object.className === layer.className) {
+              handleCreateUniversalText(layer.text, object);
+             }
           });
         });
       }

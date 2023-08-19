@@ -27,7 +27,7 @@ const SingleElements = ({
   Players,
   setIsModalOpen,
 }) => {
-  console.log(coords)
+  
   return (
     <div>
       {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && <Radio fabricRef={fabricRef} coords={coords} />}

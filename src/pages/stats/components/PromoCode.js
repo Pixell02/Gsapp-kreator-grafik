@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import usePromoCode from "./hooks/usePromoCode";
 import "./promoCode.css";
 import { useCollection } from "../../../hooks/useCollection";

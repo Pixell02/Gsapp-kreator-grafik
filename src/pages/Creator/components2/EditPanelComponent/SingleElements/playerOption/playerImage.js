@@ -20,6 +20,7 @@ const playerImage = (fabricRef, playerImage, coords) => {
         left: coords.playerImage.Left,
         originX: "center",
         originY: "top",
+        zIndex:5,
         angle: (coords.playerImage.Angle || 0),
         className: "playerImage",
       });

@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import FilterBlock from "./Filters/FilterBlock";
 import useImageFilters from "../hooks/useImageFilters";
 import ColorBlock from "./Filters/ColorBlock";

@@ -4,7 +4,6 @@ import MainYourTeamPanel from "./components/MainYourTeamPanel";
 import MainFooter from "../../components/MainFooter";
 import "../../App.css";
 import WelcomeModal from "./components/WelcomeModal";
-import UpdateModal from "./components/UpdateModal";
 
 function YourTeamPanel() {
   const [isOpen, setIsOpen] = useState(false);

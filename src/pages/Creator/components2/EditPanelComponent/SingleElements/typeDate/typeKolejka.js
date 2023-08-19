@@ -18,6 +18,7 @@ const typeKolejka = (fabricRef, typeRound, coords, themeOption) => {
       fontFamily: coords.yourKolejka.FontFamily,
       selectable: false,
       fontSize: coords.yourKolejka.FontSize,
+      zIndex:5,
       fill: coords.yourKolejka.Fill,
       className: "yourRound",
       originX: coords.yourKolejka.OriginX,
@@ -34,6 +35,7 @@ const typeKolejka = (fabricRef, typeRound, coords, themeOption) => {
     if (coords.yourKolejka.themeOption) {
       findThemeOption(coords.yourKolejka, themeOption, yourKolejka)
     }
+    console.log(yourKolejka)
     fabricRef.current.add(yourKolejka);
     fabricRef.current.renderAll();
   });

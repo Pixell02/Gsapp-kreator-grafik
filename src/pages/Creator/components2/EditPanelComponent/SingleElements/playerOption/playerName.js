@@ -27,6 +27,7 @@ const playerName = (fabricRef, selectedPlayerName, coords, themeOption) => {
       originX: coords.player.OriginX,
       originY: coords.player.OriginY,
       className: "yourPlayer",
+      zIndex:5,
       selectable: false,
       fontFamily: coords.player.FontFamily,
       angle: coords.player.Angle ? coords.player.Angle : 0,

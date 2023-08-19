@@ -1,23 +1,19 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import * as Icon from "react-bootstrap-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Title from "../../../components/main-content-elements/Title";
 import { db } from "../../../firebase/config";
 import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
-import { LanguageContext } from "../../../context/LanguageContext";
 import PosterLinkBlock from "../../../components/main-content-elements/PosterLinkBlock";
 
 export default function UsersPosters() {
   const navigate = useNavigate();
-  const { language } = useContext(LanguageContext);
   const { documents: userPosters } = useCollection("yourCatalog");
   const { documents: Teams } = useCollection("Teams");
   const [users, setUsers] = useState("");
-  const [data, setData] = useState();
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
 
@@ -45,7 +41,6 @@ export default function UsersPosters() {
     setItemToEdit(item);
   };
   const editClick = (e, item) => {
-    setData(item);
     setItemToEdit(null);
     navigate(`/posterCreator/${item.uuid}`);
   };

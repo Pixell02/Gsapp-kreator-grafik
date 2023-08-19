@@ -13,10 +13,9 @@ export default function Round({ fabricRef, coords, themeOption, posterBackground
     setTimeout(() => {
       setTypeRound("Kolejka");
     }, 500);
-  }, [fabricRef.current?.backgroundImage]);
-
+  }, [fabricRef.current?._objects]);
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && typeRound !== "") {
+    if (fabricRef.current?._objects && typeRound !== "") {
       typeKolejka(fabricRef, typeRound, coords, themeOption);
     }
   }, [fabricRef.current, typeRound, posterBackground]);

@@ -22,10 +22,10 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
 
   useEffect(() => {
     
-    if (fabricRef.current?.backgroundImage && selectedPlayerName !== "") {
+    if (fabricRef.current?._objects && selectedPlayerName !== "") {
       playerName(fabricRef, selectedPlayerName, coords, themeOption, posterBackground)
     }
-    if (fabricRef.current?.backgroundImage && selectedPlayerImage.split(" ")[0] !== "" && coords.playerImage) {
+    if (fabricRef.current?._objects && selectedPlayerImage.split(" ")[0] !== "" && coords.playerImage) {
       
     }
   }, [fabricRef.current, themeOption, posterBackground, selectedPlayerName, selectedPlayerImage]);

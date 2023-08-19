@@ -7,7 +7,7 @@ export default function Users({ users, radioValue, setRadioValue }) {
         users.map((user) => (
           <div className="d-flex flex-row w-100 h-50" key={user.id}>
             <div className="d-flex  w-50 align-items-center mt-2 ml-5">
-              <img src={user.img} style={{ maxHeight: "50px", maxWidth: "30px" }} />
+              <img src={user.img} style={{ maxHeight: "50px", maxWidth: "30px" }} alt="error" />
             </div>
             <div className="d-flex  w-100 align-items-center mt-2 ml-5">{user.firstName + " " + user.secondName} </div>
             <div className="d-flex  w-100 align-items-center mt-2 ml-5">{user.email}</div>

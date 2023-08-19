@@ -16,10 +16,8 @@ export function BackgroundProvider({ children }) {
     .then((doc) => {
      setImage(doc.data())
    }) 
-  },[])
+  },[params.id])
   
-  const { documents: backgrounds } = useCollection("yourCatalog", ["uuid", "==", params.id])
-  const { documents: coords } = useCollection("coords", ["uid", "==", params.id])
   
 
   const [background, setBackground] = useState([]);

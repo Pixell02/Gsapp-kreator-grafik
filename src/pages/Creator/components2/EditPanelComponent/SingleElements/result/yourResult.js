@@ -4,7 +4,7 @@ import findThemeOption from "../functions/themeOption";
 
 const yourResult = (fabricRef, yourTeamResult, coords, themeOption, radioChecked) => {
   fabricRef.current._objects.forEach((image, i) => {
-    if (fabricRef.current.item(i).className == "yourTeamResult") {
+    if (fabricRef.current.item(i).className === "yourTeamResult") {
       fabricRef.current.remove(fabricRef.current.item(i));
     }
   });
@@ -19,6 +19,7 @@ const yourResult = (fabricRef, yourTeamResult, coords, themeOption, radioChecked
       fontSize: coords.yourTeamResult.FontSize,
       fontStyle: coords.yourTeamResult.FontStyle ? coords.yourTeamResult.FontStyle : "normal",
       selectable: false,
+      zIndex:5,
       fill: coords.yourTeamResult.Fill,
       className: "yourTeamResult",
       angle: coords.yourTeamResult.Angle ? coords.yourTeamResult.Angle : 0,

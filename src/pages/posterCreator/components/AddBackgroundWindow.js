@@ -46,7 +46,7 @@ export default function AddBackgroundWindow({backgrounds}) {
           </div>
         </div>
         <div className="content w-100 d-flex flex-column justify-content-center overflow-scroll">
-          {defaultBackgrounds && defaultBackgrounds.map((image) => (
+          {backgrounds?.map((image) => (
             <div className='d-flex w-100 flex-row h-100'>
               <div className='w-25'><img src={image.src} style={{maxWidth: "20px"}} /></div>
               {image.color}

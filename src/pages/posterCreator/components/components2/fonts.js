@@ -1,5 +1,8 @@
 const fonts = [
   { label: "Russo_one", value: "Russo_one" },
+  { label: "Raleway medium", value: "Raleway Medium" },
+  { label: "Raleway black", value: "Raleway Black" },
+  { label: "Impact", value: "Impact" },
   { label: "Poppins Regular", value: "Poppins" },
   { label: "Poppins-ThinItalic", value: "Poppins-ThinItalic" },
   { label: "Typo_Speed_Black_Italic_Demo", value: "Typo_Speed_Black_Italic_Demo" },

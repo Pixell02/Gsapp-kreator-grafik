@@ -5,8 +5,10 @@ import {
   createFabricText,
   createFabricTextBox,
   createMultiplyImage,
+  createMultiplyText,
   createPlayerImage,
   createPlayerNameText,
+  createUniversalMultiplyText,
   createUniversalText,
   createUniversalTextBox,
 } from "./createFabricObject";
@@ -14,9 +16,9 @@ import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 
 export const useAddFabricObject = (fabricRef) => {
   const [fabricObject, setFabricObject] = useState([]);
-  const { setIsMany } = useMultiPropertiesContext();
+  const { setIsMany, properties } = useMultiPropertiesContext();
+  
   const handleAddObject = (e, layer) => {
-    console.log(layer)
     if (layer.type === "image") {
       createFabricImage(fabricRef, setFabricObject, layer.className, layer.image, layer.type);
     } else if (layer.type === "FilteredImage") {
@@ -34,9 +36,18 @@ export const useAddFabricObject = (fabricRef) => {
     } else if (layer.type === "universalTextBox") {
       createUniversalTextBox(fabricRef, setFabricObject, layer.text, layer.className);
     } else if (layer.type === "multiplyImage") {
-      createMultiplyImage(fabricRef, setFabricObject, layer.className, layer.image)
+      createMultiplyImage(fabricRef, setFabricObject, layer.className, layer.image, properties.numberOfMatches)
       setIsMany(true);
-    }
+    } else if (layer.type === "multiplyText") {
+      createMultiplyText(fabricRef, setFabricObject, layer.className, layer.text, properties.numberOfMatches)
+      setIsMany(true);
+    } else if (layer.type === "multiplyUniversalText") {
+      createUniversalMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches)
+      setIsMany(true);
+    } else if (layer.type === "multiplyUniversalNumber") {
+      createUniversalMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches)
+      setIsMany(true);
+    } 
   };
 
   return { handleAddObject };

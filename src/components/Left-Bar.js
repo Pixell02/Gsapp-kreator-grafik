@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { ReactComponent as PlayerIcon } from "./../img/player.svg";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCollection } from "../hooks/useCollection";
 import { useLogout } from "../hooks/useLogout";
 import * as Icon from "react-bootstrap-icons";
@@ -22,14 +21,14 @@ function LeftBar() {
   const [isActive, setIsActive] = useState(false);
   const { language } = useContext(LanguageContext);
   const hideElement = useRef(null);
-  const { sportKeys, setSportKeys } = useContext(TeamContext);
+  const { setSportKeys } = useContext(TeamContext);
 
   useEffect(() => {
     if (Teams) {
       const uniqueSportKeys = Array.from(new Set(Teams.map((team) => team.sport)));
       setSportKeys(uniqueSportKeys);
     }
-  }, [Teams]);
+  }, [Teams, setSportKeys]);
 
   const handleClickOutside = (e) => {
     if (!hideElement.current.contains(e.target)) {
@@ -46,7 +45,7 @@ function LeftBar() {
   return (
     <div className="left-bar">
       <div className="logo-item" style={{ backgroundColor: "black" }}>
-        <img src={logo} className="logo-image" />
+        <img src={logo} className="logo-image" alt="error" />
       </div>
       <div className="d-flex w-100 align-items-center mt-3">
         <LanguageOption />
@@ -56,7 +55,7 @@ function LeftBar() {
           <div className="list-item">
             <Icon.List
               style={{ height: "50px", width: "auto" }}
-              onClick={() => (isActive == true ? setIsActive(false) : setIsActive(true))}
+              onClick={() => (isActive === true ? setIsActive(false) : setIsActive(true))}
             />
           </div>
           <Link

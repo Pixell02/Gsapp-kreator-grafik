@@ -1,24 +1,17 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import "./addTeamWindow.css";
 import bin from "../../../img/binIcon.png";
-import { addDoc, collection, deleteDoc } from "firebase/firestore";
+import { deleteDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useParams } from "react-router-dom";
+
 import { doc, updateDoc } from "firebase/firestore";
-import updatePlayer from "../../../hooks/UpdatePlayer";
-import Select from "react-select";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import useEditModal from "../../../hooks/useEditModal";
+
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import updateData from "../EditYourTeamWindow/updateData";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
-import translate from "./locales/yourTeamPanel.json"
+import translate from "./locales/yourTeamPanel.json";
 import deleteData from "../EditYourTeamWindow/deleteData";
 
 const options = [
@@ -31,7 +24,6 @@ const options = [
 function EditYourTeamWindow({ yourTeam, open, onClose }) {
   const { language } = useContext(LanguageContext);
   const { user } = useAuthContext();
-  const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
   const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
   const [isImage, setIsImage] = useState(true);
@@ -39,7 +31,7 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
   const [image, setImage] = useState(yourTeam.img);
   const [preview, setPreview] = useState(yourTeam.img);
   const [oldName] = useState(yourTeam.firstName + " " + yourTeam.secondName);
-  
+
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
@@ -71,18 +63,14 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
         const metadata = {
           contentType: "image/png",
         };
-        const player = ref(
-          storage,
-          `${user.uid}/herb/${firstTeamName}_${secondTeamName}`
-        );
+        const player = ref(storage, `${user.uid}/herb/${firstTeamName}_${secondTeamName}`);
 
         const uploadTask = uploadBytesResumable(player, image, metadata);
 
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            let progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
@@ -91,24 +79,23 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
               case "running":
                 console.log("Upload is running");
                 break;
+              default: console.log("default");
             }
           },
           (error) => {
             console.log(error);
           },
           async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then(
-              (downloadURL) => {
-                const docRef = doc(db, "Teams", yourTeam.id);
-                updateDoc(docRef, {
-                  firstName: firstTeamName.trim(),
-                  secondName: secondTeamName.trim(),
-                  img: downloadURL,
-                  sport: sport,
-                });
-                updateData(user.uid, oldName, firstTeamName, secondTeamName)
-              }
-            );
+            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              const docRef = doc(db, "Teams", yourTeam.id);
+              updateDoc(docRef, {
+                firstName: firstTeamName.trim(),
+                secondName: secondTeamName.trim(),
+                img: downloadURL,
+                sport: sport,
+              });
+              updateData(user.uid, oldName, firstTeamName, secondTeamName);
+            });
           }
         );
       } else {
@@ -160,7 +147,7 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
         </select>
 
         <button onClick={onButtonClick} className="btn primary-btn add-img">
-        {translate.addLogo[language]}
+          {translate.addLogo[language]}
         </button>
         <input
           type="file"
@@ -172,23 +159,24 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
           }}
         />
         <div className="add-logo-window">
-          <div className="image-container">
-            {preview && <img src={preview} />}
-          </div>
-          <div className="bin-container">
-            {preview && <img src={bin} onClick={() => setPreview(null)} />}
-          </div>
+          <div className="image-container">{preview && <img src={preview} />}</div>
+          <div className="bin-container">{preview && <img src={bin} onClick={() => setPreview(null)} />}</div>
         </div>
         <div className="buttons-container">
-          <button className="btn" onClick={() => {
-            deleteData(user.uid, firstTeamName, secondTeamName);
-            const docRef = doc(db, "Teams", yourTeam.id);
-            deleteDoc(docRef);
-            onClose();
-            setFirstTeamName("");
+          <button
+            className="btn"
+            onClick={() => {
+              deleteData(user.uid, firstTeamName, secondTeamName);
+              const docRef = doc(db, "Teams", yourTeam.id);
+              deleteDoc(docRef);
+              onClose();
+              setFirstTeamName("");
               setSecondTeamName("");
               setImage(null);
-          }}>{translate.delete[language]}</button>
+            }}
+          >
+            {translate.delete[language]}
+          </button>
           <button
             onClick={() => {
               onClose();
@@ -201,7 +189,7 @@ function EditYourTeamWindow({ yourTeam, open, onClose }) {
             {translate.Cancel[language]}
           </button>
           <button onClick={handleSubmit} className="btn primary-btn">
-          {translate.Save[language]}
+            {translate.Save[language]}
           </button>
         </div>
       </div>

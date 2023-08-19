@@ -15,7 +15,7 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
     backgrounds || null
   );
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
-  const { handleDeleteFile, handleDeleteLinkFile } = useFileDelete(backgrounds || null);
+  const { handleDeleteFile, handleDeleteLinkFile } = useFileDelete(defaultBackgrounds || null);
   
   const { image, setImage, setColor } = useContext(BackgroundContext);
   function handleFileUpload(e) {
@@ -89,23 +89,19 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
           </div>
         </div>
         <div className="content w-100 d-flex flex-column overflow-scroll">
-          {defaultBackgrounds?.map((item, i) => (
-            <BackgroundItem
+          {backgrounds?.map((item, i) => (
+          <>
+            {
+              item.src !== image.src && (
+             <BackgroundItem
               item={item}
               i={i}
               handleNameChange={handleDefaultBackgroundChangeName}
               handleSelectColor={handleSelectColor}
               handleDeleteItem={handleDeleteLinkFile}
-            />
-            // <div className="d-flex w-100 flex-row" key={item.name}>
-            //   <div className="w-25">
-            //     <img src={item.src} style={{ maxWidth: "50px" }} alt="Background" />
-            //   </div>
-            //   <input value={item.color} onChange={(e) => handleDefaultBackgroundChangeName(e, i)} />
-            //   <button onClick={() => handleSelectColor(item)} className="btn">
-            //     wybierz
-            //   </button>
-            // </div>
+                  />
+          )}
+          </>
           ))}
 
           {image && (

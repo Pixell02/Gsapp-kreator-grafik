@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ItemBlock from "../../../../components/main-content-elements/ItemBlock";
 import ItemContainer from "../../../../components/main-content-elements/ItemContainer";
 import Title from "../../../../components/main-content-elements/Title";
 import Licenses from "../../../Account/components/Licenses";
@@ -99,7 +98,7 @@ export default function UserProfile(props) {
             props.user.map((user) => (
               <div className="profile-image-name d-flex flex-column">
                 <div className="profile-image-container pt-5 pb-5 border border-secondary">
-                  <div className="profile-image">{<img src={user.img} />}</div>
+                  <div className="profile-image">{<img src={user.img} alt="error" />}</div>
                 </div>
                 <div className="team-name-container border border-secondary">
                   <span>{user.firstName + " " + user.secondName}</span>

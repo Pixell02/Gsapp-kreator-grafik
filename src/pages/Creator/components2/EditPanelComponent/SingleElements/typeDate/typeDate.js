@@ -20,6 +20,7 @@ const typeDate = (fabricRef, date, coords, themeOption, posterBackground) => {
       className: "typeDate",
       fontSize: coords.typeData.FontSize,
       fill: coords.typeData.Fill,
+      zIndex: 3,
       originX: coords.typeData.OriginX,
       originY: coords.typeData.OriginY,
       fontFamily: coords.typeData.FontFamily,

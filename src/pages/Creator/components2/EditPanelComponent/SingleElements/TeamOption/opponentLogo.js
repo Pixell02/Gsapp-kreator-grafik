@@ -21,14 +21,15 @@ const opponentLogo = (fabricRef, opponentLogo, coords, themeOption, radioChecked
         className: "opponentImage",
         originX: "center",
         originY: "center",
+        zIndex: 5,
         angle: radioChecked === "radio1" ? (coords.opponentImage.Angle || 0) : (coords.yourTeamLogo.Angle || 0),
       });
 
       img.scaleToHeight(parseInt(coords.opponentImage.ScaleToHeight));
-
-      if (img.width * img.ScaleX > coords.opponentImage.ScaleToWidth) {
+      if (img.width * img.scaleX > coords.opponentImage.ScaleToWidth) {
         img.scaleToWidth(coords.opponentImage.ScaleToWidth);
       }
+      console.log(img)
       fabricRef.current.add(img);
       fabricRef.current.renderAll();
     });

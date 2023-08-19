@@ -47,6 +47,7 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
         width: coords.reserveOne.ScaleToWidth * 1.1,
         top: coords.reserveOne.Top,
         left: coords.reserveOne.Left,
+        zIndex:5,
         originX: coords.reserveOne.OriginX,
         originY: coords.reserveOne.OriginY,
         fontFamily: coords.reserveOne.FontFamily,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import LeftBar from '../../components/Left-Bar'
 import "../../App.css";
 import AdministratorPanel from './components/AdministratorPanel';

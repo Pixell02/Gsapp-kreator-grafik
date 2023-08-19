@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
 import translate from "../locales/translate.json";
-import { Link } from "react-router-dom";
 
 export default function ProductsContainer(props) {
 

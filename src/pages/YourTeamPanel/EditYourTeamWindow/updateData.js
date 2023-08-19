@@ -1,4 +1,4 @@
-import { collection, getDocs, query, updateDoc, where, doc, runTransaction, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, updateDoc, where, doc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 
 const updateData = async (user, oldName, firstName, secondName) => {

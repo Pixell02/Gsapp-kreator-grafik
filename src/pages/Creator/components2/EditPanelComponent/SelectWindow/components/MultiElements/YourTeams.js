@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MultiElements = () => {
+const YourTeams = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const MultiElements = () => {
   )
 }
 
-export default MultiElements
+export default YourTeams

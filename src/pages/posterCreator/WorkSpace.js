@@ -12,12 +12,14 @@ import UpdateModal from "./components/UpdateModal";
 import { ManyBackgroundsContext } from "./Context/ManyBackgroundsContext";
 import HelpLinesModal from "./components/HelpLinesModal";
 import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
+import { useMultiPropertiesContext } from "./components/hooks/useMultiPropertiesContext";
 
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   
   const [image, setImage] = useState(defaultBackGround ? defaultBackGround : null);
   const [globalProperties, setGlobalProperties] = useState({ coords } ? coords : {});
+  const { setIsMany, setProperties } = useMultiPropertiesContext();
   const [color, setColor] = useState();
   const [isOpen, setIsOpen] = useState(true);
   const fabricRef = useRef(null);
@@ -25,7 +27,16 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const [helpLinesModal, setHelpLinesModal] = useState(false);
   useEffect(() => {
     if (fabricRef.current?.backgroundImage) {
-      createDefaultObjects(fabricRef, globalProperties);
+      if (globalProperties.orientation) {
+        setProperties(prev => ({
+        ...prev,
+        orientation: globalProperties.orientation,
+        Margin: globalProperties.Margin,
+        numberOfMatches: globalProperties.numberOfMatches
+      }))
+      }
+      
+      createDefaultObjects(fabricRef, globalProperties, setIsMany);
     }
   }, [fabricRef.current]);  
   return (

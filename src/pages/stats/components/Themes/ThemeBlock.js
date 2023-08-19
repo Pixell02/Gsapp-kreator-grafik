@@ -1,28 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import "./themeBlock.css";
-import Toggle from "react-toggle";
 import { useState } from "react";
 import { Switch } from "antd";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
-import FilteredBlock from "../../../../components/main-content-elements/FilteredBlock";
-import { LanguageContext } from "../../../../context/LanguageContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PosterLinkBlock from "../../../../components/main-content-elements/PosterLinkBlock";
-import { useRef } from "react";
 
 export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedTheme }) {
-  const [isCheckedArray, setIsCheckedArray] = useState([]);
+  
   const navigate = useNavigate();
-  const { language } = useContext(LanguageContext);
-  const hideElement = useRef(null);
-  useEffect(() => {
-    const newIsCheckedArray = themes.map((theme) => {
-      return theme && theme.public ? theme.public : false;
-    });
 
-    setIsCheckedArray(newIsCheckedArray);
-  }, [themes]);
+  
   const [itemToEdit, setItemToEdit] = useState(null);
 
   const handleClick = (e, item) => {
@@ -36,16 +25,7 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
     updateDoc(docRef, {
       public: updatedPublicValue,
     }).then(() => {
-      const updatedThemes = themes.map((item) => {
-        if (item.id === theme.id) {
-          return {
-            ...item,
-            public: updatedPublicValue,
-          };
-        }
-        return item;
-      });
-      setIsCheckedArray(updatedThemes);
+      console.log("made")
     });
   };
 
@@ -72,7 +52,6 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
     navigate(`/posterCreator/${item.uuid}`);
   };
   const handleDeleteClick = async (id) => {
-    console.log(id)
     const Pref = doc(db, "piecesOfPoster", id);
     await deleteDoc(Pref);
 

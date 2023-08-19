@@ -43,13 +43,14 @@ const OpponentSelect = ({ Opponents, fabricRef, coords, posterBackground, themeO
     setOpponentsName(option.label);
   };
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && opponentsLogo) {
+    if (fabricRef.current?._objects && opponentsLogo) {
+      
       opponentLogo(fabricRef, opponentsLogo, coords, themeOption, radioChecked);
     }
   }, [fabricRef.current, coords, posterBackground, themeOption, opponentsLogo, radioChecked]);
 
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && opponentsName !== "") {
+    if (fabricRef.current?._objects && opponentsName !== "") {
       if (coords.opponentFirstName) {
         opponentsFirstName(fabricRef, opponentsName, coords, themeOption, radioChecked);
       }
@@ -65,7 +66,7 @@ const OpponentSelect = ({ Opponents, fabricRef, coords, posterBackground, themeO
   return (
     <>
       <label>{translate.Opponents[language]}</label>
-      {Opponents && <Select options={options} onChange={setOpponent} />}
+      {Opponents && <Select options={options} onChange={setOpponent} /> }
     </>
   );
 };

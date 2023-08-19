@@ -12,12 +12,12 @@ export default function Result({ fabricRef, coords, posterBackground, themeOptio
   const { radioChecked } = useContext(radioContext);
   const {language} = useContext(LanguageContext)
   useEffect(() => {
-    if(fabricRef.current?.backgroundImage && yourTeamResult !== "")
+    if(fabricRef.current?._objects && yourTeamResult !== "")
     yourResult(fabricRef, yourTeamResult, coords, themeOption, radioChecked)
   }, [fabricRef.current, yourTeamResult, posterBackground, themeOption, radioChecked])
   
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && yourOpponentResult !== "")
+    if (fabricRef.current?._objects && yourOpponentResult !== "")
       opponentResult(fabricRef, yourOpponentResult, coords, themeOption, radioChecked)
   },[fabricRef.current, yourOpponentResult, posterBackground, themeOption, radioChecked])
 

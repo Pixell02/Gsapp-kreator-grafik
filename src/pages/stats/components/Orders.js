@@ -5,29 +5,28 @@ import { useCollection } from "../../../hooks/useCollection";
 import "../Stats.css";
 export default function Orders(props) {
   const { documents: history } = useCollection("history");
-  const { documents : user } = useCollection("Teams");
+  const { documents: user } = useCollection("Teams");
   const [sortedHistory, setSortedHistory] = useState();
   const [isHistory, setIsHistory] = useState(false);
   const [formattedArray, setFormattedArray] = useState();
 
-  const sortHistory = () => {
-    const sortedData = [...history].slice().sort((a, b) => b.date - a.date);
-    setSortedHistory(sortedData);
-    setIsHistory(true);
-  };
-
   const [dataFiltered, setDataFiltered] = useState([]);
-  console.log(formattedArray)
   useEffect(() => {
     if (user) {
       const filteredData = user.filter((user, index, self) => {
-        return index === self.findIndex(u => u.uid === user.uid);
+        return index === self.findIndex((u) => u.uid === user.uid);
       });
       setDataFiltered(filteredData);
     }
   }, [user]);
 
   useEffect(() => {
+    const sortHistory = () => {
+      const sortedData = [...history].slice().sort((a, b) => b.date - a.date);
+      setSortedHistory(sortedData);
+      setIsHistory(true);
+    };
+
     if (history) {
       sortHistory();
       if (sortedHistory) {
@@ -41,7 +40,7 @@ export default function Orders(props) {
         );
       }
     }
-  }, [history, isHistory]);
+  }, [history, isHistory, sortedHistory]);
   return (
     <div className="order-container mt-5 ml-5">
       <p>Zamówienia</p>
@@ -74,9 +73,7 @@ export default function Orders(props) {
                             </ul>
                           </td>
                           <td className="dimension">
-                            <div>
-                              {user.firstName + " " + user.secondName + " " + `(${user.uid.substring(0, 10)}...)`}
-                            </div>
+                            <div>{`${user.firstName} ${user.secondName} (${user.uid.substring(0, 10)}...)`}</div>
                           </td>
                         </>
                       ))}

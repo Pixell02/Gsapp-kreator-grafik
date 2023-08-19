@@ -21,6 +21,7 @@ const typeLeague = (fabricRef, league, themeOption, coords) => {
         fontSize: coords.yourLeague.FontSize,
         fill: coords.yourLeague.Fill,
         className: "yourLeague",
+        zIndex:5,
         originX: coords.yourLeague.OriginX,
         originY: coords.yourLeague.OriginY,
         angle: (coords.yourLeague.Angle || 0),

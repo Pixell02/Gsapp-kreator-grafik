@@ -1,6 +1,4 @@
 import { createContext } from "react";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useCollection } from "../hooks/useCollection";
 import { useState } from "react";
 import { useEffect } from "react";
 

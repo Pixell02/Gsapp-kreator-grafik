@@ -38,6 +38,7 @@ export default function opponentTeamResult(props) {
         fontSize: props.coords.yourPlayerOneGoal.FontSize,
         width: props.coords.yourPlayerOneGoal.ScaleToWidth * 1.2,
         selectable: false,
+        zIndex:5,
         fill: props.coords.yourPlayerOneGoal.Fill,
         className: "opponentGoals",
         splitByGrapheme: true,

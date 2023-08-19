@@ -13,10 +13,10 @@ export default function TypePlace({ fabricRef, coords, themeOption, posterBackgr
     setTimeout(() => {
       setPlace("Boisko w");
     },500)
-  }, [fabricRef.current?.backgroundImage]);
+  }, [fabricRef.current?._objects]);
 
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && place !== "") {
+    if (fabricRef.current?._objects && place !== "") {
       
       typePlace(fabricRef, coords, place, themeOption)
     }

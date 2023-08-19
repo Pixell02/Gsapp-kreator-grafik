@@ -7,7 +7,7 @@ export const MultiPropertiesProvider = ({ children }) => {
   const [isMany, setIsMany] = useState(false);
   const [properties, setProperties] = useState({
     numberOfMatches: 4,
-    orientation: 'horizontal',
+    orientation: 'horizontally',
     Margin: 100
   })
   return (

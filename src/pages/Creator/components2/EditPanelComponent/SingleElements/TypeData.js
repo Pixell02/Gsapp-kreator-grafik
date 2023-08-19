@@ -9,17 +9,16 @@ import moment from "moment/moment";
 export default function TypeData({ fabricRef, coords, themeOption, posterBackground }) {
   const [Date, setTypeDate] = useState("");
   const { language } = useContext(LanguageContext)
-  
   useEffect(() => {
     setTimeout(() => {
       setTypeDate(moment().format("DD.MM.YYYY"));
     },500)
-  }, [fabricRef.current?.backgroundImage]);
+  }, [fabricRef.current?._objects]);
 
 
 
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage && Date !== "") {
+    if (fabricRef.current?._objects && Date !== "") {
         typeDate(fabricRef, Date, coords, themeOption, posterBackground)
     }
   },[fabricRef.current,Date, posterBackground])

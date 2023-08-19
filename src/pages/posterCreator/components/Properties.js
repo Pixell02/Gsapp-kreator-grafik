@@ -35,7 +35,7 @@ export default function Properties({ fabricRef }) {
           fabricRef={fabricRef}
         />
       )}
-      {coords.type === "text" && (
+      {(coords.type === "text" || coords.type === "multiplyText") && (
         <TextProperties
           coords={coords}
           canvasRef={fabricRef}
@@ -72,7 +72,7 @@ export default function Properties({ fabricRef }) {
           handleInputChange={handleInputChange}
         />
       )}
-      {coords.type === "universalText" &&
+      {(coords.type === "universalText" || coords.type === "multiplyUniversalText" || coords.type === "multiplyUniversalNumber") &&
         <TextUniversalProperties
           coords={coords}
           canvasRef={fabricRef}

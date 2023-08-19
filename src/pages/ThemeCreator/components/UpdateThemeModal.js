@@ -5,9 +5,8 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalPropertiesContext } from "../../posterCreator/Context/GlobalProperitesContext";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc} from "firebase/firestore";
 import { db } from "../../../firebase/config";
-import { useCollection } from "../../../hooks/useCollection";
 import "./saveThemeModal.css";
 import { useEffect } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
@@ -17,7 +16,6 @@ const UpdateThemeModal = ({ isOpen, setIsOpen, defaultBackGround }) => {
   const { language } = useContext(LanguageContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
-  const [progressInfo, setProgress] = useState();
   const { globalProperties } = useContext(GlobalPropertiesContext);
   const [percentageProgress, setPercentageProgress] = useState();
   const [catalog, setCatalog] = useState();
