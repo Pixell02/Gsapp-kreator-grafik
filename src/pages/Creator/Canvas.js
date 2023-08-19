@@ -23,7 +23,7 @@ function Canvas(props) {
       };
       initFabric(props.fabricRef, image);
     };
-  }, [props.posterBackGround]);
+  }, [props.posterBackGround, props.fabricRef, initFabric, setWidth, setHeight]);
 
   return (
     <canvas
