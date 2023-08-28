@@ -13,6 +13,8 @@ import { ManyBackgroundsContext } from "./Context/ManyBackgroundsContext";
 import HelpLinesModal from "./components/HelpLinesModal";
 import ThemeBackgroundWindow from "../ThemeCreator/components/ThemeBackgroundWindow";
 import { useMultiPropertiesContext } from "./components/hooks/useMultiPropertiesContext";
+import useImageFilters from "./components/hooks/useImageFilters";
+
 
 
 export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }) {
@@ -25,8 +27,9 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   const fabricRef = useRef(null);
   const [manyBackgrounds, setManyBackgrounds] = useState([]);
   const [helpLinesModal, setHelpLinesModal] = useState(false);
+  // const { imageFilters} = useImageFilters(fabricRef);
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage) {
+    if (fabricRef.current?._objects) {
       if (globalProperties.orientation) {
         setProperties(prev => ({
         ...prev,
@@ -35,10 +38,9 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
         numberOfMatches: globalProperties.numberOfMatches
       }))
       }
-      
       createDefaultObjects(fabricRef, globalProperties, setIsMany);
     }
-  }, [fabricRef.current]);  
+  }, [fabricRef.current?._objects]);  
   return (
     <BackgroundContext.Provider value={{image, setImage, color, setColor }}>
       <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>

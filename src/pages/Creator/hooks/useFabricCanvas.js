@@ -5,11 +5,11 @@ import useImageRefProvider from "./useImageRefProvider";
 const useFabricCanvas = () => {
   
   const { imageRef } = useImageRefProvider();
-
+  console.log(imageRef.current);
   const initFabric = (fabricRef, image) => {
     if (!fabricRef.current?._objects) {
       fabricRef.current = new fabric.Canvas("canvas", {
-        selection: false,
+        selection: true,
         width: image.width,
         height: image.height,
       });
@@ -23,8 +23,8 @@ const useFabricCanvas = () => {
         fabric.Image.fromURL(image.src, function (img) {
         img.set({
           selectable: false,
-          zIndex: 0,
         })
+        
         fabricRef.current.add(img);
         fabricRef.current.renderAll();
         imageRef.current = img;

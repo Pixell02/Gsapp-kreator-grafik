@@ -5,6 +5,8 @@ import FontFaceObserver from "fontfaceobserver";
 const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, capitan) => {
   if (squadPlayers && coords.playerOne) {
     let text = "";
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
     squadPlayers.forEach((player) => {
       if (player) {
         fabricRef.current._objects.forEach((image, i) => {
@@ -23,13 +25,15 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
           formatPlayer = (player.number ? player.number : "") + " " + player.firstName[0] + "." + player.secondName;
         } else {
           formatPlayer = player.secondName;
+        }   
+        if (currentYear - player.age <= 21) {
+          formatPlayer += " (m)"
         }
-
-        console.log(goalKeeper, (player.number || "") + " " + player.firstName + " " + player.secondName)
-          if (goalKeeper === (player.number || "") + " " + player.firstName + " " + player.secondName) {
+        console.log(goalKeeper)
+          if ((goalKeeper?.number || "" ) + " " + goalKeeper?.firstName + " " + goalKeeper?.secondName === (player.number || "") + " " + player.firstName + " " + player.secondName) {
             formatPlayer += " (gk)";
           }
-        if (capitan === (player.number || "") + " " + player.firstName + " " + player.secondName) {
+        if ((capitan?.number || "" ) + " " + capitan?.firstName + " " + capitan?.secondName === (player.number || "") + " " + player.firstName + " " + player.secondName) {
           formatPlayer += " (c)";
         } else {
           formatPlayer = formatPlayer;

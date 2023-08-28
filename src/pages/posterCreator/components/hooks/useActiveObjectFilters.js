@@ -16,7 +16,7 @@ const useActiveObjectFilters = (fabricRef) => {
     setObjectFilters(activeObject.filters);
 
 
-  },[fabricRef])
+  },[fabricRef.current?.getActiveObject])
 
 
   return {objectFilters}

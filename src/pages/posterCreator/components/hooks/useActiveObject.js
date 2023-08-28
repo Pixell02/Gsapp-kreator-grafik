@@ -47,7 +47,6 @@ const useActiveObjectCoords = (fabricRef) => {
       }
     })
   }
-
   const updateFormat = (value, className) => {
     const canvas = fabricRef.current;
     if (canvas) {

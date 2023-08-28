@@ -10,8 +10,8 @@ export default function WorkSpaceNavbar({ setHelpLinesModal, helpLinesModal }) {
 
   return (
     <div className=" nav-container w-100 bg-light">
-      <div class="collapse navbar-collapse d-flex flex-row w-100">
-        <div class="navbar-nav d-flex flex-row ml-5" style={{marginLeft: "100px"}}>
+      <div className="collapse navbar-collapse d-flex flex-row w-100">
+        <div className="navbar-nav d-flex flex-row ml-5" style={{marginLeft: "100px"}}>
           
           <NavDropdown title="obszar roboczy">
             <NavDropdown.Item ><Link style={{ color: "black" }} to={`/${language}/posterCreator/theme`}>do motywów</Link></NavDropdown.Item>

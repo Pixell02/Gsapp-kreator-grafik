@@ -9,6 +9,15 @@ const useSetMultiplyProperties = (fabricRef) => {
   const { properties, setProperties } = useMultiPropertiesContext();
   const { handleCreateImage, handleCreateText, handleCreateUniversalText } = useAddMultiplyLayer(fabricRef);
   
+  
+
+  useEffect(() => {
+    setGlobalProperties(prev => ({
+      ...prev,
+      ...properties
+    }))
+  },[properties, setGlobalProperties])
+
   useEffect(() => {
     const objectProperties = {
       top: null,
@@ -45,7 +54,6 @@ const useSetMultiplyProperties = (fabricRef) => {
     });
     setGlobalProperties((prev) => ({
       ...prev,
-      ...properties
     }))
   }, [properties, fabricRef, setGlobalProperties]);
 
@@ -77,31 +85,38 @@ const useSetMultiplyProperties = (fabricRef) => {
         });
       }
     }
+    setGlobalProperties(prev => ({...prev, numberOfMatches: newNumberOfMatches}))
   };
   const handleMarginChange = (e) => {
     setProperties((prev) => ({ ...prev, Margin: parseInt(e.target.value) }));
+    setGlobalProperties(prev => ({...prev, Margin: parseInt(e.target.value)}))
     let startPosition;
     fabricRef.current._objects.forEach((object) => {
-      if (object.index === 1) {
-        if (properties.orientation === "vertically") {
-          startPosition = object.top;
+      if(object.index){
+        if (object.index === 1) {
+          if (properties.orientation === "vertically") {
+            startPosition = object.top;
+          } else {
+            startPosition = object.left;
+          }
         } else {
-          startPosition = object.left;
+          if (properties.orientation === "vertically") {
+            object.set("top", startPosition + e.target.value * (object.index - 1));
+          } else {
+            object.set("left", startPosition + e.target.value * (object.index - 1));
+          }
         }
-      } else {
-        if (properties.orientation === "vertically") {
-          object.set("top", startPosition + e.target.value * (object.index - 1));
-        } else {
-          object.set("left", startPosition + e.target.value * (object.index - 1));
-        }
-      fabricRef.current.renderAll();
+        fabricRef.current.renderAll();
       }
       
     });
+    
   };
   const handleOrientationChange = (option) => {
     setProperties((prev) => ({ ...prev, orientation: option.value }));
+    setGlobalProperties((prev) => ({ ...prev, orientation: option.value }));
   };
+  console.log(properties)
 
   return { globalProperties, properties, handleNumberOfMatchesChange, handleMarginChange, handleOrientationChange };
 };

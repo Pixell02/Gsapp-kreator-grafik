@@ -23,13 +23,15 @@ const ColorBlock = (props) => {
             <input
               type="checkbox"
               className={className}
-              checked={filters[className]?.active}
+              checked={filters[className]}
               onChange={(e) => handleFiltersChange(e.target.className, e.target.checked)}
             />{" "}
           <span>{name}</span>
           </label>
       </div>
-      <select className="form-control" value={mode} onChange={(e) => handleModeChange(e.target.value, "blendColor")}>
+      {filters[className] && (
+        <>
+        <select className="form-control" value={mode} onChange={(e) => handleModeChange(e.target.value, "blendColor")}>
         {options.map(option => (
           <option value={option.value}>{option.label}</option>
         ))}
@@ -51,6 +53,9 @@ const ColorBlock = (props) => {
           />
           <span>{filters[className]?.alpha}</span>
         </div>
+        </>
+      )}
+      
       </div>
   )
 }

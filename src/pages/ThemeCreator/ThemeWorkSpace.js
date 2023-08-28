@@ -12,6 +12,7 @@ import { ManyBackgroundsProvider } from "../posterCreator/Context/ManyBackground
 import SaveThemeModal from "./components/SaveThemeModal";
 import createDefaultObjects from "../posterCreator/components/hooks/createDefaultObjects";
 import UpdateThemeModal from "./components/UpdateThemeModal";
+import { useMultiPropertiesContext } from "../posterCreator/components/hooks/useMultiPropertiesContext";
 
 export default function ThemeWorkSpace({ coords, defaultBackGround, id, backgrounds }) {
   const fabricRef = useRef(null);
@@ -20,13 +21,21 @@ export default function ThemeWorkSpace({ coords, defaultBackGround, id, backgrou
   const [image, setImage] = useState(defaultBackGround ? defaultBackGround : null);
   const [color, setColor] = useState();
   const [isOpen, setIsOpen] = useState(true);
-  
+  const { setIsMany, setProperties } = useMultiPropertiesContext();
   
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage) {
-      createDefaultObjects(fabricRef, globalProperties, coords)
+    if (fabricRef.current?._objects) {
+      if (globalProperties.orientation) {
+        setProperties(prev => ({
+        ...prev,
+        orientation: globalProperties.orientation,
+        Margin: globalProperties.Margin,
+        numberOfMatches: globalProperties.numberOfMatches
+      }))
+      }
+      createDefaultObjects(fabricRef, globalProperties, setIsMany)
     };
-  },[fabricRef.current])
+  },[fabricRef.current?._objects])
   return (
     <BackgroundContext.Provider value={{image, setImage, color, setColor }}>
       <GlobalPropertiesContext.Provider value={{globalProperties, setGlobalProperties}}>

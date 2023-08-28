@@ -19,11 +19,16 @@ const StartingPlayers = ({fabricRef, coords, themeOption}) => {
   useEffect(() => {
     const option = selectedPlayers?.map((player) => ({
       label: (player.number || "") + " " + player.firstName + " " + player.secondName,
-      value: (player.number || "") + " " + player.firstName + " " + player.secondName
+      value: {
+        number: player.number,
+        firstName: player.firstName,
+        secondName: player.secondName,
+        age: player?.age
+      }
+      // value: (player.number || "") + " " + player.firstName + " " + player.secondName
     }))
     setPlayerSelect(option)
   },[selectedPlayers])
-
   return (
     <div className="w-100 d-flex align-items-center flex-column">
       {Players &&
@@ -47,7 +52,7 @@ const StartingPlayers = ({fabricRef, coords, themeOption}) => {
               </label>
             </div>
             <div className="player-image">
-              {player.img && <img src={player.img} />}
+              {player.img && <img src={player.img} alt={player.firstName} />}
             </div>
           </div>
         ))}

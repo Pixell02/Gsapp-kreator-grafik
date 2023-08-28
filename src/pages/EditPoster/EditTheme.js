@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCollection } from "../../hooks/useCollection";
 import LeftBar from "../../components/Left-Bar";
 import ThemeWorkSpace from "../ThemeCreator/ThemeWorkSpace";
 import { MultiPropertiesProvider } from "../posterCreator/Context/MultiPropertiesContext";
+import { ImageRefProvider } from "../Creator/context/ImageRefContext";
 
 export default function EditTheme() {
   const params = useParams();
@@ -21,19 +21,21 @@ export default function EditTheme() {
 
   return (
     <MultiPropertiesProvider>
-      <div className="page-container">
-        <div className="content-wrap">
-          <LeftBar />
-          {defaultBackground && coords && (
-            <ThemeWorkSpace
-              id={params.id}
-              backgrounds={poster}
-              defaultBackGround={defaultBackground ? defaultBackground : null}
-              coords={coords ? coords[0] : null}
-            />
-          )}
+      <ImageRefProvider>
+        <div className="page-container">
+          <div className="content-wrap">
+            <LeftBar />
+            {defaultBackground && coords && (
+              <ThemeWorkSpace
+                id={params.id}
+                backgrounds={poster}
+                defaultBackGround={defaultBackground ? defaultBackground : null}
+                coords={coords ? coords[0] : null}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      </ImageRefProvider>
     </MultiPropertiesProvider>
   );
 }

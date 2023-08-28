@@ -8,6 +8,7 @@ import PlayerNameProperties from "./components2/PlayerNameProperties";
 import TextUniversalProperties from "./components2/TextUniversalProperties";
 import TextBoxUniversalProperties from "./components2/TextBoxUniversalProperties";
 import ImageFilterProperties from "./components2/ImageFilterProperties";
+import { ImageFiltersProvider } from "../Context/ImageFiltersContext";
 
 export default function Properties({ fabricRef }) {
   const {
@@ -18,10 +19,11 @@ export default function Properties({ fabricRef }) {
     updateActiveGroupObjectCoords,
     handleSelectGroupChange,
   } = useActiveObjectCoords(fabricRef);
-  
   return (
+   
     <div className="overflow-scroll d-flex h-100">
-      {coords.type === "image" && (
+      <ImageFiltersProvider>
+      {(coords.type === "image" || coords.type === "multiplyimage") && (
         <ImageProperties
           coords={coords}
           handleSelectChange={handleSelectChange}
@@ -88,7 +90,9 @@ export default function Properties({ fabricRef }) {
           setCoords={setCoords}
           handleSelectChange={handleSelectChange}
           handleInputChange={handleInputChange}
-        />}
-    </div>
+          />}
+      </ImageFiltersProvider>
+      </div>
+   
   );
 }

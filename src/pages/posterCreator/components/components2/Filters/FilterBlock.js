@@ -8,12 +8,13 @@ const FilterBlock = ({filters, handleFiltersChange, handleValuesChange, classNam
             <input
               type="checkbox"
               className={className}
-              checked={filters[className]?.active}
-              onChange={(e) => handleFiltersChange(e.target.className, e.target.checked)}
+              checked={filters[className]}
+              onChange={(e) => handleFiltersChange(e.target.className)}
             />{" "}
           <span>{name}</span>
           </label>
-        </div>
+      </div>
+      {filters[className] && (
         <div>
           <input
             step={1}
@@ -23,6 +24,8 @@ const FilterBlock = ({filters, handleFiltersChange, handleValuesChange, classNam
           />
           <span>{filters[className]?.value}</span>
         </div>
+      )}
+        
       </div>
   )
 }

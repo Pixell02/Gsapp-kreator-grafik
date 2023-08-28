@@ -6,6 +6,8 @@ const useAddMultiplyLayer = (fabricRef) => {
 
   const { properties } = useMultiPropertiesContext();
 
+  console.log(properties)
+
   const handleCreateImage = (image, object) => {
     
     const loadedImage = (img) => {

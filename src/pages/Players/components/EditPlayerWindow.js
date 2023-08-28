@@ -20,6 +20,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
   const [secondPlayerName, setSecondPlayerName] = useState(player.secondName);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
   const [number, setNumber] = useState(player.number);
+  const [age, setAge] = useState(player.age);
   const [isImage, setIsImage] = useState(true);
   const [image, setImage] = useState(player.img);
   const [preview, setPreview] = useState(player.img);
@@ -103,7 +104,8 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
         updateDoc(docRef, {
           firstName: firstPlayerName.trim(),
           secondName: secondPlayerName.trim(),
-          img: image? image : null,
+          img: image ? image : null,
+          age: age || null,
           number: number || "",
           team: selectedTeam,
         });
@@ -111,6 +113,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
       onClose();
       setFirstPlayerName("");
       setSecondPlayerName("");
+      setAge(null);
       setNumber(null);
       setImage(null);
     }
@@ -132,6 +135,13 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
           onChange={(e) => setSecondPlayerName(e.target.value)}
           value={secondPlayerName}
           className="secondPlayerName"
+        />
+        <label>{translate.birthYear[language]}</label>
+        <input
+          type="number"
+          onChange={(e) => setAge(e.target.value)}
+          value={age}
+          className="Number"
         />
         <label>{translate.number[language]}</label>
         <input

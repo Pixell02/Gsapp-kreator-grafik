@@ -8,11 +8,11 @@ const useResults = (fabricRef, coords, selectedMatch) => {
   const [hostResult, setHostResult] = useState('');
   const [guestResult, setGuestResult] = useState('');
   const { handleAddText } = useAddMultiplyImageAndText(fabricRef, selectedMatch);
-  
+  console.log(coords)
   useEffect(() => {
     if (coords.connectedResultsOne && (hostResult || guestResult)) handleAddText(coords.connectedResultsOne, (hostResult || "") + " " + (coords.connectedResultsOne.Formatter || ":") + " " + (guestResult || ""), properties)
     if (coords.yourTeamResultOne && hostResult) handleAddText(coords.yourTeamResultOne, hostResult, properties);
-    if (coords.yourOpponentResultOne && guestResult) handleAddText(coords.yourOpponentResultOne, guestResult, properties);
+    if (coords.opponentTeamResultOne && guestResult) handleAddText(coords.opponentTeamResultOne, guestResult, properties);
   },[hostResult, guestResult])
 
   return {hostResult ,setHostResult, guestResult, setGuestResult}

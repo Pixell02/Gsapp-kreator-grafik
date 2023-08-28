@@ -6,10 +6,10 @@ import { BackgroundContext } from '../../Context/BackgroundContext';
 const useCoords = (fabricRef) => {
   const [coords, setCoords] = useState({});
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-  const { properties} = useMultiPropertiesContext();
+  const { properties } = useMultiPropertiesContext();
   const { color } = useContext(BackgroundContext);
   useEffect(() => {
-    if (fabricRef.current?.backgroundImage) {
+    if (fabricRef.current?._objects) {
       const handleObjectModified = () => {
         const canvas = fabricRef.current;
         if (canvas) {
@@ -23,6 +23,7 @@ const useCoords = (fabricRef) => {
               Width: parseInt((activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0)),
               Height: parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)),
               ScaleToWidth: parseInt((activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0)),
+              zIndex: activeObject.zIndex,
               ScaleToHeight:
                 activeObject.className !== "playerImage"
                   ? parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0))
@@ -58,7 +59,9 @@ const useCoords = (fabricRef) => {
             };
             fabricRef.current._objects.forEach((object) => {
               if (object.type === "multiplyimage" || object.type === "multiplyText" || object.type === "multiplyUniversalText") {
-                if (object.className === activeObject.className || object?.id === activeObject?.id) {
+                
+                if (object.className === activeObject.className) {
+                  
                   if (object.index !== 1) {
                     object.set(
                       "top",
@@ -74,12 +77,14 @@ const useCoords = (fabricRef) => {
                     );
                     object.set("scaleX", objectProperties.scaleX);
                     object.set("scaleY", objectProperties.scaleY);
-                  } else {
+                  }
+                  else {
                     objectProperties.top = object.top;
                     objectProperties.left = object.left;
                     objectProperties.scaleX = object.scaleX;
                     objectProperties.scaleY = object.scaleY;
                   }
+                  
                 }
               }
               fabricRef.current.renderAll();
@@ -109,7 +114,7 @@ const useCoords = (fabricRef) => {
         document.removeEventListener("keydown", handleDeleteKeyPress);
       };
     }
-  }, [fabricRef, globalProperties, coords, color,  properties.Margin, properties.orientation]);
+  }, [fabricRef, color, properties ]);
   
   useEffect(() => {
     if (coords && coords.className !== undefined && coords.className !== "image") {
@@ -194,8 +199,9 @@ const useCoords = (fabricRef) => {
       // Kod klawisza Delete lub Backspace
 
       const activeObject = fabricRef.current.getActiveObject();
+      console.log(activeObject)
       const key = Object.keys(globalProperties).find((prop) => activeObject.className.includes(prop));
-      
+      console.log(key)
       if (activeObject && key) {
         // Jeśli klucz został znaleziony w globalProperties, usuń obiekt związany z kluczem
         const objectToRemove = activeObject;
@@ -246,6 +252,10 @@ const useCoords = (fabricRef) => {
             })
             fabricRef.current.renderAll();
           }
+        }
+        if (activeObject.className === "image") {
+          fabricRef.current.remove(activeObject);
+          fabricRef.current.renderAll();
         }
       }
     }

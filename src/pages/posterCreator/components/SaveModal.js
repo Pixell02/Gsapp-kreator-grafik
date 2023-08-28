@@ -13,13 +13,11 @@ import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
 import {LanguageContext} from "../../../context/LanguageContext"
 
 export default function SaveModal({ isOpen, setIsOpen }) {
-  const myId = uuidv4().replace(/-/g, "");
+  
   const {language} = useContext(LanguageContext)
   const navigate = useNavigate();
-  const [id, setId] = useState();
-  useEffect(() => {
-    setId(myId);
-  }, [myId])
+  const [id] = useState(uuidv4().replace(/-/g, ""));
+  
   const [percentageProgress, setPercentageProgress] = useState();
   const [query, setQuery] = useState("");
   const [users, loading, error] = useSearchTeam(query);
@@ -41,8 +39,9 @@ export default function SaveModal({ isOpen, setIsOpen }) {
       ...prevState,
       uid: id
     }));
-  }, [background, id, radioValue, setGlobalProperties, image]);
+  }, [background, id, radioValue, image]);
     
+  
   
   
   
@@ -123,8 +122,9 @@ export default function SaveModal({ isOpen, setIsOpen }) {
         },
         async () => {
           await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log( image.color, userPoster, downloadURL, id)
             setDoc(doc(collection(db, "yourCatalog"), id), {
-              color: manyBackgrounds ? "tło 1": null,
+              color: image.color ? "tło 1": null,
               name: userPoster.name,
               src: downloadURL,
               uid: userPoster.uid,

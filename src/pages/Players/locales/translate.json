@@ -34,6 +34,13 @@
     "es": "Número de jugador",
     "fr": "Numéro du joueur"
   },
+  "birthYear": {
+    "pl": "rok urodzenia",
+    "en": "birth year",
+    "de": "Geburtsjahr",
+    "es": "año de nacimiento",
+    "fr": "année de naissance"
+  },
   "team": {
     "pl": "Drużyna",
     "en": "Team",

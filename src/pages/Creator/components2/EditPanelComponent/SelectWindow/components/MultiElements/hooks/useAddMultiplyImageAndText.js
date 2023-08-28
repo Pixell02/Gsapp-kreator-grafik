@@ -37,14 +37,14 @@ const useAddMultiplyImageAndText = (fabricRef, selectedMatch) => {
     };
   };
   const handleAddText = (coords, teamName, properties) => {
+    console.log(coords)
     fabricRef.current._objects.forEach((image, i) => {
-      if (fabricRef.current.item(i).className === coords.className + selectedMatch) {
+      if (fabricRef.current.item(i).className === coords?.className + selectedMatch) {
         fabricRef.current.remove(fabricRef.current.item(i));
         fabricRef.current.renderAll();
       }
     });
     const font = new FontFaceObserver(coords.FontFamily);
-    console.log( selectedMatch )
     font.load().then(() => {
       const text = new fabric.Text(teamName, {
         selectable: false,
@@ -58,7 +58,7 @@ const useAddMultiplyImageAndText = (fabricRef, selectedMatch) => {
         fontSize: coords.FontSize,
         fontFamily: coords.FontFamily,
         angle: coords.Angle || 0,
-        className: coords.className + selectedMatch,
+        className: coords?.className + selectedMatch,
       });
       if (text.width > coords.ScaleToWidth) {
         text.scaleToWidth(coords.ScaleToWidth);
@@ -67,7 +67,6 @@ const useAddMultiplyImageAndText = (fabricRef, selectedMatch) => {
       if (coords.themeOption) {
         findThemeOption(coords, coords.themeOption, text);
       }
-      console.log(text)
       fabricRef.current.add(text);
       fabricRef.current.renderAll();
     });

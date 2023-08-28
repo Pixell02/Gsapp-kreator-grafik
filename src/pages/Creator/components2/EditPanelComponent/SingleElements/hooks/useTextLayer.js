@@ -24,7 +24,6 @@ const useTextLayer = (fabricRef, coords) => {
           className: coords.className,
           fontSize: coords.FontSize,
           fill: coords.Fill,
-          zIndex: 5,
           originX: coords.OriginX,
           originY: coords.OriginY,
           fontFamily: coords.FontFamily,

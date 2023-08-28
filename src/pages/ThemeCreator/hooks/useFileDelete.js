@@ -7,12 +7,8 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
 import { useLocation, useParams } from 'react-router-dom';
 
-const useFileDelete = (backgrounds) => {
+const useFileDelete = () => {
 
-  const { defaultBackgrounds, setDefaultBackgrounds,  handleDefaultBackgroundChangeName } = useDefaultBackgrounds(
-    backgrounds || null
-  );
-  console.log(defaultBackgrounds)
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
   const storage = getStorage();
   const location = useLocation();
@@ -36,8 +32,8 @@ const useFileDelete = (backgrounds) => {
       docRef = doc(db, "yourCatalog", item.id)
     }
     deleteDoc(docRef);
-        const filteredBackgrounds = defaultBackgrounds.filter((background) => background.color !== item.color);
-      setDefaultBackgrounds(filteredBackgrounds)
+      //   const filteredBackgrounds = defaultBackgrounds.filter((background) => background.color !== item.color);
+      // setDefaultBackgrounds(filteredBackgrounds)
       }).catch((err) => { 
         console.log(err)
       });

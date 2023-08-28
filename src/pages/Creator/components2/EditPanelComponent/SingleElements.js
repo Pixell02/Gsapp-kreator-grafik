@@ -15,6 +15,7 @@ import StartingSquad from "./SingleElements/StartingSquad";
 import Result from "./SingleElements/Result";
 import TextInput from "./SingleElements/TextInput";
 import TextBoxInput from "./SingleElements/TextBoxInput";
+import Images from "./SingleElements/Images";
 
 const SingleElements = ({
   coords,
@@ -82,6 +83,9 @@ const SingleElements = ({
       {coords.yourTeamResult && (
         <Result fabricRef={fabricRef} coords={coords} posterBackground={posterBackground} themeOption={themeOption} />
       )}
+      {coords.Images?.Image.map((image) => (
+        <Images fabricRef={fabricRef} filters={coords.Images.filters} coords={image} />
+      ))}
       {coords.player && (
         <Player
           fabricRef={fabricRef}

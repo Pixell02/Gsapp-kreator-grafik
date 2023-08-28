@@ -10,10 +10,11 @@ const ReservePlayers = ({ fabricRef, coords, themeOption }) => {
   
   useEffect(() => {
     if (fabricRef.current?._objects && selectedReserve) {
+      console.log(selectedReserve)
       showReserve(fabricRef, selectedReserve, coords, themeOption)
     }
   },[selectedReserve, fabricRef, coords, themeOption])
-
+  
 
   return (
     <div className="w-100 d-flex align-items-center flex-column">

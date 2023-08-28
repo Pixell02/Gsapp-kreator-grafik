@@ -6,9 +6,10 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
   if (reserve && coords.reserveOne) {
     let text = "";
     const innerText = new fabric.Text("");
-    
-    reserve.forEach((reserve) => {
-      if (reserve) {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    reserve.forEach((reserved) => {
+      if (reserved) {
         fabricRef.current._objects.forEach((image, i) => {
           if (fabricRef.current.item(i).className === "reserve") {
             fabricRef.current.remove(fabricRef.current.item(i));
@@ -16,17 +17,19 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
         });
         
         if (coords.reserveOne.format === "NumDotSurName") {
-          reserve = (reserve.number || "") + "." + reserve.secondName;
+          reserve = (reserved.number || "") + "." + reserved.secondName;
         } else if (coords.reserveOne.format === "NumSurName") {
-         reserve =(reserve.number || "") + "." +reserve.secondName;
+         reserve =(reserved.number || "") + "." +reserved.secondName;
         } else if (coords.reserveOne.format === "dotted") {
-          reserve = (reserve.number || "") + "." + reserve.firstName[0] + "." + reserve.secondName; 
+          reserve = (reserved.number || "") + "." + reserved.firstName[0] + "." + reserved.secondName; 
         } else if (coords.reserveOne.format === "oneDot") {
-          reserve = (reserve.number || "") + "." + reserve.firstName[0] + "." + reserve.secondName;
+          reserve = (reserved.number || "") + "." + reserved.firstName[0] + "." + reserved.secondName;
         } else {
-          reserve = reserve.secondName
+          reserve = reserved.secondName
         }
-       
+        if (currentYear - Number(reserved.age) <= 21) {
+          reserve += "(m)"
+        }
         let formatReserve = reserve;
         innerText.set("text", formatReserve + `${coords.reserveOne.Formatter}`);
 

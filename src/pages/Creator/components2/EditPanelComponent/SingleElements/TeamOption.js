@@ -22,20 +22,20 @@ export default function TeamOption({ fabricRef, coords, themeOption, posterBackg
   const [yourTeam, teamOption, getTeamOption, yourLogo, yourName] = YourTeamNameAndLogo(Logo);
   
   useEffect(() => {
-    if (fabricRef.current?._objects) {
+    if (fabricRef.current?._objects && yourLogo) {
       teamLogo(fabricRef, yourLogo, coords, themeOption, radioChecked)
     }
   }, [fabricRef.current, yourLogo, radioChecked])
   useEffect(() => {
     
-    if (fabricRef.current?._objects) {
+    if (fabricRef.current?._objects && yourName) {
       if (coords?.yourTeamName) {
         teamFullName(fabricRef, yourName, coords, themeOption, radioChecked)
       } 
-      if (coords?.yourTeamFirstName) {
+      if (coords?.yourTeamFirstName && yourName) {
         teamFirstName(fabricRef, yourName, coords, themeOption, radioChecked)
       }
-      if (coords?.yourTeamSecondName) {
+      if (coords?.yourTeamSecondName && yourName) {
         teamSecondName(fabricRef, yourName, coords, themeOption, radioChecked)
        }
     }

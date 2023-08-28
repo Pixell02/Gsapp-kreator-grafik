@@ -6,7 +6,6 @@ import ColorBlock from "./Filters/ColorBlock";
 const ImageFilterProperties = ({ coords, handleInputChange, fabricRef }) => {
   const { filters, handleCheckFilter, handleAlphaChange, handleValuesChange, elements, handleModeChange } =
     useImageFilters(fabricRef);
-
   return (
     <div>
       <div>Nazwa obiektu : {coords.className}</div>
@@ -40,7 +39,7 @@ const ImageFilterProperties = ({ coords, handleInputChange, fabricRef }) => {
             handleValuesChange={handleValuesChange}
             className={element.className}
             name={element.name}
-            mode={filters.blendColor.mode}
+            mode={filters?.blendColor?.mode}
           />
         ))}
         <div className="d-flex flex-column mt-2">
@@ -53,6 +52,17 @@ const ImageFilterProperties = ({ coords, handleInputChange, fabricRef }) => {
             handleModeChange={handleModeChange}
             handleAlphaChange={handleAlphaChange}
           />
+        </div>
+        <div className="d-flex flex-column mt-2">
+        <label>
+            <input
+              type="checkbox"
+              className="grayScale"
+              checked={filters.grayScale}
+              onChange={(e) => handleCheckFilter(e.target.className, e.target.checked)}
+            />{" "}
+          <span>odcień szarości</span>
+          </label>
         </div>
       </div>
     </div>

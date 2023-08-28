@@ -37,7 +37,7 @@ function WorkSpace() {
       {Licenses && Licenses[0].license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            <TransformWrapper minScale={0.1} initialScale={initScale} centerOnInit>
+            <TransformWrapper minScale={0.1} initialScale={initScale} panning={{disabled: true}} >
               <TransformComponent>
                 <div className="d-flex w-100 h-100">
                   {fabricRef && dataURL && (

@@ -1,65 +1,37 @@
 import React, { useContext, useState } from "react";
 import { ManyBackgroundsContext } from "../../posterCreator/Context/ManyBackgroundsContext";
 import Draggable from "react-draggable";
-import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext";
-import { fabric } from "fabric";
-import  BackgroundItem  from "./ThemeBackgroundWindow/BackgroundItem";
-import useDefaultBackgrounds from "../hooks/useDefaultBackgrounds";
+// import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext";
+// import { fabric } from "fabric";
+// import BackgroundItem from "./ThemeBackgroundWindow/BackgroundItem";
+// import useDefaultBackgrounds from "../hooks/useDefaultBackgrounds";
 import "./themeBackgroundWindow.css";
-import useFileDelete from "../hooks/useFileDelete";
+// import useFileDelete from "../hooks/useFileDelete";
+// import useImageRefProvider from "../../Creator/hooks/useImageRefProvider";
+import TopBar from "./ThemeBackgroundWindow/TopBar";
+import BackgroundScreen from "./ThemeBackgroundWindow/BackgroundScreen";
+import LayerScreen from "./ThemeBackgroundWindow/LayerScreen";
 
 export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
   const [position, setPosition] = useState({ x: 0, y: -300 });
-
-  const { defaultBackgrounds, handleDefaultBackgroundChangeName } = useDefaultBackgrounds(
-    backgrounds || null
-  );
+  const [selectedWindow, setSelectedWindow] = useState(1);
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
-  const { handleDeleteFile, handleDeleteLinkFile } = useFileDelete(defaultBackgrounds || null);
   
-  const { image, setImage, setColor } = useContext(BackgroundContext);
   function handleFileUpload(e) {
     const files = e.target.files;
     const fileList = Array.from(files);
     const updatedBackgrounds = fileList.map((file) => ({
       file,
       color: file.name.split(".")[0],
-      src: URL.createObjectURL(file), // Create preview URL
+      src: URL.createObjectURL(file),
     }));
     setManyBackgrounds([...manyBackgrounds, ...updatedBackgrounds]);
   }
-
-  const handleMainNameChange = (e) => {
-    const newName = e.target.value;
-
-    setImage((prev) => ({
-      ...prev,
-      color: newName,
-    }));
-  };
-
-  function handleNameChange(e, i) {
-    const newName = e.target.value;
-    const updatedManyBackgrounds = [...manyBackgrounds];
-    updatedManyBackgrounds[i] = {
-      ...updatedManyBackgrounds[i],
-      color: newName,
-    };
-    setManyBackgrounds(updatedManyBackgrounds);
-  }
-
-  const handleSelectColor = (color) => {
-    setColor(color);
-    fabric.Image.fromURL(color.preview ? color.preview : color.src, function (img) {
-      fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
-    });
-  };
 
   function handleDrag(e, ui) {
     const { x, y } = ui;
     setPosition({ x, y });
   }
-
   return (
     <Draggable
       axis="both"
@@ -71,60 +43,10 @@ export default function ThemeBackgroundWindow({ backgrounds, fabricRef }) {
       onDrag={handleDrag}
     >
       <div className="window">
-        <div className="handle d-flex flex-row">
-          <div className="d-flex align-items-center">
-            <label htmlFor="layers" className="file-input-label">
-              tła
-            </label>
-          </div>
-          <label htmlFor="layers" className="file-input-label">
-            Warstwy
-          </label>{" "}
-          <span className="d-flex w-100">nie działa jeszcze</span>
-          <div className="w-100 d-flex justify-content-end">
-            <label htmlFor="file-input" className="file-input-label">
-              Dodaj tła
-            </label>
-            <input id="file-input" type="file" multiple onChange={handleFileUpload} className="file-input" />
-          </div>
-        </div>
+        <TopBar handleFileUpload={handleFileUpload} setSelectedWindow={setSelectedWindow} />
         <div className="content w-100 d-flex flex-column overflow-scroll">
-          {backgrounds?.map((item, i) => (
-          <>
-            {
-              item.src !== image.src && (
-             <BackgroundItem
-              item={item}
-              i={i}
-              handleNameChange={handleDefaultBackgroundChangeName}
-              handleSelectColor={handleSelectColor}
-              handleDeleteItem={handleDeleteLinkFile}
-                  />
-          )}
-          </>
-          ))}
-
-          {image && (
-            <div className="d-flex w-100 flex-row">
-              <div className="w-25">
-                <img src={image.src} style={{ maxWidth: "50px" }} alt="Background" />
-              </div>
-              <input value={image.color} onChange={(e) => handleMainNameChange(e)} className="w-50" />
-              <button onClick={() => handleSelectColor(image)} className="btn">
-                wybierz
-              </button>
-            </div>
-          )}
-          <hr />
-          {manyBackgrounds?.map((item, i) => (
-            <BackgroundItem
-              item={item}
-              i={i}
-              handleNameChange={handleNameChange}
-              handleSelectColor={handleSelectColor}
-              handleDeleteItem={handleDeleteFile}
-            />
-          ))}
+          {selectedWindow === 1 && <BackgroundScreen backgrounds={backgrounds} fabricRef={fabricRef} />}
+          {selectedWindow === 2 && <LayerScreen fabricRef={fabricRef} />}
         </div>
       </div>
     </Draggable>

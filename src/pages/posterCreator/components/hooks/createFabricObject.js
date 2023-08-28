@@ -113,7 +113,11 @@ export const createFabricImage = (fabricRef, setFabricObject, name, image, type)
       type: type,
     });
     img.scaleToHeight(150);
+    img.moveTo(0 - 1);
     fabricRef.current.add(img);
+    if (img.type === "FilteredImage") {
+      fabricRef.current.sendToBack(img)
+    }
     fabricRef.current.renderAll();
   });
   setFabricObject((prevState) => [...prevState, { name }]);

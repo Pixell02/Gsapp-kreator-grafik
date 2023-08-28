@@ -22,6 +22,7 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
   const [firstPlayerName, setFirstPlayerName] = useState("");
   const [secondPlayerName, setSecondPlayerName] = useState("");
   const [number, setNumber] = useState("");
+  const [age, setAge] = useState(null);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams);
@@ -77,6 +78,7 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
               case "running":
                 console.log("Upload is running");
                 break;
+              default: console.log("default");
             }
           },
           (error) => {
@@ -89,6 +91,7 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
                 secondName: secondPlayerName.trim(),
                 img: downloadURL || "",
                 number: number || "",
+                age: age || null,
                 team: selectedTeam,
                 uid: id ? id : user.uid,
               });
@@ -104,6 +107,7 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
           secondName: secondPlayerName.trim(),
           img: "",
           number: number || "",
+          age: age || null,
           team: selectedTeam,
           uid: id ? id : user.uid,
         });
@@ -136,6 +140,9 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
           value={secondPlayerName}
           className="secondPlayerName"
         />
+        <label>{translate.birthYear[language]}</label>
+        <input type="number" onChange={(e) => setAge(e.target.value)} value={age} className="Number" />
+
         <label>{translate.number[language]}</label>
         <input type="number" onChange={(e) => setNumber(e.target.value)} value={number} className="Number" />
 
