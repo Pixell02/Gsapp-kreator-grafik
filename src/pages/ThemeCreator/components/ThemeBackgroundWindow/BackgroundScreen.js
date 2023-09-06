@@ -12,7 +12,7 @@ const BackgroundScreen = ({ backgrounds, fabricRef }) => {
   const { image, setImage, setColor } = useContext(BackgroundContext);
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
   const { handleDefaultBackgroundChangeName } = useDefaultBackgrounds();
-  const { handleDeleteFile, handleDeleteLinkFile } = useFileDelete();
+  const { handleDeleteFile, handleDeleteLinkFile, handleDeleteImage } = useFileDelete(setImage);
 
   const handleSelectColor = (color) => {
     setColor(color);
@@ -22,6 +22,23 @@ const BackgroundScreen = ({ backgrounds, fabricRef }) => {
       });
     });
   };
+
+  const handleAddAdditionalLayer = (file) => {
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+    image.onload = () => { 
+      fabric.Image.fromURL(image.src, function (img) {
+        img.set({selectable: false})
+        fabricRef.current.add(img);
+        fabricRef.current.bringForward(img);
+        fabricRef.current.renderAll();
+      })
+    }
+    setImage((prev) => ({
+      ...prev,
+      additionalLayer: file
+    }))
+  }
 
   const handleMainNameChange = (e) => {
     const newName = e.target.value;
@@ -68,6 +85,13 @@ const BackgroundScreen = ({ backgrounds, fabricRef }) => {
           <button onClick={() => handleSelectColor(image)} className="btn">
             wybierz
           </button>
+          <button onClick={() => handleDeleteImage(image)} className="btn">
+            usuń
+          </button>
+          <label style={{width: "80px", height: "36px", backgroundColor:"#444444", color:"white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"}}>
+          <input  type="file" accept="image" style={{opacity: 0}} onChange={(e) => handleAddAdditionalLayer(e.target.files[0])} />
+            <span>Dodaj warstwę</span>
+          </label>
         </div>
       )}
       <hr />

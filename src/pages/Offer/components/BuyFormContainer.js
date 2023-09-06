@@ -44,7 +44,6 @@ function BuyFormContainer() {
           email: user.email,
           uid: user.uid
       }});
-      console.log(response)
       const { data } = await payUPayment(paymentData);
       
       

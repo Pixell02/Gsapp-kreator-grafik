@@ -5,8 +5,8 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
-import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
-import { useCollection } from "../../../hooks/useCollection";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+
 import Select from "react-select";
 import { useTeams } from "./useTeams";
 import { LicenseContext } from "../../../context/LicenseContext";

@@ -9,11 +9,14 @@ import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
 import { LanguageContext } from "../../../context/LanguageContext";
+import { BackgroundContext } from "../Context/BackgroundContext";
 
 export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
   const navigate = useNavigate();
   const params = useParams();
   const { language } = useContext(LanguageContext);
+  const { image } = useContext(BackgroundContext);
+  console.log(image)
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState("");
@@ -21,24 +24,67 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
-      color: "tło 1"
-    }))
-  }, [manyBackgrounds])
+      color: "tło 1",
+    }));
+  }, [manyBackgrounds]);
   useEffect(() => {
-    setGlobalProperties(prev => ({
+    setGlobalProperties((prev) => ({
       ...prev,
-      uid: params.id
-    }))
-  }, [setGlobalProperties, params])
+      uid: params.id,
+    }));
+  }, [setGlobalProperties, params]);
   const handleAddDoc = async () => {
+    if (!image.src.split('/')[7]) {
+      const storage = getStorage();
+        const metadata = {
+          contentType: "image/jpeg",
+        };
+        const player = ref(
+          storage,
+          `${defaultBackGround.uid}/posters/${globalProperties.uid}`
+        );
+          console.log(image)
+      const uploadTask = uploadBytesResumable(player, image.file, metadata);
+      
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("dodawanie...");
+              break;
+            default:
+              console.log("default");
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        async () => {
+          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            updateDoc(doc(collection(db, "yourCatalog"), globalProperties.id), {
+              src: downloadURL,
+            });
+          });
+        }
+      );
+
+    }
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
         const storage = getStorage();
         const metadata = {
           contentType: "image/jpeg",
         };
-        const player = ref(storage, `${defaultBackGround.uid}/posters/${defaultBackGround.uuid + backgrounds.length + i}`);
-        
+        const player = ref(
+          storage,
+          `${defaultBackGround.uid}/posters/${defaultBackGround.uuid + backgrounds.length + i}`
+        );
+
         const uploadTask = uploadBytesResumable(player, background.file, metadata);
 
         uploadTask.on(
@@ -53,7 +99,8 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
               case "running":
                 setProgress("Upload is " + progress + "% done");
                 break;
-              default: console.log("default");
+              default:
+                console.log("default");
             }
           },
           (error) => {
@@ -70,20 +117,16 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           }
         );
       });
-      updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster)
-    
+      updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster);
+
       setDoc(doc(collection(db, "coords"), globalProperties.uid), globalProperties);
       setTimeout(() => {
-        navigate(`/${language}/creator/${globalProperties.uid}`)
-      }, 500)
+        navigate(`/${language}/creator/${globalProperties.uid}`);
+      }, 500);
     } else {
-    
-      // updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster)
-    
       setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
-      // setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
-        navigate(`/${language}/creator/${globalProperties.uid}`)
-    
+
+      navigate(`/${language}/creator/${globalProperties.uid}`);
     }
   };
   return (

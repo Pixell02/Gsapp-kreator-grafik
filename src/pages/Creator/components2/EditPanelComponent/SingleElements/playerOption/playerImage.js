@@ -1,8 +1,7 @@
-import React from 'react'
+import React from "react";
 import { fabric } from "fabric";
 
-const playerImage = (fabricRef, playerImage, coords) => {
-
+const playerImage = (fabricRef, playerImage, coords, setImageRef) => {
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "playerImage") {
       fabricRef.current.remove(fabricRef.current.item(i));
@@ -11,28 +10,25 @@ const playerImage = (fabricRef, playerImage, coords) => {
   });
   const img = new Image();
   img.src = playerImage;
-
   img.onload = () => {
-    fabric.Image.fromURL(img.src, function (img) {
-      img.set({
-        selectable: false,
-        top: coords.playerImage.Top,
-        left: coords.playerImage.Left,
-        originX: "center",
-        originY: "top",
-        zIndex:5,
-        angle: (coords.playerImage.Angle || 0),
-        className: "playerImage",
-      });
-    
-          img.scaleToWidth(coords.playerImage.ScaleToWidth);
-        
-      fabricRef.current.add(img);
-      fabricRef.current.renderAll();
+    const fabricImage = new fabric.Image(img, {
+      selectable: true,
+      top: coords.Top,
+      left: coords.Left,
+      originX: "center",
+      originY: "top",
+      angle: coords.Angle || 0,
+      className: "playerImage",
     });
+
+    fabricImage.scaleToWidth(coords.ScaleToWidth);
+
+    fabricRef.current.add(fabricImage);
+    setImageRef(fabricImage);
+    fabricImage.moveTo(2)
+
+    fabricRef.current.renderAll();
   };
+};
 
-  
-}
-
-export default playerImage
+export default playerImage;

@@ -1,13 +1,14 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage'
-import React from 'react'
 import { useContext } from 'react';
 import { ManyBackgroundsContext } from '../../posterCreator/Context/ManyBackgroundsContext';
-import useDefaultBackgrounds from './useDefaultBackgrounds';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, deleteField, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { GlobalPropertiesContext } from '../../posterCreator/Context/GlobalProperitesContext';
 
-const useFileDelete = () => {
+const useFileDelete = (setImage) => {
+
+  const {globalProperties} = useContext(GlobalPropertiesContext)
 
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
   const storage = getStorage();
@@ -17,6 +18,40 @@ const useFileDelete = () => {
     const filteredBackgrounds = manyBackgrounds.filter((background) => background.color !== item.color)
     setManyBackgrounds(filteredBackgrounds)
   } 
+
+  const handleDeleteImage = (item) => {
+    if (item.src?.split('/')[7]) {
+      const split = item.src.split('/')[7];
+    const secondSplit = split.split('?')[0];
+      const link = decodeURIComponent(secondSplit.replace("%2F", "/"));
+    const imageRef = ref(storage, link);
+    deleteObject(imageRef)
+      .then(() => {
+        let docRef;
+    if (location.pathname.split('/')[3] === "theme") {
+      docRef = doc(db, "piecesOfPoster", globalProperties.id)
+    } else {
+      docRef = doc(db, "yourCatalog", globalProperties.id)
+    }
+        updateDoc(docRef, {
+          src: deleteField()
+        })
+        setImage(prev => ({
+          ...prev,
+          src:""
+        }))
+      }).catch((err) => { 
+        console.log(err)
+      });
+    } else {
+      setImage(prev => ({
+        ...prev,
+        src: "",
+        color: "",
+      }))
+    }
+  }
+
   const handleDeleteLinkFile = async (item) => {
     const split = item.src.split('/')[7];
     const secondSplit = split.split('?')[0];
@@ -24,7 +59,6 @@ const useFileDelete = () => {
     const imageRef = ref(storage, link);
     deleteObject(imageRef)
       .then(() => {
-        console.log("deleted")
         let docRef;
     if (location.pathname.split('/')[3] === "theme") {
       docRef = doc(db, "piecesOfPoster", item.id)
@@ -32,16 +66,12 @@ const useFileDelete = () => {
       docRef = doc(db, "yourCatalog", item.id)
     }
     deleteDoc(docRef);
-      //   const filteredBackgrounds = defaultBackgrounds.filter((background) => background.color !== item.color);
-      // setDefaultBackgrounds(filteredBackgrounds)
       }).catch((err) => { 
         console.log(err)
       });
-    
-    
   }
 
-  return {handleDeleteFile, handleDeleteLinkFile}
+  return {handleDeleteFile, handleDeleteLinkFile, handleDeleteImage}
 }
 
 export default useFileDelete

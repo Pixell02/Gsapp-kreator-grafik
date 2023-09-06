@@ -8,17 +8,19 @@ const usePosters = (poster) => {
   const { documents: MainCatalog } = useCollection("piecesOfPoster", ["uuid", "==", poster]);
   const { documents: yourCatalog } = useCollection("yourCatalog", ["uuid", "==", poster]);
   const [themeOption, setThemeOption] = useState([]);
+  const [additionalLayer, setAdditionalLayer] = useState("");
+  
   const [selectThemes, setSelectThemes] = useState(null);
   const [dataURL, setDataURL] = useState();
   useEffect(() => {
     if (MainCatalog) {
       if (MainCatalog.length > 0) {
-        setThemeOption(MainCatalog.map((item) => ({ value: item.src, label: item.color })));
+        setThemeOption(MainCatalog.map((item) => ({ value: {src: item.src, additionalLayer: item.additionalLayer }, label: item.color })));
       }
     }
     if (yourCatalog) {
       if (yourCatalog.length > 0) {
-        setThemeOption(yourCatalog.map((item) => ({ value: item.src, label: item.color })));
+        setThemeOption(yourCatalog.map((item) => ({ value: {src: item.src, additionalLayer: item.additionalLayer}, label: item.color })));
       }
     }
   }, [MainCatalog, yourCatalog]);
@@ -29,7 +31,8 @@ const usePosters = (poster) => {
 
   useEffect(() => {
     if (selectThemes) {
-      fetch(`${selectThemes.value}`)
+      const initSelected = async() => {
+       await fetch(`${selectThemes.value.src}`)
         .then((res) => res.blob())
         .then((blob) => {
           const reader = new FileReader();
@@ -42,10 +45,26 @@ const usePosters = (poster) => {
           console.error(error);
           setDataURL(null);
         });
+        if (selectThemes.value.additionalLayer) {
+        await fetch(`${selectThemes.value.additionalLayer}`)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            setAdditionalLayer(reader.result)
+          };
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+      }
+      initSelected();
     }
   }, [selectThemes]);
 
-  return {dataURL, themeOption, selectThemes, setSelectThemes}
+  return {dataURL, themeOption, selectThemes, setSelectThemes, additionalLayer}
 }
 
 export default usePosters

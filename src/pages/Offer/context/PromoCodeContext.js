@@ -20,7 +20,7 @@ export const PromoCodeProvider = ({ children }) => {
       setPromoCode(promoDocs[0])
       const currentDate = moment()
       const dayAfter = currentDate.add(1, "day");
-      if (dayAfter.format("MM-DD-YYYY") === promoDocs[0].expireDate) {
+      if (dayAfter.format("MM-DD-YYYY") >= promoDocs[0].expireDate) {
         const docRef = doc(db, "expirationCode", promoDocs[0].id);
         deleteDoc(docRef);
       }

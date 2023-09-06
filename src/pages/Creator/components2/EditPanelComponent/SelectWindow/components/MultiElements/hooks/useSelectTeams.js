@@ -80,10 +80,13 @@ const useSelectTeams = (fabricRef, coords, selectedMatch) => {
     if(coords.opponentImageOne && selectedGuest) handleAddImage(coords.opponentImageOne, guestLogo, properties)
   }, [selectedGuest, coords.yourOpponentNameOne, coords.opponentImageOne, handleAddImage, handleAddText, properties])
   useEffect(() => {
-    if (coords.connectedTeams && (selectedHost || selectedGuest)) handleAddText(coords.connectedTeams, selectedHost?.label + " - " + selectedGuest?.label || null , properties);
-  },[coords.connectedTeams, selectedHost, selectedGuest, handleAddText, properties])
-
-
+    if (coords.connectedTeams && (selectedHost || selectedGuest)) {
+      const label = selectedHost ? selectedHost.label : "";
+      const guestLabel = selectedGuest ? " - " + selectedGuest.label : "";
+      handleAddText(coords.connectedTeams, label + guestLabel, properties);
+    }
+  }, [coords.connectedTeams, selectedHost, selectedGuest, handleAddText, properties]);
+  
 
 
   return {teamOption, setSelectedHost, setSelectedGuest}

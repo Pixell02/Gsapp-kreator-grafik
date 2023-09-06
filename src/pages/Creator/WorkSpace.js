@@ -21,7 +21,7 @@ function WorkSpace() {
   const { user } = useAuthContext();
   const { language } = useContext(LanguageContext);
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
-  const {dataURL, themeOption, selectThemes, setSelectThemes} = usePosters(poster)
+  const {dataURL, additionalLayer, themeOption, selectThemes, setSelectThemes} = usePosters(poster)
   const { hasTheme } = useIsTheme();
   const { initScale } = useInitScale(dataURL);
 
@@ -67,6 +67,7 @@ function WorkSpace() {
                   setSelectThemes={setSelectThemes}
                   themeOptions={themeOption}
                   posterBackground={dataURL}
+                  additionalLayer={additionalLayer}
                 />
               )}
               <button

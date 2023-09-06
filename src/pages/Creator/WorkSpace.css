@@ -154,18 +154,6 @@
   opacity: 0 !important;
 }
 
-/* .canvas-opacity {
-    opacity: 0;
-} */
-.option-container {
-  display: flex;
-  width: 100%;
-}
-
-.option-container {
-  display: flex;
-}
-
 .option-container .input-container {
   display: flex;
   flex-direction: column;
@@ -182,10 +170,6 @@
   .preview-container {
     width: 100% !important;
   }
-  /* .react-transform-wrapper {
-    margin-right: 200px !important;
-    width: 300px !important;
-  } */
 }
 @media only screen and (max-width: 1250px) {
   .workspace-container {

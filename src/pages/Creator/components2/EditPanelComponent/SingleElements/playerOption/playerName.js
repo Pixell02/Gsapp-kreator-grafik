@@ -43,6 +43,7 @@ const playerName = (fabricRef, selectedPlayerName, coords, themeOption) => {
     }
 
     fabricRef.current.add(playerName);
+    playerName.bringToFront();
     fabricRef.current.renderAll();
   });
 };

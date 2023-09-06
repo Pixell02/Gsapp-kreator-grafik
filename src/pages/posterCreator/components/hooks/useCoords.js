@@ -6,6 +6,7 @@ import { BackgroundContext } from '../../Context/BackgroundContext';
 const useCoords = (fabricRef) => {
   const [coords, setCoords] = useState({});
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  console.log(globalProperties)
   const { properties } = useMultiPropertiesContext();
   const { color } = useContext(BackgroundContext);
   useEffect(() => {

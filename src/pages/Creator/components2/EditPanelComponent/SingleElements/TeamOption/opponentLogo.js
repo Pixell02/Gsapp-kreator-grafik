@@ -29,7 +29,6 @@ const opponentLogo = (fabricRef, opponentLogo, coords, themeOption, radioChecked
       if (img.width * img.scaleX > coords.opponentImage.ScaleToWidth) {
         img.scaleToWidth(coords.opponentImage.ScaleToWidth);
       }
-      console.log(img)
       fabricRef.current.add(img);
       fabricRef.current.renderAll();
     });

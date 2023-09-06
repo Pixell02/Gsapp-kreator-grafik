@@ -16,6 +16,7 @@ import Result from "./SingleElements/Result";
 import TextInput from "./SingleElements/TextInput";
 import TextBoxInput from "./SingleElements/TextBoxInput";
 import Images from "./SingleElements/Images";
+import AdditionalImageLayer from "./SingleElements/AdditionalImageLayer";
 
 const SingleElements = ({
   coords,
@@ -27,10 +28,12 @@ const SingleElements = ({
   Opponents,
   Players,
   setIsModalOpen,
+  additionalLayer
 }) => {
   
   return (
     <div>
+      {additionalLayer && <AdditionalImageLayer fabricRef={fabricRef} additionalLayer={additionalLayer} />}
       {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && <Radio fabricRef={fabricRef} coords={coords} />}
       {themeOptions && (
         <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />
@@ -86,13 +89,14 @@ const SingleElements = ({
       {coords.Images?.Image.map((image) => (
         <Images fabricRef={fabricRef} filters={coords.Images.filters} coords={image} />
       ))}
-      {coords.player && (
+      {(coords.player || coords.playerImage) && (
         <Player
           fabricRef={fabricRef}
           coords={coords}
           themeOption={themeOption}
           posterBackground={posterBackground}
           Players={Players}
+          additionalLayer={additionalLayer}
         />
       )}
       {coords.Text &&

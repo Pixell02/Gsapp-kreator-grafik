@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
 import AddPlayerWindow from "./addPlayerWindow";
@@ -8,67 +8,63 @@ import useEditModal from "../../../hooks/useEditModal";
 import { useCollection } from "../../../hooks/useCollection";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import "../../../App.css";
-import { useEffect } from "react";
-import { db } from "../../../firebase/config";
-import { doc, deleteDoc } from "firebase/firestore";
 import ReturnButton from "../../../components/ReturnButton";
 import FilteredBlock from "../../../components/main-content-elements/FilteredBlock";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
 import translate from "../locales/translate.json";
+import AddSquadPlayersPresetWindow from "./AddSquadPlayersPresetWindow";
+import { TeamProvider } from "../../Creator/context/teamContext";
+import SlabBlock from "../../../components/SlabBlock";
+import EditSquadPlayersPresetWindow from "./EditSquadPlayersPresetWindow";
 
 function PlayerMainContent() {
   const { user } = useAuthContext();
   const { language } = useContext(LanguageContext);
   const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
   const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid]);
-
+  const { documents: squadPreset} = useCollection("squadPreset", ["uid", "==", user.uid])
+  const [openPresetModal, setOpenPresetModal] = useState(false);
+  const [openEditPresetModal, setEditPresetModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[2];
 
-  const handleDeleteClick = async (id, location) => {
-    if (location === "players") {
-      const ref = doc(db, "Players", id);
-      await deleteDoc(ref);
-    } else if (location === "opponents") {
-      const ref = doc(db, "Opponents", id);
-      await deleteDoc(ref);
-    }
-  };
-
   const [data, setData] = useState();
-
-  const [itemToEdit, setItemToEdit] = useState(null);
-  
-  const handleClick = (e, item) => {
-    setItemToEdit(item);
-  };
 
   const hideElement = useRef(null);
 
-  const handleClickOutside = (e) => {
-    if (!hideElement.current.contains(e.target)) {
-      setItemToEdit(null);
-    }
-  };
-  useEffect(() => {
-    document.body.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.body.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [setItemToEdit]);
-
-  
-  const editClick = (e, item) => {
+  const editClick = (item) => {
     setData(item);
     openEditModal();
-    setItemToEdit(null);
   };
+  const editSlabClick = (item) => {
+    setData(item)
+    setEditPresetModal(true);
+  }
   return (
     <div className="main-content" ref={hideElement}>
       <AddPlayerWindow Teams={Teams} open={openModal} onClose={setOpenModal} />
+
+      {openPresetModal && (
+        <TeamProvider>
+          <AddSquadPlayersPresetWindow
+            Players={Players}
+            onClose={() => setOpenPresetModal(false)}
+          />
+        </TeamProvider>
+      )}
+      {openEditPresetModal && (
+        <TeamProvider>
+          <EditSquadPlayersPresetWindow
+            data={data}
+            Players={Players}
+            onClose={() => setEditPresetModal(false)}
+          />
+        </TeamProvider>
+      )}
+
       <div className="ml-5">
         <ReturnButton />
         <Title title={translate.players[language]} />
@@ -80,26 +76,22 @@ function PlayerMainContent() {
             <>
               <div className="d-flex flew-row">
                 <div className="catalog-container">
-                  {Players &&
-                    Players.map((player) => (
-                      <>
-                        <FilteredBlock
-                          handleDeleteClick={handleDeleteClick}
-                          handleClick={handleClick}
-                          editClick={editClick}
-                          itemToEdit={itemToEdit}
-                          setItemToEdit={setItemToEdit}
-                          item={player}
-                          type={goodLocation}
-                          openEditModal={openEditModal}
-                          Teams={Teams}
-                        />
-                      </>
-                    ))}
+                  {Players?.map((player, i) => <FilteredBlock key={i} editClick={editClick} item={player} />)}
                 </div>
               </div>
             </>
           )}
+        </ItemContainer>
+        <button className="btn" onClick={() => setOpenPresetModal(true)}>
+          Stwórz wzór
+        </button>
+        <label className="ml-5">(dodawanie i usuwanie aktualnie działa)</label>
+        <ItemContainer>
+          
+          {squadPreset?.map((item, i) => (
+              <SlabBlock key={i} item={item} editClick={editSlabClick} type="squadPreset" />
+            ))}
+          
         </ItemContainer>
       </div>
       {data && isEditModal && goodLocation === "players" && (

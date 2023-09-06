@@ -1,16 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import MainFooter from "../../../components/MainFooter";
+import { useState } from "react";
 import Title from "../../../components/main-content-elements/Title";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
-import OpponentBlock from "./OpponentBlock";
-import ItemBlock from "../../../components/main-content-elements/ItemBlock";
 import AddOpponentWindow from "./addOpponentWindow";
 import { useCollection } from "../../../hooks/useCollection";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useLocation, useParams } from "react-router-dom";
 import FilteredBlock from "../../../components/main-content-elements/FilteredBlock";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
+
 import useEditModal from "../../../hooks/useEditModal";
 import EditOpponentWindow from "./EditOpponentWindow";
 import ReturnButton from "../../../components/ReturnButton";
@@ -18,56 +13,38 @@ import translate from "../locales/locales.json";
 import "./opponents.css";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
+import AddPlaceWindow from "./AddPlaceWindow";
+import SlabBlock from "../../../components/SlabBlock";
+import EditPlaceWindow from "./EditPlaceWindow";
 
 function OpponentsMainContent() {
   const { user } = useAuthContext();
-  const { id } = useParams();
+  const [openPlaceModal, setOpenPlaceModal] = useState(false);
   const { language } = useContext(LanguageContext);
   const { isEditModal, openEditModal, closeEditModal } = useEditModal();
-  const location = useLocation();
-  const goodLocation = location.pathname.split("/")[2];
-
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
   const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid]);
-  const handleDeleteClick = async (id, location) => {
-    if (location === "players") {
-      const ref = doc(db, "Players", id);
-      await deleteDoc(ref);
-    } else if (location === "opponents") {
-      const ref = doc(db, "Opponents", id);
-      await deleteDoc(ref);
-    }
-  };
+  const { documents: PlacePresets } = useCollection("placePreset", ["uid", "==", user.uid]);
 
   const [data, setData] = useState();
-  const [itemToEdit, setItemToEdit] = useState(null);
-  const hideElement = useRef(null);
 
-  const handleClickOutside = (e) => {
-    if (!hideElement.current.contains(e.target)) {
-      setItemToEdit(null);
-    }
-  };
-  useEffect(() => {
-    document.body.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.body.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [setItemToEdit]);
-
-  const handleClick = (e, item) => {
-    setItemToEdit(item);
-  };
-  const editClick = (e, item) => {
+  const editClick = (item) => {
     setData(item);
     openEditModal();
-    setItemToEdit(null);
   };
+  const editSlabClick = (item) => {
+    setData(item);
+    setIsEditOpen(true);
+
+  }
 
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="main-content">
       {openModal && <AddOpponentWindow Teams={Teams} open={openModal} onClose={() => setOpenModal(false)} />}
+      {openPlaceModal && <AddPlaceWindow onClose={() => setOpenPlaceModal(false)} />}
+      {isEditOpen && <EditPlaceWindow onClose={() => setIsEditOpen(false)} data={data} />}
       <div className="ml-5">
         <ReturnButton />
         <Title title={translate.opponents[language]} />
@@ -75,55 +52,25 @@ function OpponentsMainContent() {
           {translate.addOpponent[language]}
         </button>
         <ItemContainer>
-          <div ref={hideElement} className="catalog-container">
-            {Teams &&
-              Teams.length === 1 &&
-              Teams.map((team) => (
-                <>
-                  <label className="w-100">{Teams[0].firstName + " " + Teams[0].secondName}</label>
-                  {Opponents &&
-                    Opponents.map((player) => (
-                      <FilteredBlock
-                        handleClick={handleClick}
-                        editClick={editClick}
-                        itemToEdit={itemToEdit}
-                        setItemToEdit={setItemToEdit}
-                        handleDeleteClick={handleDeleteClick}
-                        item={player}
-                        type={goodLocation}
-                        openEditModal={openEditModal}
-                        Teams={Teams}
-                      />
-                    ))}
-                </>
-              ))}
-          </div>
-          {Teams &&
-            Teams.length > 1 &&
-            Teams.map((teams) => (
+          <div className="catalog-container">
+            {Teams?.map((team) => (
               <>
-                <div className="ml-5 mt-3">{teams.firstName + " " + teams.secondName}</div>
-
-                {Opponents &&
-                  Opponents.filter((player) => player.team === teams.firstName + " " + teams.secondName).map(
-                    (player) => (
-                      <>
-                        <FilteredBlock
-                          handleClick={handleClick}
-                          handleDeleteClick={handleDeleteClick}
-                          editClick={editClick}
-                          itemToEdit={itemToEdit}
-                          setItemToEdit={setItemToEdit}
-                          item={player}
-                          type={goodLocation}
-                          openEditModal={openEditModal}
-                          Teams={Teams}
-                        />
-                      </>
-                    )
-                  )}
+                <label className="w-100">{team.firstName + " " + team.secondName}</label>
+                {
+                  Opponents?.map((player, i) => (
+                    <FilteredBlock key={i} editClick={editClick} item={player} />
+                  ))}
               </>
             ))}
+          </div>
+        </ItemContainer>
+        <button className="btn" onClick={() => setOpenPlaceModal(true)}>
+          Dodaj miejsce
+        </button>
+        <ItemContainer>
+          {PlacePresets?.map((item, i) => (
+            <SlabBlock key={i+"as"} item={item} type="place" editClick={editSlabClick} />
+          ))}
         </ItemContainer>
       </div>
       {data && isEditModal && (

@@ -46,9 +46,12 @@
   flex-wrap: wrap;
 }
 
-.option-container button {
+.option-container .button {
   border: 0;
   background: none;
+  max-width: 20px;
+  margin-right: 10px;
+  max-height: 20px;
 }
 .icon-item {
   position: fixed;

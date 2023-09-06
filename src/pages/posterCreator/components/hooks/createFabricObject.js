@@ -39,7 +39,7 @@ export const createMultiplyImage = (fabricRef, setFabricObject, name, image, num
     objectsToAdd.push(img);
 
     loadedImages++;
-      fabricRef.current.add(img);
+    fabricRef.current.add(img);
       fabricRef.current.renderAll();
   };
 
@@ -109,11 +109,10 @@ export const createFabricImage = (fabricRef, setFabricObject, name, image, type)
       left: 400,
       className: name,
       originX: "center",
-      originY: "center",
+      originY: type !== "playerImage" ? "center" : "top",
       type: type,
     });
     img.scaleToHeight(150);
-    img.moveTo(0 - 1);
     fabricRef.current.add(img);
     if (img.type === "FilteredImage") {
       fabricRef.current.sendToBack(img)
@@ -130,11 +129,12 @@ export const createPlayerImage = (fabricRef, setFabricObject, name, image) => {
       left: 400,
       className: name,
       originX: "center",
-      originY: "center",
+      originY: "top",
       type: "image",
     });
     img.scaleToHeight(150);
     fabricRef.current.add(img);
+    img.moveTo(fabricRef.current._objects.length - 2)
     fabricRef.current.renderAll();
   });
   setFabricObject((prevState) => [...prevState, { name }]);
@@ -176,6 +176,7 @@ export const createPlayerNameText = (fabricRef, setFabricObject, name, className
     type: "playerGoal",
   });
   fabricRef.current.add(text);
+  
   fabricRef.current.renderAll();
   setFabricObject((prevState) => [...prevState, { name }]);
 };

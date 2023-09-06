@@ -1,13 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ManyBackgroundsContext } from "../../posterCreator/Context/ManyBackgroundsContext";
 import Draggable from "react-draggable";
-// import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext";
-// import { fabric } from "fabric";
-// import BackgroundItem from "./ThemeBackgroundWindow/BackgroundItem";
-// import useDefaultBackgrounds from "../hooks/useDefaultBackgrounds";
 import "./themeBackgroundWindow.css";
-// import useFileDelete from "../hooks/useFileDelete";
-// import useImageRefProvider from "../../Creator/hooks/useImageRefProvider";
 import TopBar from "./ThemeBackgroundWindow/TopBar";
 import BackgroundScreen from "./ThemeBackgroundWindow/BackgroundScreen";
 import LayerScreen from "./ThemeBackgroundWindow/LayerScreen";

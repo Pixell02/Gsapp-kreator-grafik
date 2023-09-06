@@ -1,14 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import playerName from "./playerOption/playerName";
-import translate from "../../../locales/translate.json"
+import translate from "../../../locales/translate.json";
 import { LanguageContext } from "../../../../../context/LanguageContext";
+import playerImage from "./playerOption/playerImage";
 
 export default function Player({ fabricRef, coords, themeOption, posterBackground, Players }) {
   const [playerOptions, setPlayerOption] = useState([]);
   const [selectedPlayerName, setSelectedPlayerName] = useState("");
-  const [selectedPlayerImage, setSelectedPlayerImage] = useState("");
-  const {language} = useContext(LanguageContext)
+  const [imageRef, setImageRef] = useState(null)
+  const [isActive, setIsActive] = useState(false);
+  const [playerImg, setPlayerImage] = useState("");
+  const { language } = useContext(LanguageContext);
+
+  const handleActive = (item) => {
+    fabricRef.current.setActiveObject(item);
+    setIsActive(true)
+    fabricRef.current.renderAll();
+  
+  }
+  const handleDiscard = () => {
+    fabricRef.current.discardActiveObject();
+    setIsActive(false)
+    fabricRef.current.renderAll()
+  }
+
   useEffect(() => {
     if (Players) {
       const options = Players.map((player) => ({
@@ -21,26 +37,41 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
   }, [Players]);
 
   useEffect(() => {
-    
-    if (fabricRef.current?._objects && selectedPlayerName !== "") {
-      playerName(fabricRef, selectedPlayerName, coords, themeOption, posterBackground)
+    if (fabricRef.current?._objects && selectedPlayerName !== "" && coords.player) {
+      playerName(fabricRef, selectedPlayerName, coords, themeOption, posterBackground);
     }
-    if (fabricRef.current?._objects && selectedPlayerImage.split(" ")[0] !== "" && coords.playerImage) {
-      
+    if (fabricRef.current?._objects && playerImg !== "" && coords.playerImage) {
+      playerImage(fabricRef, playerImg, coords.playerImage, setImageRef);
+    } else {
+      setPlayerImage(null)
+      setImageRef(null)
     }
-  }, [fabricRef.current, themeOption, posterBackground, selectedPlayerName, selectedPlayerImage]);
+  }, [fabricRef.current, themeOption, posterBackground, selectedPlayerName, playerImg]);
 
-  const handleSelectPlayer = (option) => {
+  const handleSelectPlayer = async (option) => {
     setSelectedPlayerName(option.label);
-    setSelectedPlayerImage(option.value);
+    await fetch(`${option.value.split(" ")[0]}`)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          setPlayerImage(reader.result);
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    
   };
-
   return (
     <>
       {playerOptions && (
         <>
-          <label>{translate.player[language] }</label>
+          <label>{translate.player[language]}</label>
           <Select options={playerOptions} onChange={handleSelectPlayer} />
+          {playerImg && !isActive && <button onClick={ () => handleActive(imageRef)} className="mt-2 btn">Wybierz</button>}
+          {playerImg && isActive && <button onClick={ () => handleDiscard(imageRef)} className="mt-2 btn">Ustaw</button>}
         </>
       )}
     </>

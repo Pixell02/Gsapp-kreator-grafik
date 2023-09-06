@@ -10,7 +10,7 @@ import SelectWindow from "./EditPanelComponent/SelectWindow/SelectWindow";
 import MultiElementButtons from "./EditPanelComponent/MultiElementButtons";
 import useCoords from "../hooks/useCoords";
 
-export default function EditPanel({ fabricRef, themeOption, setSelectThemes, themeOptions, posterBackground }) {
+export default function EditPanel({ fabricRef, themeOption, setSelectThemes, themeOptions, additionalLayer, posterBackground }) {
   const { user } = useAuthContext();
   const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
   const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
@@ -20,6 +20,7 @@ export default function EditPanel({ fabricRef, themeOption, setSelectThemes, the
     id: null,
     open: false,
   });
+
 
   return (
     <RadioProvider>
@@ -46,6 +47,7 @@ export default function EditPanel({ fabricRef, themeOption, setSelectThemes, the
             posterBackground={posterBackground}
             setSelectThemes={setSelectThemes}
             Opponents={Opponents}
+            additionalLayer={additionalLayer}
             Players={Players}
             setIsModalOpen={setIsModalOpen}
           />

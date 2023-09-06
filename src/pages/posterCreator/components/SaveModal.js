@@ -10,14 +10,13 @@ import { BackgroundContext } from "../Context/BackgroundContext";
 import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { useNavigate } from "react-router-dom";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
-import {LanguageContext} from "../../../context/LanguageContext"
+import { LanguageContext } from "../../../context/LanguageContext";
 
 export default function SaveModal({ isOpen, setIsOpen }) {
-  
-  const {language} = useContext(LanguageContext)
+  const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
   const [id] = useState(uuidv4().replace(/-/g, ""));
-  
+
   const [percentageProgress, setPercentageProgress] = useState();
   const [query, setQuery] = useState("");
   const [users, loading, error] = useSearchTeam(query);
@@ -25,7 +24,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [radioValue, setRadioValue] = useState("");
   const [userPoster, setUserPoster] = useState({
-    type: "MATCH-POSTER"
+    type: "MATCH-POSTER",
   });
   const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   useEffect(() => {
@@ -33,24 +32,20 @@ export default function SaveModal({ isOpen, setIsOpen }) {
       ...prevState,
       src: image,
       uuid: id,
-      uid: radioValue
+      uid: radioValue,
     }));
     setGlobalProperties((prevState) => ({
       ...prevState,
-      uid: id
+      uid: id,
     }));
   }, [background, id, radioValue, image]);
-    
-  
-  
-  
-  
+
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
   };
- 
+
+
   const handleAddDoc = async () => {
-    
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
         const storage = getStorage();
@@ -73,7 +68,8 @@ export default function SaveModal({ isOpen, setIsOpen }) {
               case "running":
                 console.log("dodawanie...");
                 break;
-            default: console.log("default");
+              default:
+                console.log("default");
             }
           },
           (error) => {
@@ -91,7 +87,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
         );
       });
     }
-   
+
     if (userPoster.src) {
       const storage = getStorage();
       const metadata = {
@@ -105,8 +101,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
         "state_changed",
         (snapshot) => {
           let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          setPercentageProgress(progress.toFixed(0))
+          setPercentageProgress(progress.toFixed(0));
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -114,32 +109,76 @@ export default function SaveModal({ isOpen, setIsOpen }) {
             case "running":
               console.log("Upload is running");
               break;
-            default: console.log("default");
+            default:
+              console.log("default");
           }
         },
         (error) => {
           console.log(error);
         },
         async () => {
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log( image.color, userPoster, downloadURL, id)
-            setDoc(doc(collection(db, "yourCatalog"), id), {
-              color: image.color ? "tło 1": null,
-              name: userPoster.name,
-              src: downloadURL,
-              uid: userPoster.uid,
-              uuid: userPoster.uuid,
+          await getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              if (image.additionalLayer) {
+                const storage = getStorage();
+        const metadata = {
+          contentType: "image/jpeg",
+        };
+        const player = ref(storage, `${userPoster.uid}/posters/${globalProperties.uid}/${globalProperties.uid}`);
+
+        const uploadTask = uploadBytesResumable(player, image.additionalLayer, metadata);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setPercentageProgress("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("dodawanie...");
+                break;
+              default:
+                console.log("default");
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            await getDownloadURL(uploadTask.snapshot.ref).then((additionalURL) => {
+              setDoc(doc(collection(db, "yourCatalog"), id), {
+                color: image.color ? "tło 1" : null,
+                name: userPoster.name,
+                src: downloadURL,
+                additionalLayer: additionalURL,
+                uid: userPoster.uid,
+                uuid: userPoster.uuid,
+              });
             });
-            setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
-          }).then(() => {
-            setTimeout(() => {
-              navigate(`/${language}/creator/${userPoster.uuid}`)
-            },500)
-            
-          })
+          }
+        );
+              } else {
+                setDoc(doc(collection(db, "yourCatalog"), id), {
+                  color: image.color ? "tło 1" : null,
+                  name: userPoster.name,
+                  src: downloadURL,
+                  uid: userPoster.uid,
+                  uuid: userPoster.uuid,
+                });
+              }
+
+              setDoc(doc(collection(db, "coords"), id), globalProperties ? globalProperties : { uid: id });
+            })
+            .then(() => {
+              setTimeout(() => {
+                navigate(`/${language}/creator/${userPoster.uuid}`);
+              }, 500);
+            });
         }
       );
-      
     }
   };
 
@@ -156,16 +195,21 @@ export default function SaveModal({ isOpen, setIsOpen }) {
             <Users users={users} radioValue={radioValue} setRadioValue={setRadioValue} />
           </div>
           <label>Nazwa wzoru</label>
-          <input type="text" onChange={(e) => setUserPoster((prevState) => ({
-            ...prevState,
-            name: e.target.value
-          }))} />
+          <input
+            type="text"
+            onChange={(e) =>
+              setUserPoster((prevState) => ({
+                ...prevState,
+                name: e.target.value,
+              }))
+            }
+          />
           {percentageProgress}
           <div className="btn-container justify-content-end h-100 align-items-end mb-3">
             <button onClick={() => setIsOpen(false)} className="btn btn-primary">
               Anuluj
             </button>
-            <button onClick={handleAddDoc} className="btn btn-primary" >
+            <button onClick={handleAddDoc} className="btn btn-primary">
               Zapisz
             </button>
           </div>

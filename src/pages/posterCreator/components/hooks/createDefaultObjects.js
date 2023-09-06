@@ -41,7 +41,25 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
           });
-        } else if (layer.type === "textBox") {
+        } else if (layer.type === "playerImage") {
+          
+          fabric.Image.fromURL(layer.image, function (img) {
+            img.set({
+              top: globalProperties[key]?.Top,
+              left: globalProperties[key]?.Left,
+              className: layer.className,
+              selectable: true,
+              angle: globalProperties[key]?.Angle,
+              originX: "center",
+              originY: "top",
+              type: "image",
+            });
+            img.scaleToWidth(globalProperties[key]?.ScaleToWidth);
+            fabricRef.current.add(img);
+            fabricRef.current.renderAll();
+          });
+        }
+        else if (layer.type === "textBox") {
           let value;
 
           if (layer.className === "playerOne") {
@@ -112,28 +130,28 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
           });
         } else if (layer.type === "playerGoal") {
           let value;
-          if ((globalProperties[key].Format || globalProperties[key].format) === "dotted") {
+          if ((globalProperties[key]?.Format || globalProperties[key]?.format) === "dotted") {
             value = "I.Nazwisko";
-          } else if ((globalProperties[key].Format || globalProperties[key].format) === "NumSurName") {
+          } else if ((globalProperties[key]?.Format || globalProperties[key]?.format) === "NumSurName") {
             value = "Imie Nazwisko";
-          } else if ((globalProperties[key].Format || globalProperties[key].format) === "SurName") {
+          } else  {
             value = "Nazwisko";
           }
-
           const text = new fabric.IText(value, {
-            top: globalProperties[key].Top,
-            left: globalProperties[key].Left,
+            top: globalProperties[key]?.Top,
+            left: globalProperties[key]?.Left,
             angle: globalProperties[key]?.Angle,
-            fontSize: globalProperties[key].FontSize,
+            fontSize: globalProperties[key]?.FontSize,
             width: globalProperties[key]?.Width,
-            originX: globalProperties[key].OriginX,
-            originY: globalProperties[key].OriginY,
+            originX: globalProperties[key]?.OriginX,
+            originY: globalProperties[key]?.OriginY,
             className: "player",
-            fill: globalProperties[key].Fill,
-            fontFamily: globalProperties[key].FontFamily,
-            format: globalProperties[key].Format,
-            type: globalProperties[key].Type,
+            fill: globalProperties[key]?.Fill,
+            fontFamily: globalProperties[key]?.FontFamily,
+            format: globalProperties[key]?.Format,
+            type: globalProperties[key]?.Type,
           });
+          console.log(text)
           fabricRef.current.add(text);
           fabricRef.current.renderAll();
         } else if (layer.type === "multiplyText") {
