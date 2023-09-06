@@ -1,6 +1,6 @@
 import "./WorkSpace.css";
 import { useCollection } from "../../hooks/useCollection";
-import { useRef} from "react";
+import { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import background from "../../img/back.png";
@@ -21,7 +21,7 @@ function WorkSpace() {
   const { user } = useAuthContext();
   const { language } = useContext(LanguageContext);
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
-  const {dataURL, additionalLayer, themeOption, selectThemes, setSelectThemes} = usePosters(poster)
+  const { dataURL, additionalLayer, themeOption, selectThemes, setSelectThemes } = usePosters(poster);
   const { hasTheme } = useIsTheme();
   const { initScale } = useInitScale(dataURL);
 
@@ -37,15 +37,10 @@ function WorkSpace() {
       {Licenses && Licenses[0].license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            <TransformWrapper minScale={0.1} initialScale={initScale} panning={{disabled: true}} >
+            <TransformWrapper minScale={0.1} initialScale={initScale} panning={{ disabled: true }}>
               <TransformComponent>
                 <div className="d-flex w-100 h-100">
-                  {fabricRef && dataURL && (
-                    <Canvas
-                      posterBackGround={dataURL}
-                      fabricRef={fabricRef}
-                    />
-                  )}
+                  {fabricRef && dataURL && <Canvas posterBackGround={dataURL} fabricRef={fabricRef} />}
                 </div>
               </TransformComponent>
             </TransformWrapper>
@@ -66,14 +61,10 @@ function WorkSpace() {
                   themeOption={selectThemes}
                   setSelectThemes={setSelectThemes}
                   themeOptions={themeOption}
-                  posterBackground={dataURL}
                   additionalLayer={additionalLayer}
                 />
               )}
-              <button
-                className="btn primary-btn save"
-                onClick={() => exportImg(Licenses, selectThemes, user, poster)}
-              >
+              <button className="btn primary-btn save" onClick={() => exportImg(Licenses, selectThemes, user, poster)}>
                 {translate.save[language]}
               </button>
             </div>

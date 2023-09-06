@@ -2,7 +2,7 @@ import React from 'react'
 import useTextBoxLayer from './hooks/useTextBoxLayer'
 
 
-const TextBoxInput = ({ coords, fabricRef, themeOption, posterBackground }) => {
+const TextBoxInput = ({ coords, fabricRef }) => {
   
   const {textValue, setTextValue} = useTextBoxLayer(coords, fabricRef)
 
