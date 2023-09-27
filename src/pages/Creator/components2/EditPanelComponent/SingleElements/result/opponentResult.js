@@ -18,7 +18,6 @@ const opponentResult = (fabricRef, yourOpponentResult, coords, themeOption, radi
       fontFamily: coords.yourOpponentResult.FontFamily,
       selectable: false,
       fill: coords.yourOpponentResult.Fill,
-      zIndex:5,
       fontSize: coords.yourTeamResult.FontSize,
       className: "yourOpponentResult",
       angle: radioChecked === "radio1" ? (coords.yourOpponentResult.Angle || 0) : (coords.yourTeamResult.Angle || 0),
