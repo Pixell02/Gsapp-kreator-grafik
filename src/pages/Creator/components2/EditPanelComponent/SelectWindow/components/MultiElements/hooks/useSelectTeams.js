@@ -1,95 +1,62 @@
-import React from 'react'
-import { useState } from 'react'
-import useAddMultiplyImageAndText from './useAddMultiplyImageAndText';
-import { useCollection } from '../../../../../../../../hooks/useCollection';
-import { useAuthContext } from '../../../../../../../../hooks/useAuthContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from "react";
+import useFetch from "../../../../../../../../hooks/useFetch";
+import useAddMultiplyImageAndText from "./useAddMultiplyImageAndText";
+import useTeamOption from "./useTeamOption";
 
 const useSelectTeams = (fabricRef, coords, selectedMatch) => {
-
-  const { user } = useAuthContext(); 
-  const [teamOption, setTeamOption] = useState(null);
+  const teamOption = useTeamOption();
   const [properties] = useState({
     Margin: coords.Margin,
-    orientation: coords.orientation
-  })
-  const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid])
-  const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
-  const [hostLogo, setHostLogo] = useState(null);
-  const [guestLogo, setGuestLogo] = useState(null);
+    orientation: coords.orientation,
+  });
+
   const [selectedHost, setSelectedHost] = useState(null);
   const [selectedGuest, setSelectedGuest] = useState(null);
-  const { handleAddImage, handleAddText } = useAddMultiplyImageAndText(fabricRef, selectedMatch);
-  
-  useEffect(() => {
-    const combinedOptions = [];
+  const { image: hostLogo } = useFetch(selectedHost?.value);
+  const { image: guestLogo } = useFetch(selectedGuest?.value);
 
-    if (Teams?.length) {
-      const options = Teams?.map((team) => ({
-        label: team.firstName + " " + team.secondName,
-        value: team.img
-      }))
-      combinedOptions.push(...options)
-    }
-    if (Opponents?.length) {
-      const options = Opponents?.map((opponent) => ({
-        label: opponent.firstName + " " + opponent.secondName,
-        value: opponent.img
-      }))
-      combinedOptions.push(...options)
-    }
-    setTeamOption(combinedOptions)
-  }, [Teams, Opponents])
+  const { handleAddImage, handleAddText } = useAddMultiplyImageAndText(
+    fabricRef,
+    selectedMatch,
+    properties
+  );
 
   useEffect(() => {
-    if (selectedHost) {
-      fetch(`${selectedHost.value}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          setHostLogo(reader.result);
-        };
-      });
-    }
-  }, [selectedHost])
-  useEffect(() => {
-    if (selectedGuest) {
-      fetch(`${selectedGuest.value}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          setGuestLogo(reader.result);
-        };
-      });
-    }
-  },[selectedGuest])
-  
+    if (coords.yourTeamLogoOne && selectedHost)
+      handleAddImage(coords.yourTeamLogoOne, hostLogo);
+    if (coords.yourTeamNameOne && selectedHost)
+      handleAddText(coords.yourTeamNameOne, selectedHost.label);
+  }, [
+    selectedHost,
+    hostLogo,
+    coords.yourTeamLogoOne,
+    coords.yourTeamNameOne,
+    handleAddImage,
+    handleAddText,
+  ]);
 
   useEffect(() => {
-    if (coords.yourTeamLogoOne && selectedHost) handleAddImage(coords.yourTeamLogoOne, hostLogo, properties)
-    if(coords.yourTeamNameOne && selectedHost) handleAddText(coords.yourTeamNameOne, selectedHost.label, properties)
-   
-  }, [selectedHost, coords.yourTeamLogoOne, coords.yourTeamNameOne, handleAddImage, handleAddText, properties])
-  
-  useEffect(() => {
-    if (coords.yourOpponentNameOne && selectedGuest) handleAddText(coords.yourOpponentNameOne, selectedGuest.label, properties)
-    if(coords.opponentImageOne && selectedGuest) handleAddImage(coords.opponentImageOne, guestLogo, properties)
-  }, [selectedGuest, coords.yourOpponentNameOne, coords.opponentImageOne, handleAddImage, handleAddText, properties])
+    if (coords.yourOpponentNameOne && selectedGuest)
+      handleAddText(coords.yourOpponentNameOne, selectedGuest.label);
+    if (coords.opponentImageOne && selectedGuest)
+      handleAddImage(coords.opponentImageOne, guestLogo);
+  }, [
+    selectedGuest,
+    coords.yourOpponentNameOne,
+    coords.opponentImageOne,
+    handleAddImage,
+    handleAddText,
+    guestLogo,
+  ]);
   useEffect(() => {
     if (coords.connectedTeams && (selectedHost || selectedGuest)) {
       const label = selectedHost ? selectedHost.label : "";
       const guestLabel = selectedGuest ? " - " + selectedGuest.label : "";
-      handleAddText(coords.connectedTeams, label + guestLabel, properties);
+      handleAddText(coords.connectedTeams, label + guestLabel);
     }
-  }, [coords.connectedTeams, selectedHost, selectedGuest, handleAddText, properties]);
-  
+  }, [coords.connectedTeams, selectedHost, selectedGuest, handleAddText]);
 
+  return { teamOption, setSelectedHost, setSelectedGuest };
+};
 
-  return {teamOption, setSelectedHost, setSelectedGuest}
-}
-
-export default useSelectTeams
+export default useSelectTeams;
