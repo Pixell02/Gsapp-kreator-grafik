@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Select from "react-select";
 import { LanguageContext } from "../../../../../context/LanguageContext";
 import radioContext from "../../../context/radioContext";
-import { YourTeamNameAndLogo } from "../../../hooks2/useYourTeamLogo";
+import { useYourTeamNameAndLogo } from "../../../hooks2/useYourTeamLogo";
 import translate from "../../../locales/translate.json";
 import teamFirstName from "./TeamOption/teamFirstName";
 import teamFullName from "./TeamOption/teamFullName";
@@ -19,8 +19,8 @@ export default function TeamOption({
 
   const { radioChecked } = useContext(radioContext);
 
-  const [yourTeam, teamOption, getTeamOption, yourLogo, yourName] =
-    YourTeamNameAndLogo();
+  const { teamOption, getTeamOption, yourLogo, yourName } =
+    useYourTeamNameAndLogo();
 
   useEffect(() => {
     if (fabricRef.current?._objects && yourLogo) {
