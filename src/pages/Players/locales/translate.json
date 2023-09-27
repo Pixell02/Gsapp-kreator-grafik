@@ -69,6 +69,13 @@
     "es": "Ningún equipo seleccionado",
     "fr": "Aucune équipe sélectionnée"
   },
+  "Round": {
+    "pl": "Kolejka",
+    "en": "Round",
+    "es": "Ronda",
+    "de": "Runde",
+    "fr": "Tour"
+  },
   "cancel": {
     "pl": "Anuluj",
     "en": "Cancel",
