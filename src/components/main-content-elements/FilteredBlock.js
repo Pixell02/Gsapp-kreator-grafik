@@ -1,10 +1,11 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 
 import "./ItemBlock.css";
 
-import OptionButton from "../OptionButton";
 import { useLocation } from "react-router-dom";
-export default function FilteredBlock({item, editClick }) {
+import OptionButton from "../OptionButton";
+export default function FilteredBlock({ item, editClick }) {
+  console.log(item);
   const hideElement = useRef(null);
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[2];
@@ -22,8 +23,12 @@ export default function FilteredBlock({item, editClick }) {
               item.name
             )}
           </span>
-          <OptionButton item={item} hideElement={hideElement} editClick={editClick} type={goodLocation} />
-          
+          <OptionButton
+            item={item}
+            hideElement={hideElement}
+            editClick={editClick}
+            type={goodLocation}
+          />
         </div>
         <div className="image-content">
           {item.img !== null && item.img !== "" && (
