@@ -1,5 +1,11 @@
-import { useState, useEffect } from "react";
-import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
 export const useSearch = (collectionName, radioValue, searchText) => {
@@ -7,7 +13,6 @@ export const useSearch = (collectionName, radioValue, searchText) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
-  console.log(documents);
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -43,11 +48,10 @@ export const useSearch = (collectionName, radioValue, searchText) => {
           license: licenseData?.license,
           team: {
             firstName: teamData?.firstName,
-          secondName: teamData?.secondName,
-          img: teamData?.img,
-          sport: teamData?.sport,
-          }
-          
+            secondName: teamData?.secondName,
+            img: teamData?.img,
+            sport: teamData?.sport,
+          },
         };
 
         results.push(result);
@@ -71,62 +75,70 @@ export const useSearch = (collectionName, radioValue, searchText) => {
           where("email", "<=", searchText + "\uf8ff")
         );
       } else if (radioValue === "id") {
-        queryRef = query(collectionRef, where("uid", ">=", searchText), where("uid", "<=", searchText + "\uf8ff"));
+        queryRef = query(
+          collectionRef,
+          where("uid", ">=", searchText),
+          where("uid", "<=", searchText + "\uf8ff")
+        );
       } else {
         queryRef = collectionRef;
       }
 
-      const unsubscribe = onSnapshot(queryRef, (snapshot) => fetchData(queryRef));
+      const unsubscribe = onSnapshot(queryRef, (snapshot) =>
+        fetchData(queryRef)
+      );
       return unsubscribe;
     }
   }, [collectionName, radioValue, searchText]);
 
   useEffect(() => {
     const fetchData = async () => {
-      
-        let queryRef;
-        let unsubscribe;
+      let queryRef;
+      let unsubscribe;
 
-        queryRef = collection(db, "user");
-        let results = [];
-        unsubscribe = onSnapshot(queryRef, async (snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            results.push({...doc.data() });
-          });
+      queryRef = collection(db, "user");
+      let results = [];
+      unsubscribe = onSnapshot(queryRef, async (snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          results.push({ ...doc.data() });
         });
-        let emailResults = [];
-        const teamSnapshot = await getDocs(query(collection(db, "email")));
-        teamSnapshot.docs.forEach((doc) => {
-          emailResults.push({ id: doc.id,...doc.data() });
-         });
-        let TeamsResults = [];
-        const teamsSnapshot = await getDocs(query(collection(db, "Teams")));
-        teamsSnapshot.docs.forEach((doc) => {
-          TeamsResults.push({ id: doc.id, ...doc.data() });
-        })
-        console.log(results)
-        // setDocuments(results);
-        const users = results.map((user) => {
-          const userEmail = emailResults.find((emailUser) => emailUser.uid === user.uid);
-          const userTeam = TeamsResults.find((teamUser) => teamUser.uid === user.uid);
-        
-          return {
-            ...user,
-            email: userEmail ? userEmail?.email : "",
-            team: userTeam
-              ? {
-                  firstName: userTeam?.firstName,
-                  secondName: userTeam?.secondName,
-                  img: userTeam?.img,
-                  sport: userTeam?.sport,
-                }
-              : null,
-          };
-        });
+      });
+      let emailResults = [];
+      const teamSnapshot = await getDocs(query(collection(db, "email")));
+      teamSnapshot.docs.forEach((doc) => {
+        emailResults.push({ id: doc.id, ...doc.data() });
+      });
+      let TeamsResults = [];
+      const teamsSnapshot = await getDocs(query(collection(db, "Teams")));
+      teamsSnapshot.docs.forEach((doc) => {
+        TeamsResults.push({ id: doc.id, ...doc.data() });
+      });
+      console.log(results);
+      // setDocuments(results);
+      const users = results.map((user) => {
+        const userEmail = emailResults.find(
+          (emailUser) => emailUser.uid === user.uid
+        );
+        const userTeam = TeamsResults.find(
+          (teamUser) => teamUser.uid === user.uid
+        );
+
+        return {
+          ...user,
+          email: userEmail ? userEmail?.email : "",
+          team: userTeam
+            ? {
+                firstName: userTeam?.firstName,
+                secondName: userTeam?.secondName,
+                img: userTeam?.img,
+                sport: userTeam?.sport,
+              }
+            : null,
+        };
+      });
       setAllUsers(users);
 
-        return () => unsubscribe();
-     
+      return () => unsubscribe();
     };
 
     fetchData();
