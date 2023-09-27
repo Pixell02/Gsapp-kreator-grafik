@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { LanguageContext } from "../../../../../context/LanguageContext";
-import { useAuthContext } from "../../../../../hooks/useAuthContext";
-import { useCollection } from "../../../../../hooks/useCollection";
-import useTeamLicenseCollection from "../../../../../hooks/useTeamLicenseCollection";
+import useFetch from "../../../../../hooks/useFetch";
 import radioContext from "../../../context/radioContext";
+import useOpponents from "../../../hooks/useOpponents";
 import translate from "../../../locales/translate.json";
 import opponentLogo from "./TeamOption/opponentLogo";
 import opponentsFirstName from "./TeamOption/opponentsFirstName";
@@ -17,49 +16,15 @@ const OpponentSelect = ({
   posterBackground,
   themeOption,
 }) => {
-  const { user } = useAuthContext();
-  const { documents: LicenseOpponents } = useTeamLicenseCollection("Opponents");
+  const options = useOpponents();
+  const [selectedValue, setSelectedValue] = useState(null);
+  const { image: opponentsLogo } = useFetch(selectedValue?.img);
   const [opponentsName, setOpponentsName] = useState("");
-  const [opponentsLogo, setOpponentsLogo] = useState("");
-  const [options, setOptions] = useState([]);
   const { radioChecked } = useContext(radioContext);
   const { language } = useContext(LanguageContext);
-  const { documents: Opponents } = useCollection("Opponents", [
-    "uid",
-    "==",
-    user.uid,
-  ]);
-  useEffect(() => {
-    if (Array.isArray(Opponents)) {
-      // Check if both are arrays
-      const options = Opponents.map((opponent) => ({
-        value: opponent.img,
-        label: `${opponent.firstName} ${opponent.secondName}`,
-      }));
-      setOptions([...options]);
-    }
-    if (Array.isArray(LicenseOpponents)) {
-      const additionalOption = LicenseOpponents.map((item) => ({
-        value: item.img,
-        label: `${item.firstName} ${item.secondName}`,
-      }));
-
-      setOptions([...additionalOption]);
-    }
-
-    // Concatenate the two arrays and update the state
-  }, [Opponents, LicenseOpponents]);
 
   const setOpponent = (option) => {
-    fetch(`${option.value}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          setOpponentsLogo(reader.result);
-        };
-      });
+    setSelectedValue(option.value);
     setOpponentsName(option.label);
   };
   useEffect(() => {
@@ -117,7 +82,7 @@ const OpponentSelect = ({
   return (
     <>
       <label>{translate.Opponents[language]}</label>
-      {Opponents && <Select options={options} onChange={setOpponent} />}
+      {options && <Select options={options} onChange={setOpponent} />}
     </>
   );
 };
