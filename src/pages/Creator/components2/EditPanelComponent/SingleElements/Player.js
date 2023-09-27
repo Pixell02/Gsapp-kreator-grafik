@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { LanguageContext } from "../../../../../context/LanguageContext";
-import useTeamLicenseCollection from "../../../../../hooks/useTeamLicenseCollection";
+import useFetch from "../../../../../hooks/useFetch";
+import usePlayers from "../../../hooks/usePlayers";
 import translate from "../../../locales/translate.json";
 import playerImage from "./playerOption/playerImage";
 import playerName from "./playerOption/playerName";
@@ -13,12 +14,12 @@ export default function Player({
   posterBackground,
   Players,
 }) {
-  const { documents: LicensedPlayers } = useTeamLicenseCollection("Players");
-  const [playerOptions, setPlayerOption] = useState([]);
+  const playerOptions = usePlayers(Players);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedPlayerName, setSelectedPlayerName] = useState("");
+  const { image: playerImg } = useFetch(selectedPlayer?.img);
   const [imageRef, setImageRef] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  const [playerImg, setPlayerImage] = useState("");
   const { language } = useContext(LanguageContext);
 
   const handleActive = (item) => {
@@ -31,23 +32,6 @@ export default function Player({
     setIsActive(false);
     fabricRef.current.renderAll();
   };
-
-  useEffect(() => {
-    if (Players) {
-      const options = Players.map((player) => ({
-        label: player.number + "." + player.firstName + "." + player.secondName,
-        value: player.img + " " + player.firstName + " " + player.secondName,
-      }));
-      setPlayerOption([...options]);
-    }
-    if (LicensedPlayers) {
-      const options = LicensedPlayers?.map((item) => ({
-        label: item.number + "." + item.firstName + "." + item.secondName,
-        value: item.img + " " + item.firstName + " " + item.secondName,
-      }));
-      setPlayerOption([...options]);
-    }
-  }, [Players, LicensedPlayers]);
 
   useEffect(() => {
     if (
@@ -66,7 +50,6 @@ export default function Player({
     if (fabricRef.current?._objects && playerImg !== "" && coords.playerImage) {
       playerImage(fabricRef, playerImg, coords.playerImage, setImageRef);
     } else {
-      setPlayerImage(null);
       setImageRef(null);
     }
   }, [
@@ -78,19 +61,8 @@ export default function Player({
   ]);
 
   const handleSelectPlayer = async (option) => {
+    setSelectedPlayer(option.value);
     setSelectedPlayerName(option.label);
-    await fetch(`${option.value.split(" ")[0]}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          setPlayerImage(reader.result);
-        };
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
   return (
     <>
