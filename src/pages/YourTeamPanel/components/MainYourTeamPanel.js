@@ -1,32 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ReturnButton from "../../../components/ReturnButton";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
-import { useCollection } from "../../../hooks/useCollection";
-import { useNavigate } from "react-router-dom";
+import { LanguageContext } from "../../../context/LanguageContext";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import AddTeamWindow from "./addTeamWindow";
-import YourTeamBlock from "./YourTeamBlock";
-import { useContext } from "react";
-import { LicenseContext } from "../../../context/LicenseContext";
-import translate from "./locales/yourTeamPanel.json"
-import { LanguageContext } from "../../../context/LanguageContext"
-// Styles
+import { useCollection } from "../../../hooks/useCollection";
 import "./MainYourTeamPanel.css";
-import ReturnButton from "../../../components/ReturnButton";
+import YourTeamContainer from "./YourTeamContainer";
+import AddTeamWindow from "./addTeamWindow";
+import translate from "./locales/yourTeamPanel.json";
 function MainYourTeamPanel() {
   const { user } = useAuthContext();
-  const { setLicense } = useContext(LicenseContext);
   const { language } = useContext(LanguageContext);
   const [openModal, setOpenModal] = useState(false);
   const { documents: Team } = useCollection("Teams", ["uid", "==", user.uid]);
-  const { documents: licensed } = useCollection("user", ["uid", "==", user.uid]);
-  useEffect(() => {  
-    if (licensed) {
-      if (licensed.length > 0) {
-        setLicense((prev) => ({ ...prev, type: licensed[0].license }));
-      }
-    }
-  }, [licensed]);
 
   const navigate = useNavigate();
   return (
@@ -40,20 +28,28 @@ function MainYourTeamPanel() {
             </div>
             <div className="empty-container"></div>
             <div className="d-flex guide-btn-container">
-              <button onClick={() => navigate(`/${language}/guide`)} className="btn primary-btn">
-                {translate.guide[language]} 
+              <button
+                onClick={() => navigate(`/${language}/guide`)}
+                className="btn primary-btn"
+              >
+                {translate.guide[language]}
               </button>
             </div>
           </div>
-          <button className="btn primary-btn" onClick={() => setOpenModal(true)}>
-          {translate.addTeam[language]} 
+          <button
+            className="btn primary-btn"
+            onClick={() => setOpenModal(true)}
+          >
+            {translate.addTeam[language]}
           </button>
           <ItemContainer>
-            <YourTeamBlock Team={Team} />
+            <YourTeamContainer Team={Team} />
           </ItemContainer>
         </div>
       </div>
-      {openModal && <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} />}
+      {openModal && (
+        <AddTeamWindow open={openModal} onClose={() => setOpenModal(false)} />
+      )}
     </>
   );
 }
