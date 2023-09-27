@@ -7,7 +7,7 @@ const useTextLayer = (fabricRef, coords, themeOption, name) => {
 
   const [textValue, setTextValue] = useState(null);
   useEffect(() => {
-    if (textValue && fabricRef.current) {
+    if (fabricRef.current) {
       fabricRef.current._objects.forEach((image, i) => {
         if (fabricRef.current.item(i).className === (name || coords.className)) {
           fabricRef.current.remove(fabricRef.current.item(i));
