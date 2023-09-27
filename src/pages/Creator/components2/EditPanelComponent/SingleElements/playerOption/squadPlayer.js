@@ -3,6 +3,7 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 
 const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, capitan) => {
+ 
   if (squadPlayers && coords.playerOne) {
     let text = "";
     const currentDate = new Date();
@@ -29,7 +30,6 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
         if (currentYear - player.age <= 21) {
           formatPlayer += " (m)"
         }
-        console.log(goalKeeper)
           if ((goalKeeper?.number || "" ) + " " + goalKeeper?.firstName + " " + goalKeeper?.secondName === (player.number || "") + " " + player.firstName + " " + player.secondName) {
             formatPlayer += " (gk)";
           }
