@@ -2,8 +2,8 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 import findThemeOption from "../../../../SingleElements/functions/themeOption";
 
-const useAddMultiplyImageAndText = (fabricRef, selectedMatch) => {
-  const handleAddImage = (coords, image, properties) => {
+const useAddMultiplyImageAndText = (fabricRef, selectedMatch, properties) => {
+  const handleAddImage = (coords, image) => {
     fabricRef.current._objects.forEach((image, i) => {
       if (
         fabricRef.current.item(i).className ===
@@ -43,7 +43,7 @@ const useAddMultiplyImageAndText = (fabricRef, selectedMatch) => {
       });
     };
   };
-  const handleAddText = (coords, teamName, properties) => {
+  const handleAddText = (coords, teamName) => {
     fabricRef.current._objects.forEach((image, i) => {
       if (
         fabricRef.current.item(i).className ===
