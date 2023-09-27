@@ -1,5 +1,4 @@
 import React from "react";
-import { FontSizeProvider } from "../../../../context/FontSizeContext";
 import Results from "./MultiElements/Results";
 import SelectLeagueTeams from "./MultiElements/SelectLeagueTeams";
 import SelectTeams from "./MultiElements/SelectTeams";
@@ -13,62 +12,60 @@ const MultiElements = ({ fabricRef, coords, selectedMatch }) => {
 
   return (
     <div>
-      <FontSizeProvider>
-        <p>Mecz {selectedMatch}</p>
-        {(coords.yourTeamLogoOne || coords.yourTeamNameOne) &&
-          (!coords.yourOpponentNameOne || !coords.opponentImageOne) && (
-            <YourTeams
-              fabricRef={fabricRef}
-              coords={coords}
-              selectedMatch={selectedMatch}
-            />
-          )}
-        {!coords.yourTeamLogoOne &&
-          !coords.yourTeamNameOne &&
-          (coords.yourOpponentNameOne || coords.opponentImageOne) && (
-            <SelectLeagueTeams
-              fabricRef={fabricRef}
-              coords={coords}
-              selectedMatch={selectedMatch}
-            />
-          )}
-        {(coords.yourTeamLogoOne || coords.yourTeamNameOne) &&
-          (coords.yourOpponentNameOne || coords.opponentImageOne) && (
-            <SelectTeams
-              fabricRef={fabricRef}
-              coords={coords}
-              selectedMatch={selectedMatch}
-            />
-          )}
-        {coords.connectedTeams && (
+      <p>Mecz {selectedMatch}</p>
+      {(coords.yourTeamLogoOne || coords.yourTeamNameOne) &&
+        (!coords.yourOpponentNameOne || !coords.opponentImageOne) && (
+          <YourTeams
+            fabricRef={fabricRef}
+            coords={coords}
+            selectedMatch={selectedMatch}
+          />
+        )}
+      {!coords.yourTeamLogoOne &&
+        !coords.yourTeamNameOne &&
+        (coords.yourOpponentNameOne || coords.opponentImageOne) && (
+          <SelectLeagueTeams
+            fabricRef={fabricRef}
+            coords={coords}
+            selectedMatch={selectedMatch}
+          />
+        )}
+      {(coords.yourTeamLogoOne || coords.yourTeamNameOne) &&
+        (coords.yourOpponentNameOne || coords.opponentImageOne) && (
           <SelectTeams
             fabricRef={fabricRef}
             coords={coords}
             selectedMatch={selectedMatch}
           />
         )}
-        <Results
+      {coords.connectedTeams && (
+        <SelectTeams
           fabricRef={fabricRef}
           coords={coords}
           selectedMatch={selectedMatch}
         />
-        {coords?.TextOne?.map((item) => (
-          <UniversalTextLayer
-            fabricRef={fabricRef}
-            properties={properties}
-            coords={item}
-            selectedMatch={selectedMatch}
-          />
-        ))}
-        {coords?.NumberOne?.map((item) => (
-          <UniversalNumberLayer
-            fabricRef={fabricRef}
-            properties={properties}
-            coords={item}
-            selectedMatch={selectedMatch}
-          />
-        ))}
-      </FontSizeProvider>
+      )}
+      <Results
+        fabricRef={fabricRef}
+        coords={coords}
+        selectedMatch={selectedMatch}
+      />
+      {coords?.TextOne?.map((item) => (
+        <UniversalTextLayer
+          fabricRef={fabricRef}
+          properties={properties}
+          coords={item}
+          selectedMatch={selectedMatch}
+        />
+      ))}
+      {coords?.NumberOne?.map((item) => (
+        <UniversalNumberLayer
+          fabricRef={fabricRef}
+          properties={properties}
+          coords={item}
+          selectedMatch={selectedMatch}
+        />
+      ))}
     </div>
   );
 };
