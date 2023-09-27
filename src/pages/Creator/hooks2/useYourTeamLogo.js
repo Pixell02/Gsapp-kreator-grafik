@@ -1,52 +1,26 @@
 import { useEffect, useState } from "react";
+import useFetch from "../../../hooks/useFetch";
+import useTeamOption from "../hooks/useTeamOption";
 
-export const YourTeamNameAndLogo = (Logo) => {
-  const [yourTeam, setYourTeam] = useState();
-  const [yourLogo, setYourLogo] = useState();
-  const [LogoLink, setLogoLink] = useState();
-  const [yourName, setYourName] = useState();
-  const [teamOption, setTeamOption] = useState([]);
-  
+export const useYourTeamNameAndLogo = () => {
+  const [LogoLink, setLogoLink] = useState(null);
+  const [yourName, setYourName] = useState(null);
+
+  const { images: yourLogo } = useFetch(LogoLink);
+
+  const teamOption = useTeamOption();
 
   useEffect(() => {
-    if (Logo) {
-      const TeamOption = Logo.map((logo) => ({
-        value: logo.img,
-        label: logo.firstName + "." + logo.secondName,
-      }));
-      
-      setTeamOption(TeamOption);
+    if (teamOption?.length === 1) {
+      setLogoLink(teamOption[0].value);
+      setYourName(teamOption[0].label);
     }
-  }, [Logo]);
-  
-  useEffect(() => {
-    if (Logo) {
-      if (Logo.length === 1) {
-        setLogoLink(Logo[0].img);
-        setYourName(Logo[0].firstName + "." + Logo[0].secondName)
-      }
-    }
-  }, [Logo]);
+  }, [teamOption]);
 
   const getTeamOption = (option) => {
     setLogoLink(option.value);
-    setYourName(option.label)
+    setYourName(option.label);
   };
-  useEffect(() => {
-    if (LogoLink) {
-      
-      fetch(`${LogoLink}`)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(blob);
-          reader.onloadend = () => {
-            setYourLogo(reader.result);
-          };
-        });
-    }
-  }, [LogoLink, yourLogo]);
 
-
-  return [yourTeam, teamOption, getTeamOption, yourLogo, yourName];
+  return { teamOption, getTeamOption, yourLogo, yourName };
 };
