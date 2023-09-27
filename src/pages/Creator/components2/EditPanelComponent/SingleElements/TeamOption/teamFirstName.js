@@ -62,7 +62,6 @@ const teamFirstName = (fabricRef, yourName, coords, themeOption, radioChecked) =
       if (text.width > coords.yourTeamFirstName.ScaleToWidth) {
         text.scaleToWidth(coords.yourTeamFirstName.ScaleToWidth);
       }
-      console.log(coords.yourTeamFirstName.themeOption)
       if (coords.yourTeamFirstName ? coords.yourTeamFirstName.themeOption : coords.yourTeamName.themeOption) {
         findThemeOption(coords.yourTeamFirstName, themeOption, text);
       }

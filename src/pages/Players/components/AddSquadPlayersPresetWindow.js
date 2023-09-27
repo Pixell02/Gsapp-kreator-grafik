@@ -54,7 +54,6 @@ const AddSquadPlayersPresetWindow = ({ onClose, Players }) => {
           <button onClick={() => setSelectedWindow(2)} className="btn">
             Rezerwowi
           </button>
-          <label><input type="checkbox" /><span>asdasd</span></label>
         </div>
         <div>
           <label>Nazwa wzoru</label>

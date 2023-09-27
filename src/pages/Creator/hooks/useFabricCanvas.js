@@ -1,11 +1,10 @@
-import { useEffect, useRef } from "react";
+
 import { fabric } from "fabric";
 import useImageRefProvider from "./useImageRefProvider";
 
 const useFabricCanvas = () => {
   
   const { imageRef } = useImageRefProvider();
-  console.log(imageRef.current);
   const initFabric = (fabricRef, image) => {
     if (!fabricRef.current?._objects) {
       fabricRef.current = new fabric.Canvas("canvas", {
@@ -28,7 +27,6 @@ const useFabricCanvas = () => {
         fabricRef.current.add(img);
         fabricRef.current.renderAll();
         imageRef.current = img;
-        // fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
       });
     }
     

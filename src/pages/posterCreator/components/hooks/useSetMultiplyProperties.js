@@ -1,33 +1,37 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
-import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
-import useAddMultiplyLayer from "./useAddMultiplyLayer";
 import { layersName } from "../../layersName";
+import useAddMultiplyLayer from "./useAddMultiplyLayer";
+import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 
 const useSetMultiplyProperties = (fabricRef) => {
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  const { globalProperties, setGlobalProperties } = useContext(
+    GlobalPropertiesContext
+  );
   const { properties, setProperties } = useMultiPropertiesContext();
-  const { handleCreateImage, handleCreateText, handleCreateUniversalText } = useAddMultiplyLayer(fabricRef);
-  
-  
+  const { handleCreateImage, handleCreateText, handleCreateUniversalText } =
+    useAddMultiplyLayer(fabricRef);
 
   useEffect(() => {
-    setGlobalProperties(prev => ({
+    setGlobalProperties((prev) => ({
       ...prev,
-      ...properties
-    }))
-  },[properties, setGlobalProperties])
+      ...properties,
+    }));
+  }, [properties, setGlobalProperties]);
 
   useEffect(() => {
     const objectProperties = {
       top: null,
       left: null,
       scaleX: null,
-      scaleY: null 
+      scaleY: null,
     };
     fabricRef.current._objects.forEach((object) => {
-      if (object.type === "multiplyimage" || object.type === "multiplyText" || object.type === "multiplyUniversalText") {
-     
+      if (
+        object.type === "multiplyimage" ||
+        object.type === "multiplyText" ||
+        object.type === "multiplyUniversalText"
+      ) {
         if (object.index !== 1) {
           object.set(
             "top",
@@ -54,7 +58,7 @@ const useSetMultiplyProperties = (fabricRef) => {
     });
     setGlobalProperties((prev) => ({
       ...prev,
-    }))
+    }));
   }, [properties, fabricRef, setGlobalProperties]);
 
   const handleNumberOfMatchesChange = (e) => {
@@ -74,25 +78,40 @@ const useSetMultiplyProperties = (fabricRef) => {
       for (let i = 0; i < objectsToAddCount; i++) {
         multiplyObject.forEach((object) => {
           layersName.forEach((layer) => {
-            if (object.type === "multiplyimage" && object.className === layer.className) {
+            if (
+              object.type === "multiplyimage" &&
+              object.className === layer.className
+            ) {
               handleCreateImage(layer.image, object);
-            } else if (object.type === "multiplyText" && object.className === layer.className) {
+            } else if (
+              object.type === "multiplyText" &&
+              object.className === layer.className
+            ) {
               handleCreateText(layer.text, object);
-            } else if (object.type === "multiplyUniversalText" && object.className === layer.className) {
+            } else if (
+              object.type === "multiplyUniversalText" &&
+              object.className === layer.className
+            ) {
               handleCreateUniversalText(layer.text, object);
-             }
+            }
           });
         });
       }
     }
-    setGlobalProperties(prev => ({...prev, numberOfMatches: newNumberOfMatches}))
+    setGlobalProperties((prev) => ({
+      ...prev,
+      numberOfMatches: newNumberOfMatches,
+    }));
   };
   const handleMarginChange = (e) => {
     setProperties((prev) => ({ ...prev, Margin: parseInt(e.target.value) }));
-    setGlobalProperties(prev => ({...prev, Margin: parseInt(e.target.value)}))
+    setGlobalProperties((prev) => ({
+      ...prev,
+      Margin: parseInt(e.target.value),
+    }));
     let startPosition;
     fabricRef.current._objects.forEach((object) => {
-      if(object.index){
+      if (object.index) {
         if (object.index === 1) {
           if (properties.orientation === "vertically") {
             startPosition = object.top;
@@ -101,24 +120,33 @@ const useSetMultiplyProperties = (fabricRef) => {
           }
         } else {
           if (properties.orientation === "vertically") {
-            object.set("top", startPosition + e.target.value * (object.index - 1));
+            object.set(
+              "top",
+              startPosition + e.target.value * (object.index - 1)
+            );
           } else {
-            object.set("left", startPosition + e.target.value * (object.index - 1));
+            object.set(
+              "left",
+              startPosition + e.target.value * (object.index - 1)
+            );
           }
         }
         fabricRef.current.renderAll();
       }
-      
     });
-    
   };
   const handleOrientationChange = (option) => {
     setProperties((prev) => ({ ...prev, orientation: option.value }));
     setGlobalProperties((prev) => ({ ...prev, orientation: option.value }));
   };
-  console.log(properties)
 
-  return { globalProperties, properties, handleNumberOfMatchesChange, handleMarginChange, handleOrientationChange };
+  return {
+    globalProperties,
+    properties,
+    handleNumberOfMatchesChange,
+    handleMarginChange,
+    handleOrientationChange,
+  };
 };
 
 export default useSetMultiplyProperties;

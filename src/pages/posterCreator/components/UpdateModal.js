@@ -1,26 +1,35 @@
-import React from "react";
-import { useContext } from "react";
-import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { LanguageContext } from "../../../context/LanguageContext";
+import { db } from "../../../firebase/config";
 import { BackgroundContext } from "../Context/BackgroundContext";
+import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
+import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
 
-export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
+export default function UpdateModal({
+  isOpen,
+  setIsOpen,
+  defaultBackGround,
+  backgrounds,
+}) {
   const navigate = useNavigate();
   const params = useParams();
   const { language } = useContext(LanguageContext);
   const { image } = useContext(BackgroundContext);
-  console.log(image)
+
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
   const [progressInfo, setProgress] = useState("");
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  const { globalProperties, setGlobalProperties } = useContext(
+    GlobalPropertiesContext
+  );
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
@@ -34,22 +43,22 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
     }));
   }, [setGlobalProperties, params]);
   const handleAddDoc = async () => {
-    if (!image.src.split('/')[7]) {
+    if (!image.src.split("/")[7]) {
       const storage = getStorage();
-        const metadata = {
-          contentType: "image/jpeg",
-        };
-        const player = ref(
-          storage,
-          `${defaultBackGround.uid}/posters/${globalProperties.uid}`
-        );
-          console.log(image)
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+      const player = ref(
+        storage,
+        `${defaultBackGround.uid}/posters/${globalProperties.uid}`
+      );
       const uploadTask = uploadBytesResumable(player, image.file, metadata);
-      
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -72,7 +81,6 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           });
         }
       );
-
     }
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
@@ -82,15 +90,22 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
         };
         const player = ref(
           storage,
-          `${defaultBackGround.uid}/posters/${defaultBackGround.uuid + backgrounds.length + i}`
+          `${defaultBackGround.uid}/posters/${
+            defaultBackGround.uuid + backgrounds.length + i
+          }`
         );
 
-        const uploadTask = uploadBytesResumable(player, background.file, metadata);
+        const uploadTask = uploadBytesResumable(
+          player,
+          background.file,
+          metadata
+        );
 
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            let progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             setProgress("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
@@ -107,24 +122,35 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
             setProgress(error);
           },
           async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              addDoc(collection(db, "yourCatalog"), {
-                color: background.color,
-                src: downloadURL,
-                uuid: globalProperties.uid,
-              });
-            });
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              (downloadURL) => {
+                addDoc(collection(db, "yourCatalog"), {
+                  color: background.color,
+                  src: downloadURL,
+                  uuid: globalProperties.uid,
+                });
+              }
+            );
           }
         );
       });
-      updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster);
+      updateDoc(
+        doc(collection(db, "yourCatalog"), globalProperties.uid),
+        userPoster
+      );
 
-      setDoc(doc(collection(db, "coords"), globalProperties.uid), globalProperties);
+      setDoc(
+        doc(collection(db, "coords"), globalProperties.uid),
+        globalProperties
+      );
       setTimeout(() => {
         navigate(`/${language}/creator/${globalProperties.uid}`);
       }, 500);
     } else {
-      setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
+      setDoc(
+        doc(collection(db, "coords"), globalProperties.id),
+        globalProperties
+      );
 
       navigate(`/${language}/creator/${globalProperties.uid}`);
     }
@@ -148,7 +174,10 @@ export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, back
           />
           {progressInfo && <span>{progressInfo}</span>}
           <div className="btn-container justify-content-end h-100 align-items-end mb-3">
-            <button onClick={() => setIsOpen(false)} className="btn btn-primary">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="btn btn-primary"
+            >
               Anuluj
             </button>
             <button onClick={handleAddDoc} className="btn btn-primary">
