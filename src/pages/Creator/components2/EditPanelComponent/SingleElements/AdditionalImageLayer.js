@@ -1,9 +1,7 @@
 import { fabric } from "fabric";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 const AdditionalImageLayer = ({ additionalLayer, fabricRef }) => {
-  const imageRef = useRef(null);
-
   useEffect(() => {
     if (additionalLayer) {
       const img = new Image();
@@ -20,7 +18,7 @@ const AdditionalImageLayer = ({ additionalLayer, fabricRef }) => {
         });
       };
     }
-  }, [additionalLayer, fabricRef.current._objects]);
+  }, [additionalLayer, fabricRef.current?._objects]);
 
   return <div></div>;
 };
