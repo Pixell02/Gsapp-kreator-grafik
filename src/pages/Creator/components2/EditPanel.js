@@ -1,14 +1,13 @@
-import React from "react";
-import { RadioProvider } from "../context/radioContext";
-import TrainingPlan from "../components/TrainingPlan";
-import { useCollection } from "../../../hooks/useCollection";
+import React, { useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useState } from "react";
+import { useCollection } from "../../../hooks/useCollection";
+import TrainingPlan from "../components/TrainingPlan";
+import { RadioProvider } from "../context/radioContext";
 import { TeamProvider } from "../context/teamContext";
-import SingleElements from "./EditPanelComponent/SingleElements";
-import SelectWindow from "./EditPanelComponent/SelectWindow/SelectWindow";
-import MultiElementButtons from "./EditPanelComponent/MultiElementButtons";
 import useCoords from "../hooks/useCoords";
+import MultiElementButtons from "./EditPanelComponent/MultiElementButtons";
+import SelectWindow from "./EditPanelComponent/SelectWindow/SelectWindow";
+import SingleElements from "./EditPanelComponent/SingleElements";
 
 export default function EditPanel({
   fabricRef,
@@ -18,8 +17,12 @@ export default function EditPanel({
   additionalLayer,
 }) {
   const { user } = useAuthContext();
-  const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
-  const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
+
+  const { documents: Players } = useCollection("Players", [
+    "uid",
+    "==",
+    user.uid,
+  ]);
   const { coords } = useCoords();
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState({
@@ -50,12 +53,13 @@ export default function EditPanel({
                 themeOption={themeOption}
                 themeOptions={themeOptions}
                 setSelectThemes={setSelectThemes}
-                Opponents={Opponents}
                 additionalLayer={additionalLayer}
                 Players={Players}
                 setIsModalOpen={setIsModalOpen}
               />
-              {coords?.dayOne && <TrainingPlan fabricRef={fabricRef} coords={coords} />}
+              {coords?.dayOne && (
+                <TrainingPlan fabricRef={fabricRef} coords={coords} />
+              )}
               {coords?.numberOfMatches && (
                 <MultiElementButtons
                   coords={coords}
