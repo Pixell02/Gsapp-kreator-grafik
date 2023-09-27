@@ -1,20 +1,21 @@
 import React, { useContext } from "react";
-import Radio from "./SingleElements/Radio";
-import ThemeOption from "./SingleElements/ThemeOption";
+import { LanguageContext } from "../../../../context/LanguageContext";
+import translate from "../../locales/translate.json";
+import AdditionalImageLayer from "./SingleElements/AdditionalImageLayer";
 import AdditionalText from "./SingleElements/AdditionalText";
-import TeamOption from "./SingleElements/TeamOption";
+import Images from "./SingleElements/Images";
 import OpponentSelect from "./SingleElements/OpponentSelect";
+import PlacePreset from "./SingleElements/PlacePreset";
 import Player from "./SingleElements/Player";
 import PlayersGoals from "./SingleElements/PlayersGoals";
-import StartingSquad from "./SingleElements/StartingSquad";
+import Radio from "./SingleElements/Radio";
 import Result from "./SingleElements/Result";
-import TextInput from "./SingleElements/TextInput";
+import StartingSquad from "./SingleElements/StartingSquad";
+import TeamOption from "./SingleElements/TeamOption";
 import TextBoxInput from "./SingleElements/TextBoxInput";
-import Images from "./SingleElements/Images";
-import AdditionalImageLayer from "./SingleElements/AdditionalImageLayer";
+import TextInput from "./SingleElements/TextInput";
 import TextLineInput from "./SingleElements/TextLineInput";
-import translate from "../../locales/translate.json";
-import { LanguageContext } from "../../../../context/LanguageContext";
+import ThemeOption from "./SingleElements/ThemeOption";
 
 const SingleElements = ({
   coords,
@@ -28,19 +29,33 @@ const SingleElements = ({
   additionalLayer,
 }) => {
   const { language } = useContext(LanguageContext);
+
   return (
     <div>
-      {additionalLayer && <AdditionalImageLayer fabricRef={fabricRef} additionalLayer={additionalLayer} />}
-      {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
-        <Radio fabricRef={fabricRef} coords={coords} />
+      {additionalLayer && (
+        <AdditionalImageLayer
+          fabricRef={fabricRef}
+          additionalLayer={additionalLayer}
+        />
       )}
+      {(coords.opponentImage ||
+        coords.opponentFirstName ||
+        coords.opponentSecondName ||
+        coords.opponentName) && <Radio fabricRef={fabricRef} coords={coords} />}
       {themeOptions && (
-        <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />
+        <ThemeOption
+          themeOptions={themeOptions}
+          themeOption={themeOption}
+          setSelectThemes={setSelectThemes}
+        />
       )}
       {coords.additionalText && (
         <AdditionalText fabricRef={fabricRef} coords={coords} />
       )}
-      {(coords.yourTeamLogo || coords.yourTeamFirstName || coords.yourTeamSecondName || coords.yourTeamName) && (
+      {(coords.yourTeamLogo ||
+        coords.yourTeamFirstName ||
+        coords.yourTeamSecondName ||
+        coords.yourTeamName) && (
         <TeamOption
           fabricRef={fabricRef}
           coords={coords}
@@ -56,12 +71,20 @@ const SingleElements = ({
         />
       )}
       {coords.typePlace && (
-        <TextLineInput
-          fabricRef={fabricRef}
-          themeOption={themeOption}
-          coords={coords.typePlace}
-          name={translate.typePlace[language]}
-        />
+        <>
+          <PlacePreset
+            fabricRef={fabricRef}
+            themeOption={themeOption}
+            coords={coords.typePlace}
+            name={translate.typePlace[language]}
+          />
+          <TextLineInput
+            fabricRef={fabricRef}
+            themeOption={themeOption}
+            coords={coords.typePlace}
+            name={translate.typePlace[language]}
+          />
+        </>
       )}
       {coords.typeData && (
         <TextLineInput
@@ -76,7 +99,7 @@ const SingleElements = ({
           fabricRef={fabricRef}
           themeOption={themeOption}
           coords={coords.yourKolejka}
-          name={translate.Round[language]}
+          name={translate.typeRound[language]}
         />
       )}
       {coords.yourLeague && (
@@ -84,10 +107,13 @@ const SingleElements = ({
           fabricRef={fabricRef}
           themeOption={themeOption}
           coords={coords.yourLeague}
-          name={translate.yourLeague[language]}
+          name={translate.typeLeague[language]}
         />
       )}
-      {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
+      {(coords.opponentImage ||
+        coords.opponentFirstName ||
+        coords.opponentSecondName ||
+        coords.opponentName) && (
         <OpponentSelect
           fabricRef={fabricRef}
           coords={coords}
@@ -96,10 +122,18 @@ const SingleElements = ({
         />
       )}
       {coords.yourTeamResult && (
-        <Result fabricRef={fabricRef} coords={coords} themeOption={themeOption} />
+        <Result
+          fabricRef={fabricRef}
+          coords={coords}
+          themeOption={themeOption}
+        />
       )}
       {coords.Images?.Image.map((image) => (
-        <Images fabricRef={fabricRef} filters={coords.Images.filters} coords={image} />
+        <Images
+          fabricRef={fabricRef}
+          filters={coords.Images.filters}
+          coords={image}
+        />
       ))}
       {(coords.player || coords.playerImage) && (
         <Player
@@ -111,7 +145,13 @@ const SingleElements = ({
         />
       )}
       {coords.Text &&
-        coords.Text.map((coords) => <TextInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />)}
+        coords.Text.map((coords) => (
+          <TextInput
+            fabricRef={fabricRef}
+            coords={coords}
+            themeOption={themeOption}
+          />
+        ))}
       {coords.TextBox &&
         coords.TextBox.map((coords) => (
           <TextBoxInput
@@ -129,7 +169,12 @@ const SingleElements = ({
           Players={Players}
         />
       )}
-      <StartingSquad setIsModalOpen={setIsModalOpen} coords={coords} />
+      <StartingSquad
+        setIsModalOpen={setIsModalOpen}
+        themeOption={themeOption}
+        fabricRef={fabricRef}
+        coords={coords}
+      />
     </div>
   );
 };
