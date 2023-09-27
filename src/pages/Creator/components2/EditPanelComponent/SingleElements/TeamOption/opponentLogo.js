@@ -1,7 +1,5 @@
-import React from "react";
+
 import { fabric } from "fabric";
-import FontFaceObserver from "fontfaceobserver";
-import findThemeOption from "../functions/themeOption";
 
 const opponentLogo = (fabricRef, opponentLogo, coords, themeOption, radioChecked) => {
   fabricRef.current._objects.forEach((image, i) => {
@@ -21,7 +19,6 @@ const opponentLogo = (fabricRef, opponentLogo, coords, themeOption, radioChecked
         className: "opponentImage",
         originX: "center",
         originY: "center",
-        zIndex: 5,
         angle: radioChecked === "radio1" ? (coords.opponentImage.Angle || 0) : (coords.yourTeamLogo.Angle || 0),
       });
 
