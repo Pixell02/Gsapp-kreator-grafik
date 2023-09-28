@@ -1,23 +1,28 @@
-import React, { useContext } from "react";
-import { useCollection } from "../../../hooks/useCollection";
-import "./saveThemeModal.css";
-import { useState } from "react";
-import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import Select from "react-select";
-import { useNavigate } from "react-router-dom";
-import { GlobalPropertiesContext } from "../../posterCreator/Context/GlobalProperitesContext";
-import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext";
-import { ManyBackgroundsContext } from "../../posterCreator/Context/ManyBackgroundsContext";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { v4 as uuidv4 } from "uuid";
 import { LanguageContext } from "../../../context/LanguageContext";
+import { db } from "../../../firebase/config";
+import { useCollection } from "../../../hooks/useCollection";
+import { BackgroundContext } from "../../posterCreator/Context/BackgroundContext";
+import { GlobalPropertiesContext } from "../../posterCreator/Context/GlobalProperitesContext";
+import { ManyBackgroundsContext } from "../../posterCreator/Context/ManyBackgroundsContext";
+import "./saveThemeModal.css";
 
 export default function SaveThemeModal({ isOpen, setIsOpen }) {
   const { documents: catalog } = useCollection("catalog");
   const { language } = useContext(LanguageContext);
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+  const { globalProperties, setGlobalProperties } = useContext(
+    GlobalPropertiesContext
+  );
   const { background, image } = useContext(BackgroundContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const myId = uuidv4().replace(/-/g, "");
@@ -37,12 +42,11 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
   const [selectedTheme, setSelectedTheme] = useState();
   const [themeName, setThemeName] = useState("");
   const [percentageProgress, setPercentageProgress] = useState();
-  console.log(background)
+  console.log(background);
   const handleThemeSelect = (option) => {
     setSelectedTheme(option.value);
     setSavedThemeName(option.label);
   };
-  
 
   useEffect(() => {
     if (catalog) {
@@ -53,7 +57,7 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
       setCatalogOption(options);
     }
   }, [catalog]);
-  
+
   const handleAddDoc = async () => {
     if (manyBackgrounds) {
       manyBackgrounds.forEach((background, i) => {
@@ -61,14 +65,22 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
         const metadata = {
           contentType: "image/jpeg",
         };
-        const player = ref(storage, `${savedThemeName}/${themeName}/${background.name}`);
+        const player = ref(
+          storage,
+          `${savedThemeName}/${themeName}/${background.name}`
+        );
 
-        const uploadTask = uploadBytesResumable(player, background.file, metadata);
+        const uploadTask = uploadBytesResumable(
+          player,
+          background.file,
+          metadata
+        );
 
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            let progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             setPercentageProgress("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
@@ -83,13 +95,15 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
             console.log(error);
           },
           async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              addDoc(collection(db, "piecesOfPoster"), {
-                color: background.name,
-                src: downloadURL,
-                uuid: globalProperties.uid,
-              });
-            });
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              (downloadURL) => {
+                addDoc(collection(db, "piecesOfPoster"), {
+                  color: background.name,
+                  src: downloadURL,
+                  uuid: globalProperties.uid,
+                });
+              }
+            );
           }
         );
       });
@@ -100,14 +114,18 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
       const metadata = {
         contentType: "image/jpeg",
       };
-      const player = ref(storage, `${savedThemeName}/${themeName}/${image.name}`);
+      const player = ref(
+        storage,
+        `${savedThemeName}/${themeName}/${image.name}`
+      );
 
       const uploadTask = uploadBytesResumable(player, image.file, metadata);
 
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
           switch (snapshot.state) {
             case "paused":
@@ -115,6 +133,9 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
               break;
             case "running":
               console.log("Upload is running");
+              break;
+            default:
+              console.log("default");
               break;
           }
         },
@@ -124,14 +145,17 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
         async () => {
           await getDownloadURL(uploadTask.snapshot.ref)
             .then((downloadURL) => {
-              setDoc(doc(collection(db, "piecesOfPoster"), globalProperties.uid), {
-                color: image.color,
-                name: themeName,
-                src: downloadURL,
-                themeId: selectedTheme,
-                uid: globalProperties.uid,
-                uuid: globalProperties.uid,
-              });
+              setDoc(
+                doc(collection(db, "piecesOfPoster"), globalProperties.uid),
+                {
+                  color: image.color,
+                  name: themeName,
+                  src: downloadURL,
+                  themeId: selectedTheme,
+                  uid: globalProperties.uid,
+                  uuid: globalProperties.uid,
+                }
+              );
               setDoc(
                 doc(collection(db, "coords"), globalProperties.uid),
                 globalProperties ? globalProperties : { uid: id }
@@ -145,7 +169,6 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
         }
       );
     } else {
-
     }
   };
 
@@ -154,9 +177,16 @@ export default function SaveThemeModal({ isOpen, setIsOpen }) {
       <div className="modal-window p-3">
         <p>Dodaj motyw</p>
         <span>motyw</span>
-        <Select options={catalogOption} onChange={(option) => handleThemeSelect(option)} />
+        <Select
+          options={catalogOption}
+          onChange={(option) => handleThemeSelect(option)}
+        />
         <span>Nazwa wzoru</span>
-        <input type="text" value={themeName} onChange={(e) => setThemeName(e.target.value)} />
+        <input
+          type="text"
+          value={themeName}
+          onChange={(e) => setThemeName(e.target.value)}
+        />
         {percentageProgress}
         <div className="btn-container w-100 h-50">
           <div className="w-100 d-flex justify-content-end align-items-end">
