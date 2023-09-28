@@ -5,7 +5,6 @@ import "./ItemBlock.css";
 import { useLocation } from "react-router-dom";
 import OptionButton from "../OptionButton";
 export default function FilteredBlock({ item, editClick }) {
-  console.log(item);
   const hideElement = useRef(null);
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[2];
