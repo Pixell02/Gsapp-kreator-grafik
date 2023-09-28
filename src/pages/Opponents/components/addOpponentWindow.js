@@ -1,135 +1,55 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import "../../YourTeamPanel/components/addTeamWindow.css";
-import bin from "../../../img/binIcon.png";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useParams } from "react-router-dom";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { useTeams } from "../../Players/components/useTeams";
+import { useContext, useRef, useState } from "react";
 import Select from "react-select";
+import ImagePreview from "../../../components/ImagePreview";
 import { LanguageContext } from "../../../context/LanguageContext";
+import useFileReader from "../../../hooks/useFileReader";
+import "../../YourTeamPanel/components/addTeamWindow.css";
+import useOpponents from "../hooks/useOpponents";
 import translate from "../locales/locales.json";
 
 function AddOpponentWindow({ open, onClose, Teams }) {
-  const { id } = useParams();
   const { language } = useContext(LanguageContext);
-  const [firstOpponentName, setFirstOpponentName] = useState("");
-  const [secondOpponentName, setSecondOpponentName] = useState("");
+
+  const elements = [
+    { name: translate.firstOpponentName[language], className: "firstName" },
+    { name: translate.secondOpponentName[language], className: "secondName" },
+  ];
   const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams);
-  const { user } = useAuthContext();
+  const { preview, setPreview } = useFileReader(image);
+  const {
+    handleSubmit,
+    opponent,
+    teamOptions,
+    handleTeamChange,
+    setOpponent,
+    handleValueChange,
+  } = useOpponents(Teams, image);
 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
 
-  useEffect(() => {
-    if (image) {
-      if (Math.round(image.size / 1024) < 1000) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-        };
-        reader.readAsDataURL(image);
-      } else {
-        setPreview(null);
-        alert(translate.maxSize[language]);
-      }
-    } else {
-      setPreview(null);
-    }
-  }, [image]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!firstOpponentName || !secondOpponentName) {
-      alert(translate.emptyField[language]);
-    } else if (!selectedTeam) {
-      alert(translate.noTeam[language]);
-    } else {
-      if (preview) {
-        const storage = getStorage();
-        const metadata = {
-          contentType: "image/png",
-        };
-        const storageRef = ref(storage, `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`);
-
-        const uploadTask = uploadBytesResumable(storageRef, image, metadata);
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
-          },
-          (error) => {
-            console.log(error);
-          },
-          async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              const docRef = collection(db, "Opponents");
-              addDoc(docRef, {
-                firstName: firstOpponentName.trim(),
-                secondName: secondOpponentName.trim(),
-                img: downloadURL,
-                uid: id ? id : user.uid,
-                team: selectedTeam,
-              });
-            });
-          }
-        );
-      } else {
-        const docRef = collection(db, "Opponents");
-        addDoc(docRef, {
-          firstName: firstOpponentName.trim(),
-          secondName: secondOpponentName.trim(),
-          img: "",
-          uid: id ? id : user.uid,
-          team: selectedTeam,
-        });
-      }
-      onClose(true);
-      setFirstOpponentName("");
-      setSecondOpponentName("");
-      setImage(null);
-    }
-  };
   return (
     <div className={open ? "active-modal" : "modal"}>
       <div className="add-window">
-        <label>{translate.firstOpponentName[language] }</label>
-        <input
-          type="text"
-          onChange={(e) => setFirstOpponentName(e.target.value)}
-          value={firstOpponentName}
-          className="firstOpponentName"
-          required
+        {elements.map((item, i) => (
+          <>
+            <label key={i}>{item.name}</label>
+            <input
+              type="text"
+              onChange={(e) => handleValueChange(e, item.className)}
+              value={opponent[item.className]}
+              className={item.className}
+              required
+            />
+          </>
+        ))}
+        <label>{translate.team[language]}</label>
+        <Select
+          options={teamOptions}
+          onChange={(option) => handleTeamChange(option.value)}
         />
-        <label>{translate.secondOpponentName[language] }</label>
-        <input
-          type="text"
-          onChange={(e) => setSecondOpponentName(e.target.value)}
-          value={secondOpponentName}
-          className="secondOpponentName"
-          required
-        />
-
-        <>
-          <label>{translate.team[language]}</label>
-          <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
-        </>
-
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           {translate.addCrest[language]}
         </button>
@@ -147,24 +67,26 @@ function AddOpponentWindow({ open, onClose, Teams }) {
             }
           }}
         />
-        <div className="add-logo-window">
-          <div className="image-container">{preview && <img src={preview} className="image" />}</div>
-          <div className="bin-container">{preview && <img src={bin} onClick={() => setPreview(null)} />}</div>
-        </div>
-
+        <ImagePreview preview={preview} setPreview={setPreview} />
         <div className="buttons-container">
           <button
             onClick={() => {
               onClose();
-              setFirstOpponentName("");
-              setSecondOpponentName("");
+              setOpponent(null);
               setImage(null);
             }}
             className="btn primary-btn"
           >
             {translate.cancel[language]}
           </button>
-          <button onClick={handleSubmit} className="btn primary-btn">
+          <button
+            onClick={(e) => {
+              handleSubmit(e);
+              setImage(null);
+              onClose(true);
+            }}
+            className="btn primary-btn"
+          >
             {translate.save[language]}
           </button>
         </div>

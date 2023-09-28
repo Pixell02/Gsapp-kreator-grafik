@@ -1,126 +1,51 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import "../../YourTeamPanel/components/addTeamWindow.css";
-import bin from "../../../img/binIcon.png";
-import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { doc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { useTeams } from "../../Players/components/useTeams";
-import translate from "../locales/locales.json";
+import { useContext, useRef, useState } from "react";
+import ImagePreview from "../../../components/ImagePreview";
 import { LanguageContext } from "../../../context/LanguageContext";
+import useFileReader from "../../../hooks/useFileReader";
+import "../../YourTeamPanel/components/addTeamWindow.css";
+import useOpponents from "../hooks/useOpponents";
+import translate from "../locales/locales.json";
 
 function EditOpponentWindow({ player, open, onClose, Teams }) {
   const { language } = useContext(LanguageContext);
-  const [firstOpponentName, setFirstOpponentName] = useState(player.firstName);
-  const [secondOpponentName, setSecondOpponentName] = useState(player.secondName);
+  const elements = [
+    { name: translate.firstOpponentName[language], className: "firstName" },
+    { name: translate.secondOpponentName[language], className: "secondName" },
+  ];
+
   const [image, setImage] = useState(player.img);
-  const [isImage, setIsImage] = useState(true);
-  const [preview, setPreview] = useState(player.img);
-  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
-  const { user } = useAuthContext();
+  const {
+    handleSubmit,
+    opponent,
+    teamOptions,
+    handleTeamChange,
+    setOpponent,
+    handleValueChange,
+    selectedTeam,
+  } = useOpponents(Teams, image, player);
+  const { preview, setPreview } = useFileReader(image);
+
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
 
-  useEffect(() => {
-    if (!image) {
-      setIsImage(false);
-    }
-  }, []);
-
-  const handleEdit = (e) => {
-    const file = e.target.files[0];
-    setIsImage(false);
-    if (file.size > 1000000) {
-      alert(translate.maxSize[language]);
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-    setImage(file);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!firstOpponentName || !secondOpponentName) {
-      alert(translate.emptyField[language]);
-    } else if (!selectedTeam) {
-      alert(translate.noTeam[language]);
-    } else {
-      if (!isImage) {
-        const storage = getStorage();
-        const metadata = {
-          contentType: "image/png",
-        };
-        const storageRef = ref(storage, `${user.uid}/przeciwnicy/${firstOpponentName}_${secondOpponentName}`);
-
-        const uploadTask = uploadBytesResumable(storageRef, image, metadata);
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
-          },
-          (error) => {
-            console.log(error);
-          },
-          async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              const docRef = doc(db, "Opponents", player.id);
-              updateDoc(docRef, {
-                firstName: firstOpponentName.trim(),
-                secondName: secondOpponentName.trim(),
-                img: downloadURL,
-                team: selectedTeam,
-              });
-            });
-          }
-        );
-      } else {
-        const docRef = doc(db, "Opponents", player.id);
-        updateDoc(docRef, {
-          firstName: firstOpponentName.trim(),
-          secondName: secondOpponentName.trim(),
-          team: selectedTeam,
-        });
-      }
-      onClose();
-      setFirstOpponentName("");
-      setSecondOpponentName("");
-      setImage(null);
-    }
-  };
-
   return (
     <div className={open ? "active-modal m-edit" : "modal"}>
       <div className="add-window">
-        <label>{translate.firstOpponentName[language]}</label>
-        <input
-          type="text"
-          onChange={(e) => setFirstOpponentName(e.target.value)}
-          value={firstOpponentName}
-          className="firstPlayerName"
-        />
-        <label>{translate.secondOpponentName[language]}</label>
-        <input
-          type="text"
-          onChange={(e) => setSecondOpponentName(e.target.value)}
-          value={secondOpponentName}
-          className="secondPlayerName"
-        />
+        {elements.map((item, i) => (
+          <>
+            <label key={i}>{item.name}</label>
+            <input
+              type="text"
+              onChange={(e) => handleValueChange(e, item.className)}
+              value={opponent[item.className]}
+              className={item.className}
+              required
+            />
+          </>
+        ))}
+
         <label>{translate.team[language]}</label>
         <select
           name="country"
@@ -130,7 +55,10 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
           onChange={(e) => handleTeamChange(e.target.value)}
         >
           <option value=""></option>
-          {teamOptions && teamOptions.map((team) => <option value={team.value}>{team.label}</option>)}
+          {teamOptions &&
+            teamOptions.map((team) => (
+              <option value={team.value}>{team.label}</option>
+            ))}
         </select>
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           {translate.addCrest[language]}
@@ -141,26 +69,37 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
-            handleEdit(e);
+            const file = e.target.files[0];
+            if (file) {
+              setImage(file);
+            } else {
+              setImage(null);
+            }
           }}
         />
-        <div className="add-logo-window">
-          <div className="image-container">{preview && <img src={preview} />}</div>
-          <div className="bin-container">{preview && <img src={bin} onClick={() => setPreview(null)} />}</div>
-        </div>
+        <ImagePreview
+          preview={preview || image}
+          setPreview={image ? setImage : setPreview}
+        />
         <div className="buttons-container">
           <button
             onClick={() => {
               onClose();
-              setFirstOpponentName("");
-              setSecondOpponentName("");
+              setOpponent(null);
               setImage(null);
             }}
             className="btn primary-btn"
           >
             {translate.cancel[language]}
           </button>
-          <button onClick={handleSubmit} className="btn primary-btn">
+          <button
+            onClick={(e) => {
+              handleSubmit(e);
+              onClose();
+              setImage(null);
+            }}
+            className="btn primary-btn"
+          >
             {translate.save[language]}
           </button>
         </div>
