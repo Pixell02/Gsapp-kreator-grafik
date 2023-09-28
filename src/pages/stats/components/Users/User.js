@@ -1,5 +1,5 @@
 import React from "react";
-import UserButton from "../subComponents/UserButton";
+import UserButton from "../UserButton";
 
 const User = ({ license }) => {
   return (
@@ -11,9 +11,15 @@ const User = ({ license }) => {
         </td>
         <>
           <td className="dimension">
-            <img src={license?.team?.img} className="logo-img" alt={license?.team?.firstName + " " + license?.team?.secondName} />
+            <img
+              src={license?.team?.img}
+              className="logo-img"
+              alt={license?.team?.firstName + " " + license?.team?.secondName}
+            />
           </td>
-          <td className="dimension">{license?.team?.firstName + " " + license?.team?.secondName}</td>
+          <td className="dimension">
+            {license?.team?.firstName + " " + license?.team?.secondName}
+          </td>
           <td className="dimension">{license?.team?.sport}</td>
         </>
         <td className="dimension">{license?.license}</td>
