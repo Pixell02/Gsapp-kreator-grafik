@@ -1,8 +1,8 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import React from "react";
-import { db } from "../../../firebase/config";
-import { useCollection } from "../../../hooks/useCollection";
-import usePromoCode from "./hooks/usePromoCode";
+import { db } from "../../../../firebase/config";
+import { useCollection } from "../../../../hooks/useCollection";
+import usePromoCode from "../hooks/usePromoCode";
 import "./promoCode.css";
 
 export default function PromoCode() {

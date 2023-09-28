@@ -1,18 +1,15 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import React, { useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Title from "../../../components/main-content-elements/Title";
-import { db } from "../../../firebase/config";
-import { useCollection } from "../../../hooks/useCollection";
-import "../Stats.css";
-import PosterLinkBlock from "../../../components/main-content-elements/PosterLinkBlock";
+import PosterLinkBlock from "../../../../components/main-content-elements/PosterLinkBlock";
+import Title from "../../../../components/main-content-elements/Title";
+import { db } from "../../../../firebase/config";
+import { useCollection } from "../../../../hooks/useCollection";
+import "../../Stats.css";
 
-export default function UsersPosters() {
+export default function UsersPosters({ Teams }) {
   const navigate = useNavigate();
   const { documents: userPosters } = useCollection("yourCatalog");
-  const { documents: Teams } = useCollection("Teams");
   const [users, setUsers] = useState("");
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
@@ -62,10 +59,14 @@ export default function UsersPosters() {
               <span className="users-id">
                 {Teams &&
                   Teams.filter((teams) => teams.uid === user).map((teams) =>
-                    teams.firstName ? teams.firstName + " " + teams.secondName + " " : null
+                    teams.firstName
+                      ? teams.firstName + " " + teams.secondName + " "
+                      : null
                   )}
                 {user !== undefined ? `(${user})` : null}
-                {user === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && <span>(Moje konto)</span>}
+                {user === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && (
+                  <span>(Moje konto)</span>
+                )}
               </span>
 
               <div className="users-posters">

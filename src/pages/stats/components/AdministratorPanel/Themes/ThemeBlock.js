@@ -1,17 +1,19 @@
-import React from "react";
-import "./themeBlock.css";
-import { useState } from "react";
 import { Switch } from "antd";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../../firebase/config";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PosterLinkBlock from "../../../../components/main-content-elements/PosterLinkBlock";
+import PosterLinkBlock from "../../../../../components/main-content-elements/PosterLinkBlock";
+import { db } from "../.././../../../firebase/config";
+import "./themeBlock.css";
 
-export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedTheme }) {
-  
+export default function ThemeBlock({
+  themes,
+  posters,
+  setIsOpen,
+  setSelectedTheme,
+}) {
   const navigate = useNavigate();
 
-  
   const [itemToEdit, setItemToEdit] = useState(null);
 
   const handleClick = (e, item) => {
@@ -25,7 +27,7 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
     updateDoc(docRef, {
       public: updatedPublicValue,
     }).then(() => {
-      console.log("made")
+      console.log("made");
     });
   };
 
@@ -68,17 +70,26 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
               <div className="theme-name">
                 {theme.theme}{" "}
                 <div>
-                  <button className="btn" onClick={(e) => handleClickEdit(e, theme)}>
+                  <button
+                    className="btn"
+                    onClick={(e) => handleClickEdit(e, theme)}
+                  >
                     Edytuj nazwę
                   </button>
                 </div>
               </div>
               <div className="d-flex w-100 justify-content-end mt-3 mx-2">
-                <button className="btn mx-3" onClick={(e) => handleClickDelete(e, theme)}>
+                <button
+                  className="btn mx-3"
+                  onClick={(e) => handleClickDelete(e, theme)}
+                >
                   Usuń
                 </button>
                 {theme.public ? <span>Publiczny</span> : <span>Prywatny</span>}{" "}
-                <Switch checked={theme.public} onChange={() => handleToggle(theme)} />
+                <Switch
+                  checked={theme.public}
+                  onChange={() => handleToggle(theme)}
+                />
               </div>
             </div>
             <div className="d-flex w-100 poster-content">

@@ -1,8 +1,8 @@
-import React from 'react';
-import { useCollection } from '../../../hooks/useCollection';
+import React from "react";
+import { useCollection } from "../../../../hooks/useCollection";
 
 export default function Logs() {
-  const { documents: logs } = useCollection('logs');
+  const { documents: logs } = useCollection("logs");
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -14,7 +14,7 @@ export default function Logs() {
       <table>
         <thead>
           <tr>
-            <th className='w-25'>Dodane przez</th>
+            <th className="w-25">Dodane przez</th>
             <th>Opis</th>
             <th>Dla konta</th>
             <th>Czas</th>

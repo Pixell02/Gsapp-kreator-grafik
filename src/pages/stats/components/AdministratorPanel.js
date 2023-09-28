@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react";
-import LicenseStats from "./LicenseStats";
-import "../Stats.css";
-import UsersPosters from "./UsersPosters";
-import Orders from "./Orders";
-import Users from "./Users";
-import FavoriteTheme from "./FavoriteTheme";
-import UsersCountry from "./UsersCountry";
-import Themes from "./Themes";
+import React, { useEffect, useState } from "react";
 import { useSearch } from "../../../hooks/useLimit";
-import PromoCode from "./PromoCode";
-import Logs from "./Logs";
-import ToDo from "./ToDo";
+import "../Stats.css";
+import FavoriteTheme from "./AdministratorPanel/FavoriteTheme";
+import LicenseStats from "./AdministratorPanel/LicenseStats";
+import Logs from "./AdministratorPanel/Logs";
+import Orders from "./AdministratorPanel/Orders";
+import PromoCode from "./AdministratorPanel/PromoCode";
+import Teams from "./AdministratorPanel/Teams";
+import Themes from "./AdministratorPanel/Themes";
+import ToDo from "./AdministratorPanel/ToDo";
+import Users from "./AdministratorPanel/Users";
+import UsersCountry from "./AdministratorPanel/UsersCountry";
+import UsersPosters from "./AdministratorPanel/UsersPosters";
 
 export default function AdministratorPanel() {
   const [activeBar, setActiveBar] = useState("users");
   const [radioValue, setRadioValue] = useState("full-license");
   const [search, setSearch] = useState("");
-  const { documents: users, loading, allUsers } = useSearch("Teams", radioValue, search === "" ? null : search);
+  const {
+    documents: users,
+    loading,
+    allUsers,
+  } = useSearch("Teams", radioValue, search === "" ? null : search);
 
   const [dataFiltered, setDataFiltered] = useState([]);
 
@@ -42,7 +47,9 @@ export default function AdministratorPanel() {
             <span>użytkownicy</span>
           </li>
           <li
-            className={activeBar === "themes" ? "trapezoid-active" : "trapezoid"}
+            className={
+              activeBar === "themes" ? "trapezoid-active" : "trapezoid"
+            }
             onClick={() => {
               setActiveBar("themes");
             }}
@@ -57,19 +64,29 @@ export default function AdministratorPanel() {
           >
             <span>Statystyki</span>
           </li>
-          <li className={activeBar === "logs" ? "trapezoid-active" : "trapezoid"}
+          <li
+            className={activeBar === "logs" ? "trapezoid-active" : "trapezoid"}
             onClick={() => {
-            setActiveBar("logs")
-          }}
+              setActiveBar("logs");
+            }}
           >
             <span>Logi</span>
           </li>
-          <li className={activeBar === "toDo" ? "trapezoid-active" : "trapezoid"}
+          <li
+            className={activeBar === "toDo" ? "trapezoid-active" : "trapezoid"}
             onClick={() => {
-            setActiveBar("toDo")
-          }}
+              setActiveBar("toDo");
+            }}
           >
-            <span style={{fontSize: "10px"}}>do zrobienia</span>
+            <span style={{ fontSize: "10px" }}>do zrobienia</span>
+          </li>
+          <li
+            className={activeBar === "teams" ? "trapezoid-active" : "trapezoid"}
+            onClick={() => {
+              setActiveBar("teams");
+            }}
+          >
+            <span style={{ fontSize: "10px" }}>Kluby</span>
           </li>
         </ul>
         <hr />
@@ -81,13 +98,13 @@ export default function AdministratorPanel() {
               <FavoriteTheme />
               <UsersCountry />
             </div>
-            <Orders />
+            <Orders user={allUsers} />
           </>
         )}
         {activeBar === "users" && (
           <>
             <PromoCode />
-            <UsersPosters />
+            <UsersPosters Teams={allUsers} />
             <Users
               allUsers={allUsers}
               users={dataFiltered}
@@ -102,6 +119,7 @@ export default function AdministratorPanel() {
         {activeBar === "themes" && <Themes />}
         {activeBar === "logs" && <Logs />}
         {activeBar === "toDo" && <ToDo />}
+        {activeBar === "teams" && <Teams />}
       </div>
     </div>
   );

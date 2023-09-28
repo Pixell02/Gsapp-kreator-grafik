@@ -1,10 +1,7 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useCollection } from "../../../hooks/useCollection";
-import "../Stats.css";
+import React, { useEffect, useState } from "react";
+import { useCollection } from "../../../../hooks/useCollection";
+import "../../Stats.css";
 export default function LicenseStats(props) {
-  
   const { documents: license } = useCollection("user");
   const [fullLicenseCount, setFullLicenseCount] = useState();
   const [freeLicenseCount, setFreeLicenseCount] = useState();
@@ -37,7 +34,12 @@ export default function LicenseStats(props) {
       );
       setAdminCount(matchAdminAccount.length);
 
-      setUserCount(matchFreeLicense.length + matchFullLicense.length + matchNoLicense.length + matchAdminAccount.length)
+      setUserCount(
+        matchFreeLicense.length +
+          matchFullLicense.length +
+          matchNoLicense.length +
+          matchAdminAccount.length
+      );
     }
   }, [license]);
 

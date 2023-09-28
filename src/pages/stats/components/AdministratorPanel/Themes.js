@@ -1,10 +1,9 @@
-import React from "react";
-import { useState } from "react";
-import { useCollection } from "../../../hooks/useCollection";
-import useOrderBy from "../../Catalog/hooks/useOrderBy";
-import ThemesBar from "./Themes/ThemesBar";
-import ThemeBlock from "./Themes/ThemeBlock";
+import React, { useState } from "react";
+import { useCollection } from "../../../../hooks/useCollection";
+import useOrderBy from "../../../Catalog/hooks/useOrderBy";
 import Modals from "./Themes/Modals";
+import ThemeBlock from "./Themes/ThemeBlock";
+import ThemesBar from "./Themes/ThemesBar";
 
 export default function Themes() {
   const [selectedSportOption, setSelectedSportOption] = useState("piłka nożna");
