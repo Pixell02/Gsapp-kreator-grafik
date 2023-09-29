@@ -22,8 +22,8 @@ const OrderDimension = ({ history, dataFiltered }) => {
               </ul>
             </td>
             <td className="dimension">
-              <div>{`${user.team.firstName} ${
-                user.team.secondName
+              <div>{`${user?.team?.firstName} ${
+                user?.team?.secondName
               } (${user.uid.substring(0, 10)}...)`}</div>
             </td>
           </>
