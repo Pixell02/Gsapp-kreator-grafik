@@ -1,22 +1,32 @@
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { useState, useEffect, useContext } from "react";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import moment from "moment";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LanguageContext } from "../../context/LanguageContext";
 import { db } from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCollection } from "../../hooks/useCollection";
-import moment from "moment";
-import { getFunctions, httpsCallable } from "firebase/functions";
-import { LanguageContext } from "../../context/LanguageContext";
 
 export default function Success() {
   const { user } = useAuthContext();
-  const { documents: ordersId } = useCollection("orderId", ["uid", "==", user.uid]);
+  const { documents: ordersId } = useCollection("orderId", [
+    "uid",
+    "==",
+    user.uid,
+  ]);
   const { language } = useContext(LanguageContext);
   const functions = getFunctions();
   const getOrder = httpsCallable(functions, "getOrder");
   const createFax = httpsCallable(functions, "createFax");
-  const checkTransactionStatus = httpsCallable(functions, "checkTransactionStatus");
-  const transactionConfirmation = httpsCallable(functions, "transactionConfirmation");
+  const checkTransactionStatus = httpsCallable(
+    functions,
+    "checkTransactionStatus"
+  );
+  const transactionConfirmation = httpsCallable(
+    functions,
+    "transactionConfirmation"
+  );
   const navigate = useNavigate();
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
   const { documents: users } = useCollection("user", ["team", "==", user.uid]);
@@ -47,7 +57,9 @@ export default function Success() {
       setStatus(`Status zamówienia ${orderId} to ${order.status}`);
       if (order.status === "COMPLETED") {
         if (order.description === "Licencja") {
-          const newDate = moment(currentDate).add(1, "months").format("MM-DD-YYYY");
+          const newDate = moment(currentDate)
+            .add(1, "months")
+            .format("MM-DD-YYYY");
           const docRef = doc(db, "user", License[0].id);
           setStatus(`Przyznawanie licencji, która wygaśnie ${newDate}`);
           setDoc(docRef, {
@@ -100,14 +112,13 @@ export default function Success() {
 
   useEffect(() => {
     setTimeout(() => {
-       if (orderId && License && !isReady) {
-      if (License.length > 0) {
-        handleGetOrder();
-        setIsReady(true);
+      if (orderId && License && !isReady) {
+        if (License.length > 0) {
+          handleGetOrder();
+          setIsReady(true);
+        }
       }
-    }
-    },1000)
-   
+    }, 1000);
   }, [License, orderId]);
 
   return (
