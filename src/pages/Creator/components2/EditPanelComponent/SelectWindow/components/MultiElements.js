@@ -9,7 +9,6 @@ import useProperties from "./MultiElements/hooks/useProperties";
 
 const MultiElements = ({ fabricRef, coords, selectedMatch }) => {
   const { properties } = useProperties(coords);
-
   return (
     <div>
       <p>Mecz {selectedMatch}</p>
