@@ -2,6 +2,8 @@ const fonts = [
   { label: "Russo_one", value: "Russo_one" },
   { label: "Raleway medium", value: "Raleway Medium" },
   { label: "Raleway black", value: "Raleway Black" },
+  { label: "evorgia regular", value: "evorgia regular" },
+  { label: "evorgia italic", value: "evorgia italic" },
   { label: "Impact", value: "Impact" },
   { label: "Poppins Regular", value: "Poppins" },
   { label: "Poppins-ThinItalic", value: "Poppins-ThinItalic" },
@@ -9,7 +11,7 @@ const fonts = [
   { label: "Poppins-ExtraBoldItalic", value: "Poppins-ExtraBoldItalic" },
   { label: "Bai Jamjuree", value: "Bai Jamjuree" },
   { label: "BaiJamjuree-BoldItalic", value: "BaiJamjuree-BoldItalic" },
-  { label: "BaiJamjuree-Bold", value: "BaiJamjuree-Bold"},
+  { label: "BaiJamjuree-Bold", value: "BaiJamjuree-Bold" },
   { label: "Poppins-italic", value: "Poppins-italic" },
   { label: "Poppins Bold", value: "Poppins Bold" },
   { label: "Baron-Neue-Black", value: "Baron-Neue-Black" },
@@ -18,10 +20,10 @@ const fonts = [
   { label: "Goldman-Regular", value: "Goldman-Regular" },
   { label: "Goldman-Bold", value: "Goldman-Bold" },
   { label: "kenyan coffee", value: "kenyan coffee" },
-  {label: "kenyan coffee italic", value: "kenyan coffee italic" },
-  {label: "kenyan coffee bold", value: "kenyan coffee bold" },
-  {label: "kenyan coffee bold italic", value: "kenyan coffee bold italic" },
-  { label: "eurostar", value:"eurostar"},
+  { label: "kenyan coffee italic", value: "kenyan coffee italic" },
+  { label: "kenyan coffee bold", value: "kenyan coffee bold" },
+  { label: "kenyan coffee bold italic", value: "kenyan coffee bold italic" },
+  { label: "eurostar", value: "eurostar" },
   { label: "Made Outer Sans Thin", value: "Made Outer Sans Thin" },
   { label: "Made Outer Sans Regular", value: "Made Outer Sans Regular" },
   { label: "Made Outer Sans Black", value: "Made Outer Sans Black" },
@@ -33,8 +35,8 @@ const fonts = [
   { label: "Teko-SemiBold", value: "Teko-SemiBold" },
   { label: "gravtrac", value: "gravtrac" },
   { label: "Nexa-Heavy", value: "Nexa-trial-Heavy" },
-  { label: "paladins expanded", value: "paladins expanded"},
+  { label: "paladins expanded", value: "paladins expanded" },
   { label: "motorblock", value: "motorblock" },
-]
+];
 
 export default fonts;
