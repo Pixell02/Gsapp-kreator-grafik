@@ -1,11 +1,9 @@
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { useState } from "react";
 
 const useStorage = () => {
+  const [progressInfo, setProgress] = useState("");
+
   const storage = getStorage();
   const metadata = {
     contentType: "image/png",
@@ -19,9 +17,8 @@ const useStorage = () => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          let progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -51,7 +48,7 @@ const useStorage = () => {
     });
   };
 
-  return { handleAddImage };
+  return { handleAddImage, progressInfo };
 };
 
 export default useStorage;
