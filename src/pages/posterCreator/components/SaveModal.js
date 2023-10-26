@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import useSearchTeam from "./hooks/useSearchTeam";
-import "./SaveModal.css";
-import Users from "./Users";
-import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { LanguageContext } from "../../../context/LanguageContext";
+import { db } from "../../../firebase/config";
 import { BackgroundContext } from "../Context/BackgroundContext";
 import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
-import { useNavigate } from "react-router-dom";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
-import { LanguageContext } from "../../../context/LanguageContext";
+import "./SaveModal.css";
+import Users from "./Users";
+import useSearchTeam from "./hooks/useSearchTeam";
 
 export default function SaveModal({ isOpen, setIsOpen }) {
   const { language } = useContext(LanguageContext);
@@ -21,6 +21,7 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const [query, setQuery] = useState("");
   const [users, loading, error] = useSearchTeam(query);
   const { background, image } = useContext(BackgroundContext);
+
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [radioValue, setRadioValue] = useState("");
   const [userPoster, setUserPoster] = useState({
@@ -43,7 +44,6 @@ export default function SaveModal({ isOpen, setIsOpen }) {
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
   };
-
 
   const handleAddDoc = async () => {
     if (manyBackgrounds) {
@@ -121,48 +121,48 @@ export default function SaveModal({ isOpen, setIsOpen }) {
             .then((downloadURL) => {
               if (image.additionalLayer) {
                 const storage = getStorage();
-        const metadata = {
-          contentType: "image/jpeg",
-        };
-        const player = ref(storage, `${userPoster.uid}/posters/${globalProperties.uid}/${globalProperties.uid}`);
+                const metadata = {
+                  contentType: "image/jpeg",
+                };
+                const player = ref(storage, `${userPoster.uid}/posters/${globalProperties.uid}/${globalProperties.uid}`);
 
-        const uploadTask = uploadBytesResumable(player, image.additionalLayer, metadata);
+                const uploadTask = uploadBytesResumable(player, image.additionalLayer, metadata);
 
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setPercentageProgress("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("dodawanie...");
-                break;
-              default:
-                console.log("default");
-            }
-          },
-          (error) => {
-            console.log(error);
-          },
-          async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((additionalURL) => {
-              setDoc(doc(collection(db, "yourCatalog"), id), {
-                color: image.color ? "tło 1" : null,
-                name: userPoster.name,
-                src: downloadURL,
-                additionalLayer: additionalURL,
-                uid: userPoster.uid,
-                uuid: userPoster.uuid,
-              });
-            });
-          }
-        );
+                uploadTask.on(
+                  "state_changed",
+                  (snapshot) => {
+                    let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setPercentageProgress("Upload is " + progress + "% done");
+                    switch (snapshot.state) {
+                      case "paused":
+                        console.log("Upload is paused");
+                        break;
+                      case "running":
+                        console.log("dodawanie...");
+                        break;
+                      default:
+                        console.log("default");
+                    }
+                  },
+                  (error) => {
+                    console.log(error);
+                  },
+                  async () => {
+                    await getDownloadURL(uploadTask.snapshot.ref).then((additionalURL) => {
+                      setDoc(doc(collection(db, "yourCatalog"), id), {
+                        color: image.color,
+                        name: userPoster.name,
+                        src: downloadURL,
+                        additionalLayer: additionalURL,
+                        uid: userPoster.uid,
+                        uuid: userPoster.uuid,
+                      });
+                    });
+                  }
+                );
               } else {
                 setDoc(doc(collection(db, "yourCatalog"), id), {
-                  color: image.color ? "tło 1" : null,
+                  color: image.color,
                   name: userPoster.name,
                   src: downloadURL,
                   uid: userPoster.uid,

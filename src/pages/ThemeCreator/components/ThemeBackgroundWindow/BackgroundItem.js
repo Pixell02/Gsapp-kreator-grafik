@@ -16,7 +16,9 @@ const BackgroundItem = ({ item, i, handleNameChange, handleSelectColor, handleDe
       <button onClick={() => handleSelectColor(item)} className="btn">
         wybierz
       </button>
-      <button onClick={() => handleDeleteItem(item)} className="btn ml-2">Usuń</button>
+      <button onClick={() => handleDeleteItem(item)} className="btn ml-2">
+        Usuń
+      </button>
     </div>
   );
 };

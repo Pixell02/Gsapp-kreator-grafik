@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import "../../../components/main-content-elements/Block.css";
-import * as Icon from "react-bootstrap-icons";
 import { LanguageContext } from "../../../context/LanguageContext";
-import { useContext } from "react";
 import useCatalog from "../hooks/useCatalog";
 
 function Catalog() {
@@ -54,47 +52,43 @@ function Catalog() {
   return (
     <>
       <div className="catalog-container">
-        {isOpen &&
-          isOpen.map((category, i) => (
-            <div className="mg-container">
-              <div className="nav-container" onClick={() => handleCategory(i)}>
-                <div className={category.expanded ? "nav-window" : "nav-window-dark"}>
-                  <div className="category-icon-container">
-                    <Icon.ChevronCompactDown
-                      className={category.expanded ? "extend-icon-open" : "extend-icon-close"}
-                      style={{ marginLeft: "20px" }}
-                    />
-                  </div>
-                  <span>{category.theme} </span>
-                  <div className="empty-container"></div>
+        {isOpen?.map((category, i) => (
+          <div className="mg-container">
+            <div className="nav-container" onClick={() => handleCategory(i)}>
+              <div className={category.expanded ? "nav-window" : "nav-window-dark"}>
+                <div className="category-icon-container">
+                  <Icon.ChevronCompactDown
+                    className={category.expanded ? "extend-icon-open" : "extend-icon-close"}
+                    style={{ marginLeft: "20px" }}
+                  />
                 </div>
-              </div>
-
-              <div className={category.expanded ? "poster-container-close" : "poster-container-open"}>
-                <>
-                  {posters &&
-                    posters
-                      .filter((poster) => poster.themeId === category.id)
-                      .map((poster) => (
-                        <>
-                          <div className="item-category-window">
-                            <Link to={`/${language}/creator/theme/${poster.uid}`}>
-                              <div className="name-content">
-                                <span className="name-content">{poster.name}</span>
-                              </div>
-                              <div className="image-category-content">
-                                {poster.src && (
-                                  <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />
-                                )}
-                              </div>
-                            </Link>
-                          </div>
-                        </>
-                      ))}
-                </>
+                <span>{category.theme} </span>
+                <div className="empty-container"></div>
               </div>
             </div>
-          ))}
+
+            <div className={category.expanded ? "poster-container-close" : "poster-container-open"}>
+              <>
+                {posters
+                  ?.filter((poster) => poster.themeId === category.id)
+                  .map((poster) => (
+                    <>
+                      <div className="item-category-window">
+                        <Link to={`/${language}/creator/theme/${poster.uid}`}>
+                          <div className="name-content">
+                            <span className="name-content">{poster.name}</span>
+                          </div>
+                          <div className="image-category-content">
+                            {poster.src && <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />}
+                          </div>
+                        </Link>
+                      </div>
+                    </>
+                  ))}
+              </>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );

@@ -1,7 +1,5 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const useIsTheme = () => {
   const location = useLocation();
@@ -19,7 +17,7 @@ const useIsTheme = () => {
     }
     return null; // Jeśli nie znaleziono wartości theme w adresie URL
   };
-  return {hasTheme }
-}
+  return { hasTheme };
+};
 
-export default useIsTheme
+export default useIsTheme;

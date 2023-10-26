@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Select from "react-select";
+import radioContext from "../../../context/radioContext";
 import useCreateOpponentGoals from "../../../hooks2/useCreateOpponentGoals";
 import useCreateYourTeamGoals from "../../../hooks2/useCreateYourTeamGoals";
-import Select from "react-select";
-import yourTeamResult from "./result/yourTeamResult";
-import { useContext } from "react";
-import radioContext from "../../../context/radioContext";
 import opponentTeamResult from "./result/opponentTeamResult";
-import translate from "../../../locales/translate.json"
-import { LanguageContext } from "../../../../../context/LanguageContext";
+import yourTeamResult from "./result/yourTeamResult";
 
 export default function PlayersGoals({ fabricRef, coords, themeOption, posterBackground, Players }) {
   const [playerOptions, setPlayerOption] = useState([]);
-  const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] =
-    useCreateOpponentGoals(Array(9).fill());
+  const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] = useCreateOpponentGoals(
+    Array(9).fill()
+  );
   const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
     Array(9).fill()
   );
   const { radioChecked } = useContext(radioContext);
-  const {language} = useContext(LanguageContext)
+
   useEffect(() => {
     if (Players) {
       const options = Players.map((player) => ({
@@ -30,24 +28,21 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
   }, [Players]);
 
   useEffect(() => {
-    
     if (fabricRef.current?._objects && (yourTeamGoal || yourTeamGoalMinute)) {
       yourTeamResult({ fabricRef, yourTeamGoal, yourTeamGoalMinute, coords, radioChecked, themeOption });
     }
   }, [fabricRef.current, yourTeamGoal, yourTeamGoalMinute, radioChecked, posterBackground]);
 
   useEffect(() => {
-    if (fabricRef.current?._objects && (opponentGoals || opponentGoalMinute )) { 
-      
-      opponentTeamResult({ fabricRef, opponentGoals, opponentGoalMinute, coords, radioChecked})
+    if (fabricRef.current?._objects && (opponentGoals || opponentGoalMinute)) {
+      opponentTeamResult({ fabricRef, opponentGoals, opponentGoalMinute, coords, radioChecked });
     }
-  },[fabricRef.current, opponentGoals, opponentGoalMinute, radioChecked, posterBackground])
-
-
+  }, [fabricRef.current, opponentGoals, opponentGoalMinute, radioChecked, posterBackground]);
 
   return (
     <div>
-      {coords && coords.yourPlayerOneGoal &&
+      {coords &&
+        coords.yourPlayerOneGoal &&
         yourTeamGoal.map((goal, i) => (
           <div key={i} className="goal-container">
             <div className="minute-container">
