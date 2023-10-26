@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LanguageContext } from "../../context/LanguageContext";
+import React from "react";
 import * as Icon from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
-const PosterLinkBlock = ({ userPoster, itemToEdit, editClick, handleClick, handleDeleteClick }) => {
-  const navigate = useNavigate();
-  const { language } = useContext(LanguageContext);
-
+const PosterLinkBlock = ({ userPoster, link, itemToEdit, editClick, handleClick, handleDeleteClick }) => {
   return (
     <div className="item-category-window">
       <div className="name-content">
@@ -21,8 +17,8 @@ const PosterLinkBlock = ({ userPoster, itemToEdit, editClick, handleClick, handl
             <div className="edit-element">
               <button
                 key={userPoster.uid}
-                onClick={(e) => {
-                  editClick(e, userPoster);
+                onClick={() => {
+                  editClick(userPoster);
                 }}
               >
                 Edytuj
@@ -36,7 +32,7 @@ const PosterLinkBlock = ({ userPoster, itemToEdit, editClick, handleClick, handl
           </div>
         )}
       </div>
-      <Link to={`/${language}/creator/${userPoster.uuid}`}>
+      <Link to={link}>
         <div className="image-category-content">
           {userPoster.src && <img src={userPoster.src} alt={userPoster.firstName + " " + userPoster.secondName} />}
         </div>
