@@ -1,17 +1,16 @@
-import { deleteDoc, doc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import { deleteDoc, doc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import * as Icon from "react-bootstrap-icons";
-import { db } from '../firebase/config';
+import { db } from "../firebase/config";
 
 const OptionButton = ({ item, editClick, type, hideElement }) => {
   const [itemToEdit, setItemToEdit] = useState(null);
 
-  
   useEffect(() => {
     const handleClickOutside = (e) => {
-    if (!hideElement.current.contains(e.target)) {
-      setItemToEdit(null);
-    }
+      if (!hideElement.current.contains(e.target)) {
+        setItemToEdit(null);
+      }
     };
     document.body.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -30,17 +29,13 @@ const OptionButton = ({ item, editClick, type, hideElement }) => {
       const ref = doc(db, "placePreset", id);
       await deleteDoc(ref);
     } else if (location === "squadPreset") {
-      const ref = doc(db, "squadPreset", id)
-      await deleteDoc(ref)
+      const ref = doc(db, "squadPreset", id);
+      await deleteDoc(ref);
     }
   };
   return (
     <div className="option-container">
-      <button
-        className="button"
-        key={item.id}
-        onClick={() => setItemToEdit(item)}
-      >
+      <button className="button" key={item.id} onClick={() => setItemToEdit(item)}>
         <Icon.ThreeDotsVertical style={{ margin: "5px 0 0 0", zIndex: "1" }} />
       </button>
       {itemToEdit === item && (
@@ -63,7 +58,7 @@ const OptionButton = ({ item, editClick, type, hideElement }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default OptionButton
+export default OptionButton;
