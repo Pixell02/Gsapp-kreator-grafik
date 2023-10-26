@@ -27,6 +27,7 @@ export default function TeamOption({
       teamLogo(fabricRef, yourLogo, coords, themeOption, radioChecked);
     }
   }, [fabricRef.current, yourLogo, radioChecked]);
+
   useEffect(() => {
     if (fabricRef.current?._objects && yourName) {
       if (coords?.yourTeamName) {
@@ -40,6 +41,7 @@ export default function TeamOption({
       }
     }
   }, [fabricRef.current, yourName, radioChecked, posterBackground]);
+
   return (
     <div>
       {teamOption && teamOption.length > 1 && (
