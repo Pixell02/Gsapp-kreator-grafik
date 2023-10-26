@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 const useFetch = (link) => {
   const [image, setImage] = useState(null);
-
   useEffect(() => {
     if (link) {
       const handleFetch = async (link) => {
