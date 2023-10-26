@@ -26,6 +26,15 @@
   font-family: "gravtrac";
   src: url(./fonts/gravtrac-condensed-bd.ttf);
 }
+@font-face {
+  font-family: "evorgia regular";
+  src: url(./fonts/evogria.regular.ttf);
+}
+
+@font-face {
+  font-family: "evorgia italic";
+  src: url(./fonts/evogria.italic.ttf);
+}
 
 @font-face {
   font-family: "Raleway Medium";
