@@ -1,21 +1,21 @@
+import { fabric } from "fabric";
 import React, { useContext } from "react";
-import BackgroundItem from "./BackgroundItem";
+import useImageRefProvider from "../../../Creator/hooks/useImageRefProvider";
 import { BackgroundContext } from "../../../posterCreator/Context/BackgroundContext";
 import { ManyBackgroundsContext } from "../../../posterCreator/Context/ManyBackgroundsContext";
-import useImageRefProvider from "../../../Creator/hooks/useImageRefProvider";
-import { fabric } from "fabric";
 import useDefaultBackgrounds from "../../hooks/useDefaultBackgrounds";
 import useFileDelete from "../../hooks/useFileDelete";
+import BackgroundItem from "./BackgroundItem";
 
 const BackgroundScreen = ({ backgrounds, fabricRef }) => {
   const { imageRef } = useImageRefProvider();
   const { image, setImage, setColor } = useContext(BackgroundContext);
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
-  const { handleDefaultBackgroundChangeName } = useDefaultBackgrounds();
+  const { handleDefaultBackgroundChangeName } = useDefaultBackgrounds(backgrounds);
   const { handleDeleteFile, handleDeleteLinkFile, handleDeleteImage } = useFileDelete(setImage);
 
   const handleSelectColor = (color) => {
-    setColor(color);
+    setColor(color.color);
     fabric.Image.fromURL(color.preview ? color.preview : color.src, function (img) {
       imageRef.current.setSrc(color.preview ? color.preview : color.src, () => {
         fabricRef.current.renderAll();
@@ -26,19 +26,19 @@ const BackgroundScreen = ({ backgrounds, fabricRef }) => {
   const handleAddAdditionalLayer = (file) => {
     const image = new Image();
     image.src = URL.createObjectURL(file);
-    image.onload = () => { 
+    image.onload = () => {
       fabric.Image.fromURL(image.src, function (img) {
-        img.set({selectable: false})
+        img.set({ selectable: false });
         fabricRef.current.add(img);
         fabricRef.current.bringForward(img);
         fabricRef.current.renderAll();
-      })
-    }
+      });
+    };
     setImage((prev) => ({
       ...prev,
-      additionalLayer: file
-    }))
-  }
+      additionalLayer: file,
+    }));
+  };
 
   const handleMainNameChange = (e) => {
     const newName = e.target.value;
@@ -88,8 +88,24 @@ const BackgroundScreen = ({ backgrounds, fabricRef }) => {
           <button onClick={() => handleDeleteImage(image)} className="btn">
             usuń
           </button>
-          <label style={{width: "80px", height: "36px", backgroundColor:"#444444", color:"white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"}}>
-          <input  type="file" accept="image" style={{opacity: 0}} onChange={(e) => handleAddAdditionalLayer(e.target.files[0])} />
+          <label
+            style={{
+              width: "80px",
+              height: "36px",
+              backgroundColor: "#444444",
+              color: "white",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <input
+              type="file"
+              accept="image"
+              style={{ opacity: 0 }}
+              onChange={(e) => handleAddAdditionalLayer(e.target.files[0])}
+            />
             <span>Dodaj warstwę</span>
           </label>
         </div>
