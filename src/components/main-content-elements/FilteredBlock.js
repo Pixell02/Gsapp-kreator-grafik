@@ -4,7 +4,7 @@ import "./ItemBlock.css";
 
 import { useLocation } from "react-router-dom";
 import OptionButton from "../OptionButton";
-export default function FilteredBlock({ item, editClick }) {
+export default function FilteredBlock({ item, editClick, type }) {
   const hideElement = useRef(null);
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[2];
@@ -22,12 +22,7 @@ export default function FilteredBlock({ item, editClick }) {
               item.name
             )}
           </span>
-          <OptionButton
-            item={item}
-            hideElement={hideElement}
-            editClick={editClick}
-            type={goodLocation}
-          />
+          <OptionButton item={item} hideElement={hideElement} editClick={editClick} type={type || goodLocation} />
         </div>
         <div className="image-content">
           {item.img !== null && item.img !== "" && (
