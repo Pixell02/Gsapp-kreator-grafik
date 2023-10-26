@@ -1,13 +1,10 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
+import useCanvasPropertiesContext from "./hooks/useCanvasPropertiesContext";
 import useFabricCanvas from "./hooks/useFabricCanvas";
 
 function Canvas(props) {
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
+  const { width, setWidth, height, setHeight } = useCanvasPropertiesContext();
   const { initFabric } = useFabricCanvas();
-
 
   useEffect(() => {
     const img = new Image();
@@ -25,15 +22,7 @@ function Canvas(props) {
     };
   }, [props.posterBackGround, props.fabricRef, initFabric, setWidth, setHeight]);
 
-  return (
-    <canvas
-      id="canvas"
-      className="resposive-canvas"
-      ref={props.fabricRef}
-      width={width}
-      height={height}
-    />
-  );
+  return <canvas id="canvas" className="resposive-canvas" ref={props.fabricRef} width={width} height={height} />;
 }
 
 export default Canvas;
