@@ -1,20 +1,20 @@
-import "./WorkSpace.css";
-import { useCollection } from "../../hooks/useCollection";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import background from "../../img/back.png";
-import { exportImg } from "./components/exportImg";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import Canvas from "./Canvas";
-import EditPanel from "./components2/EditPanel";
-import { useContext } from "react";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { LanguageContext } from "../../context/LanguageContext";
-import translate from "./locales/translate.json";
-import usePosters from "./hooks/usePosters";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useCollection } from "../../hooks/useCollection";
+import background from "../../img/back.png";
+import Canvas from "./Canvas";
+import "./WorkSpace.css";
+import { exportImg } from "./components/exportImg";
+import AdminButton from "./components2/AdminButton";
+import EditPanel from "./components2/EditPanel";
+import { CanvasContextProvider } from "./context/CanvasPropertiesContext";
 import useInitScale from "./hooks/useInitScale";
 import useIsTheme from "./hooks/useIsTheme";
-import AdminButton from "./components2/AdminButton";
+import usePosters from "./hooks/usePosters";
+import translate from "./locales/translate.json";
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef();
@@ -26,7 +26,7 @@ function WorkSpace() {
   const { initScale } = useInitScale(dataURL);
 
   return (
-    <>
+    <CanvasContextProvider>
       {Licenses && Licenses[0].license === "no-license" && (
         <div className="license-content">
           <p>
@@ -71,8 +71,7 @@ function WorkSpace() {
             {Licenses && Licenses[0].license === "free-trial" && (
               <div className="license-place">
                 <span className="license-content">
-                  {translate.freeUsesFirstPart[language]} {Licenses[0].numberOfFreeUse}{" "}
-                  {translate.freeUsesLastPart[language]}
+                  {translate.freeUsesFirstPart[language]} {Licenses[0].numberOfFreeUse} {translate.freeUsesLastPart[language]}
                 </span>
               </div>
             )}
@@ -83,7 +82,7 @@ function WorkSpace() {
           </div>
         </div>
       )}
-    </>
+    </CanvasContextProvider>
   );
 }
 
