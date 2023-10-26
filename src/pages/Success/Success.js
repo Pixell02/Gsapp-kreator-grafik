@@ -10,23 +10,13 @@ import { useCollection } from "../../hooks/useCollection";
 
 export default function Success() {
   const { user } = useAuthContext();
-  const { documents: ordersId } = useCollection("orderId", [
-    "uid",
-    "==",
-    user.uid,
-  ]);
+  const { documents: ordersId } = useCollection("orderId", ["uid", "==", user.uid]);
   const { language } = useContext(LanguageContext);
   const functions = getFunctions();
   const getOrder = httpsCallable(functions, "getOrder");
   const createFax = httpsCallable(functions, "createFax");
-  const checkTransactionStatus = httpsCallable(
-    functions,
-    "checkTransactionStatus"
-  );
-  const transactionConfirmation = httpsCallable(
-    functions,
-    "transactionConfirmation"
-  );
+  const checkTransactionStatus = httpsCallable(functions, "checkTransactionStatus");
+  const transactionConfirmation = httpsCallable(functions, "transactionConfirmation");
   const navigate = useNavigate();
   const { documents: License } = useCollection("user", ["uid", "==", user.uid]);
   const { documents: users } = useCollection("user", ["team", "==", user.uid]);
@@ -57,9 +47,7 @@ export default function Success() {
       setStatus(`Status zamówienia ${orderId} to ${order.status}`);
       if (order.status === "COMPLETED") {
         if (order.description === "Licencja") {
-          const newDate = moment(currentDate)
-            .add(1, "months")
-            .format("MM-DD-YYYY");
+          const newDate = moment(currentDate).add(1, "months").format("MM-DD-YYYY");
           const docRef = doc(db, "user", License[0].id);
           setStatus(`Przyznawanie licencji, która wygaśnie ${newDate}`);
           setDoc(docRef, {
