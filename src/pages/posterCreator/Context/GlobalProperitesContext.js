@@ -1,9 +1,9 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
 export const GlobalPropertiesContext = createContext();
 
 export function GlobalPropertiesProvider(props) {
-  const [globalProperties, setGlobalProperties] = useState(null);
+  const [globalProperties, setGlobalProperties] = useState({});
 
   return (
     <GlobalPropertiesContext.Provider value={{ globalProperties, setGlobalProperties }}>

@@ -1,8 +1,9 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PosterLinkBlock from "../../../../components/main-content-elements/PosterLinkBlock";
 import Title from "../../../../components/main-content-elements/Title";
+import { LanguageContext } from "../../../../context/LanguageContext";
 import { db } from "../../../../firebase/config";
 import { useCollection } from "../../../../hooks/useCollection";
 import "../../Stats.css";
@@ -10,6 +11,7 @@ import "../../Stats.css";
 export default function UsersPosters({ Teams }) {
   const navigate = useNavigate();
   const { documents: userPosters } = useCollection("yourCatalog");
+  const { language } = useContext(LanguageContext);
   const [users, setUsers] = useState("");
   const [itemToEdit, setItemToEdit] = useState(null);
   const hideElement = useRef(null);
@@ -59,14 +61,10 @@ export default function UsersPosters({ Teams }) {
               <span className="users-id">
                 {Teams &&
                   Teams.filter((teams) => teams.uid === user).map((teams) =>
-                    teams.firstName
-                      ? teams.firstName + " " + teams.secondName + " "
-                      : null
+                    teams.firstName ? teams.firstName + " " + teams.secondName + " " : null
                   )}
                 {user !== undefined ? `(${user})` : null}
-                {user === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && (
-                  <span>(Moje konto)</span>
-                )}
+                {user === "hgwaMbxg3qWnQyqS44AtyTrkSA93" && <span>(Moje konto)</span>}
               </span>
 
               <div className="users-posters">
@@ -77,6 +75,7 @@ export default function UsersPosters({ Teams }) {
                       <>
                         {userPoster?.uid && (
                           <PosterLinkBlock
+                            link={`/${language}/creator/${userPoster.uuid}`}
                             userPoster={userPoster}
                             itemToEdit={itemToEdit}
                             editClick={editClick}

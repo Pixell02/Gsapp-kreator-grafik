@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
 import { fabric } from "fabric";
-import useActiveObjectFilters from "./useActiveObjectFilters";
-import { useContext } from "react";
-import { GlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
-import useCoords from "./useCoords";
+import { useEffect, useState } from "react";
+import useGlobalPropertiesContext from "./useGlobalPropertiesContext";
 import useImageFiltersContext from "./useImageFiltersContext";
 
-const useImageFilters = (fabricRef) => {
-  const { coords } = useCoords(fabricRef);
-  const { setGlobalProperties } = useContext(GlobalPropertiesContext);
+const useImageFilters = (fabricRef, coords) => {
+  const { setGlobalProperties } = useGlobalPropertiesContext();
 
   const [elements] = useState([
     { className: "brightness", name: "jasność" },
@@ -93,7 +89,7 @@ const useImageFilters = (fabricRef) => {
 
     const canvas = fabricRef.current;
     if (!canvas) return;
-
+    if (coords?.type !== "FilteredImage") return;
     const activeObject = canvas.getActiveObject();
     if (!activeObject) return;
     const activeFilters = Object.keys(filters).reduce((acc, filterName) => {
@@ -119,7 +115,7 @@ const useImageFilters = (fabricRef) => {
         filters: filters,
       },
     }));
-  }, [filters, coords, fabricRef]);
+  }, [filters, coords, fabricRef, setGlobalProperties]);
 
   return { filters, handleCheckFilter, handleValuesChange, elements, handleModeChange, handleAlphaChange };
 };

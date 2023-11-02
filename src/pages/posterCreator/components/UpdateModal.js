@@ -1,160 +1,79 @@
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { db } from "../../../firebase/config";
+import useStorage from "../../../hooks/useStorage";
 import { BackgroundContext } from "../Context/BackgroundContext";
 import { GlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { ManyBackgroundsContext } from "../Context/ManyBackgroundsContext";
 
-export default function UpdateModal({
-  isOpen,
-  setIsOpen,
-  defaultBackGround,
-  backgrounds,
-}) {
+export default function UpdateModal({ isOpen, setIsOpen, defaultBackGround, backgrounds }) {
   const navigate = useNavigate();
   const params = useParams();
   const { language } = useContext(LanguageContext);
   const { image } = useContext(BackgroundContext);
-
+  const { handleAddImage, progressInfo } = useStorage();
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const [userPoster, setUserPoster] = useState(defaultBackGround);
-  const [progressInfo, setProgress] = useState("");
-  const { globalProperties, setGlobalProperties } = useContext(
-    GlobalPropertiesContext
-  );
+  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
+
   useEffect(() => {
     setUserPoster((prevState) => ({
       ...prevState,
-      color: "tło 1",
+      color: image.color,
     }));
-  }, [manyBackgrounds]);
+  }, [image]);
   useEffect(() => {
     setGlobalProperties((prev) => ({
       ...prev,
       uid: params.id,
     }));
   }, [setGlobalProperties, params]);
-  const handleAddDoc = async () => {
-    if (!image.src.split("/")[7]) {
-      const storage = getStorage();
-      const metadata = {
-        contentType: "image/jpeg",
-      };
-      const player = ref(
-        storage,
-        `${defaultBackGround.uid}/posters/${globalProperties.uid}`
-      );
-      const uploadTask = uploadBytesResumable(player, image.file, metadata);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          let progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("dodawanie...");
-              break;
-            default:
-              console.log("default");
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        async () => {
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            updateDoc(doc(collection(db, "yourCatalog"), globalProperties.id), {
-              src: downloadURL,
-            });
+  const handleAddDoc = async () => {
+    if (manyBackgrounds) {
+      manyBackgrounds.forEach(async (background, i) => {
+        const downloadURL = await handleAddImage(
+          background.file,
+          `${defaultBackGround.uid}/posters/${defaultBackGround.uuid + backgrounds.length + i}`
+        );
+        addDoc(collection(db, "yourCatalog"), {
+          color: background.color,
+          src: downloadURL,
+          uuid: globalProperties.uid,
+        });
+      });
+      await updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), userPoster);
+    }
+    if (backgrounds) {
+      backgrounds.forEach(async (item, i) => {
+        if (i !== 0) {
+          await updateDoc(doc(collection(db, "yourCatalog"), item.id), {
+            color: item.color,
           });
         }
-      );
-    }
-    if (manyBackgrounds) {
-      manyBackgrounds.forEach((background, i) => {
-        const storage = getStorage();
-        const metadata = {
-          contentType: "image/jpeg",
-        };
-        const player = ref(
-          storage,
-          `${defaultBackGround.uid}/posters/${
-            defaultBackGround.uuid + backgrounds.length + i
-          }`
-        );
-
-        const uploadTask = uploadBytesResumable(
-          player,
-          background.file,
-          metadata
-        );
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            let progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setProgress("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                setProgress("Upload is paused");
-                break;
-              case "running":
-                setProgress("Upload is " + progress + "% done");
-                break;
-              default:
-                console.log("default");
-            }
-          },
-          (error) => {
-            setProgress(error);
-          },
-          async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then(
-              (downloadURL) => {
-                addDoc(collection(db, "yourCatalog"), {
-                  color: background.color,
-                  src: downloadURL,
-                  uuid: globalProperties.uid,
-                });
-              }
-            );
-          }
-        );
       });
-      updateDoc(
-        doc(collection(db, "yourCatalog"), globalProperties.uid),
-        userPoster
-      );
-
-      setDoc(
-        doc(collection(db, "coords"), globalProperties.uid),
-        globalProperties
-      );
-      setTimeout(() => {
-        navigate(`/${language}/creator/${globalProperties.uid}`);
-      }, 500);
-    } else {
-      setDoc(
-        doc(collection(db, "coords"), globalProperties.id),
-        globalProperties
-      );
-
-      navigate(`/${language}/creator/${globalProperties.uid}`);
     }
+    if (!image.src.split("/")[7]) {
+      const downloadURL = await handleAddImage(image.file, `${defaultBackGround.uid}/posters/${globalProperties.uid}`);
+
+      await updateDoc(doc(collection(db, "yourCatalog"), globalProperties.id), {
+        color: image.color,
+        src: downloadURL,
+      }).then(() => {
+        setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
+      });
+    } else {
+      await updateDoc(doc(collection(db, "yourCatalog"), globalProperties.id), {
+        color: image.color,
+      }).then(() => {
+        setDoc(doc(collection(db, "coords"), globalProperties.id), globalProperties);
+      });
+    }
+    navigate(`/${language}/creator/${globalProperties.uid}`);
   };
+
   return (
     <div className={isOpen ? "modal" : "closed-modal"}>
       <div className="modal-window rounded">
@@ -174,10 +93,7 @@ export default function UpdateModal({
           />
           {progressInfo && <span>{progressInfo}</span>}
           <div className="btn-container justify-content-end h-100 align-items-end mb-3">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="btn btn-primary"
-            >
+            <button onClick={() => setIsOpen(false)} className="btn btn-primary">
               Anuluj
             </button>
             <button onClick={handleAddDoc} className="btn btn-primary">

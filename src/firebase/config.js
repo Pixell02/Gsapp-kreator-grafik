@@ -3,12 +3,12 @@ import { browserSessionPersistence, getAuth, setPersistence } from "firebase/aut
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.API_KEY,
-  authDomain: import.meta.env.AUTH_DOMAIN,
-  projectId: import.meta.env.PROJECT_ID,
-  storageBucket: import.meta.env.STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.MESSAGING_SENDER_ID,
-  measurementId: import.meta.env.MEASUREMENT_ID,
+  apiKey: "AIzaSyDmqmCgUHChFn88wr71Rzos0S2K__Wovp4",
+  authDomain: "gsapp.pl",
+  projectId: "poster-dd714",
+  storageBucket: "poster-dd714.appspot.com",
+  messagingSenderId: "230369778825",
+  measurementId: "G-8T0X5E7934",
 };
 
 // init firebase

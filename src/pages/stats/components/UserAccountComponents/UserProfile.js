@@ -1,31 +1,34 @@
-import React, { useState } from "react";
+import { deleteDoc, doc } from "firebase/firestore";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import FilteredBlock from "../../../../components/main-content-elements/FilteredBlock";
 import ItemContainer from "../../../../components/main-content-elements/ItemContainer";
 import Title from "../../../../components/main-content-elements/Title";
+import { LanguageContext } from "../../../../context/LanguageContext";
+import { db } from "../../../../firebase/config";
 import Licenses from "../../../Account/components/Licenses";
 import "../../../Account/components/MainAccount.css";
-import UserStats from "./UserAccountComponents/UserStats";
-import EditYourTeamWindow from "../../../YourTeamPanel/components/EditYourTeamWindow";
-import FilteredBlock from "../../../../components/main-content-elements/FilteredBlock";
 import EditOpponentWindow from "../../../Opponents/components/EditOpponentWindow";
+import AddOpponentWindow from "../../../Opponents/components/addOpponentWindow";
 import EditPlayerWindow from "../../../Players/components/EditPlayerWindow";
 import AddPlayerWindow from "../../../Players/components/addPlayerWindow";
-import AddOpponentWindow from "../../../Opponents/components/addOpponentWindow";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../../../firebase/config";
+import EditYourTeamWindow from "../../../YourTeamPanel/components/EditYourTeamWindow";
 import AddTeamWindow from "../../../YourTeamPanel/components/addTeamWindow";
 import LicenseEdit from "./UserAccountComponents/LicenseEdit";
+import MultiAccountContainer from "./UserAccountComponents/MultiAccountContainer";
+import UserStats from "./UserAccountComponents/UserStats";
 
 export default function UserProfile(props) {
   const [data, setData] = useState();
   const [openEditYourTeam, setOpenEditYourTeam] = useState(false);
+  const { language } = useContext(LanguageContext);
   const [openEditPlayer, setOpenEditPlayer] = useState(false);
   const [openEditOpponent, setOpenEditOpponent] = useState(false);
   const [openPlayerModal, setOpenPlayerModal] = useState(false);
   const [openTeamModal, setOpenTeamModal] = useState(false);
   const [openOpponentModal, setOpenOpponentModal] = useState(false);
   const [editLicense, setEditLicense] = useState(false);
-  const editClick = (e, user, type) => {
+  const editClick = (user, type) => {
     if (type === "player") {
       setOpenEditPlayer(true);
     } else if (type === "opponent") {
@@ -38,8 +41,8 @@ export default function UserProfile(props) {
   };
   const handleEditLicense = (e, license) => {
     setEditLicense(true);
-    setData(license)
-  }
+    setData(license);
+  };
   const [itemToEdit, setItemToEdit] = useState(null);
   const handleDeleteClick = async (id, type) => {
     if (type === "player") {
@@ -50,7 +53,7 @@ export default function UserProfile(props) {
       await deleteDoc(ref);
     }
   };
-  
+
   const handleClick = (e, item) => {
     setItemToEdit(item);
   };
@@ -58,41 +61,68 @@ export default function UserProfile(props) {
     <div className="main-content">
       {openTeamModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <AddTeamWindow email={props.email}  Teams={props.user} open={openTeamModal} onClose={() => setOpenTeamModal(false)} />
+          <AddTeamWindow email={props.email} Teams={props.user} open={openTeamModal} onClose={() => setOpenTeamModal(false)} />
         </div>
       )}
       {openOpponentModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <AddOpponentWindow email={props.email}  Teams={props.user} open={openOpponentModal} onClose={() => setOpenOpponentModal(false)} />
+          <AddOpponentWindow
+            email={props.email}
+            Teams={props.user}
+            open={openOpponentModal}
+            onClose={() => setOpenOpponentModal(false)}
+          />
         </div>
       )}
       {openPlayerModal && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <AddPlayerWindow email={props.email}  Teams={props.user} open={openPlayerModal} onClose={() => setOpenPlayerModal(false)} />
+          <AddPlayerWindow
+            email={props.email}
+            Teams={props.user}
+            open={openPlayerModal}
+            onClose={() => setOpenPlayerModal(false)}
+          />
         </div>
       )}
       {data && openEditYourTeam && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <EditYourTeamWindow email={props.email}  yourTeam={data} open={openEditYourTeam} onClose={(e) => setOpenEditYourTeam(false)} />
+          <EditYourTeamWindow
+            email={props.email}
+            yourTeam={data}
+            open={openEditYourTeam}
+            onClose={(e) => setOpenEditYourTeam(false)}
+          />
         </div>
       )}
       {data && openEditOpponent && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <EditOpponentWindow email={props.email}  Teams = {props.user} player={data} open={openEditOpponent} onClose={(e) => setOpenEditOpponent(false)} />
+          <EditOpponentWindow
+            email={props.email}
+            Teams={props.user}
+            player={data}
+            open={openEditOpponent}
+            onClose={(e) => setOpenEditOpponent(false)}
+          />
         </div>
       )}
       {data && openEditPlayer && (
         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-          <EditPlayerWindow email={props.email}  Teams = {props.user} player={data} open={openEditPlayer} onClose={(e) => setOpenEditPlayer(false)} />
+          <EditPlayerWindow
+            email={props.email}
+            Teams={props.user}
+            player={data}
+            open={openEditPlayer}
+            onClose={(e) => setOpenEditPlayer(false)}
+          />
         </div>
       )}
       {data && editLicense && (
-         <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
-         <LicenseEdit email={props.email} License={data} open={editLicense} onClose={(e) => setEditLicense(false)} />
-       </div>
+        <div className="d-flex h-100 position-absolute w-100 justify-content-center align-items-center">
+          <LicenseEdit email={props.email} License={data} open={editLicense} onClose={(e) => setEditLicense(false)} />
+        </div>
       )}
 
-      <div className="ml-2">
+      <div className="ml-2 d-flex flex-column w-100">
         <div className="d-flex flex-row">
           {props.user &&
             props.user.map((user) => (
@@ -120,34 +150,35 @@ export default function UserProfile(props) {
               <label>Sport</label>
               <input
                 type="text"
-                value={
-                  props.user && props.user.length > 0 && props.user[0].sport ? props.user[0].sport : "brak informacji"
-                }
+                value={props.user && props.user.length > 0 && props.user[0].sport ? props.user[0].sport : "brak informacji"}
                 disabled
               />
             </div>
           </div>
         </div>
         <div className="btn-container">
-          <button onClick={() => setOpenTeamModal(true)} className="btn">Dodaj drużynę</button>
+          <button onClick={() => setOpenTeamModal(true)} className="btn">
+            Dodaj drużynę
+          </button>
         </div>
         <div>
           <div className="yourPoster-container">
             <Licenses License={props.License} />
-            <button className="btn ml-5 w-25 mt-2" onClick={e => handleEditLicense(e,props.License)}>Edytuj</button>
+            <button className="btn ml-5 w-25 mt-2" onClick={(e) => handleEditLicense(e, props.License)}>
+              Edytuj
+            </button>
+            {props?.email && <MultiAccountContainer email={props.email[0]} />}
             <Title title="Motywy użytkownika" />
             <ItemContainer>
               {props.yourPosters &&
                 props.yourPosters.map((userPoster) => (
                   <div className="item-category-window">
-                    <Link to={`/creator/${userPoster.uuid}`}>
+                    <Link to={`/${language}/creator/${userPoster.uuid}`}>
                       <div className="name-content">
                         <span className="name-content">{userPoster.name}</span>
                       </div>
                       <div className="image-category-content">
-                        {userPoster.src && (
-                          <img src={userPoster.src} alt={userPoster.firstName + " " + userPoster.secondName} />
-                        )}
+                        {userPoster.src && <img src={userPoster.src} alt={userPoster.firstName + " " + userPoster.secondName} />}
                       </div>
                     </Link>
                   </div>
@@ -199,7 +230,7 @@ export default function UserProfile(props) {
                 ))}
             </ItemContainer>
           </div>
-          <div className="opponents-container">
+          <div className="players-container">
             <Title title="Przeciwnicy" />
             <div className="btn-container ml-5">
               <button onClick={() => setOpenOpponentModal(true)} className="btn primary-btn">
@@ -207,31 +238,29 @@ export default function UserProfile(props) {
               </button>
             </div>
             <ItemContainer>
-            
               {props.user &&
                 props.user.map((teams) => (
                   <>
                     <div className="ml-5 mt-3">{teams.firstName + " " + teams.secondName}</div>
-                    <div className="ml-5 w-100 d-flex">
-                    {props.opponents &&
-                      props.opponents
-                        .filter((player) => player.team === teams.firstName + " " + teams.secondName)
-                        .map((player) => (
-                          <>
-                            <FilteredBlock
-                              type="opponent"
-                              handleClick={handleClick}
-                              editClick={editClick}
-                              itemToEdit={itemToEdit}
-                              setItemToEdit={setItemToEdit}
-                              item={player}
-                              handleDeleteClick={handleDeleteClick}
-                            />
-                          </>
-                        ))}
-                      </div>
+                    <div className="d-flex flew-row flex-wrap ml-5">
+                      {props.opponents &&
+                        props.opponents
+                          .filter((player) => player.team === teams.firstName + " " + teams.secondName)
+                          .map((player) => (
+                            <>
+                              <FilteredBlock
+                                type="opponent"
+                                handleClick={handleClick}
+                                editClick={editClick}
+                                itemToEdit={itemToEdit}
+                                setItemToEdit={setItemToEdit}
+                                item={player}
+                                handleDeleteClick={handleDeleteClick}
+                              />
+                            </>
+                          ))}
+                    </div>
                   </>
-                    
                 ))}
             </ItemContainer>
           </div>

@@ -32,35 +32,14 @@ const SingleElements = ({
 
   return (
     <div>
-      {additionalLayer && (
-        <AdditionalImageLayer
-          fabricRef={fabricRef}
-          additionalLayer={additionalLayer}
-        />
+      {additionalLayer && <AdditionalImageLayer fabricRef={fabricRef} additionalLayer={additionalLayer} />}
+      {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
+        <Radio fabricRef={fabricRef} coords={coords} />
       )}
-      {(coords.opponentImage ||
-        coords.opponentFirstName ||
-        coords.opponentSecondName ||
-        coords.opponentName) && <Radio fabricRef={fabricRef} coords={coords} />}
-      {themeOptions && (
-        <ThemeOption
-          themeOptions={themeOptions}
-          themeOption={themeOption}
-          setSelectThemes={setSelectThemes}
-        />
-      )}
-      {coords.additionalText && (
-        <AdditionalText fabricRef={fabricRef} coords={coords} />
-      )}
-      {(coords.yourTeamLogo ||
-        coords.yourTeamFirstName ||
-        coords.yourTeamSecondName ||
-        coords.yourTeamName) && (
-        <TeamOption
-          fabricRef={fabricRef}
-          coords={coords}
-          themeOption={themeOption}
-        />
+      {themeOptions && <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />}
+      {coords.additionalText && <AdditionalText fabricRef={fabricRef} coords={coords} />}
+      {(coords.yourTeamLogo || coords.yourTeamFirstName || coords.yourTeamSecondName || coords.yourTeamName) && (
+        <TeamOption fabricRef={fabricRef} coords={coords} themeOption={themeOption} />
       )}
       {coords.typeMonth && (
         <TextLineInput
@@ -110,30 +89,12 @@ const SingleElements = ({
           name={translate.typeLeague[language]}
         />
       )}
-      {(coords.opponentImage ||
-        coords.opponentFirstName ||
-        coords.opponentSecondName ||
-        coords.opponentName) && (
-        <OpponentSelect
-          fabricRef={fabricRef}
-          coords={coords}
-          themeOption={themeOption}
-          Opponents={Opponents}
-        />
+      {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
+        <OpponentSelect fabricRef={fabricRef} coords={coords} themeOption={themeOption} Opponents={Opponents} />
       )}
-      {coords.yourTeamResult && (
-        <Result
-          fabricRef={fabricRef}
-          coords={coords}
-          themeOption={themeOption}
-        />
-      )}
+      {coords.yourTeamResult && <Result fabricRef={fabricRef} coords={coords} themeOption={themeOption} />}
       {coords.Images?.Image.map((image) => (
-        <Images
-          fabricRef={fabricRef}
-          filters={coords.Images.filters}
-          coords={image}
-        />
+        <Images fabricRef={fabricRef} filters={coords.Images.filters} coords={image} />
       ))}
       {(coords.player || coords.playerImage) && (
         <Player
@@ -144,37 +105,14 @@ const SingleElements = ({
           additionalLayer={additionalLayer}
         />
       )}
-      {coords.Text &&
-        coords.Text.map((coords) => (
-          <TextInput
-            fabricRef={fabricRef}
-            coords={coords}
-            themeOption={themeOption}
-          />
-        ))}
+      {coords.Text && coords.Text.map((coords) => <TextInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />)}
       {coords.TextBox &&
-        coords.TextBox.map((coords) => (
-          <TextBoxInput
-            fabricRef={fabricRef}
-            coords={coords}
-            themeOption={themeOption}
-          />
-        ))}
+        coords.TextBox.map((coords) => <TextBoxInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />)}
 
       {coords.yourPlayerOneGoal && (
-        <PlayersGoals
-          fabricRef={fabricRef}
-          coords={coords}
-          themeOption={themeOption}
-          Players={Players}
-        />
+        <PlayersGoals fabricRef={fabricRef} coords={coords} themeOption={themeOption} Players={Players} />
       )}
-      <StartingSquad
-        setIsModalOpen={setIsModalOpen}
-        themeOption={themeOption}
-        fabricRef={fabricRef}
-        coords={coords}
-      />
+      <StartingSquad setIsModalOpen={setIsModalOpen} themeOption={themeOption} fabricRef={fabricRef} coords={coords} />
     </div>
   );
 };

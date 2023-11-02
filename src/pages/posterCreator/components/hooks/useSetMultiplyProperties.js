@@ -5,12 +5,9 @@ import useAddMultiplyLayer from "./useAddMultiplyLayer";
 import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 
 const useSetMultiplyProperties = (fabricRef) => {
-  const { globalProperties, setGlobalProperties } = useContext(
-    GlobalPropertiesContext
-  );
+  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
   const { properties, setProperties } = useMultiPropertiesContext();
-  const { handleCreateImage, handleCreateText, handleCreateUniversalText } =
-    useAddMultiplyLayer(fabricRef);
+  const { handleCreateImage, handleCreateText, handleCreateUniversalText } = useAddMultiplyLayer(fabricRef);
 
   useEffect(() => {
     setGlobalProperties((prev) => ({
@@ -27,11 +24,7 @@ const useSetMultiplyProperties = (fabricRef) => {
       scaleY: null,
     };
     fabricRef.current._objects.forEach((object) => {
-      if (
-        object.type === "multiplyimage" ||
-        object.type === "multiplyText" ||
-        object.type === "multiplyUniversalText"
-      ) {
+      if (object.type === "multiplyimage" || object.type === "multiplyText" || object.type === "multiplyUniversalText") {
         if (object.index !== 1) {
           object.set(
             "top",
@@ -78,20 +71,11 @@ const useSetMultiplyProperties = (fabricRef) => {
       for (let i = 0; i < objectsToAddCount; i++) {
         multiplyObject.forEach((object) => {
           layersName.forEach((layer) => {
-            if (
-              object.type === "multiplyimage" &&
-              object.className === layer.className
-            ) {
+            if (object.type === "multiplyimage" && object.className === layer.className) {
               handleCreateImage(layer.image, object);
-            } else if (
-              object.type === "multiplyText" &&
-              object.className === layer.className
-            ) {
+            } else if (object.type === "multiplyText" && object.className === layer.className) {
               handleCreateText(layer.text, object);
-            } else if (
-              object.type === "multiplyUniversalText" &&
-              object.className === layer.className
-            ) {
+            } else if (object.type === "multiplyUniversalText" && object.className === layer.className) {
               handleCreateUniversalText(layer.text, object);
             }
           });
@@ -103,6 +87,7 @@ const useSetMultiplyProperties = (fabricRef) => {
       numberOfMatches: newNumberOfMatches,
     }));
   };
+
   const handleMarginChange = (e) => {
     setProperties((prev) => ({ ...prev, Margin: parseInt(e.target.value) }));
     setGlobalProperties((prev) => ({
@@ -120,15 +105,9 @@ const useSetMultiplyProperties = (fabricRef) => {
           }
         } else {
           if (properties.orientation === "vertically") {
-            object.set(
-              "top",
-              startPosition + e.target.value * (object.index - 1)
-            );
+            object.set("top", startPosition + e.target.value * (object.index - 1));
           } else {
-            object.set(
-              "left",
-              startPosition + e.target.value * (object.index - 1)
-            );
+            object.set("left", startPosition + e.target.value * (object.index - 1));
           }
         }
         fabricRef.current.renderAll();

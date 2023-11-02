@@ -8,7 +8,8 @@ const useResults = (fabricRef, coords, selectedMatch) => {
   const [guestResult, setGuestResult] = useState("");
   const { handleAddText } = useAddMultiplyImageAndText(
     fabricRef,
-    selectedMatch
+    selectedMatch,
+    properties
   );
 
   useEffect(() => {

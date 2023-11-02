@@ -1,19 +1,16 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
+import FontFaceObserver from "fontfaceobserver";
+import { useEffect, useState } from "react";
 
 const useTextBoxLayer = (coords, fabricRef) => {
-
   const [textValue, setTextValue] = useState(null);
 
   useEffect(() => {
     if (textValue && fabricRef.current) {
       fabricRef.current._objects.forEach((item, i) => {
-      if (item.className === coords.className) {
+        if (item.className === coords.className) {
           fabricRef.current.remove(item);
-      }
+        }
       });
       fabricRef.current.renderAll();
       const font = new FontFaceObserver(coords.FontFamily);
@@ -27,16 +24,15 @@ const useTextBoxLayer = (coords, fabricRef) => {
           width: coords.ScaleToWidth,
           fill: coords.Fill,
           originX: coords.OriginX,
-          zIndex: 5,
           originY: coords.OriginY,
           textAlign: coords.TextAlign,
           splitByGrapheme: true,
           fontFamily: coords.FontFamily,
-          angle: (coords.Angle || 0),
+          angle: coords.Angle || 0,
           charSpacing: coords.CharSpacing ? coords.CharSpacing : 0,
           fontStyle: coords.FontStyle ? coords.FontStyle : "normal",
         });
-        
+
         if (typeDate.width >= coords.ScaleToWidth) {
           typeDate.scaleToWidth(coords.ScaleToWidth);
           if (coords?.Angle > 0) {
@@ -62,9 +58,9 @@ const useTextBoxLayer = (coords, fabricRef) => {
         fabricRef.current.renderAll();
       });
     }
-  },[textValue, fabricRef.current])
+  }, [textValue, fabricRef.current]);
 
-  return {textValue, setTextValue}
-}
+  return { textValue, setTextValue };
+};
 
-export default useTextBoxLayer
+export default useTextBoxLayer;

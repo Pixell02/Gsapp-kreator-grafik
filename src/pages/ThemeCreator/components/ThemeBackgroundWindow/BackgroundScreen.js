@@ -13,7 +13,6 @@ const BackgroundScreen = ({ backgrounds, fabricRef }) => {
   const { manyBackgrounds, setManyBackgrounds } = useContext(ManyBackgroundsContext);
   const { handleDefaultBackgroundChangeName } = useDefaultBackgrounds(backgrounds);
   const { handleDeleteFile, handleDeleteLinkFile, handleDeleteImage } = useFileDelete(setImage);
-
   const handleSelectColor = (color) => {
     setColor(color.color);
     fabric.Image.fromURL(color.preview ? color.preview : color.src, function (img) {

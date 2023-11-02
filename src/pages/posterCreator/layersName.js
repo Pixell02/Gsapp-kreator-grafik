@@ -1,7 +1,7 @@
-import yourTeamLogo from "../../img/crest_2.png";
 import opponentTeamLogo from "../../img/crest_1.png";
-import playerImg from "../../img/playerImg.png";
+import yourTeamLogo from "../../img/crest_2.png";
 import image from "../../img/image.jpg";
+import playerImg from "../../img/playerImg.png";
 export const layersName = [
   { name: "herb gospodarza", type: "image", image: yourTeamLogo, className: "yourTeamLogo" },
   { name: "herb przeciwnika", type: "image", image: opponentTeamLogo, className: "opponentImage" },
@@ -45,10 +45,6 @@ export const layersName = [
     text: "42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n ",
     className: "opponentPlayerOneGoal",
   },
-  { name: "klasa", type: "text", text: "Klasa", className: "yourLeague" },
-  { name: "kolejka", type: "text", text: "kolejka", className: "yourKolejka" },
-  { name: "miejsce", type: "text", text: "miejsce", className: "typePlace" },
-  { name: "data i godzina", type: "text", text: "data i godzina", className: "typeData" },
   { name: "linia tekstu", type: "universalText", text: "linia tekstu", className: "" },
   { name: "pole tekstowe", type: "universalTextBox", text: "pole tekstowe", className: "" },
   { name: "herby gospodarza", type: "multiplyImage", image: yourTeamLogo, className: "yourTeamLogoOne" },
@@ -59,6 +55,6 @@ export const layersName = [
   { name: "wyniki (88:88)", type: "multiplyText", text: "88:88", className: "connectedResultsOne" },
   { name: "wyniki gospodarza", type: "multiplyText", text: "88", className: "yourTeamResultOne" },
   { name: "wyniki gości", type: "multiplyText", text: "88", className: "opponentTeamResultOne" },
-  {name: "liczby", type:"multiplyUniversalNumber", text: "8", className: "warstwa"},
-  { name: "linie tekstu", type: "multiplyUniversalText", text: "linia tekstu", className:"warstwa"}
+  { name: "liczby", type: "multiplyUniversalNumber", text: "8", className: "warstwa" },
+  { name: "linie tekstu", type: "multiplyUniversalText", text: "linia tekstu", className: "warstwa" },
 ];

@@ -55,12 +55,7 @@ export default function Themes() {
       <div className="d-flex mt-4 flex-column">
         <p>Motywy</p>
         <div>
-          <ThemeBlock
-            setSelectedTheme={setSelectedTheme}
-            setIsOpen={setIsOpen}
-            themes={filteredData}
-            posters={posters}
-          />
+          <ThemeBlock setSelectedTheme={setSelectedTheme} setIsOpen={setIsOpen} themes={filteredData} posters={posters} />
         </div>
       </div>
     </div>

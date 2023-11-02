@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import {
   createFabricImage,
@@ -15,39 +15,38 @@ import {
 import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 
 export const useAddFabricObject = (fabricRef) => {
-  const [fabricObject, setFabricObject] = useState([]);
   const { setIsMany, properties } = useMultiPropertiesContext();
-  
+
   const handleAddObject = (e, layer) => {
     if (layer.type === "image") {
-      createFabricImage(fabricRef, setFabricObject, layer.className, layer.image, layer.type);
+      createFabricImage(fabricRef, layer.className, layer.image, layer.type);
     } else if (layer.type === "FilteredImage") {
-      createFabricImage(fabricRef, setFabricObject, layer.className, layer.image, layer.type);
+      createFabricImage(fabricRef, layer.className, layer.image, layer.type);
     } else if (layer.type === "text") {
-      createFabricText(fabricRef, setFabricObject, layer.text, layer.className);
+      createFabricText(fabricRef, layer.text, layer.className);
     } else if (layer.type === "textBox") {
-      createFabricTextBox(fabricRef, setFabricObject, layer.text, layer.className);
+      createFabricTextBox(fabricRef, layer.text, layer.className);
     } else if (layer.type === "playerImage") {
-      createPlayerImage(fabricRef, setFabricObject, layer.className, layer.image);
+      createPlayerImage(fabricRef, layer.className, layer.image, layer.type);
     } else if (layer.type === "playerGoal") {
-      createPlayerNameText(fabricRef, setFabricObject, layer.text, layer.className);
+      createPlayerNameText(fabricRef, layer.text, layer.className);
     } else if (layer.type === "universalText") {
-      createUniversalText(fabricRef, setFabricObject, layer.text, layer.className);
+      createUniversalText(fabricRef, layer.text, layer.className);
     } else if (layer.type === "universalTextBox") {
-      createUniversalTextBox(fabricRef, setFabricObject, layer.text, layer.className);
+      createUniversalTextBox(fabricRef, layer.text, layer.className);
     } else if (layer.type === "multiplyImage") {
-      createMultiplyImage(fabricRef, setFabricObject, layer.className, layer.image, properties.numberOfMatches)
+      createMultiplyImage(fabricRef, layer.className, layer.image, properties.numberOfMatches);
       setIsMany(true);
     } else if (layer.type === "multiplyText") {
-      createMultiplyText(fabricRef, setFabricObject, layer.className, layer.text, properties.numberOfMatches)
+      createMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches);
       setIsMany(true);
     } else if (layer.type === "multiplyUniversalText") {
-      createUniversalMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches)
+      createUniversalMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches);
       setIsMany(true);
     } else if (layer.type === "multiplyUniversalNumber") {
-      createUniversalMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches)
+      createUniversalMultiplyText(fabricRef, layer.className, layer.text, properties.numberOfMatches);
       setIsMany(true);
-    } 
+    }
   };
 
   return { handleAddObject };

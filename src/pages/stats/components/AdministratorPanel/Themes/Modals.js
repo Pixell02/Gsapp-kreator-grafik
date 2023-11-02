@@ -1,10 +1,9 @@
 import React from "react";
 import ThemeAddModal from "./Modals/ThemeAddModal";
-import ThemeEditModal from "./Modals/ThemeEditModal";
 import ThemeDeleteModal from "./Modals/ThemeDeleteModal";
+import ThemeEditModal from "./Modals/ThemeEditModal";
 
 const Modals = ({ isOpen, setIsOpen, themes, selectedLangOption, selectedSportOption, selectedTheme }) => {
-  console.log(isOpen)
   return (
     <div>
       {isOpen.type === "add" && (
@@ -16,7 +15,7 @@ const Modals = ({ isOpen, setIsOpen, themes, selectedLangOption, selectedSportOp
         />
       )}
       {isOpen.type === "edit" && <ThemeEditModal selectedTheme={selectedTheme} setIsOpen={setIsOpen} />}
-      {isOpen.type === "delete" && <ThemeDeleteModal selectedTheme={selectedTheme} setIsOpen={setIsOpen}  />}
+      {isOpen.type === "delete" && <ThemeDeleteModal selectedTheme={selectedTheme} setIsOpen={setIsOpen} />}
     </div>
   );
 };

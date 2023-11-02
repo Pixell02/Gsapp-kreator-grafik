@@ -1,7 +1,6 @@
-import React from "react";
 import { fabric } from "fabric";
 
-const playerImage = (fabricRef, playerImage, coords, setImageRef) => {
+const playerImage = (fabricRef, playerImage, coords, setImageRef, height) => {
   fabricRef.current._objects.forEach((image, i) => {
     if (fabricRef.current.item(i).className === "playerImage") {
       fabricRef.current.remove(fabricRef.current.item(i));
@@ -21,11 +20,15 @@ const playerImage = (fabricRef, playerImage, coords, setImageRef) => {
       className: "playerImage",
     });
 
-    fabricImage.scaleToWidth(coords.ScaleToWidth);
-
+    fabricImage.scaleToHeight(coords.Height);
+    if (fabricRef.current.getObjects().find((item) => item.className === "additionalLayer")) {
+      fabricImage.moveTo(2);
+      console.log(fabricRef.current.getObjects());
+    } else {
+      fabricImage.moveTo(0);
+    }
     fabricRef.current.add(fabricImage);
     setImageRef(fabricImage);
-    fabricImage.moveTo(2)
 
     fabricRef.current.renderAll();
   };
