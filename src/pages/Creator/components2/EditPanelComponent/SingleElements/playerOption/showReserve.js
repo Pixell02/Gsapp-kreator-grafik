@@ -3,7 +3,7 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 import findThemeOption from "../functions/themeOption";
 const showReserve = (fabricRef, reserve, coords, themeOption) => {
-  if (reserve && coords.reserveOne) {
+  if (reserve) {
     let text = "";
     const innerText = new fabric.Text("");
     const currentDate = new Date();
@@ -16,13 +16,13 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
           }
         });
         
-        if (coords.reserveOne.format === "NumDotSurName") {
+        if (coords.reserveOne.format === "NumDotSurName" || coords.reserveOne.Format === "NumDotSurName") {
           reserve = (reserved.number || "") + "." + reserved.secondName;
-        } else if (coords.reserveOne.format === "NumSurName") {
+        } else if (coords.reserveOne.format === "NumSurName" || coords.reserveOne.Format === "NumSurName" ) {
          reserve =(reserved.number || "") + "." +reserved.secondName;
-        } else if (coords.reserveOne.format === "dotted") {
+        } else if (coords.reserveOne.format === "dotted" || coords.reserveOne.Format === "dotted") {
           reserve = (reserved.number || "") + "." + reserved.firstName[0] + "." + reserved.secondName; 
-        } else if (coords.reserveOne.format === "oneDot") {
+        } else if (coords.reserveOne.format === "oneDot" || coords.reserveOne.Format === "oneDot") {
           reserve = (reserved.number || "") + "." + reserved.firstName[0] + "." + reserved.secondName;
         } else {
           reserve = reserved.secondName
@@ -31,9 +31,9 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
           reserve += "(m)"
         }
         let formatReserve = reserve;
-        innerText.set("text", formatReserve + `${coords.reserveOne.Formatter}`);
+        innerText.set("text", formatReserve + `${coords.reserveOne.Formatter || ","}`);
 
-          text = text + " " + formatReserve + `${coords.reserveOne.Formatter} `;
+          text = text + " " + formatReserve + `${coords.reserveOne.Formatter || ","} `;
         
       }
     });
@@ -77,9 +77,8 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
           }
         }
       }
-     
-      
-    if (coords.reserveOne.themeOption) {
+     console.log(themeOption)
+    if (coords.reserveOne.themeOption && themeOption) {
       findThemeOption(coords.reserveOne, themeOption, reserveText)
     }
       fabricRef.current.add(reserveText);

@@ -16,13 +16,13 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
           }
         });
         let formatPlayer;
-        if (coords.playerOne.format === "NumDotSurName") {
-          formatPlayer = (player.number ? player.number : "") + "." + player.secondName;
-        } else if (coords.playerOne.format === "NumSurName") {
+        if (coords.playerOne.format === "NumDotSurName" || coords.playerOne.Format === "NumDotSurName") {
+          formatPlayer = (player.number ? player.number + "." : "")  + player.secondName;
+        } else if (coords.playerOne.format === "NumSurName" || coords.playerOne.Format === "NumSurName") {
           formatPlayer = (player.number ? player.number : "") + " " + player.secondName;
-        } else if (coords.playerOne.format === "dotted") {
-          formatPlayer = (player.number ? player.number : "") + "." + player.firstName[0] + "." + player.secondName;
-        } else if (coords.playerOne.format === "oneDot") {
+        } else if (coords.playerOne.format === "dotted" || coords.playerOne.Format === "dotted") {
+          formatPlayer = (player.number ? player.number + "." : "")  + player.firstName[0] + "." + player.secondName;
+        } else if (coords.playerOne.format === "oneDot" || coords.playerOne.Format === "oneDot") {
           formatPlayer = (player.number ? player.number : "") + " " + player.firstName[0] + "." + player.secondName;
         } else {
           formatPlayer = player.secondName;
@@ -54,7 +54,6 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
         lineHeight: parseFloat(coords.playerOne.LineHeight),
         textAlign: coords.playerOne.TextAlign,
         originX: coords.playerOne.OriginX,
-        zIndex:5,
         originY: "top",
         width: coords.playerOne.ScaleToWidth,
         fontSize: coords.playerOne.FontSize,
@@ -71,7 +70,7 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
           charSpacing: coords.playerOne.CharSpacing,
         });
       }
-      if (coords.playerOne.themeOption) {
+      if (coords.playerOne.themeOption && themeOption) {
         findThemeOption(coords.playerOne, themeOption, showPlayer);
       }
 
