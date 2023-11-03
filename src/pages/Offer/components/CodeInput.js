@@ -2,11 +2,11 @@ import React from "react";
 import translate from "../locales/translate.json";
 import { useContext } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
-import { PromoCodeContext } from "../context/PromoCodeContext";
+import usePromoCodeContext from "../hooks/usePromoCodeContext";
 
-export default function CodeInput({ usedCode, setUsedCode, handleUseCode, alert }) {
+export default function CodeInput() {
   const { language } = useContext(LanguageContext);
-  const { promoCode } = useContext(PromoCodeContext);
+  const { promoCode, handleUseCode, usedCode, setUsedCode, alert } = usePromoCodeContext();
   
   return (
     <div>
