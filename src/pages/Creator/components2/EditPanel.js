@@ -29,7 +29,7 @@ export default function EditPanel({
     id: null,
     open: false,
   });
-
+  console.log(coords)
   return (
     <RadioProvider>
       <TeamProvider>
