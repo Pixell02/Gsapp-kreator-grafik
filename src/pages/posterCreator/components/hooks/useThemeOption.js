@@ -3,27 +3,49 @@ import useBackgroundContext from "./useBackgroundContext";
 const useThemeOption = () => {
   const { color } = useBackgroundContext();
 
-  const setThemeOption = (coords) => {
-    if (color) {
-      if (!coords.themeOption) {
-        coords.themeOption = [];
+  const setThemeOption = (prevState, coords) => {
+    return (
+      color && {
+        ...coords,
+        themeOption: [
+          ...(prevState[coords.className]?.themeOption || []).filter((option) => option.label !== color),
+          {
+            label: color,
+            Fill: coords.Fill,
+          },
+        ],
       }
+    );
+  };
+  const setUniversalThemeOption = (prevState, coords) => {
+    
 
-      const themeOptionIndex = coords.themeOption.findIndex((option) => option.label === color);
-
-      if (themeOptionIndex !== -1) {
-        coords.themeOption[themeOptionIndex].Fill = coords.Fill;
-      } else {
-        coords.themeOption.push({
-          label: color,
-          Fill: coords.Fill,
-        });
+    const index = prevState?.findIndex((option) => option.className === coords.className);
+    if (index === -1) {
+      return {
+        ...coords,
+        themeOption: [
+          {
+            label: color,
+            Fill: coords.Fill,
+          },
+        ],
+      };
+    } else {
+      return {
+        ...coords,
+        themeOption:[
+        ...(prevState[index].themeOption || []).filter((option) => option.label !== color),
+          {
+            label: color,
+            Fill: coords.Fill,
+          },
+        ]
       }
     }
-    return coords;
   };
 
-  return setThemeOption;
+  return { setThemeOption, setUniversalThemeOption };
 };
 
 export default useThemeOption;
