@@ -5,6 +5,7 @@ import findThemeOption from "../functions/themeOption";
 
 const useTextLayer = (fabricRef, coords, themeOption, name) => {
   const [textValue, setTextValue] = useState("");
+  
   useEffect(() => {
     if (fabricRef.current && textValue) {
       fabricRef.current._objects.forEach((image, i) => {
@@ -36,10 +37,9 @@ const useTextLayer = (fabricRef, coords, themeOption, name) => {
             typeDate.scaleToHeight(coords.ScaleToWidth);
           }
         }
-        if (coords.themeOption) {
+        if (coords.themeOption && themeOption) {
           findThemeOption(coords, themeOption, typeDate);
         }
-
         fabricRef.current.add(typeDate);
         fabricRef.current.renderAll();
       });
