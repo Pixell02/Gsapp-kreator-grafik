@@ -17,7 +17,7 @@ const usePromoCode = () => {
   const [usedCode, setUsedCode] = useState("");
   const [alert, setAlert] = useState("");
 
-  const handleUseCode = async (value) => {
+  const handleUseCode = async () => {
     let ref = query(collection(db, "promoCode"), where("code", "==", usedCode));
     
     try {
