@@ -23,9 +23,10 @@ export const PromoCodeProvider = ({ children }) => {
       if (dayAfter.format("MM-DD-YYYY") >= promoDocs[0].expireDate) {
         const docRef = doc(db, "expirationCode", promoDocs[0].id);
         deleteDoc(docRef);
+        setPromoCode(null)
       }
     }
-  },[promoDocs])
+  },[promoDocs, setPromoCode])
 
   return (
     <PromoCodeContext.Provider value={{promoCode, alert, handleUseCode, usedCode, setUsedCode}}>
