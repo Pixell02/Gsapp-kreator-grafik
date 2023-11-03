@@ -29,14 +29,19 @@ const SingleElements = ({
   additionalLayer,
 }) => {
   const { language } = useContext(LanguageContext);
+  const playersArray = Array.isArray(coords.player) ? coords.player : [coords.player];
 
+  const playersImageArray = Array.isArray(coords.playerImage) ? coords.playerImage : [coords.playerImage];
+  const largerArray = playersArray?.length > playersImageArray?.length ? playersArray : playersImageArray;
   return (
     <div>
       {additionalLayer && <AdditionalImageLayer fabricRef={fabricRef} additionalLayer={additionalLayer} />}
       {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
         <Radio fabricRef={fabricRef} coords={coords} />
       )}
-      {themeOptions && <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />}
+      {themeOptions && (
+        <ThemeOption themeOptions={themeOptions} themeOption={themeOption} setSelectThemes={setSelectThemes} />
+      )}
       {coords.additionalText && <AdditionalText fabricRef={fabricRef} coords={coords} />}
       {(coords.yourTeamLogo || coords.yourTeamFirstName || coords.yourTeamSecondName || coords.yourTeamName) && (
         <TeamOption fabricRef={fabricRef} coords={coords} themeOption={themeOption} />
@@ -96,18 +101,26 @@ const SingleElements = ({
       {coords.Images?.Image.map((image) => (
         <Images fabricRef={fabricRef} filters={coords.Images.filters} coords={image} />
       ))}
-      {(coords.player || coords.playerImage) && (
-        <Player
-          fabricRef={fabricRef}
-          coords={coords}
-          themeOption={themeOption}
-          Players={Players}
-          additionalLayer={additionalLayer}
-        />
-      )}
-      {coords.Text && coords.Text.map((coords) => <TextInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />)}
-      {coords.TextBox &&
-        coords.TextBox.map((coords) => <TextBoxInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />)}
+      {(coords.player || coords.playerImage) &&
+        largerArray[0] !== null &&
+        largerArray.map((item, i) => (
+          <Player
+            key={i}
+            i={i}
+            fabricRef={fabricRef}
+            playersArray={playersArray}
+            playersImageArray={playersImageArray}
+            themeOption={themeOption}
+            Players={Players}
+            additionalLayer={additionalLayer}
+          />
+        ))}
+      {coords.Text?.length > 0 &&
+        coords.Text?.map((coords) => <TextInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />)}
+      {coords.TextBox?.length > 0 &&
+        coords.TextBox?.map((coords) => (
+          <TextBoxInput fabricRef={fabricRef} coords={coords} themeOption={themeOption} />
+        ))}
 
       {coords.yourPlayerOneGoal && (
         <PlayersGoals fabricRef={fabricRef} coords={coords} themeOption={themeOption} Players={Players} />
