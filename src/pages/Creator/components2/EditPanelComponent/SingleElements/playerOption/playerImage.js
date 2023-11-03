@@ -1,9 +1,10 @@
 import { fabric } from "fabric";
 
-const playerImage = (fabricRef, playerImage, coords, setImageRef, height) => {
-  fabricRef.current._objects.forEach((image, i) => {
-    if (fabricRef.current.item(i).className === "playerImage") {
-      fabricRef.current.remove(fabricRef.current.item(i));
+const playerImage = (fabricRef, playerImage, coords, setImageRef, height, i) => {
+  fabricRef.current?._objects.forEach((image) => {
+    
+    if (image.className === "playerImage" + i) {
+      fabricRef.current.remove(image);
       fabricRef.current.renderAll();
     }
   });
@@ -17,7 +18,7 @@ const playerImage = (fabricRef, playerImage, coords, setImageRef, height) => {
       originX: "center",
       originY: "top",
       angle: coords.Angle || 0,
-      className: "playerImage",
+      className: "playerImage" + i,
     });
 
     fabricImage.scaleToHeight(coords.Height);
