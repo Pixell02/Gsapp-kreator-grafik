@@ -142,6 +142,7 @@ export const createPlayerImage = (fabricRef, name, image, type) => {
 };
 
 export const createFabricTextBox = (fabricRef, name, className) => {
+  
   const text = new fabric.Textbox(name, {
     top: 400,
     left: 400,
