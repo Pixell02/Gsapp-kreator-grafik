@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-
-
+import { useEffect, useState } from "react";
+import usePromoCodeContext from "./usePromoCodeContext";
 
 const useProducts = (setPaymentData) => {
-  const [products, setProducts] = useState([]);
-  const [unitPrice, setUnitPrice] = useState("5000");
+  const [products, setProducts] = useState([{ name: "Licencja MAX 1 miesiąc", unitPrice: "2800" }]);
+  const { promoCode } = usePromoCodeContext();
   const [isChecked, setIsChecked] = useState(false);
   const [radioType, setRadioType] = useState("Licencja MAX 1 miesiąc");
 
@@ -12,42 +11,28 @@ const useProducts = (setPaymentData) => {
     const { name, value, checked } = e.target;
 
     if (checked) {
-      if (e.target.name === "Licencja MAX 1 miesiąc") {
-        setProducts((prevProducts) => [{ name: e.target.name, unitPrice: e.target.value }]);
-        setPaymentData((prev) => ({
-          ...prev,
-          description: "Licencja",
-          products: [{ [e.target.name]: e.target.value }],
-        }));
-      } else {
-        setProducts((prevProducts) => prevProducts.filter((product) => product.name !== "Licencja MAX 1 miesiąc"));
-
-        setPaymentData((prev) => ({
-          ...prev,
-          description: "Usługi graficzne",
-          products: [{ [e.target.name]: e.target.value }],
-        }));
-        setProducts((prevProducts) => prevProducts.filter((product) => product.name !== "other"));
-
-        // setDescription("Usługi graficzne");
-        setProducts((prevProducts) => [...prevProducts, { name, unitPrice: parseFloat(value) }]);
-      }
-    } else {
-      setProducts((prevProducts) => prevProducts.filter((product) => product.name !== name));
+      setProducts([{ name: name, unitPrice: value }]);
+      setPaymentData((prev) => ({
+        ...prev,
+        description: "Licencja",
+        products: [{ [name]: value }],
+      }));
     }
   };
-  useEffect(() => {
-    if (products.length === 0) {
-      products.push({ name: "Licencja MAX 1 miesiąc", unitPrice: "5000" });
-    }
-  }, []);
 
   useEffect(() => {
     let price = 0;
-
     const updatedProducts = products.map((product) => {
-      price += Number(product.unitPrice);
-      return { name: product.name, unitPrice: product.unitPrice, quantity: "1" };
+      price += promoCode?.percentage
+      ? (product.unitPrice * Number(100 - promoCode.percentage)) / 100
+      : product.unitPrice;
+      return {
+        name: product.name,
+        unitPrice: promoCode?.percentage
+          ? (product.unitPrice * Number(100 - promoCode.percentage)) / 100
+          : product.unitPrice,
+        quantity: "1",
+      };
     });
 
     setPaymentData((prev) => ({
@@ -55,16 +40,9 @@ const useProducts = (setPaymentData) => {
       totalAmount: price,
       products: updatedProducts,
     }));
-  }, [products, radioType]);
+  }, [products, radioType, setPaymentData, promoCode]);
 
-  useEffect(() => {
-    setPaymentData((prev) => ({
-      ...prev,
-      totalAmount: unitPrice,
-    }));
-  }, [unitPrice]);
-
-  return {radioType, setRadioType, unitPrice, setUnitPrice, isChecked, setIsChecked, handleCheckboxChange, products, setProducts}
-}
+  return { radioType, setRadioType, isChecked, setIsChecked, handleCheckboxChange, products, setProducts };
+};
 
 export default useProducts;
