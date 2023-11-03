@@ -3,65 +3,68 @@ import "./MainContentOffer.css";
 import { countries } from "./countries";
 import Input from "./Input";
 import translate from "../locales/translate.json";
-import {LanguageContext} from "../../../context/LanguageContext";
+import { LanguageContext } from "../../../context/LanguageContext";
+import useCheckActiveButton from "../hooks/useCheckActiveButton";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
-const zipCodeRegex = /^\d{2}-\d{3}$/;
-const nipRegex = /^\d{10}$/;
 
 export default function Form({
   paymentData,
   handleChange,
   handleDataChange,
-  handleSave,
   handleDeliveryDataChange,
   isChecked,
   setIsChecked,
-  isLoading
 }) {
-  const [isActiveButton, setActiveButton] = useState(false);
+  const isActiveButton = useCheckActiveButton(paymentData, isChecked);
+  const { user } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const { language } = useContext(LanguageContext);
+  const functions = getFunctions();
+  const payUPayment = httpsCallable(functions, "PayUPayment");
+  const createTransactionInfo = httpsCallable(functions, "createTransactionInfo");
 
-  const {language} = useContext(LanguageContext)
+  const handleSave = async () => {
+    setIsLoading(true);
+   
+    try {
+      const res = await createTransactionInfo({
+        user: {
+          email: user.email,
+          uid: user.uid
+      }});
+      const { data } = await payUPayment(paymentData);
+      
+      
+      const url = new URL(data);
+      const searchParams = new URLSearchParams(url.search);
+      const orderId = searchParams.get("orderId");
+      const orderRef = doc(db, "orderId", user.uid);
+      setDoc(orderRef, {
+        orderId: orderId,
+        uid: user.uid,
+      });
+      
+      window.location.href = data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (paymentData.companyName) {
       setIsChecked(true);
     }
-  },[paymentData.companyName])
-  useEffect(() => {
-    if (isChecked) {
-      if (
-        !nipRegex.test(paymentData.NIP) ||
-        !paymentData.companyName ||
-        !paymentData.buyer.firstName ||
-        !paymentData.buyer.lastName ||
-        !paymentData.buyer.delivery.city ||
-        !paymentData.buyer.delivery.street ||
-        !paymentData.buyer.email ||
-        !zipCodeRegex.test(paymentData.buyer.delivery.postalCode)
-      ) {
-        setActiveButton(false);
-      } else {
-        setActiveButton(true);
-      }
-    } else if (!isChecked) {
-      if (
-        !paymentData.buyer.firstName ||
-        !paymentData.buyer.lastName ||
-        !paymentData.buyer.delivery.city ||
-        !paymentData.buyer.delivery.street ||
-        !zipCodeRegex.test(paymentData.buyer.delivery.postalCode)
-      ) {
-        setActiveButton(false);
-      } else {
-        setActiveButton(true);
-      }
-    }
-    
-  }, [paymentData]);
+  }, [paymentData.companyName, setIsChecked]);
+
+
   return (
     <>
       <div className="fax-container">
-        <p className="form-title">{translate.billing[language] }</p>
+        <p className="form-title">{translate.billing[language]}</p>
 
         <select
           name="countryCode"
@@ -70,12 +73,11 @@ export default function Form({
           onChange={(e) => handleDeliveryDataChange(e)}
           required
         >
-          {countries &&
-            countries.map((country, i) => (
-              <option key={i} value={country.value}>
-                {country.label}
-              </option>
-            ))}
+          {countries.map((country, i) => (
+            <option key={i} value={country.value}>
+              {country.label}
+            </option>
+          ))}
         </select>
 
         <div className="fullName-content">
@@ -134,7 +136,13 @@ export default function Form({
         </div>
         {isChecked && (
           <div className="data-content">
-            <Input key={7} title={translate.vatId[language]} name="NIP" value={paymentData.NIP} handleDataChange={(e) => handleChange(e)} />
+            <Input
+              key={7}
+              title={translate.vatId[language]}
+              name="NIP"
+              value={paymentData.NIP}
+              handleDataChange={(e) => handleChange(e)}
+            />
             <Input
               key={8}
               title={translate.companyName[language]}
