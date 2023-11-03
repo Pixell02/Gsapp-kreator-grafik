@@ -1,8 +1,9 @@
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 import { useEffect, useState } from "react";
+import findThemeOption from "../functions/themeOption";
 
-const useTextBoxLayer = (coords, fabricRef) => {
+const useTextBoxLayer = (coords, fabricRef, themeOption) => {
   const [textValue, setTextValue] = useState(null);
 
   useEffect(() => {
@@ -40,7 +41,6 @@ const useTextBoxLayer = (coords, fabricRef) => {
           }
         }
         if (typeDate.height >= coords.ScaleToHeight) {
-          // typeDate.scaleToHeight(coords.ScaleToHeight);
           typeDate._textLines.forEach((lines, i) => {
             const height = typeDate.height;
             while (height > coords.ScaleToHeight) {
@@ -53,6 +53,9 @@ const useTextBoxLayer = (coords, fabricRef) => {
               }
             }
           });
+        }
+        if (coords.themeOption && themeOption) {
+          findThemeOption(coords, themeOption, typeDate);
         }
         fabricRef.current.add(typeDate);
         fabricRef.current.renderAll();

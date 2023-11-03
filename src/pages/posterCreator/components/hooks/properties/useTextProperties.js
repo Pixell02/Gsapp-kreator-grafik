@@ -16,6 +16,7 @@ const useTextProperties = (fabricRef) => {
     "CharSpacing",
     "TextAlign",
     "FontStyle",
+    "FontSize",
     "Width",
     "Height",
     "ScaleToWidth",
@@ -30,7 +31,7 @@ const useTextProperties = (fabricRef) => {
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   const { handlePropertiesChange } = useMultipleObjectProperties(fabricRef);
-  const setThemeOption = useThemeOption();
+  const { setThemeOption, setUniversalThemeOption } = useThemeOption();
 
   useEffect(() => {
     if (Object.keys(coords).length === 0) return;
@@ -38,19 +39,22 @@ const useTextProperties = (fabricRef) => {
       if (coords.type === "multiplyText" || coords.type === "multiplyUniversalText") {
         handlePropertiesChange();
       }
-      const updatedCoordsWithThemeOption = setThemeOption(coords);
 
       setGlobalProperties((prevState) => {
+        
         let updatedCoords = {};
         if (coords.type === "text" || coords.type === "multiplyText") {
+          const updatedCoordsWithThemeOption = setThemeOption(prevState, coords);
           updatedCoords = {
             [coords.className]: updatedCoordsWithThemeOption,
           };
         } else if (coords.type === "universalText") {
+          const updatedCoordsWithThemeOption = setUniversalThemeOption((prevState.Text || []), coords);
           updatedCoords = {
             Text: getUniqueTextArray([...(prevState.Text || []), updatedCoordsWithThemeOption]),
           };
         } else {
+          const updatedCoordsWithThemeOption = setUniversalThemeOption((prevState.TextOne || []), coords);
           updatedCoords = {
             TextOne: getUniqueTextArray([...(prevState.TextOne || []), updatedCoordsWithThemeOption])
           }

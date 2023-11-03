@@ -23,11 +23,11 @@ export default function TeamOption({
     useYourTeamNameAndLogo();
 
   useEffect(() => {
-    if (fabricRef.current?._objects && yourLogo) {
+    if (fabricRef.current?._objects && yourLogo && coords.yourTeamLogo) {
       teamLogo(fabricRef, yourLogo, coords, themeOption, radioChecked);
     }
   }, [fabricRef.current, yourLogo, radioChecked]);
-
+  console.log(coords)
   useEffect(() => {
     if (fabricRef.current?._objects && yourName) {
       if (coords?.yourTeamName) {
@@ -40,7 +40,7 @@ export default function TeamOption({
         teamSecondName(fabricRef, yourName, coords, themeOption, radioChecked);
       }
     }
-  }, [fabricRef.current, yourName, radioChecked, posterBackground]);
+  }, [yourName, radioChecked, posterBackground, coords, themeOption, fabricRef]);
 
   return (
     <div>

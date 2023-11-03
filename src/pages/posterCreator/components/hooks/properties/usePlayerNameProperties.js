@@ -19,6 +19,7 @@ const usePlayerNameProperties = (fabricRef) => {
     "Height",
     "ScaleToWidth",
     "ScaleToHeight",
+    "FontSize",
     "OriginX",
     "OriginY",
     "type",
@@ -27,14 +28,15 @@ const usePlayerNameProperties = (fabricRef) => {
   ];
   const { coords, handleInputChange, handleSelectChange } = useCoords(fabricRef, propertyKeys);
   const { setGlobalProperties } = useGlobalPropertiesContext();
-  const setThemeOption = useThemeOption();
+  const { setUniversalThemeOption } = useThemeOption();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   const fill = useTextFillChange(fabricRef, coords);
   useEffect(() => {
     if (Object.keys(coords).length === 0) return;
     if (coords?.type !== "playerGoal") return;
     setGlobalProperties((prevState) => {
-      const updatedCoordsWithThemeOption = setThemeOption(coords);
+      
+      const updatedCoordsWithThemeOption = setUniversalThemeOption(coords);
       const updatedCoords = getUniqueTextArray([...(prevState.player || []), updatedCoordsWithThemeOption]);
 
       return {

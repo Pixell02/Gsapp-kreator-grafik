@@ -12,6 +12,7 @@ const useHandleKeyPress = (fabricRef) => {
         universalTextBox: "TextBox",
         multiplyUniversalText: "TextOne",
         playerImage: "playerImage",
+        playerGoal: "player"
       };
       if (activeObject) {
         const { className, type } = activeObject;

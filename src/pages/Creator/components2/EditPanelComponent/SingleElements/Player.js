@@ -8,7 +8,7 @@ import translate from "../../../locales/translate.json";
 import playerImage from "./playerOption/playerImage";
 import playerName from "./playerOption/playerName";
 
-export default function Player({ fabricRef, coords, themeOption, posterBackground, Players }) {
+export default function Player({ fabricRef, playersArray, playersImageArray, themeOption, posterBackground, Players, i }) {
   const playerOptions = usePlayers(Players);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedPlayerName, setSelectedPlayerName] = useState("");
@@ -17,7 +17,6 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
   const [imageRef, setImageRef] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const { language } = useContext(LanguageContext);
-
   const handleActive = (item) => {
     fabricRef.current.setActiveObject(item);
     setIsActive(true);
@@ -28,17 +27,16 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
     setIsActive(false);
     fabricRef.current.renderAll();
   };
-
   useEffect(() => {
-    if (fabricRef.current?._objects && selectedPlayerName !== "" && coords.player) {
-      playerName(fabricRef, selectedPlayerName, coords, themeOption, posterBackground);
+    if (fabricRef.current?._objects && selectedPlayerName !== "" && playersArray[i]) {
+      playerName(fabricRef, selectedPlayerName, playersArray[i], themeOption, i);
     }
-    if (fabricRef.current?._objects && playerImg !== "" && coords.playerImage) {
-      playerImage(fabricRef, playerImg, coords.playerImage, setImageRef, height);
+    if (fabricRef.current?._objects && playerImg !== "" && playersImageArray[i]) {
+      playerImage(fabricRef, playerImg, playersImageArray[i], setImageRef, height, i);
     } else {
       setImageRef(null);
     }
-  }, [fabricRef.current, themeOption, posterBackground, selectedPlayerName, playerImg]);
+  }, [fabricRef, themeOption, posterBackground, selectedPlayerName, playerImg, playersImageArray, playersArray, i, height]);
 
   const handleSelectPlayer = async (option) => {
     setSelectedPlayer(option.value);
@@ -50,12 +48,12 @@ export default function Player({ fabricRef, coords, themeOption, posterBackgroun
         <>
           <label>{translate.player[language]}</label>
           <Select options={playerOptions} onChange={handleSelectPlayer} />
-          {coords.playerImage && playerImg && !isActive && (
+          {playersImageArray[i] && playerImg && !isActive && (
             <button onClick={() => handleActive(imageRef)} className="mt-2 btn">
               Wybierz
             </button>
           )}
-          {coords.playerImage && playerImg && isActive && (
+          {playersImageArray[i] && playerImg && isActive && (
             <button onClick={() => handleDiscard(imageRef)} className="mt-2 btn">
               Ustaw
             </button>

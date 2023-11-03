@@ -160,6 +160,20 @@
     "de": "1 Monat",
     "en": "1 month"
   },
+  "month3": {
+    "pl": "3 miesiące",
+    "es": "3 mes",
+    "fr": "3 mois",
+    "de": "3 Monat",
+    "en": "3 months"
+  },
+  "month6": {
+    "pl": "6 miesięcy",
+    "es": "6 mes",
+    "fr": "6 mois",
+    "de": "6 Monates",
+    "en": "6 months"
+  },
   "services": {
     "pl": "Usługi",
     "es": "Servicios",
