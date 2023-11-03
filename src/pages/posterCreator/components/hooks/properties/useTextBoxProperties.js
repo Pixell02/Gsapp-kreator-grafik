@@ -20,27 +20,32 @@ const useTextBoxProperties = (fabricRef) => {
     "ScaleToWidth",
     "ScaleToHeight",
     "OriginX",
+    "FontSize",
     "OriginY",
     "type",
     "Fill",
+    "Format",
+    "Formatter",
     "LineHeight",
   ];
   const { coords, handleInputChange, handleSelectChange } = useCoords(fabricRef, propertyKeys);
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
-  const setThemeOption = useThemeOption();
+  const { setThemeOption, setUniversalThemeOption } = useThemeOption();
   const fill = useTextFillChange(fabricRef, coords);
   useEffect(() => {
     if (Object.keys(coords).length === 0) return;
     if (coords?.type === "universalTextBox" || coords?.type === "textBox")
       setGlobalProperties((prevState) => {
         let updatedCoords = {};
-        const updatedCoordsWithThemeOption = setThemeOption(coords);
+        
         if (coords?.type === "universalTextBox") {
+          const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState, coords);
           updatedCoords = {
             TextBox: getUniqueTextArray([...(prevState.TextBox || []), updatedCoordsWithThemeOption]),
           };
         } else if (coords?.type === "textBox") {
+          const updatedCoordsWithThemeOption = setThemeOption(prevState, coords);
           updatedCoords = {
             [coords.className]: updatedCoordsWithThemeOption,
           };
