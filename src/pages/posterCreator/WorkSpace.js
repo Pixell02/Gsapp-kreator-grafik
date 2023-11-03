@@ -26,6 +26,7 @@ export default function WorkSpace({ coords, defaultBackGround, id, backgrounds }
   // const { imageFilters} = useImageFilters(fabricRef);
   useEffect(() => {
     if (fabricRef.current?._objects) {
+      
       if (globalProperties?.orientation) {
         setProperties((prev) => ({
           ...prev,
