@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
@@ -45,32 +45,37 @@ export default function Success() {
       const response = await getOrder({ orderId });
       const order = response.data[0];
       setStatus(`Status zamówienia ${orderId} to ${order.status}`);
-      if (order.status === "COMPLETED") {
-        if (order.description === "Licencja") {
-          const newDate = moment(currentDate).add(1, "months").format("MM-DD-YYYY");
-          const docRef = doc(db, "user", License[0].id);
-          setStatus(`Przyznawanie licencji, która wygaśnie ${newDate}`);
-          setDoc(docRef, {
+      if (order.status === "NEW") {
+        handleGetOrder();
+      } else if (order.status === "COMPLETED") {
+        const text = order.products[0].name;
+        const regex = /\d+/;
+        const match = text.match(regex);
+        const number = parseInt(match[0], 10);
+        const newDate = moment(currentDate).add(number, "months").format("MM-DD-YYYY");
+        const docRef = doc(db, "user", License[0].id);
+        setStatus(`Przyznawanie licencji, która wygaśnie ${newDate}`);
+
+        await setDoc(docRef, {
+          license: "full-license",
+          uid: user.uid,
+          expireDate: newDate,
+        });
+        users?.forEach((users) => {
+          const userRef = doc(db, "user", users.id);
+          setDoc(userRef, {
             license: "full-license",
-            uid: user.uid,
+            uid: users.uid,
             expireDate: newDate,
           });
-          users?.forEach((users) => {
-            const userRef = doc(db, "user", users.id);
-            setDoc(userRef, {
-              license: "full-license",
-              uid: users.uid,
-              expireDate: newDate,
-            });
-          });
-        }
-        const response = await transactionConfirmation({
+        });
+        const transRes = await transactionConfirmation({
           user: {
             email: user.email,
             uid: user.uid,
           },
         });
-        const res = await createFax({ order });
+        const faxRes = await createFax({ order });
         const historyRef = collection(db, "history");
         await addDoc(historyRef, {
           uid: user.uid,
@@ -80,19 +85,39 @@ export default function Success() {
           orderId: order.orderId,
           products: order.products,
           date: Date.now(),
-        });
-        setTimeout(() => {
-          setStatus(`Przekierowanie nastąpi za 3 sekundy`);
-        }, 1000);
+        })
+          .then(() => {
+            setStatus(`Przekierowanie nastąpi za 3 sekundy`);
+          })
+          .then(async () => {
+            const orderRef = doc(db, "orderId", user.uid);
+            await setDoc(orderRef, {
+              orderId: "",
+              uid: user.uid,
+            }).then(async () => {
+              const accountRef = doc(db, "teamAccounts", user.uid);
+              await updateDoc(accountRef, {
+                expireDate: newDate,
+              })
+                .then((res) => {
+                  console.log(res);
+                  navigate(`/${language}/account`);
+                })
+                .catch((res) => {
+                  console.log(res);
+                  navigate(`/${language}/account`);
+                });
+            });
+          });
+      } else {
         const orderRef = doc(db, "orderId", user.uid);
-        setDoc(orderRef, {
+        await setDoc(orderRef, {
           orderId: "",
           uid: user.uid,
+        }).then(() => {
+          navigate(`/${language}/account`);
         });
       }
-      setTimeout(() => {
-        navigate(`/${language}/account`);
-      }, 3000);
     } catch (err) {
       console.log(err);
     }
