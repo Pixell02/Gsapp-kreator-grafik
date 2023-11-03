@@ -1,14 +1,13 @@
 import React from "react";
 import { useContext } from "react";
-import { PromoCodeContext } from "../context/PromoCodeContext";
 import moment from "moment";
 import translate from "../locales/translate.json";
 import { LanguageContext } from "../../../context/LanguageContext";
+import usePromoCodeContext from "../hooks/usePromoCodeContext";
 
 const PromoCodeInformation = () => {
-  const { promoCode } = useContext(PromoCodeContext);
+  const { promoCode } = usePromoCodeContext();
   const { language } = useContext(LanguageContext);
-
   return (
     <div className="w-100 d-flex align-items-center justify-content-center">
       {promoCode?.expireDate && (
