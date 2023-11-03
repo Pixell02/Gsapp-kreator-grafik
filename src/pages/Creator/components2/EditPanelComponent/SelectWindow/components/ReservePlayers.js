@@ -10,6 +10,7 @@ const ReservePlayers = ({ fabricRef, coords, themeOption }) => {
   
   useEffect(() => {
     if (fabricRef.current?._objects && selectedReserve) {
+      
       showReserve(fabricRef, selectedReserve, coords, themeOption)
     }
   },[selectedReserve, fabricRef, coords, themeOption])

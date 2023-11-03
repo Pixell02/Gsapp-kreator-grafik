@@ -10,6 +10,7 @@ export default function StartingSquad({ coords, setIsModalOpen, fabricRef, theme
   
   return (
     <div className="d-flex flex-column mt-4">
+      
       {(coords?.playerOne || coords?.reserveOne) && PresetOptions?.length > 0 && (
         <div className="mb-5">
         <label>Wzór składu</label>

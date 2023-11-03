@@ -28,7 +28,7 @@ const OpponentSelect = ({
     setOpponentsName(option.label);
   };
   useEffect(() => {
-    if (fabricRef.current?._objects && opponentsLogo) {
+    if (fabricRef.current?._objects && opponentsLogo && coords.opponentImage) {
       opponentLogo(fabricRef, opponentsLogo, coords, themeOption, radioChecked);
     }
   }, [
