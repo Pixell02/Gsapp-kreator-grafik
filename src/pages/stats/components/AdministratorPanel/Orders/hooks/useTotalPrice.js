@@ -24,7 +24,6 @@ const useTotalPrice = (ordersData) => {
       setTotalPrice(0); // Ustawienie wyniku na 0, jeśli nie ma danych
     }
   }, [ordersData]);
-  console.log(totalPrice);
   return totalPrice;
 };
 
