@@ -3,43 +3,43 @@ import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
 import findThemeOption from "../functions/themeOption";
 
-const playerName = (fabricRef, selectedPlayerName, coords, themeOption) => {
-  fabricRef.current._objects.forEach((image, i) => {
-    if (fabricRef.current.item(i).className === "yourPlayer") {
-      fabricRef.current.remove(fabricRef.current.item(i));
+const playerName = (fabricRef, selectedPlayerName, coords, themeOption, i) => {
+  fabricRef.current._objects.forEach((image) => {
+    if (image.className === "yourPlayer" + i) {
+      fabricRef.current.remove(image);
+      fabricRef.current.renderAll();
     }
   });
-  const font = new FontFaceObserver(coords.player.FontFamily);
+  const font = new FontFaceObserver(coords.FontFamily);
   let formatPlayer = "";
 
-  if (coords.player.format === "dotted") {
+  if (coords.format === "dotted") {
     formatPlayer = selectedPlayerName.split(".")[1][0] + "." + selectedPlayerName.split(".")[2];
-  } else if (coords.player.format === "nameSurName") {
+  } else if (coords.format === "nameSurName") {
     formatPlayer = selectedPlayerName.split(".")[1] + " " + selectedPlayerName.split(".")[2];
   } else {
     formatPlayer = selectedPlayerName.split(".")[2];
   }
   font.load().then(() => {
     const playerName = new fabric.Text(formatPlayer, {
-      left: coords.player.Left,
-      top: coords.player.Top,
-      fill: coords.player.Fill,
-      originX: coords.player.OriginX,
-      originY: coords.player.OriginY,
-      className: "yourPlayer",
-      zIndex:5,
+      left: coords.Left,
+      top: coords.Top,
+      fill: coords.Fill,
+      originX: coords.OriginX,
+      originY: coords.OriginY,
+      className: "yourPlayer" + i,
       selectable: false,
-      fontFamily: coords.player.FontFamily,
-      angle: coords.player.Angle ? coords.player.Angle : 0,
-      fontSize: coords.player.FontSize,
+      fontFamily: coords.FontFamily,
+      angle: coords.Angle ? coords.Angle : 0,
+      fontSize: coords.FontSize,
     });
 
-    if (playerName.width > coords.player.ScaleToWidth) {
-      playerName.scaleToWidth(coords.player.ScaleToWidth);
+    if (playerName.width > coords.ScaleToWidth) {
+      playerName.scaleToWidth(coords.ScaleToWidth);
     }
 
-    if (coords.player.themeOption) {
-      findThemeOption(coords.player, themeOption, playerName);
+    if (coords.themeOption && themeOption) {
+      findThemeOption(coords, themeOption, playerName);
     }
 
     fabricRef.current.add(playerName);
