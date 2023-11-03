@@ -32,6 +32,7 @@ export default function createDefaultObjects(
   globalProperties,
   setIsMany
 ) {
+  if (!fabricRef.current) return;
   layersName.forEach((layer, i) => {
     for (const key in globalProperties) {
       if (layer.className === key) {
@@ -52,24 +53,28 @@ export default function createDefaultObjects(
             fabricRef.current.renderAll();
           });
         } else if (layer.type === "playerImage") {
-          fabric.Image.fromURL(layer.image, function (img) {
+          const array = globalProperties[key];
+          console.log(array)
+          array.forEach((item) => {
+            fabric.Image.fromURL(layer.image, function (img) {
             img.set({
-              top: globalProperties[key]?.Top,
-              left: globalProperties[key]?.Left,
-              className: layer.className,
+              top: item.Top,
+              left: item.Left,
+              className: item.className,
               selectable: true,
-              angle: globalProperties[key]?.Angle,
+              angle: item.Angle,
               originX: "center",
               originY: "top",
               type: "image",
             });
-            img.scaleToWidth(globalProperties[key]?.ScaleToWidth);
+              img.scaleToWidth(item.ScaleToWidth);
             fabricRef.current.add(img);
             fabricRef.current.renderAll();
           });
+          })
+          
         } else if (layer.type === "textBox") {
           let value;
-
           if (layer.className === "playerOne") {
             if (
               globalProperties[key]?.Format === "dotted" ||
@@ -152,14 +157,16 @@ export default function createDefaultObjects(
             fabricRef.current.renderAll();
           });
         } else if (layer.type === "playerGoal") {
-          let value;
+          const array = globalProperties[key];
+          array.forEach((item) => {
+            let value;
           if (
-            (globalProperties[key]?.Format || globalProperties[key]?.format) ===
+            (item.Format || item.format) ===
             "dotted"
           ) {
             value = "I.Nazwisko";
           } else if (
-            (globalProperties[key]?.Format || globalProperties[key]?.format) ===
+            (item.Format || item.format) ===
             "NumSurName"
           ) {
             value = "Imie Nazwisko";
@@ -167,21 +174,23 @@ export default function createDefaultObjects(
             value = "Nazwisko";
           }
           const text = new fabric.IText(value, {
-            top: globalProperties[key]?.Top,
-            left: globalProperties[key]?.Left,
-            angle: globalProperties[key]?.Angle,
-            fontSize: globalProperties[key]?.FontSize,
-            width: globalProperties[key]?.Width,
-            originX: globalProperties[key]?.OriginX,
-            originY: globalProperties[key]?.OriginY,
-            className: "player",
-            fill: globalProperties[key]?.Fill,
-            fontFamily: globalProperties[key]?.FontFamily,
-            format: globalProperties[key]?.Format,
-            type: globalProperties[key]?.Type,
+            top: item.Top,
+            left: item.Left,
+            angle: item.Angle,
+            fontSize: item.FontSize,
+            width: item.Width,
+            originX: item.OriginX,
+            originY: item.OriginY,
+            className: item.className,
+            fill: item.Fill,
+            fontFamily: item.FontFamily,
+            format: item.Format,
+            type: item.type,
           });
           fabricRef.current.add(text);
           fabricRef.current.renderAll();
+          })
+          
         } else if (layer.type === "multiplyText") {
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
           font.load().then(() => {
