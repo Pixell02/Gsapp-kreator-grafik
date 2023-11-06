@@ -15,16 +15,17 @@ import useInitScale from "./hooks/useInitScale";
 import useIsTheme from "./hooks/useIsTheme";
 import usePosters from "./hooks/usePosters";
 import translate from "./locales/translate.json";
+import useThemeContext from "./hooks/useThemeContext";
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef();
   const { user } = useAuthContext();
   const { language } = useContext(LanguageContext);
+  const { themeColor } = useThemeContext();
   const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
-  const { dataURL, additionalLayer, themeOption, selectThemes, setSelectThemes } = usePosters(poster);
+  const { dataURL, additionalLayer, themeOptions } = usePosters(poster);
   const { hasTheme } = useIsTheme();
   const { initScale } = useInitScale(dataURL);
-
   return (
     <CanvasContextProvider>
       {Licenses && Licenses[0].license === "no-license" && (
@@ -55,16 +56,14 @@ function WorkSpace() {
             </div>
             <div className="ms-5 me-5 mt-3">
               {/* Właściwy workspace */}
-              {fabricRef && themeOption && selectThemes && (
+              {fabricRef && themeOptions && themeColor && (
                 <EditPanel
                   fabricRef={fabricRef}
-                  themeOption={selectThemes}
-                  setSelectThemes={setSelectThemes}
-                  themeOptions={themeOption}
+                  themeOptions={themeOptions}
                   additionalLayer={additionalLayer}
                 />
               )}
-              <button className="btn primary-btn save" onClick={() => exportImg(Licenses, selectThemes, user, poster)}>
+              <button className="btn primary-btn save" onClick={() => exportImg(Licenses, themeColor, user, poster)}>
                 {translate.save[language]}
               </button>
             </div>
