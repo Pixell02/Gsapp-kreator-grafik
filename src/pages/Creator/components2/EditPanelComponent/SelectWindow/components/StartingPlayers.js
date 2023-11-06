@@ -4,17 +4,18 @@ import "./startingPlayers.css";
 import { useEffect } from "react";
 import squadPlayer from "../../SingleElements/playerOption/squadPlayer";
 import Select from "react-select";
-const StartingPlayers = ({ fabricRef, coords, themeOption }) => {
+import useThemeContext from "../../../../hooks/useThemeContext";
+const StartingPlayers = ({ fabricRef, coords, isModalOpen}) => {
   const { Players, selectedPlayers, handlePlayerChecked } = useTeamContext();
+  const { themeColor } = useThemeContext();
   const [goalkeeper, setGoalkeeper] = useState(null);
   const [capitan, setCapitan] = useState(null);
   const [playerSelect, setPlayerSelect] = useState();
   useEffect(() => {
     if (fabricRef.current?._objects && selectedPlayers) {
-      squadPlayer(fabricRef, selectedPlayers, coords, themeOption, goalkeeper, capitan);
+      squadPlayer(fabricRef, selectedPlayers, coords, themeColor, goalkeeper, capitan);
     }
-  }, [selectedPlayers, goalkeeper, capitan]);
-
+  }, [selectedPlayers, goalkeeper, capitan, themeColor, fabricRef, coords]);
   useEffect(() => {
     const option = selectedPlayers?.map((player) => ({
       label: (player.number || "") + " " + player.firstName + " " + player.secondName,
@@ -29,7 +30,7 @@ const StartingPlayers = ({ fabricRef, coords, themeOption }) => {
   }, [selectedPlayers]);
 
   return (
-    <div className="w-100 d-flex align-items-center flex-column">
+    <div className={isModalOpen.id === 1 ? "w-100 d-flex align-items-center flex-column" : "d-none"}>
       {Players?.map((player, i) => (
         <div className="w-100 d-flex flex-row" key={i}>
           <div className="checkbox-container">

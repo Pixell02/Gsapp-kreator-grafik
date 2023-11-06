@@ -8,15 +8,15 @@ import teamFirstName from "./TeamOption/teamFirstName";
 import teamFullName from "./TeamOption/teamFullName";
 import teamLogo from "./TeamOption/teamLogo";
 import teamSecondName from "./TeamOption/teamSecondName";
+import useThemeContext from "../../../hooks/useThemeContext";
 
 export default function TeamOption({
   fabricRef,
   coords,
-  themeOption,
   posterBackground,
 }) {
   const { language } = useContext(LanguageContext);
-
+  const { themeColor } = useThemeContext();
   const { radioChecked } = useContext(radioContext);
 
   const { teamOption, getTeamOption, yourLogo, yourName } =
@@ -24,27 +24,26 @@ export default function TeamOption({
 
   useEffect(() => {
     if (fabricRef.current?._objects && yourLogo && coords.yourTeamLogo) {
-      teamLogo(fabricRef, yourLogo, coords, themeOption, radioChecked);
+      teamLogo(fabricRef, yourLogo, coords, themeColor, radioChecked);
     }
   }, [fabricRef.current, yourLogo, radioChecked]);
-  console.log(coords)
   useEffect(() => {
     if (fabricRef.current?._objects && yourName) {
       if (coords?.yourTeamName) {
-        teamFullName(fabricRef, yourName, coords, themeOption, radioChecked);
+        teamFullName(fabricRef, yourName, coords, themeColor, radioChecked);
       }
       if (coords?.yourTeamFirstName && yourName) {
-        teamFirstName(fabricRef, yourName, coords, themeOption, radioChecked);
+        teamFirstName(fabricRef, yourName, coords, themeColor, radioChecked);
       }
       if (coords?.yourTeamSecondName && yourName) {
-        teamSecondName(fabricRef, yourName, coords, themeOption, radioChecked);
+        teamSecondName(fabricRef, yourName, coords, themeColor, radioChecked);
       }
     }
-  }, [yourName, radioChecked, posterBackground, coords, themeOption, fabricRef]);
+  }, [yourName, radioChecked, posterBackground, coords, themeColor, fabricRef]);
 
   return (
     <div>
-      {teamOption && teamOption.length > 1 && (
+      {teamOption?.length > 1 && (
         <>
           <label>{translate.yourTeam[language]}</label>
           <Select options={teamOption} onChange={getTeamOption} />

@@ -5,8 +5,9 @@ import useCreateOpponentGoals from "../../../hooks2/useCreateOpponentGoals";
 import useCreateYourTeamGoals from "../../../hooks2/useCreateYourTeamGoals";
 import opponentTeamResult from "./result/opponentTeamResult";
 import yourTeamResult from "./result/yourTeamResult";
+import useThemeContext from "../../../hooks/useThemeContext";
 
-export default function PlayersGoals({ fabricRef, coords, themeOption, posterBackground, Players }) {
+export default function PlayersGoals({ fabricRef, coords, posterBackground, Players }) {
   const [playerOptions, setPlayerOption] = useState([]);
   const [opponentGoals, handleOpponentGoalChange, handleOpponentMinuteChange, opponentGoalMinute] = useCreateOpponentGoals(
     Array(9).fill()
@@ -14,6 +15,7 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
   const [yourTeamGoal, handleGoalChange, handleYourTeamMinuteChange, yourTeamGoalMinute] = useCreateYourTeamGoals(
     Array(9).fill()
   );
+  const { themeColor } = useThemeContext();
   const { radioChecked } = useContext(radioContext);
 
   useEffect(() => {
@@ -29,15 +31,15 @@ export default function PlayersGoals({ fabricRef, coords, themeOption, posterBac
 
   useEffect(() => {
     if (fabricRef.current?._objects && (yourTeamGoal || yourTeamGoalMinute)) {
-      yourTeamResult({ fabricRef, yourTeamGoal, yourTeamGoalMinute, coords, radioChecked, themeOption });
+      yourTeamResult({ fabricRef, yourTeamGoal, yourTeamGoalMinute, coords, radioChecked, themeColor });
     }
-  }, [fabricRef.current, yourTeamGoal, yourTeamGoalMinute, radioChecked, posterBackground]);
+  }, [fabricRef, yourTeamGoal, yourTeamGoalMinute, radioChecked, posterBackground, coords, themeColor]);
 
   useEffect(() => {
     if (fabricRef.current?._objects && (opponentGoals || opponentGoalMinute)) {
       opponentTeamResult({ fabricRef, opponentGoals, opponentGoalMinute, coords, radioChecked });
     }
-  }, [fabricRef.current, opponentGoals, opponentGoalMinute, radioChecked, posterBackground]);
+  }, [fabricRef, opponentGoals, opponentGoalMinute, radioChecked, posterBackground, coords, themeColor]);
 
   return (
     <div>

@@ -3,23 +3,24 @@ import "./startingPlayers.css";
 import useTeamContext from '../../../../hooks/useTeamContext';
 import { useEffect } from 'react';
 import showReserve from '../../SingleElements/playerOption/showReserve';
+import useThemeContext from '../../../../hooks/useThemeContext';
 
-const ReservePlayers = ({ fabricRef, coords, themeOption }) => {
+const ReservePlayers = ({ fabricRef, coords, isModalOpen }) => {
   
   const { reservePlayers, selectedReserve, handleReserveChecked } = useTeamContext();
-  
+  const { themeColor } = useThemeContext();
+
   useEffect(() => {
     if (fabricRef.current?._objects && selectedReserve) {
-      
-      showReserve(fabricRef, selectedReserve, coords, themeOption)
+      console.log(themeColor)
+      showReserve(fabricRef, selectedReserve, coords, themeColor)
     }
-  },[selectedReserve, fabricRef, coords, themeOption])
+  },[selectedReserve, fabricRef, coords, themeColor])
   
 
   return (
-    <div className="w-100 d-flex align-items-center flex-column">
-      {reservePlayers &&
-        reservePlayers.map((player, i) => (
+    <div className={isModalOpen.id === 2 ? "w-100 d-flex align-items-center flex-column" : "d-none"}>
+      {reservePlayers?.map((player, i) => (
           <div className="w-100 d-flex flex-row" key={i}>
             <div className="checkbox-container">
               <label>

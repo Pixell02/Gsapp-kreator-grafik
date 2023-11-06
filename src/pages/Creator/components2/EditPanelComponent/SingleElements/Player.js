@@ -7,11 +7,13 @@ import usePlayers from "../../../hooks/usePlayers";
 import translate from "../../../locales/translate.json";
 import playerImage from "./playerOption/playerImage";
 import playerName from "./playerOption/playerName";
+import useThemeContext from "../../../hooks/useThemeContext";
 
-export default function Player({ fabricRef, playersArray, playersImageArray, themeOption, posterBackground, Players, i }) {
+export default function Player({ fabricRef, playersArray, playersImageArray, posterBackground, Players, i }) {
   const playerOptions = usePlayers(Players);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedPlayerName, setSelectedPlayerName] = useState("");
+  const { themeColor } = useThemeContext();
   const { height } = useCanvasPropertiesContext();
   const { image: playerImg } = useFetch(selectedPlayer?.img);
   const [imageRef, setImageRef] = useState(null);
@@ -29,14 +31,14 @@ export default function Player({ fabricRef, playersArray, playersImageArray, the
   };
   useEffect(() => {
     if (fabricRef.current?._objects && selectedPlayerName !== "" && playersArray[i]) {
-      playerName(fabricRef, selectedPlayerName, playersArray[i], themeOption, i);
+      playerName(fabricRef, selectedPlayerName, playersArray[i], themeColor, i);
     }
     if (fabricRef.current?._objects && playerImg !== "" && playersImageArray[i]) {
       playerImage(fabricRef, playerImg, playersImageArray[i], setImageRef, height, i);
     } else {
       setImageRef(null);
     }
-  }, [fabricRef, themeOption, posterBackground, selectedPlayerName, playerImg, playersImageArray, playersArray, i, height]);
+  }, [fabricRef, themeColor, posterBackground, selectedPlayerName, playerImg, playersImageArray, playersArray, i, height]);
 
   const handleSelectPlayer = async (option) => {
     setSelectedPlayer(option.value);

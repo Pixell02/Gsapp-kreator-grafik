@@ -9,16 +9,17 @@ import opponentLogo from "./TeamOption/opponentLogo";
 import opponentsFirstName from "./TeamOption/opponentsFirstName";
 import opponentsFullName from "./TeamOption/opponentsFullName";
 import opponentsSecondName from "./TeamOption/opponentsSecondName";
+import useThemeContext from "../../../hooks/useThemeContext";
 
 const OpponentSelect = ({
   fabricRef,
   coords,
   posterBackground,
-  themeOption,
 }) => {
   const options = useOpponents();
   const [selectedValue, setSelectedValue] = useState(null);
   const { image: opponentsLogo } = useFetch(selectedValue?.img);
+  const { themeColor } = useThemeContext();
   const [opponentsName, setOpponentsName] = useState("");
   const { radioChecked } = useContext(radioContext);
   const { language } = useContext(LanguageContext);
@@ -29,13 +30,13 @@ const OpponentSelect = ({
   };
   useEffect(() => {
     if (fabricRef.current?._objects && opponentsLogo && coords.opponentImage) {
-      opponentLogo(fabricRef, opponentsLogo, coords, themeOption, radioChecked);
+      opponentLogo(fabricRef, opponentsLogo, coords, themeColor, radioChecked);
     }
   }, [
-    fabricRef.current,
+    fabricRef,
     coords,
     posterBackground,
-    themeOption,
+    themeColor,
     opponentsLogo,
     radioChecked,
   ]);
@@ -47,7 +48,7 @@ const OpponentSelect = ({
           fabricRef,
           opponentsName,
           coords,
-          themeOption,
+          themeColor,
           radioChecked
         );
       }
@@ -56,7 +57,7 @@ const OpponentSelect = ({
           fabricRef,
           opponentsName,
           coords,
-          themeOption,
+          themeColor,
           radioChecked
         );
       }
@@ -65,16 +66,16 @@ const OpponentSelect = ({
           fabricRef,
           opponentsName,
           coords,
-          themeOption,
+          themeColor,
           radioChecked
         );
       }
     }
   }, [
-    fabricRef.current,
+    fabricRef,
     coords,
     posterBackground,
-    themeOption,
+    themeColor,
     opponentsName,
     radioChecked,
   ]);

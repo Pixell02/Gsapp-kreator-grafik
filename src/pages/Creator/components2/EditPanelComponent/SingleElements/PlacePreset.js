@@ -2,11 +2,10 @@ import React from "react";
 import Select from "react-select";
 import usePlacePreset from "./hooks/usePlacePreset";
 
-const PlacePreset = ({ fabricRef, themeOption, coords, name }) => {
+const PlacePreset = ({ fabricRef, coords, name }) => {
   const { options, setSelectedPlace } = usePlacePreset(
     fabricRef,
     coords,
-    themeOption,
     name
   );
 

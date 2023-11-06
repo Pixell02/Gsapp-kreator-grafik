@@ -4,7 +4,7 @@ import { useCollection } from "../../../../../../hooks/useCollection";
 import useTeamLicenseCollection from "../../../../../../hooks/useTeamLicenseCollection";
 import useTextLayer from "./useTextLayer";
 
-const usePlacePreset = (fabricRef, coords, themeOption, name) => {
+const usePlacePreset = (fabricRef, coords, name) => {
   const { user } = useAuthContext();
   const { documents: PlacePreset } = useCollection("placePreset", [
     "uid",
@@ -14,7 +14,7 @@ const usePlacePreset = (fabricRef, coords, themeOption, name) => {
   const { documents: LicensedPlacePreset } =
     useTeamLicenseCollection("placePreset");
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const { setTextValue } = useTextLayer(fabricRef, coords, themeOption, name);
+  const { setTextValue } = useTextLayer(fabricRef, coords, name);
   const [options, setOptions] = useState(null);
 
   useEffect(() => {
@@ -23,20 +23,20 @@ const usePlacePreset = (fabricRef, coords, themeOption, name) => {
         label: item.place,
         value: item.place,
       }));
-      setOptions((prev) => [...option]);
+      setOptions([...option]);
     }
     if (LicensedPlacePreset?.length > 0) {
       const option = LicensedPlacePreset?.map((item) => ({
         label: item.place,
         value: item.place,
       }));
-      setOptions((prev) => [...option]);
+      setOptions([...option]);
     }
   }, [LicensedPlacePreset, PlacePreset]);
 
   useEffect(() => {
     setTextValue(selectedPlace);
-  }, [selectedPlace]);
+  }, [selectedPlace, setTextValue]);
 
   return { setSelectedPlace, options };
 };

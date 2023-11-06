@@ -2,10 +2,11 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 import { useEffect, useState } from "react";
 import findThemeOption from "../functions/themeOption";
+import useThemeContext from "../../../../hooks/useThemeContext";
 
-const useTextBoxLayer = (coords, fabricRef, themeOption) => {
+const useTextBoxLayer = (coords, fabricRef) => {
   const [textValue, setTextValue] = useState(null);
-
+  const { themeColor } = useThemeContext();
   useEffect(() => {
     if (textValue && fabricRef.current) {
       fabricRef.current._objects.forEach((item, i) => {
@@ -54,14 +55,14 @@ const useTextBoxLayer = (coords, fabricRef, themeOption) => {
             }
           });
         }
-        if (coords.themeOption && themeOption) {
-          findThemeOption(coords, themeOption, typeDate);
+        if (coords.themeOption && themeColor) {
+          findThemeOption(coords, themeColor, typeDate);
         }
         fabricRef.current.add(typeDate);
         fabricRef.current.renderAll();
       });
     }
-  }, [textValue, fabricRef.current]);
+  }, [textValue, fabricRef, coords, themeColor]);
 
   return { textValue, setTextValue };
 };

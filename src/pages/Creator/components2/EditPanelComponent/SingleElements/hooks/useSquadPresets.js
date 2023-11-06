@@ -4,10 +4,12 @@ import { useCollection } from "../../../../../../hooks/useCollection";
 import useTeamLicenseCollection from "../../../../../../hooks/useTeamLicenseCollection";
 import showReserve from "../playerOption/showReserve";
 import squadPlayer from "../playerOption/squadPlayer";
+import useThemeContext from "../../../../hooks/useThemeContext";
 
-const useSquadPresets = (fabricRef, coords, themeOption) => {
+const useSquadPresets = (fabricRef, coords) => {
   const [selectedPreset, setSelectedPreset] = useState(null);
   const { user } = useAuthContext();
+  const { themeColor } = useThemeContext();
   const { documents: Presets } = useCollection("squadPreset", [
     "uid",
     "==",
@@ -22,14 +24,14 @@ const useSquadPresets = (fabricRef, coords, themeOption) => {
         label: item.presetName,
         value: item,
       }));
-      setPresetOptions((prev) => [...options]);
+      setPresetOptions([...options]);
     }
     if (LicensedPreset?.length > 0) {
       const options = LicensedPreset.map((item) => ({
         label: item.presetName,
         value: item,
       }));
-      setPresetOptions((prev) => [...options]);
+      setPresetOptions([...options]);
     }
   }, [Presets, LicensedPreset]);
 
@@ -40,7 +42,7 @@ const useSquadPresets = (fabricRef, coords, themeOption) => {
           fabricRef,
           selectedPreset.squadPlayers,
           coords,
-          themeOption,
+          themeColor,
           selectedPreset.goalkeeper,
           selectedPreset.capitan
         );
@@ -49,10 +51,10 @@ const useSquadPresets = (fabricRef, coords, themeOption) => {
           fabricRef,
           selectedPreset.reservePlayers,
           coords,
-          themeOption
+          themeColor
         );
     }
-  }, [selectedPreset]);
+  }, [selectedPreset, themeColor, coords, fabricRef]);
 
   return { PresetOptions, setSelectedPreset };
 };

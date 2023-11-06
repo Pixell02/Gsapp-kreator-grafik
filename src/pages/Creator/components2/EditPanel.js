@@ -11,8 +11,6 @@ import SingleElements from "./EditPanelComponent/SingleElements";
 
 export default function EditPanel({
   fabricRef,
-  themeOption,
-  setSelectThemes,
   themeOptions,
   additionalLayer,
 }) {
@@ -29,7 +27,6 @@ export default function EditPanel({
     id: null,
     open: false,
   });
-  console.log(coords)
   return (
     <RadioProvider>
       <TeamProvider>
@@ -41,7 +38,6 @@ export default function EditPanel({
                 fabricRef={fabricRef}
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
-                themeOption={themeOption}
                 setSelectedMatch={setSelectedMatch}
                 selectedMatch={selectedMatch}
               />
@@ -50,9 +46,7 @@ export default function EditPanel({
               <SingleElements
                 coords={coords}
                 fabricRef={fabricRef}
-                themeOption={themeOption}
                 themeOptions={themeOptions}
-                setSelectThemes={setSelectThemes}
                 additionalLayer={additionalLayer}
                 Players={Players}
                 setIsModalOpen={setIsModalOpen}

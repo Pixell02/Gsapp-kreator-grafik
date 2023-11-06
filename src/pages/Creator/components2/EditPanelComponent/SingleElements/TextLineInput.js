@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import useTextLayer from './hooks/useTextLayer';
 
-const TextLineInput = ({ coords, name, fabricRef, themeOption, defaultValue }) => {
-  const { textValue, setTextValue } = useTextLayer(fabricRef, coords, themeOption, name);
+const TextLineInput = ({ coords, name, fabricRef, defaultValue }) => {
+
+  const { textValue, setTextValue } = useTextLayer(fabricRef, coords, name);
   
   useEffect(() => {
     setTextValue(defaultValue)

@@ -4,9 +4,9 @@ import { LanguageContext } from "../../../../../context/LanguageContext";
 import Select from "react-select";
 import useSquadPresets from "./hooks/useSquadPresets";
 
-export default function StartingSquad({ coords, setIsModalOpen, fabricRef, themeOption }) {
+export default function StartingSquad({ coords, setIsModalOpen, fabricRef }) {
   const { language } = useContext(LanguageContext);
-  const { PresetOptions, setSelectedPreset } = useSquadPresets(fabricRef, coords, themeOption);
+  const { PresetOptions, setSelectedPreset } = useSquadPresets(fabricRef, coords);
   
   return (
     <div className="d-flex flex-column mt-4">

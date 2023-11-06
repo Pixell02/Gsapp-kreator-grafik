@@ -2,9 +2,12 @@ import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 import { useEffect, useState } from "react";
 import findThemeOption from "../functions/themeOption";
+import useThemeContext from "../../../../hooks/useThemeContext";
 
-const useTextLayer = (fabricRef, coords, themeOption, name) => {
+const useTextLayer = (fabricRef, coords, name) => {
+
   const [textValue, setTextValue] = useState("");
+  const { themeColor } = useThemeContext();
   
   useEffect(() => {
     if (fabricRef.current && textValue) {
@@ -37,14 +40,14 @@ const useTextLayer = (fabricRef, coords, themeOption, name) => {
             typeDate.scaleToHeight(coords.ScaleToWidth);
           }
         }
-        if (coords.themeOption && themeOption) {
-          findThemeOption(coords, themeOption, typeDate);
+        if (coords.themeOption && themeColor) {
+          findThemeOption(coords, themeColor, typeDate);
         }
         fabricRef.current.add(typeDate);
         fabricRef.current.renderAll();
       });
     }
-  }, [textValue, themeOption, fabricRef, name, coords]);
+  }, [textValue, themeColor, fabricRef, name, coords]);
 
   return { textValue, setTextValue };
 };

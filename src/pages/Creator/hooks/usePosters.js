@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import useThemeOption from "./useThemeOption";
+import useThemeContext from "./useThemeContext";
 
 const usePosters = (poster) => {
-  const themeOption = useThemeOption(poster);
+  const themeOptions = useThemeOption(poster);
+  const { themeColor, setThemeColor } = useThemeContext();
 
-  const [selectThemes, setSelectThemes] = useState(null);
-  const { image: dataURL } = useFetch(selectThemes?.value?.src);
+  // const [selectThemes, setSelectThemes] = useState(null);
+  const { image: dataURL } = useFetch(themeColor?.value?.src);
   const { image: additionalLayer } = useFetch(
-    selectThemes?.value?.additionalLayer
+    themeColor?.value?.additionalLayer
   );
 
   useEffect(() => {
-    themeOption?.length > 0 && setSelectThemes(themeOption[0]);
-  }, [themeOption]);
+    themeOptions?.length > 0 && setThemeColor(themeOptions[0]);
+  }, [themeOptions, setThemeColor]);
 
   return {
     dataURL,
-    themeOption,
-    selectThemes,
-    setSelectThemes,
+    themeOptions,
     additionalLayer,
   };
 };

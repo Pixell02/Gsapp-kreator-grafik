@@ -1,8 +1,8 @@
 import React from "react";
 import useTextLayer from "./hooks/useTextLayer";
 
-const TextInput = ({ coords, fabricRef, themeOption}) => {
-  const { textValue, setTextValue } = useTextLayer(fabricRef, coords, themeOption);
+const TextInput = ({ coords, fabricRef}) => {
+  const { textValue, setTextValue } = useTextLayer(fabricRef, coords);
 
   return (
     <div>
