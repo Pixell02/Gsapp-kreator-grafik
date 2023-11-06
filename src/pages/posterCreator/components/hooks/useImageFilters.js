@@ -40,7 +40,7 @@ const useImageFilters = (fabricRef, coords) => {
         setFilters((prev) => ({
           ...prev,
           [className]: {
-            [className]: 0.5,
+            [className]: 0,
           },
         }));
       } else {
@@ -48,7 +48,7 @@ const useImageFilters = (fabricRef, coords) => {
           ...prev,
           [className]: {
             value: "#000000",
-            alpha: 0.5,
+            alpha: 0,
             blendMode: "add",
           },
         }));
