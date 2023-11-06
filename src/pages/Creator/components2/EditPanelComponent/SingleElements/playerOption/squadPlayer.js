@@ -2,9 +2,8 @@ import findThemeOption from "../functions/themeOption";
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
 
-const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, capitan) => {
- 
-  if (squadPlayers && coords.playerOne) {
+const squadPlayer = (fabricRef, squadPlayers, coords, themeOption, goalKeeper, capitan) => {
+  if (squadPlayers) {
     let text = "";
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -17,23 +16,29 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
         });
         let formatPlayer;
         if (coords.playerOne.format === "NumDotSurName" || coords.playerOne.Format === "NumDotSurName") {
-          formatPlayer = (player.number ? player.number + "." : "")  + player.secondName;
+          formatPlayer = (player.number ? player.number + "." : "") + player.secondName;
         } else if (coords.playerOne.format === "NumSurName" || coords.playerOne.Format === "NumSurName") {
           formatPlayer = (player.number ? player.number : "") + " " + player.secondName;
         } else if (coords.playerOne.format === "dotted" || coords.playerOne.Format === "dotted") {
-          formatPlayer = (player.number ? player.number + "." : "")  + player.firstName[0] + "." + player.secondName;
+          formatPlayer = (player.number ? player.number + "." : "") + player.firstName[0] + "." + player.secondName;
         } else if (coords.playerOne.format === "oneDot" || coords.playerOne.Format === "oneDot") {
           formatPlayer = (player.number ? player.number : "") + " " + player.firstName[0] + "." + player.secondName;
         } else {
           formatPlayer = player.secondName;
-        }   
-        if (currentYear - player.age <= 21) {
-          formatPlayer += " (m)"
         }
-          if ((goalKeeper?.number || "" ) + " " + goalKeeper?.firstName + " " + goalKeeper?.secondName === (player.number || "") + " " + player.firstName + " " + player.secondName) {
-            formatPlayer += " (gk)";
-          }
-        if ((capitan?.number || "" ) + " " + capitan?.firstName + " " + capitan?.secondName === (player.number || "") + " " + player.firstName + " " + player.secondName) {
+        if (currentYear - player.age <= 21) {
+          formatPlayer += " (m)";
+        }
+        if (
+          (goalKeeper?.number || "") + " " + goalKeeper?.firstName + " " + goalKeeper?.secondName ===
+          (player.number || "") + " " + player.firstName + " " + player.secondName
+        ) {
+          formatPlayer += " (gk)";
+        }
+        if (
+          (capitan?.number || "") + " " + capitan?.firstName + " " + capitan?.secondName ===
+          (player.number || "") + " " + player.firstName + " " + player.secondName
+        ) {
           formatPlayer += " (c)";
         } else {
           formatPlayer = formatPlayer;
@@ -61,17 +66,16 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
         className: "player",
         fontFamily: coords.playerOne.FontFamily,
         angle: coords.playerOne.Angle ? coords.playerOne.Angle : 0,
-        fontStyle: (coords.playerOne.FontStyle || "normal"),
+        fontStyle: coords.playerOne.FontStyle || "normal",
         splitByGrapheme: true,
       });
-
+      if (coords.playerOne.themeOption && themeOption) {
+        findThemeOption(coords.playerOne, themeOption, showPlayer);
+      }
       if (coords.playerOne.CharSpacing) {
         showPlayer.set({
           charSpacing: coords.playerOne.CharSpacing,
         });
-      }
-      if (coords.playerOne.themeOption && themeOption) {
-        findThemeOption(coords.playerOne, themeOption, showPlayer);
       }
 
       showPlayer._textLines.forEach((lines, i) => {
@@ -82,13 +86,13 @@ const squadPlayer = (fabricRef, squadPlayers, coords, themeOption,  goalKeeper, 
           showPlayer.set("fontSize", fontSize - 1);
           const newWidth = showPlayer.getLineWidth(i);
           if (newWidth <= coords.playerOne.ScaleToWidth - 50) {
+            console.log(showPlayer);
             fabricRef.current.add(showPlayer);
             fabricRef.current.renderAll();
             break;
           }
         }
       });
-
       fabricRef.current.add(showPlayer);
       fabricRef.current.renderAll();
     });
