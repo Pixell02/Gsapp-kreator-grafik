@@ -32,7 +32,7 @@ const useTextBoxProperties = (fabricRef) => {
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   const { setThemeOption, setUniversalThemeOption } = useThemeOption();
-  const fill = useTextFillChange(fabricRef, coords);
+  const fill = useTextFillChange(fabricRef);
   useEffect(() => {
     if (Object.keys(coords).length === 0) return;
     if (coords?.type === "universalTextBox" || coords?.type === "textBox")

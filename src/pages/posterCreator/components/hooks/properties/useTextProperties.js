@@ -27,7 +27,7 @@ const useTextProperties = (fabricRef) => {
     "Fill",
   ];
   const { coords, handleInputChange, handleSelectChange } = useCoords(fabricRef, propertyKeys);
-  const fill = useTextFillChange(fabricRef, coords);
+  const fill = useTextFillChange(fabricRef);
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   const { handlePropertiesChange } = useMultipleObjectProperties(fabricRef);
