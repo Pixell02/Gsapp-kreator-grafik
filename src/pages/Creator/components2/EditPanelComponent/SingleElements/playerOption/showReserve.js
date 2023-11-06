@@ -50,7 +50,6 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
         width: coords.reserveOne.ScaleToWidth * 1.1,
         top: coords.reserveOne.Top,
         left: coords.reserveOne.Left,
-        zIndex:5,
         originX: coords.reserveOne.OriginX,
         originY: coords.reserveOne.OriginY,
         fontFamily: coords.reserveOne.FontFamily,
@@ -77,7 +76,6 @@ const showReserve = (fabricRef, reserve, coords, themeOption) => {
           }
         }
       }
-     console.log(themeOption)
     if (coords.reserveOne.themeOption && themeOption) {
       findThemeOption(coords.reserveOne, themeOption, reserveText)
     }
