@@ -132,6 +132,7 @@ export default function createDefaultObjects(
             fabricRef.current.renderAll();
           });
         } else if (layer.type === "text") {
+          
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
           font.load().then(() => {
             const text = new fabric.IText(layer.text, {
