@@ -3,7 +3,7 @@ import StartingPlayers from "./components/StartingPlayers";
 import ReservePlayers from "./components/ReservePlayers";
 import MultiElements from "./components/MultiElements";
 
-const SelectWindow = ({ isModalOpen, setIsModalOpen, fabricRef, coords, themeOption, setSelectedMatch, selectedMatch }) => {
+const SelectWindow = ({ isModalOpen, setIsModalOpen, fabricRef, coords, setSelectedMatch, selectedMatch }) => {
   const handleClick = () => {
     setIsModalOpen({ id: null, open: false });
     setSelectedMatch(null);
@@ -11,8 +11,8 @@ const SelectWindow = ({ isModalOpen, setIsModalOpen, fabricRef, coords, themeOpt
 
   return (
     <div>
-      {isModalOpen.id === 1 && <StartingPlayers fabricRef={fabricRef} coords={coords} themeOption={themeOption} />}
-      {isModalOpen.id === 2 && <ReservePlayers fabricRef={fabricRef} coords={coords} themeOption={themeOption} />}
+      {coords?.playerOne && <StartingPlayers fabricRef={fabricRef} coords={coords} isModalOpen={isModalOpen} />}
+      {coords?.reserveOne && <ReservePlayers fabricRef={fabricRef} coords={coords} isModalOpen={isModalOpen} />}
       {isModalOpen.id === 3 && <MultiElements fabricRef={fabricRef} coords={coords} selectedMatch={selectedMatch} />}
       <button className="w-100 btn mt-5" onClick={() => handleClick()}>
         Zamknij
