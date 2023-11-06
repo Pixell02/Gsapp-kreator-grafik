@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCollection } from "../../../hooks/useCollection";
 
 const useThemeOption = (poster) => {
-  const [themeOption, setThemeOption] = useState(null);
+  const [themeOptions, setThemeOption] = useState(null);
 
   const { documents: MainCatalog } = useCollection("piecesOfPoster", [
     "uuid",
@@ -34,7 +34,7 @@ const useThemeOption = (poster) => {
     }
   }, [MainCatalog, yourCatalog]);
 
-  return themeOption;
+  return themeOptions;
 };
 
 export default useThemeOption;
