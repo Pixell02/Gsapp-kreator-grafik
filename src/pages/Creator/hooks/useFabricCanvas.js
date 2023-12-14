@@ -1,10 +1,13 @@
 
 import { fabric } from "fabric";
 import useImageRefProvider from "./useImageRefProvider";
+import { useRef, useState } from "react";
 
 const useFabricCanvas = () => {
+
+  // const imageRef = useRef(null)
   
-  const { imageRef } = useImageRefProvider();
+
   const initFabric = (fabricRef, image) => {
     if (!fabricRef.current?._objects) {
       fabricRef.current = new fabric.Canvas("canvas", {
@@ -13,20 +16,23 @@ const useFabricCanvas = () => {
         height: image.height,
       });
     }
-    if (imageRef.current) {
-      imageRef.current.setSrc(image.src, () => {
+    const backgroundImage = fabricRef.current.getObjects().find((item) => item.className === "background0")
+    
+    if (backgroundImage) {
+      backgroundImage.setSrc(image.src, () => {
         fabricRef.current.renderAll();
       });
-      
     } else {
         fabric.Image.fromURL(image.src, function (img) {
         img.set({
           selectable: false,
+          width: image.width,
+          height: image.height,
+          className: "background0"
         })
         
-        fabricRef.current.add(img);
+          fabricRef.current.add(img);
         fabricRef.current.renderAll();
-        imageRef.current = img;
       });
     }
     

@@ -18,7 +18,7 @@ const useStorage = () => {
         "state_changed",
         (snapshot) => {
           let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress);
+          setProgress(progress.toFixed(2));
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");

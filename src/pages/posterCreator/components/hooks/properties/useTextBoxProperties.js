@@ -40,7 +40,7 @@ const useTextBoxProperties = (fabricRef) => {
         let updatedCoords = {};
         
         if (coords?.type === "universalTextBox") {
-          const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState, coords);
+          const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.TextBox || [], coords);
           updatedCoords = {
             TextBox: getUniqueTextArray([...(prevState.TextBox || []), updatedCoordsWithThemeOption]),
           };

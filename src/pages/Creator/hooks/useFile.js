@@ -1,42 +1,60 @@
 import imageCompression from "browser-image-compression";
 import { fabric } from "fabric";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import useImageFilters from "./useImageFilters";
+import useThemeContext from "./useThemeContext";
 const useFile = (fabricRef, coords, filters) => {
-  const imageRef = useRef(null);
   const { activeFilters } = useImageFilters(filters);
+  const { themeColor } = useThemeContext();
   const [isImage, setIsImage] = useState(false);
   const [fabricImageRef, setFabricImageRef] = useState(null);
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
 
     if (file) {
       try {
         const compressedImage = await compressImage(file);
-
         const fabricImage = new fabric.Image(compressedImage, {
-          className: "background",
           filters: activeFilters,
           top: coords.Top,
           left: coords.Left,
           originX: coords.OriginX,
           originY: coords.OriginY,
+          className: coords.className,
+          type: coords.type,
         });
         setIsImage(fabricImage);
         fabricImage.scaleToHeight(coords.ScaleToHeight);
         fabricRef.current.add(fabricImage);
         fabricRef.current.sendToBack(fabricImage);
-        imageRef.current = fabricImage;
         setFabricImageRef(fabricImage);
       } catch (error) {
         console.error("Error compressing or adding image:", error);
       }
     }
   };
+
+  useEffect(() => {
+    if (!fabricRef.current?._objects) return;
+    const ImagesObjects = fabricRef.current.getObjects().filter((option) => option.className === coords.className);
+    if (ImagesObjects.length === 0) return;
+    const ImageObject = ImagesObjects[0];
+    const blendColor = coords.filters.blendColor;
+    const selectedColor = coords.filters.blendColor.themeOption.find((option) => option.label === themeColor.label);
+    if (!selectedColor) return;
+    const blendColorFilter = new fabric.Image.filters.BlendColor({
+      alpha: blendColor.alpha,
+      blendMode: blendColor.blendMode,
+      color: selectedColor.color,
+    });
+    ImageObject.applyFilters([blendColorFilter]);
+    fabricRef.current.renderAll();
+  }, [themeColor, coords, fabricRef]);
+
   const compressImage = async (file) => {
     const options = {
-      maxSizeMB: 0.8, // Adjust the maximum size as needed
-      maxWidthOrHeight: 600, // Define maximum width or height for the compressed image
+      maxSizeMB: 0.8,
+      maxWidthOrHeight: 600,
       useWebWorker: true,
     };
 
@@ -47,6 +65,7 @@ const useFile = (fabricRef, coords, filters) => {
       throw error;
     }
   };
+
   const handleDeleteImage = () => {
     fabricRef.current.remove(fabricImageRef);
     setIsImage(false);

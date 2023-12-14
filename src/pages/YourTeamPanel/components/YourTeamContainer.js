@@ -9,7 +9,7 @@ export default function YourTeamContainer({ Team }) {
   const [openEditYourTeam, setOpenEditYourTeam] = useState(false);
   const { documents: licenseTeams } = useTeamLicenseCollection("Teams");
   const [data, setData] = useState(null);
-  const editClick = (e, team) => {
+  const editClick = (team) => {
     setOpenEditYourTeam(true);
     setData(team);
   };

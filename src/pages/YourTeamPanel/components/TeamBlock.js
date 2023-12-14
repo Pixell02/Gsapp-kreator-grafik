@@ -12,13 +12,13 @@ const TeamBlock = ({ team, setOpenEditYourTeam, editClick }) => {
 
         <div
           className="option-container"
-          onClick={(e) => setOpenEditYourTeam(true)}
+          onClick={() => setOpenEditYourTeam(true)}
         >
           <button
             className="button"
             key={team.id}
-            onClick={(e) => {
-              editClick(e, team);
+            onClick={() => {
+              editClick(team);
             }}
           >
             <Icon.ThreeDotsVertical

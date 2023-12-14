@@ -32,6 +32,7 @@ const SingleElements = ({
   const { themeColor } = useThemeContext()
   const playersImageArray = Array.isArray(coords.playerImage) ? coords.playerImage : [coords.playerImage];
   const largerArray = playersArray?.length > playersImageArray?.length ? playersArray : playersImageArray;
+  
   return (
     <div>
       {additionalLayer && <AdditionalImageLayer fabricRef={fabricRef} additionalLayer={additionalLayer} />}
@@ -91,8 +92,11 @@ const SingleElements = ({
         <OpponentSelect fabricRef={fabricRef} coords={coords} Opponents={Opponents} />
       )}
       {coords.yourTeamResult && <Result fabricRef={fabricRef} coords={coords} />}
-      {coords.Images?.Image.map((image) => (
-        <Images fabricRef={fabricRef} filters={coords.Images.filters} coords={image} />
+      {coords.Images?.Image?.map((image) => (
+        <Images fabricRef={fabricRef} filters={coords?.Images?.filters} coords={image} />
+      ))}
+      {!coords.Images?.Image && coords.Images?.map((image) => (
+        <Images fabricRef={fabricRef} filters={image.filters} coords={image} />
       ))}
       {(coords.player || coords.playerImage) &&
         largerArray[0] !== null &&

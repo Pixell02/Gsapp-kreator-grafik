@@ -39,7 +39,6 @@ const useTextProperties = (fabricRef) => {
       if (coords.type === "multiplyText" || coords.type === "multiplyUniversalText") {
         handlePropertiesChange();
       }
-
       setGlobalProperties((prevState) => {
         
         let updatedCoords = {};

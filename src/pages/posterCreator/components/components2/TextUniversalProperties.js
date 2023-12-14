@@ -6,7 +6,7 @@ import originY from "./originY";
 
 const TextUniversalProperties = ({ fabricRef }) => {
   const { coords, fill, handleSelectChange, handleInputChange } = useTextProperties(fabricRef);
-
+  
   return (
     <>
       {(coords?.type === "universalText" || coords?.type === "multiplyUniversalText") && (

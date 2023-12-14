@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import useFiltersArray from './useFiltersArray';
 
-const useFilters = () => {
+const useFilters = (fabricRef, coords) => {
 
-  const handleAddFilters = (coords) => {
+  const [filters, setFilters] = useState(null);
+  const handleReadFilters = useFiltersArray();
 
-    if (!coords.themeOption) {
-      coords.filters = [];
-    }
-  }
+  useEffect(() => {
+    const canvas = fabricRef.current;
+    if (!canvas?._objects) return;
+    const activeObject = canvas.getActiveObject();
+    if (!activeObject) return;
+    if (activeObject.type !== "FilteredImage") return;
+    const Filters = handleReadFilters(activeObject.filters);
+    setFilters(Filters)
+  },[fabricRef, coords, setFilters])
 
-  return {handleAddFilters}
+  return {filters, setFilters}
 }
 
 export default useFilters

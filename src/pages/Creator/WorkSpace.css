@@ -4,6 +4,19 @@
   margin: 0 0 0 180px;
   width: auto;
 }
+.sponsors-container {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  background-color: white;
+  flex-wrap: wrap;
+  bottom: 0;
+}
+
+.sponsors-container img {
+  max-width: 100%;
+  height: auto;
+}
 
 .preview-container .react-transform-wrapper {
   width: 1920px !important;

@@ -25,12 +25,8 @@ function LeftBar() {
   const { setSportKeys } = useContext(TeamContext);
   useEffect(() => {
     if (Teams || LicensedTeams) {
-      const uniqueSportKeys = Array.from(
-        new Set(Teams?.map((team) => team.sport))
-      );
-      const TeamUniqueSportKeys = Array.from(
-        new Set(LicensedTeams?.map((team) => team.sport))
-      );
+      const uniqueSportKeys = Array.from(new Set(Teams?.map((team) => team.sport)));
+      const TeamUniqueSportKeys = Array.from(new Set(LicensedTeams?.map((team) => team.sport)));
       if (uniqueSportKeys.length > 0) {
         setSportKeys(uniqueSportKeys);
       } else {
@@ -64,9 +60,7 @@ function LeftBar() {
           <div className="list-item">
             <Icon.List
               style={{ height: "50px", width: "auto" }}
-              onClick={() =>
-                isActive === true ? setIsActive(false) : setIsActive(true)
-              }
+              onClick={() => (isActive === true ? setIsActive(false) : setIsActive(true))}
             />
           </div>
           <Link
@@ -79,12 +73,8 @@ function LeftBar() {
             <li>
               <Icon.PersonRolodex className="icon-element" />
             </li>
-            <span className={isHover === 2 ? "extended-text" : "slide-text"}>
-              {translate.yourCatalog[language]}{" "}
-            </span>
-            <span className={isActive ? "extended-text" : "slide-text"}>
-              {translate.yourCatalog[language]}{" "}
-            </span>{" "}
+            <span className={isHover === 2 ? "extended-text" : "slide-text"}>{translate.yourCatalog[language]} </span>
+            <span className={isActive ? "extended-text" : "slide-text"}>{translate.yourCatalog[language]} </span>{" "}
           </Link>
           <Link
             key="1"
@@ -96,12 +86,8 @@ function LeftBar() {
             <li>
               <Icon.CardList className="icon-element" />
             </li>
-            <span className={isHover === 1 ? "extended-text" : "slide-text"}>
-              {translate.catalog[language]}{" "}
-            </span>
-            <span className={isActive ? "extended-text" : "slide-text"}>
-              {translate.catalog[language]}{" "}
-            </span>
+            <span className={isHover === 1 ? "extended-text" : "slide-text"}>{translate.catalog[language]} </span>
+            <span className={isActive ? "extended-text" : "slide-text"}>{translate.catalog[language]} </span>
           </Link>
 
           <Link
@@ -114,17 +100,11 @@ function LeftBar() {
             <li>
               <Icon.GridFill className="icon-element" />
             </li>
-            <span className={isHover === 3 ? "extended-text" : "slide-text"}>
-              {translate.yourTeamPanel[language]}
-            </span>
+            <span className={isHover === 3 ? "extended-text" : "slide-text"}>{translate.yourTeamPanel[language]}</span>
             {isActive ? (
-              <span className="extended-text">
-                {translate.yourTeamPanel[language]}
-              </span>
+              <span className="extended-text">{translate.yourTeamPanel[language]}</span>
             ) : (
-              <span className="slide-text">
-                {translate.yourTeamPanel[language]}
-              </span>
+              <span className="slide-text">{translate.yourTeamPanel[language]}</span>
             )}
           </Link>
           <Link
@@ -137,13 +117,9 @@ function LeftBar() {
             <li>
               <Icon.People className="icon-element" />
             </li>
-            <span className={isHover === 4 ? "extended-text" : "slide-text"}>
-              {translate.players[language]}
-            </span>
+            <span className={isHover === 4 ? "extended-text" : "slide-text"}>{translate.players[language]}</span>
             {isActive ? (
-              <span className="extended-text">
-                {translate.players[language]}
-              </span>
+              <span className="extended-text">{translate.players[language]}</span>
             ) : (
               <span className="slide-text">{translate.players[language]}</span>
             )}
@@ -158,17 +134,11 @@ function LeftBar() {
             <li>
               <Crest className="icon-element" />
             </li>
-            <span className={isHover === 5 ? "extended-text" : "slide-text"}>
-              {translate.opponents[language]}
-            </span>
+            <span className={isHover === 5 ? "extended-text" : "slide-text"}>{translate.opponents[language]}</span>
             {isActive ? (
-              <span className="extended-text">
-                {translate.opponents[language]}
-              </span>
+              <span className="extended-text">{translate.opponents[language]}</span>
             ) : (
-              <span className="slide-text">
-                {translate.opponents[language]}
-              </span>
+              <span className="slide-text">{translate.opponents[language]}</span>
             )}
           </Link>
 
@@ -182,17 +152,11 @@ function LeftBar() {
             <li>
               <Icon.Cash className="icon-element" />
             </li>
-            <span className={isHover === 7 ? "extended-text" : "slide-text"}>
-              {translate.buyAccess[language]}
-            </span>
+            <span className={isHover === 7 ? "extended-text" : "slide-text"}>{translate.buyAccess[language]}</span>
             {isActive ? (
-              <span className="extended-text">
-                {translate.buyAccess[language]}
-              </span>
+              <span className="extended-text">{translate.buyAccess[language]}</span>
             ) : (
-              <span className="slide-text">
-                {translate.buyAccess[language]}
-              </span>
+              <span className="slide-text">{translate.buyAccess[language]}</span>
             )}
           </Link>
           <Link
@@ -205,13 +169,9 @@ function LeftBar() {
             <li>
               <Icon.PersonCircle className="icon-element" />
             </li>
-            <span className={isHover === 8 ? "extended-text" : "slide-text"}>
-              {translate.Account[language]}
-            </span>
+            <span className={isHover === 8 ? "extended-text" : "slide-text"}>{translate.Account[language]}</span>
             {isActive ? (
-              <span className="extended-text">
-                {translate.Account[language]}
-              </span>
+              <span className="extended-text">{translate.Account[language]}</span>
             ) : (
               <span className="slide-text">{translate.Account[language]}</span>
             )}
@@ -219,6 +179,7 @@ function LeftBar() {
           {user &&
             (user.uid === "hgwaMbxg3qWnQyqS44AtyTrkSA93" ||
               user.uid === "6vVYzE860LS6Ua4nIIfCSul7feD2" ||
+              user.uid === "yALsGjEPaRcTIkBslb8TZrvgY6u1" ||
               user.uid === "ait7T01TWaPDqx3a4YsogOQrL4O2") && (
               <>
                 <Link
@@ -231,11 +192,7 @@ function LeftBar() {
                   <li>
                     <Icon.BarChartFill className="icon-element" />
                   </li>
-                  <span
-                    className={isHover === 9 ? "extended-text" : "slide-text"}
-                  >
-                    Statystyki
-                  </span>
+                  <span className={isHover === 9 ? "extended-text" : "slide-text"}>Statystyki</span>
                   {isActive ? (
                     <span className="extended-text">Statystyki</span>
                   ) : (
@@ -252,11 +209,7 @@ function LeftBar() {
                   <li>
                     <Icon.BoundingBoxCircles className="icon-element" />
                   </li>
-                  <span
-                    className={isHover === 10 ? "extended-text" : "slide-text"}
-                  >
-                    Kreator
-                  </span>
+                  <span className={isHover === 10 ? "extended-text" : "slide-text"}>Kreator</span>
                   {isActive ? (
                     <span className="extended-text">Kreator</span>
                   ) : (
@@ -276,9 +229,7 @@ function LeftBar() {
             <li>
               <Icon.BoxArrowRight className="icon-element" />
             </li>
-            <span className={isHover === 11 ? "extended-text" : "slide-text"}>
-              Wyloguj się
-            </span>
+            <span className={isHover === 11 ? "extended-text" : "slide-text"}>Wyloguj się</span>
             {isActive ? (
               <span className="extended-text">Wyloguj się</span>
             ) : (

@@ -19,19 +19,9 @@ const OptionButton = ({ item, editClick, type, hideElement }) => {
   }, [setItemToEdit]);
 
   const handleDeleteClick = async (id, location) => {
-    if (location === "players") {
-      const ref = doc(db, "Players", id);
-      await deleteDoc(ref);
-    } else if (location === "opponents") {
-      const ref = doc(db, "Opponents", id);
-      await deleteDoc(ref);
-    } else if (location === "place") {
-      const ref = doc(db, "placePreset", id);
-      await deleteDoc(ref);
-    } else if (location === "squadPreset") {
-      const ref = doc(db, "squadPreset", id);
-      await deleteDoc(ref);
-    }
+    const ref = doc(db, location, id);
+    await deleteDoc(ref);
+    // }
   };
   return (
     <div className="option-container">

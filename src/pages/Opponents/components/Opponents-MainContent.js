@@ -75,10 +75,10 @@ function OpponentsMainContent() {
         <ItemContainer>
           <div className="catalog-container">
             {Opponents?.map((player, i) => (
-              <FilteredBlock key={i} editClick={editClick} item={player} />
+              <FilteredBlock key={i} editClick={editClick} type={"Opponents"} item={player} />
             ))}
             {LicenseOpponents?.map((item, i) => (
-              <FilteredBlock key={i} editClick={editClick} item={item} />
+              <FilteredBlock key={i} editClick={editClick} type={"Opponents"} item={item} />
             ))}
           </div>
         </ItemContainer>
@@ -90,7 +90,7 @@ function OpponentsMainContent() {
             <SlabBlock
               key={i + "as"}
               item={item}
-              type="place"
+              type={"placePreset"}
               editClick={editSlabClick}
             />
           ))}
@@ -98,7 +98,7 @@ function OpponentsMainContent() {
             <SlabBlock
               key={i}
               item={item}
-              type={"place"}
+              type={"placePreset"}
               editClick={editSlabClick}
             />
           ))}

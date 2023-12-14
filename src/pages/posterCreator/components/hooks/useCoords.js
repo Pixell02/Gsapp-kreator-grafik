@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import useHandleChangeEvents from "./useHandleChangeEvents";
 import useHandleKeyPress from "./useHandleKeyPress";
+import useFiltersArray from "./useFiltersArray";
 
-const useCoords = (fabricRef, propertyKeys) => {
+const useCoords = (fabricRef, propertyKeys, type) => {
   const [coords, setCoords] = useState({});
-  const { updateActiveObjectCoords, handleInputChange, handleSelectChange } = useHandleChangeEvents(fabricRef, coords, setCoords);
+  const { updateActiveObjectCoords, handleInputChange, handleSelectChange } = useHandleChangeEvents(
+    fabricRef,
+    coords,
+    setCoords
+  );
   const { handleDeleteKeyPress } = useHandleKeyPress(fabricRef);
+  const handleReadFilters = useFiltersArray();
   useEffect(() => {
     const handleObjectModified = () => {
       const canvas = fabricRef.current;
@@ -36,12 +42,18 @@ const useCoords = (fabricRef, propertyKeys) => {
         Formatter: activeObject.Formatter,
       };
       const selectedProperties = {};
-
       propertyKeys.forEach((key) => {
-        if (newCoords[key] !== undefined) {
-          selectedProperties[key] = newCoords[key];
-        }
-      });
+          if (newCoords[key] !== undefined) {
+            selectedProperties[key] = newCoords[key];
+          }
+        });
+      if (newCoords.type === "FilteredImage") {
+        if (newCoords.filters?.length > 0) {
+        const coordsWithFilter = handleReadFilters(newCoords.filters);
+        console.log(coordsWithFilter)
+        selectedProperties.filters = coordsWithFilter;
+      }
+      }
       setCoords(selectedProperties);
     };
     if (fabricRef?.current?._objects) {
@@ -54,9 +66,8 @@ const useCoords = (fabricRef, propertyKeys) => {
         document.removeEventListener("keydown", handleDeleteKeyPress);
       };
     }
-  }, [handleDeleteKeyPress, fabricRef, propertyKeys]);
+  }, [handleDeleteKeyPress, fabricRef, propertyKeys, handleReadFilters, type]);
 
-  console.log(coords?.type)
 
   return { coords, updateActiveObjectCoords, handleInputChange, handleSelectChange };
 };

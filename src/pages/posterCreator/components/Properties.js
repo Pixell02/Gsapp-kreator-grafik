@@ -18,11 +18,11 @@ export default function Properties({ fabricRef }) {
       <ImageFiltersProvider>
         <ImageProperties fabricRef={fabricRef} />
         <ImageFilterProperties fabricRef={fabricRef} />
-        <TextProperties fabricRef={fabricRef} />
         <TextboxProperties fabricRef={fabricRef} />
+        <TextBoxUniversalProperties fabricRef={fabricRef} />
+        <TextProperties fabricRef={fabricRef} />
         <PlayerNameProperties fabricRef={fabricRef} />
         <TextUniversalProperties fabricRef={fabricRef} />
-        <TextBoxUniversalProperties fabricRef={fabricRef} />
         <PlayerImageProperties fabricRef={fabricRef} />
       </ImageFiltersProvider>
     </div>

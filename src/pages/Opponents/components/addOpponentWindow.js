@@ -16,14 +16,10 @@ function AddOpponentWindow({ open, onClose, Teams }) {
   ];
   const [image, setImage] = useState(null);
   const { preview, setPreview } = useFileReader(image);
-  const {
-    handleSubmit,
-    opponent,
-    teamOptions,
-    handleTeamChange,
-    setOpponent,
-    handleValueChange,
-  } = useOpponents(Teams, image);
+  const { handleSubmit, opponent, teamOptions, handleTeamChange, setOpponent, handleValueChange } = useOpponents(
+    Teams,
+    image
+  );
 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
@@ -46,10 +42,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
           </>
         ))}
         <label>{translate.team[language]}</label>
-        <Select
-          options={teamOptions}
-          onChange={(option) => handleTeamChange(option.value)}
-        />
+        <Select options={teamOptions} onChange={(option) => handleTeamChange(option.value)} />
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           {translate.addCrest[language]}
         </button>

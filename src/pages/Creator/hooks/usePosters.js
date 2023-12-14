@@ -7,7 +7,6 @@ const usePosters = (poster) => {
   const themeOptions = useThemeOption(poster);
   const { themeColor, setThemeColor } = useThemeContext();
 
-  // const [selectThemes, setSelectThemes] = useState(null);
   const { image: dataURL } = useFetch(themeColor?.value?.src);
   const { image: additionalLayer } = useFetch(
     themeColor?.value?.additionalLayer

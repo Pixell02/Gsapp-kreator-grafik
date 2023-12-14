@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useImageProperties from "../hooks/properties/useImageProperties";
 import useImageFilters from "../hooks/useImageFilters";
 import ColorBlock from "./Filters/ColorBlock";
@@ -6,10 +6,15 @@ import FilterBlock from "./Filters/FilterBlock";
 
 const ImageFilterProperties = ({ fabricRef }) => {
   const { coords, handleInputChange } = useImageProperties(fabricRef);
-  const { filters, handleCheckFilter, handleAlphaChange, handleValuesChange, elements, handleModeChange } = useImageFilters(
+  const { filters, handleCheckFilter, handleAlphaChange, handleValuesChange, handleModeChange } = useImageFilters(
     fabricRef,
     coords
   );
+  const [elements] = useState([
+    { className: "brightness", name: "jasność" },
+    { className: "contrast", name: "kontraskt" },
+    { className: "saturation", name: "nasycenie" },
+  ]);
   return (
     <>
       {coords?.type === "FilteredImage" && (
@@ -43,9 +48,8 @@ const ImageFilterProperties = ({ fabricRef }) => {
                 filters={filters}
                 handleFiltersChange={handleCheckFilter}
                 handleValuesChange={handleValuesChange}
-                className={element.className}
-                name={element.name}
-                mode={filters?.blendColor?.mode}
+                className={element?.className}
+                name={element?.name}
               />
             ))}
             <div className="d-flex flex-column mt-2">
@@ -55,6 +59,7 @@ const ImageFilterProperties = ({ fabricRef }) => {
                 handleValuesChange={handleValuesChange}
                 className={"blendColor"}
                 name={"mieszaj kolor"}
+                mode={filters?.blendColor?.mode}
                 handleModeChange={handleModeChange}
                 handleAlphaChange={handleAlphaChange}
               />
@@ -64,7 +69,7 @@ const ImageFilterProperties = ({ fabricRef }) => {
                 <input
                   type="checkbox"
                   className="grayScale"
-                  checked={filters.grayScale}
+                  checked={filters?.grayScale}
                   onChange={(e) => handleCheckFilter(e.target.className, e.target.checked)}
                 />{" "}
                 <span>odcień szarości</span>

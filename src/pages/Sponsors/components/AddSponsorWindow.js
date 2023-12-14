@@ -1,112 +1,85 @@
-import { useRef ,useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
-import '../../YourTeamPanel/components/addTeamWindow.css'
-import bin from '../../../img/binIcon.png'
-import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../../../firebase/config'
-import { useAuthContext } from '../../../hooks/useAuthContext'
+import { useState } from "react";
+import "../../YourTeamPanel/components/addTeamWindow.css";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import InputImage from "../../../components/InputImage";
+import ImagePreview from "../../../components/ImagePreview";
+import ButtonContainer from "../../../components/ButtonContainer";
+import useFileReader from "../../../hooks/useFileReader";
+import useStorage from "../../../hooks/useStorage";
+import { useParams } from "react-router-dom";
 
-
-
-function AddSponsorWindow({open, onClose})  {
+function AddSponsorWindow({ open, onClose }) {
   
   const { id } = useParams();
-  const [sponsorName, setSponsorName] = useState('')
-  const [number, setNumber] = useState(null)
-  const [image, setImage] = useState(null)
-  const [preview, setPreview] = useState(null)
-  const { user } = useAuthContext()
-  const fileInputRef = useRef(null);
-  const onButtonClick = () => {
-    fileInputRef.current.click();
+  const { user } = useAuthContext();
+  const [sponsorData, setSponsorData] = useState({
+    name: "",
+    number: 0,
+    uid: user.uid
+  })
+ 
+  const [image, setImage] = useState(null);
+  const { preview, setPreview } = useFileReader(image || null);
+  const { handleAddImage } = useStorage();
+
+  const handleValueChange = (e) => {
+    const { value, className } = e.target;
+    setSponsorData(prev => ({
+      ...prev,
+      [className]: value
+    }))
   }
-  
-  useEffect (() => {
-    if(image) {
-      if(Math.round(image.size/1024) < 150) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-        }
-       reader.readAsDataURL(image); 
-      } else {
-        setPreview(null)
-        alert("maksymalna wielkość obrazu to 150KB")
-      }
-    } else {
-      setPreview(null)
-    }
-  }, [image])
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!sponsorName || !number) {
+    if (sponsorData.name === "" || !sponsorData.number === 0) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
     } else {
-      await addDoc(collection(db, 'Sponsors'), {
-        firstName: sponsorName,
-        number: number,
-        img: preview,
-        uid: id
-      })
-      onClose(true)
-      setSponsorName('')
-      setNumber('')
-      setImage(null)
+      const downloadURL = await handleAddImage(image, `${id ? id : user.uid}/sponsorzy/${sponsorData.name}`)
+      await addDoc(collection(db, "Sponsors"), {
+        ...sponsorData,
+        img: downloadURL
+      });
+      onClose(true);
+      setSponsorData(prev => ({
+        ...prev,
+        name: "",
+        number: 0
+      }))
+      setImage(null);
     }
-      
+  };
+
+  const handleClick = () => {
+    onClose(true);
+    setSponsorData(prev => ({
+      ...prev,
+      name: "",
+      number: 0
+    }))
   }
-    return (
-      <div className={open ? "active-modal" : "modal"} >
-        <div className='add-window' >
-          
-            <label for = "firstPlayerName">Nazwa sponsora</label>
-            <input type='text' onChange={(e) => setSponsorName(e.target.value)} value={sponsorName} className = 'firstPlayerName' />
-            <label for = "Number">Który z kolei ma się pokazywać</label>
-            <input type='number' onChange={(e) => setNumber(e.target.value)} value={number} className = 'Number' />
-            <button 
-              onClick={onButtonClick}
-              className='btn primary-btn add-img'
-              >
-                Dodaj Zdjęcie
-              </button>
-            <input type="file"
-             style={{display:"none"}}
-               ref={fileInputRef}
-               accept="image/png"
-               onChange={(e) => {
-                const file = e.target.files[0];
-                if(file) {
-                  setImage(file);
-                } else {
-                  setImage(null);
-                }
-               }}
-               />
-            <div className='add-logo-window'>
-              <div className='image-container'>
-            {preview && <img src={preview} className = "image" />}
-              </div>
-              <div className='bin-container'>
-               {preview && <img src={bin} onClick= {() => setPreview(null)}/>}
-              </div>
-            </div>
-            <div className='buttons-container'>
-              <button onClick={() => {
-                onClose()
-                setSponsorName('')
-                setNumber('')
-                setImage(null)
-              }
-                } className='btn primary-btn'>Anuluj</button>
-              <button onClick={handleSubmit} className='btn primary-btn'>Zapisz</button>
-            </div>
-          
-        </div>
+  return (
+    <div className={open ? "active-modal" : "modal"}>
+      <div className="add-window">
+        <label for="firstPlayerName">Nazwa sponsora</label>
+        <input
+          type="text"
+          onChange={handleValueChange}
+          value={sponsorData.name}
+          className="name"
+        />
+        <label for="Number">Który z kolei ma się pokazywać</label>
+        <input type="number" onChange={handleValueChange} value={sponsorData.number} className="number" />
+        <InputImage setImage={setImage} />
+        <ImagePreview preview={preview} setPreview={setPreview} />
+        <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>
-    )
+    </div>
+  );
 }
 
 export default AddSponsorWindow;

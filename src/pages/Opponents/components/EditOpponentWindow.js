@@ -1,13 +1,13 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ImagePreview from "../../../components/ImagePreview";
-import { LanguageContext } from "../../../context/LanguageContext";
 import useFileReader from "../../../hooks/useFileReader";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import useOpponents from "../hooks/useOpponents";
 import translate from "../locales/locales.json";
+import useLanguageContext from "../../../hooks/useLanguageContext";
 
 function EditOpponentWindow({ player, open, onClose, Teams }) {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
   const elements = [
     { name: translate.firstOpponentName[language], className: "firstName" },
     { name: translate.secondOpponentName[language], className: "secondName" },

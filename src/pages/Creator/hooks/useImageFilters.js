@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import { fabric } from "fabric";
+import useThemeContext from "./useThemeContext";
+
+
 
 const useImageFilters = (objectFilters) => {
-
   const [activeFilters, setFilters] = useState({});
-  const addDefaultFilter = (filterName, filters) => {
+  const { themeColor } = useThemeContext();
+ 
+
+  
+
+  useEffect(() => {
+     const addDefaultFilter = (filterName, filters) => {
+    const color = filters?.themeOption?.find((option) => option.label === themeColor.label)
     switch (filterName) {
       case "brightness":
         return new fabric.Image.filters.Brightness({ ...filters });
@@ -13,28 +22,22 @@ const useImageFilters = (objectFilters) => {
       case "saturation":
         return new fabric.Image.filters.Saturation({ ...filters });
       case "blendColor":
-        return new fabric.Image.filters.BlendColor({ ...filters });
+        return new fabric.Image.filters.BlendColor({ alpha: filters.alpha, blendMode: filters.blendMode, color: color?.color || filters.color });
       case "grayScale":
         return new fabric.Image.filters.Grayscale({ ...filters });
       default:
         return null;
     }
   };
-
-
-  useEffect(() => {
     if (!objectFilters) return;
     const filterKeys = Object.keys(objectFilters);
-    const updatedFilters = filterKeys.map(objFilter => {
+    const updatedFilters = filterKeys.map((objFilter) => {
       const filter = addDefaultFilter(objFilter, objectFilters[objFilter]);
       return filter;
     });
     setFilters(updatedFilters);
-  }, [objectFilters]);
-
-
-
-  return {activeFilters}
-}
+  }, [objectFilters, themeColor]);
+  return { activeFilters };
+};
 
 export default useImageFilters;

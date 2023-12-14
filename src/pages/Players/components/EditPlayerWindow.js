@@ -161,7 +161,7 @@ function EditPlayerWindow({ player, open, onClose, Teams }) {
           onChange={(e) => handleTeamChange(e.target.value)}
         >
           <option value=""></option>
-        {teamOptions && teamOptions.map((team) => (
+        {teamOptions?.map((team) => (
           <option value={team.value}>{team.label}</option>
         ))}
          

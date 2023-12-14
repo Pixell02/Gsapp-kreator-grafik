@@ -16,7 +16,6 @@ const useSingleCrestProperties = (fabricRef) => {
       if (coords.type === "multiplyimage") {
         handlePropertiesChange();
       }
-
       setGlobalProperties((prevState) => {
         const updatedCoords = {
           [coords.className]: coords,

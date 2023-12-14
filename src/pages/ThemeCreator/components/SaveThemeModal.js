@@ -12,24 +12,15 @@ import { GlobalPropertiesContext } from "../../posterCreator/Context/GlobalPrope
 import { ManyBackgroundsContext } from "../../posterCreator/Context/ManyBackgroundsContext";
 import "./saveThemeModal.css";
 
-export default function SaveThemeModal({ setIsOpen, backgrounds }) {
+export default function SaveThemeModal({ setIsOpen }) {
   const { documents: catalog } = useCollection("catalog");
   const { language } = useContext(LanguageContext);
-  const { globalProperties, setGlobalProperties } = useContext(GlobalPropertiesContext);
-  const { background, image } = useContext(BackgroundContext);
+  const { globalProperties } = useContext(GlobalPropertiesContext);
+  const { image } = useContext(BackgroundContext);
   const { manyBackgrounds } = useContext(ManyBackgroundsContext);
   const myId = uuidv4().replace(/-/g, "");
+  console.log("id: ", myId);
   const navigate = useNavigate();
-  const [id, setId] = useState();
-  useEffect(() => {
-    setId(myId);
-  }, []);
-  useEffect(() => {
-    setGlobalProperties((prevState) => ({
-      ...prevState,
-      uid: id,
-    }));
-  }, [image, catalog]);
   const [catalogOption, setCatalogOption] = useState([]);
   const [savedThemeName, setSavedThemeName] = useState("");
   const [selectedTheme, setSelectedTheme] = useState();
@@ -57,24 +48,24 @@ export default function SaveThemeModal({ setIsOpen, backgrounds }) {
         addDoc(collection(db, "piecesOfPoster"), {
           color: background.color,
           src: downloadURL,
-          uuid: globalProperties.uid,
+          uuid: myId,
         });
       });
     }
 
     if (image) {
       const downloadURL = await handleAddImage(image.file, `${savedThemeName}/${themeName}/${image.color}`);
-      setDoc(doc(collection(db, "piecesOfPoster"), globalProperties.uid), {
+      await setDoc(doc(collection(db, "piecesOfPoster"), myId), {
         color: image.color,
         name: themeName,
         src: downloadURL,
         themeId: selectedTheme,
-        uid: globalProperties.uid,
-        uuid: globalProperties.uid,
+        uid: myId,
+        uuid: myId,
       });
-      setDoc(doc(collection(db, "coords"), globalProperties.uid), globalProperties ? globalProperties : { uid: id });
+      await setDoc(doc(collection(db, "coords"), myId), { ...globalProperties, uid: myId });
     }
-    navigate(`/${language}/creator/theme/${globalProperties.uid}`);
+    navigate(`/${language}/creator/theme/${myId}`);
   };
 
   return (

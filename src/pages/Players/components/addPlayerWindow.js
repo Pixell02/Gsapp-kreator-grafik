@@ -78,7 +78,8 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
               case "running":
                 console.log("Upload is running");
                 break;
-              default: console.log("default");
+              default:
+                console.log("default");
             }
           },
           (error) => {

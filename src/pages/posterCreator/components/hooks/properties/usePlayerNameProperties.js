@@ -36,7 +36,7 @@ const usePlayerNameProperties = (fabricRef) => {
     if (coords?.type !== "playerGoal") return;
     setGlobalProperties((prevState) => {
       
-      const updatedCoordsWithThemeOption = setUniversalThemeOption(coords);
+      const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
       const updatedCoords = getUniqueTextArray([...(prevState.player || []), updatedCoordsWithThemeOption]);
 
       return {

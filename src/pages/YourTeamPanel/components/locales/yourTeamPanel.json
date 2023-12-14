@@ -13,12 +13,23 @@
     "de": "Anleitung",
     "fr": "Guide"
   },
+  "addImage": {
+    "pl": "Dodaj obraz",
+    "en": "Add image",
+    "es": "Agregar imagen",
+    "de": "Bild hinzufügen",
+    "fr": "Ajouter une image"
+  },
   "addTeam": {
     "pl": "Dodaj drużynę",
     "en": "Add Team",
     "es": "Agregar equipo",
     "de": "Team hinzufügen",
     "fr": "Ajouter une équipe"
+  },
+  "addTrainer": {
+    "pl": "Dodaj trenera",
+    "en": "Add Trainer"
   },
   "firstTeamName": {
     "pl": "Pierwsza część nazwy drużyny",

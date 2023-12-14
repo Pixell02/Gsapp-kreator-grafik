@@ -41,7 +41,7 @@ function WorkSpace() {
             <TransformWrapper minScale={0.1} initialScale={initScale} panning={{ disabled: true }}>
               <TransformComponent>
                 <div className="d-flex w-100 h-100">
-                  {fabricRef && dataURL && <Canvas posterBackGround={dataURL} fabricRef={fabricRef} />}
+                  {fabricRef && dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef} />}
                 </div>
               </TransformComponent>
             </TransformWrapper>

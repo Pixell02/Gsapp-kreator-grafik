@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
 import useCanvasPropertiesContext from "./hooks/useCanvasPropertiesContext";
 import useFabricCanvas from "./hooks/useFabricCanvas";
+import { useCollection } from "../../hooks/useCollection";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-function Canvas(props) {
+
+function Canvas({ dataURL, fabricRef }) {
   const { width, setWidth, height, setHeight } = useCanvasPropertiesContext();
   const { initFabric } = useFabricCanvas();
+  const { user } = useAuthContext(); 
+  // const { documents: sponsors } = useCollection("Sponsors", ["uid", "==", user.uid])
+  
+  
 
   useEffect(() => {
     const img = new Image();
-    img.src = props.posterBackGround;
+    img.src = dataURL;
 
     img.onload = () => {
       setWidth(img.width);
@@ -18,11 +25,20 @@ function Canvas(props) {
         width: img.width,
         height: img.height,
       };
-      initFabric(props.fabricRef, image);
+      initFabric(fabricRef, image);
     };
-  }, [props.posterBackGround, props.fabricRef, initFabric, setWidth, setHeight]);
+  }, [dataURL, fabricRef]);
 
-  return <canvas id="canvas" className="resposive-canvas" ref={props.fabricRef} width={width} height={height} />;
+  return (
+    <>
+    {/* <div className="sponsors-container" style={{height: "150px", width: "250px"}}>
+      {sponsors?.map((image, index) => (
+        <img key={index} src={image.img} alt={`Img ${index + 1}`} />
+      ))}
+    </div> */}
+      <canvas id="canvas" className="resposive-canvas" ref={fabricRef} width={width} height={height} />
+    </>
+  );
 }
 
 export default Canvas;

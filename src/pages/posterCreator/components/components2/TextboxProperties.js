@@ -55,11 +55,13 @@ export default function TextboxProperties({ fabricRef }) {
           </div>
           <div className="d-flex mx-2 w-100 align-items-center justify-content-start">
             <div className="d-flex w-50">
-              kolor: <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
+              kolor:{" "}
+              <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
             </div>
             <div className="d-flex">
               <div>
-                kąt: <input type="number" value={coords.Angle} className="w-50" name="Angle" onChange={handleInputChange} />
+                kąt:{" "}
+                <input type="number" value={coords.Angle} className="w-50" name="Angle" onChange={handleInputChange} />
               </div>
             </div>
             <div className="d-flex w-50 align-items-center justify-content-start">
@@ -108,7 +110,13 @@ export default function TextboxProperties({ fabricRef }) {
             </div>
             <div className="w-100 ml-1">
               rozmiar czcionki :{" "}
-              <input type="number" className="w-50" name="FontSize" value={coords.FontSize} onChange={handleInputChange} />
+              <input
+                type="number"
+                className="w-50"
+                name="FontSize"
+                value={coords.FontSize}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
           <div>
@@ -125,7 +133,12 @@ export default function TextboxProperties({ fabricRef }) {
           </div>
           <div>
             punkt odniesienia Y :{" "}
-            <select name="OriginY" className="form-control" value={coords.OriginY} onChange={(e) => handleSelectChange(e)}>
+            <select
+              name="OriginY"
+              className="form-control"
+              value={coords.OriginY}
+              onChange={(e) => handleSelectChange(e)}
+            >
               {originY && originY.map((team) => <option value={team.value}>{team.label}</option>)}
             </select>{" "}
           </div>

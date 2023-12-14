@@ -18,9 +18,8 @@ const useThemeOption = () => {
     );
   };
   const setUniversalThemeOption = (prevState, coords) => {
-    
-
     const index = prevState?.findIndex((option) => option.className === coords.className);
+    
     if (index === -1) {
       return {
         ...coords,
@@ -34,18 +33,58 @@ const useThemeOption = () => {
     } else {
       return {
         ...coords,
-        themeOption:[
-        ...(prevState[index].themeOption || []).filter((option) => option.label !== color),
+        themeOption: [
+          ...(prevState[index].themeOption || []).filter((option) => option.label !== color),
           {
             label: color,
             Fill: coords.Fill,
           },
-        ]
-      }
+        ],
+      };
     }
   };
 
-  return { setThemeOption, setUniversalThemeOption };
+  const setImageThemeOption = (prevState, coords) => {
+    const index = prevState?.findIndex((option) => option.className === coords.className);
+
+    if (index === -1) {
+      return {
+        ...coords,
+        filters: coords.filters && {
+          ...coords.filters,
+          blendColor: coords.filters.blendColor && {
+            themeOption: [
+              {
+                label: color,
+                color: coords.filters?.blendColor?.color,
+              },
+            ],
+          },
+        },
+      };
+    } else {
+      return {
+        ...coords,
+        filters: coords.filters && {
+          ...coords.filters,
+          blendColor: coords.filters.blendColor && {
+            ...coords.filters.blendColor,
+            themeOption: [
+              ...(prevState[index]?.filters?.blendColor?.themeOption || []).filter(
+                (option) => option.label !== color
+              ),
+              {
+                label: color,
+                color: coords.filters?.blendColor?.color,
+              },
+            ],
+          },
+        },
+      };
+    }
+  };
+
+  return { setThemeOption, setUniversalThemeOption, setImageThemeOption };
 };
 
 export default useThemeOption;

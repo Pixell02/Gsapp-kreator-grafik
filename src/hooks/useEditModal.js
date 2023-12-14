@@ -4,11 +4,11 @@ import { useState } from 'react';
 export default function useEditModal() {
    const [isEditModal, setIsEditModal] = useState(false); 
 
-   function openEditModal() {
+   const openEditModal = () => {
     setIsEditModal(true);
    }
 
-   function closeEditModal() {
+   const closeEditModal = () => {
     setIsEditModal(false);
    }
 

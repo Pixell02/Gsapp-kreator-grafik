@@ -3,6 +3,7 @@ import React from "react";
 import { useRef } from "react";
 import useFile from "../../../hooks/useFile";
 import useIsActive from "../../../hooks/useIsActive";
+import ImageProperties from "./ImageProperties";
 
 const Images = ({ coords, fabricRef, filters }) => {
   const fileInputRef = useRef(null);
@@ -35,9 +36,13 @@ const Images = ({ coords, fabricRef, filters }) => {
         </button>
       )}
       {isImage && isActive && (
+        <div className="d-flex flex-column">
+
         <button className="btn ml-5" onClick={() => handleDeActiveObject(isImage)}>
           Ustaw
-        </button>
+          </button>
+          {/* <ImageProperties /> */}
+        </div>
       )}
     </div>
   );

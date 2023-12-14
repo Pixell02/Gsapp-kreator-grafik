@@ -1,18 +1,12 @@
 import { fabric } from "fabric";
-import { useEffect, useState } from "react";
-import useGlobalPropertiesContext from "./useGlobalPropertiesContext";
-import useImageFiltersContext from "./useImageFiltersContext";
-
+import useFilters from "./useFilters";
+import { useEffect } from "react";
+import useBackgroundContext from "./useBackgroundContext";
 const useImageFilters = (fabricRef, coords) => {
-  const { setGlobalProperties } = useGlobalPropertiesContext();
+  
 
-  const [elements] = useState([
-    { className: "brightness", name: "jasność" },
-    { className: "contrast", name: "kontraskt" },
-    { className: "saturation", name: "nasycenie" },
-  ]);
-
-  const { filters, setFilters } = useImageFiltersContext();
+  const { filters, setFilters } = useFilters(fabricRef, coords);
+  const { color } = useBackgroundContext()
 
   const handleAlphaChange = (className, alpha) => {
     setFilters((prev) => ({
@@ -29,7 +23,7 @@ const useImageFilters = (fabricRef, coords) => {
       ...prev,
       [className]: {
         ...prev[className],
-        blendMode: mode,
+        mode: mode,
       },
     }));
   };
@@ -47,7 +41,7 @@ const useImageFilters = (fabricRef, coords) => {
         setFilters((prev) => ({
           ...prev,
           [className]: {
-            value: "#000000",
+            color: "#000000",
             alpha: 0,
             blendMode: "add",
           },
@@ -83,12 +77,11 @@ const useImageFilters = (fabricRef, coords) => {
       }));
     }
   };
-
+  
   useEffect(() => {
     if (!fabricRef?.current) return;
-
     const canvas = fabricRef.current;
-    if (!canvas) return;
+    if (!canvas || !filters) return;
     if (coords?.type !== "FilteredImage") return;
     const activeObject = canvas.getActiveObject();
     if (!activeObject) return;
@@ -103,21 +96,14 @@ const useImageFilters = (fabricRef, coords) => {
 
       return acc;
     }, []);
-
     activeObject.filters = activeFilters;
     activeObject.applyFilters();
     canvas.renderAll();
-    setGlobalProperties((prev) => ({
-      ...prev,
-      Images: {
-        ...prev.Image,
-        Image: [coords],
-        filters: filters,
-      },
-    }));
-  }, [filters, coords, fabricRef, setGlobalProperties]);
+    
+  }, [filters, coords, fabricRef]);
 
-  return { filters, handleCheckFilter, handleValuesChange, elements, handleModeChange, handleAlphaChange };
+
+  return { filters, handleCheckFilter, handleValuesChange, handleModeChange, handleAlphaChange };
 };
 
 const addDefaultFilter = (filterName, filters) => {

@@ -23,13 +23,13 @@ const ColorBlock = (props) => {
             <input
               type="checkbox"
               className={className}
-              checked={filters[className]}
+              checked={filters?.[className]}
               onChange={(e) => handleFiltersChange(e.target.className, e.target.checked)}
             />{" "}
           <span>{name}</span>
           </label>
       </div>
-      {filters[className] && (
+      {filters?.[className] && (
         <>
         <select className="form-control" value={mode} onChange={(e) => handleModeChange(e.target.value, "blendColor")}>
         {options.map(option => (
@@ -40,9 +40,10 @@ const ColorBlock = (props) => {
           <input
             type="color"
             className={className}
-            onChange={(e) => handleValuesChange(e.target.className, e.target.value)}
+              onChange={(e) => handleValuesChange(e.target.className, e.target.value)}
+              value={filters?.blendColor?.color}
           />
-          <span>{filters[className]?.value}</span>
+          <span>{filters?.blendColor?.color}</span>
       </div>
       <div>
           <input
@@ -51,7 +52,7 @@ const ColorBlock = (props) => {
             className={className}
             onChange={(e) => handleAlphaChange(e.target.className, e.target.value)}
           />
-          <span>{filters[className]?.alpha}</span>
+          <span>{filters?.blendColor?.alpha}</span>
         </div>
         </>
       )}

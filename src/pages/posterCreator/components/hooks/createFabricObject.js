@@ -109,7 +109,7 @@ export const createFabricImage = (fabricRef, name, image, type) => {
     img.set({
       top: 400,
       left: 400,
-      className: name !== "FilteredImage" ? name : name + quantity,
+      className: name !== "image" ? name : name + quantity,
       originX: "center",
       originY: "center",
       type: type,

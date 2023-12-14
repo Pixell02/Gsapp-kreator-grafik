@@ -22,7 +22,6 @@ const useFabric = () => {
       fabricRef.current.add(img);
         fabricRef.current.renderAll();
         imageRef.current = img;
-        // fabricRef.current.setBackgroundImage(img, fabricRef.current.renderAll.bind(fabricRef.current));
       });
     
     setColor(img.color);

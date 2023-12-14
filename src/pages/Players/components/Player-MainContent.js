@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../../../App.css";
 import ReturnButton from "../../../components/ReturnButton";
@@ -6,7 +6,6 @@ import SlabBlock from "../../../components/SlabBlock";
 import FilteredBlock from "../../../components/main-content-elements/FilteredBlock";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
-import { LanguageContext } from "../../../context/LanguageContext";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useCollection } from "../../../hooks/useCollection";
 import useEditModal from "../../../hooks/useEditModal";
@@ -17,24 +16,16 @@ import AddSquadPlayersPresetWindow from "./AddSquadPlayersPresetWindow";
 import EditPlayerWindow from "./EditPlayerWindow";
 import EditSquadPlayersPresetWindow from "./EditSquadPlayersPresetWindow";
 import AddPlayerWindow from "./addPlayerWindow";
+import useLanguageContext from "../../../hooks/useLanguageContext";
 
 function PlayerMainContent() {
   const { user } = useAuthContext();
-  const { language } = useContext(LanguageContext);
-  const { documents: Players } = useCollection("Players", [
-    "uid",
-    "==",
-    user.uid,
-  ]);
+  const { language } = useLanguageContext();
+  const { documents: Players } = useCollection("Players", ["uid", "==", user.uid]);
   const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid]);
-  const { documents: squadPreset } = useCollection("squadPreset", [
-    "uid",
-    "==",
-    user.uid,
-  ]);
+  const { documents: squadPreset } = useCollection("squadPreset", ["uid", "==", user.uid]);
   const { documents: LicensePlayers } = useTeamLicenseCollection("Players");
-  const { documents: LicenseSquadPreset } =
-    useTeamLicenseCollection("squadPreset");
+  const { documents: LicenseSquadPreset } = useTeamLicenseCollection("squadPreset");
   const [openPresetModal, setOpenPresetModal] = useState(false);
   const [openEditPresetModal, setEditPresetModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -42,7 +33,7 @@ function PlayerMainContent() {
   const location = useLocation();
   const goodLocation = location.pathname.split("/")[2];
 
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
 
   const hideElement = useRef(null);
 
@@ -60,19 +51,12 @@ function PlayerMainContent() {
 
       {openPresetModal && (
         <TeamProvider>
-          <AddSquadPlayersPresetWindow
-            Players={Players}
-            onClose={() => setOpenPresetModal(false)}
-          />
+          <AddSquadPlayersPresetWindow Players={Players} onClose={() => setOpenPresetModal(false)} />
         </TeamProvider>
       )}
       {openEditPresetModal && (
         <TeamProvider>
-          <EditSquadPlayersPresetWindow
-            data={data}
-            Players={Players}
-            onClose={() => setEditPresetModal(false)}
-          />
+          <EditSquadPlayersPresetWindow data={data} Players={Players} onClose={() => setEditPresetModal(false)} />
         </TeamProvider>
       )}
 
@@ -86,10 +70,10 @@ function PlayerMainContent() {
           <div className="d-flex flew-row">
             <div className="catalog-container">
               {Players?.map((player, i) => (
-                <FilteredBlock key={i} editClick={editClick} item={player} />
+                <FilteredBlock key={i} editClick={editClick} type={"Players"} item={player} />
               ))}
               {LicensePlayers?.map((player, i) => (
-                <FilteredBlock key={i} editClick={editClick} item={player} />
+                <FilteredBlock key={i} editClick={editClick} type={"Players"} item={player} />
               ))}
             </div>
           </div>
@@ -99,30 +83,15 @@ function PlayerMainContent() {
         </button>
         <ItemContainer>
           {squadPreset?.map((item, i) => (
-            <SlabBlock
-              key={i}
-              item={item}
-              editClick={editSlabClick}
-              type="squadPreset"
-            />
+            <SlabBlock key={i} item={item} editClick={editSlabClick} type={"squadPreset"} />
           ))}
           {LicenseSquadPreset?.map((item, i) => (
-            <SlabBlock
-              key={i}
-              item={item}
-              editClick={editSlabClick}
-              type={squadPreset}
-            />
+            <SlabBlock key={i} item={item} editClick={editSlabClick} type={"squadPreset"} />
           ))}
         </ItemContainer>
       </div>
       {data && isEditModal && goodLocation === "players" && (
-        <EditPlayerWindow
-          player={data}
-          open={isEditModal}
-          onClose={closeEditModal}
-          Teams={Teams}
-        />
+        <EditPlayerWindow player={data} open={isEditModal} onClose={closeEditModal} Teams={Teams} />
       )}
     </div>
   );
