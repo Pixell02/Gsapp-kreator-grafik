@@ -1,27 +1,26 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import "../../YourTeamPanel/components/addTeamWindow.css";
-import bin from "../../../img/binIcon.png";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useParams } from "react-router-dom";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { useRef, useState, useEffect, useContext } from 'react';
+import '../../YourTeamPanel/components/addTeamWindow.css';
+import bin from '../../../img/binIcon.png';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../../firebase/config';
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useParams } from 'react-router-dom';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
-import Select from "react-select";
-import { useTeams } from "./useTeams";
-import { LicenseContext } from "../../../context/LicenseContext";
-import { LanguageContext } from "../../../context/LanguageContext";
-import { addPlayerLog, addPlayerWithImgLog } from "../../stats/components/addLogs";
-import translate from "../locales/translate.json";
+import Select from 'react-select';
+import { useTeams } from './useTeams';
+import { addPlayerLog, addPlayerWithImgLog } from '../../stats/components/addLogs';
+import translate from '../locales/translate.json';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 function AddPlayerWindow({ open, onClose, Teams, email }) {
   const { id } = useParams();
   const { user } = useAuthContext();
-  const { language } = useContext(LanguageContext);
-  const { license } = useContext(LicenseContext);
-  const [firstPlayerName, setFirstPlayerName] = useState("");
-  const [secondPlayerName, setSecondPlayerName] = useState("");
-  const [number, setNumber] = useState("");
+  const { language } = useContext(useLanguageContext);
+  const { license } = useLanguageContext();
+  const [firstPlayerName, setFirstPlayerName] = useState('');
+  const [secondPlayerName, setSecondPlayerName] = useState('');
+  const [number, setNumber] = useState('');
   const [age, setAge] = useState(null);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -42,7 +41,7 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
         reader.readAsDataURL(image);
       } else {
         setPreview(null);
-        alert("maksymalna wielkość obrazu to 2MB");
+        alert('maksymalna wielkość obrazu to 2MB');
       }
     } else {
       setPreview(null);
@@ -60,26 +59,26 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
       if (image) {
         const storage = getStorage();
         const metadata = {
-          contentType: "image/png",
+          contentType: 'image/png',
         };
         const player = ref(storage, `${user.uid}/zawodnicy/${firstPlayerName}_${secondPlayerName}`);
 
         const uploadTask = uploadBytesResumable(player, image, metadata);
 
         uploadTask.on(
-          "state_changed",
+          'state_changed',
           (snapshot) => {
             let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
+            console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
+              case 'paused':
+                console.log('Upload is paused');
                 break;
-              case "running":
-                console.log("Upload is running");
+              case 'running':
+                console.log('Upload is running');
                 break;
               default:
-                console.log("default");
+                console.log('default');
             }
           },
           (error) => {
@@ -87,44 +86,44 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
           },
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              addDoc(collection(db, "Players"), {
+              addDoc(collection(db, 'Players'), {
                 firstName: firstPlayerName.trim(),
                 secondName: secondPlayerName.trim(),
-                img: downloadURL || "",
-                number: number || "",
+                img: downloadURL || '',
+                number: number || '',
                 age: age || null,
                 team: selectedTeam,
                 uid: id ? id : user.uid,
               });
             });
-            if (license.type === "admin") {
+            if (license.type === 'admin') {
               addPlayerWithImgLog(user, firstPlayerName, secondPlayerName, selectedTeam, email);
             }
           }
         );
       } else {
-        addDoc(collection(db, "Players"), {
+        addDoc(collection(db, 'Players'), {
           firstName: firstPlayerName.trim(),
           secondName: secondPlayerName.trim(),
-          img: "",
-          number: number || "",
+          img: '',
+          number: number || '',
           age: age || null,
           team: selectedTeam,
           uid: id ? id : user.uid,
         });
-        if (license && license.type === "admin") {
+        if (license && license.type === 'admin') {
           addPlayerLog(user, firstPlayerName, secondPlayerName, selectedTeam, email);
         }
       }
     }
     onClose(false);
-    setFirstPlayerName("");
-    setSecondPlayerName("");
-    setNumber("");
+    setFirstPlayerName('');
+    setSecondPlayerName('');
+    setNumber('');
     setImage(null);
   };
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className={open ? 'active-modal' : 'modal'}>
       <div className="add-window yourTeam-panel-window">
         <label>{translate.firstName[language]}</label>
         <input
@@ -142,22 +141,37 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
           className="secondPlayerName"
         />
         <label>{translate.birthYear[language]}</label>
-        <input type="number" onChange={(e) => setAge(e.target.value)} value={age} className="Number" />
+        <input
+          type="number"
+          onChange={(e) => setAge(e.target.value)}
+          value={age}
+          className="Number"
+        />
 
         <label>{translate.number[language]}</label>
-        <input type="number" onChange={(e) => setNumber(e.target.value)} value={number} className="Number" />
+        <input
+          type="number"
+          onChange={(e) => setNumber(e.target.value)}
+          value={number}
+          className="Number"
+        />
 
         <>
           <label>{translate.team[language]}</label>
-          <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
+          <Select
+            options={teamOptions}
+            onChange={(e) => handleTeamChange(e.value)}
+          />
         </>
 
-        <button onClick={onButtonClick} className="btn primary-btn add-img">
+        <button
+          onClick={onButtonClick}
+          className="btn primary-btn add-img">
           {translate.addPhoto[language]}
         </button>
         <input
           type="file"
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
@@ -170,22 +184,37 @@ function AddPlayerWindow({ open, onClose, Teams, email }) {
           }}
         />
         <div className="add-logo-window">
-          <div className="image-container">{preview && <img src={preview} className="image" />}</div>
-          <div className="bin-container">{preview && <img src={bin} onClick={() => setPreview(null)} />}</div>
+          <div className="image-container">
+            {preview && (
+              <img
+                src={preview}
+                className="image"
+              />
+            )}
+          </div>
+          <div className="bin-container">
+            {preview && (
+              <img
+                src={bin}
+                onClick={() => setPreview(null)}
+              />
+            )}
+          </div>
         </div>
         <div className="buttons-container">
           <button
             onClick={() => {
               onClose();
-              setFirstPlayerName("");
-              setSecondPlayerName("");
+              setFirstPlayerName('');
+              setSecondPlayerName('');
               setImage(null);
             }}
-            className="btn primary-btn"
-          >
+            className="btn primary-btn">
             {translate.cancel[language]}
           </button>
-          <button onClick={handleSubmit} className="btn primary-btn">
+          <button
+            onClick={handleSubmit}
+            className="btn primary-btn">
             {translate.save[language]}
           </button>
         </div>

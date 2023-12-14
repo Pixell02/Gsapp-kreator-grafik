@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import * as Icon from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
-import "../../../components/main-content-elements/Block.css";
-import { LanguageContext } from "../../../context/LanguageContext";
-import useCatalog from "../hooks/useCatalog";
+import { useEffect, useState } from 'react';
+import * as Icon from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
+import '../../../components/main-content-elements/Block.css';
+import useCatalog from '../hooks/useCatalog';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 function Catalog() {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
 
   const { data: catalog, posters } = useCatalog();
 
@@ -54,12 +54,14 @@ function Catalog() {
       <div className="catalog-container">
         {isOpen?.map((category, i) => (
           <div className="mg-container">
-            <div className="nav-container" onClick={() => handleCategory(i)}>
-              <div className={category.expanded ? "nav-window" : "nav-window-dark"}>
+            <div
+              className="nav-container"
+              onClick={() => handleCategory(i)}>
+              <div className={category.expanded ? 'nav-window' : 'nav-window-dark'}>
                 <div className="category-icon-container">
                   <Icon.ChevronCompactDown
-                    className={category.expanded ? "extend-icon-open" : "extend-icon-close"}
-                    style={{ marginLeft: "20px" }}
+                    className={category.expanded ? 'extend-icon-open' : 'extend-icon-close'}
+                    style={{ marginLeft: '20px' }}
                   />
                 </div>
                 <span>{category.theme} </span>
@@ -67,7 +69,7 @@ function Catalog() {
               </div>
             </div>
 
-            <div className={category.expanded ? "poster-container-close" : "poster-container-open"}>
+            <div className={category.expanded ? 'poster-container-close' : 'poster-container-open'}>
               <>
                 {posters
                   ?.filter((poster) => poster.themeId === category.id)
@@ -79,7 +81,12 @@ function Catalog() {
                             <span className="name-content">{poster.name}</span>
                           </div>
                           <div className="image-category-content">
-                            {poster.src && <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />}
+                            {poster.src && (
+                              <img
+                                src={poster.src}
+                                alt={poster.firstName + ' ' + poster.secondName}
+                              />
+                            )}
                           </div>
                         </Link>
                       </div>

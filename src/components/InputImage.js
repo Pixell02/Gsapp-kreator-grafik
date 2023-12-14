@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
-import translate from "../pages/YourTeamPanel/components/locales/yourTeamPanel.json";
-import useLanguageContext from "../hooks/useLanguageContext";
+import React, { useRef } from 'react';
+import translate from '../pages/YourTeamPanel/components/locales/yourTeamPanel.json';
+import { useLanguageContext } from '../context/LanguageContext';
 
 const InputImage = ({ setImage }) => {
   const { language } = useLanguageContext();
@@ -11,12 +11,14 @@ const InputImage = ({ setImage }) => {
 
   return (
     <>
-      <button onClick={onButtonClick} className="btn primary-btn add-img">
+      <button
+        onClick={onButtonClick}
+        className="btn primary-btn add-img">
         {translate.addImage[language]}
       </button>
       <input
         type="file"
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         ref={fileInputRef}
         accept="image/png"
         onChange={(e) => {

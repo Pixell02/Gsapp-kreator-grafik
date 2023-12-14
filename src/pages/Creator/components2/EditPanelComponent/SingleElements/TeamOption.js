@@ -1,26 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import Select from "react-select";
-import { LanguageContext } from "../../../../../context/LanguageContext";
-import radioContext from "../../../context/radioContext";
-import { useYourTeamNameAndLogo } from "../../../hooks2/useYourTeamLogo";
-import translate from "../../../locales/translate.json";
-import teamFirstName from "./TeamOption/teamFirstName";
-import teamFullName from "./TeamOption/teamFullName";
-import teamLogo from "./TeamOption/teamLogo";
-import teamSecondName from "./TeamOption/teamSecondName";
-import useThemeContext from "../../../hooks/useThemeContext";
+import React, { useContext, useEffect } from 'react';
+import Select from 'react-select';
+import radioContext from '../../../context/radioContext';
+import { useYourTeamNameAndLogo } from '../../../hooks2/useYourTeamLogo';
+import translate from '../../../locales/translate.json';
+import teamFirstName from './TeamOption/teamFirstName';
+import teamFullName from './TeamOption/teamFullName';
+import teamLogo from './TeamOption/teamLogo';
+import teamSecondName from './TeamOption/teamSecondName';
+import useThemeContext from '../../../hooks/useThemeContext';
+import { useLanguageContext } from '../../../../../context/LanguageContext';
 
-export default function TeamOption({
-  fabricRef,
-  coords,
-  posterBackground,
-}) {
-  const { language } = useContext(LanguageContext);
+export default function TeamOption({ fabricRef, coords, posterBackground }) {
+  const { language } = useLanguageContext();
   const { themeColor } = useThemeContext();
   const { radioChecked } = useContext(radioContext);
 
-  const { teamOption, getTeamOption, yourLogo, yourName } =
-    useYourTeamNameAndLogo();
+  const { teamOption, getTeamOption, yourLogo, yourName } = useYourTeamNameAndLogo();
 
   useEffect(() => {
     if (fabricRef.current?._objects && yourLogo && coords.yourTeamLogo) {
@@ -46,7 +41,10 @@ export default function TeamOption({
       {teamOption?.length > 1 && (
         <>
           <label>{translate.yourTeam[language]}</label>
-          <Select options={teamOption} onChange={getTeamOption} />
+          <Select
+            options={teamOption}
+            onChange={getTeamOption}
+          />
         </>
       )}
     </div>

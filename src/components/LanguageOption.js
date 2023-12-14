@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { langSelectOption } from "./options";
-import { LanguageContext } from "../context/LanguageContext";
-import "./languageOption.css";
-import { NavDropdown } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
+import { langSelectOption } from './options';
+import { useLanguageContext } from '../context/LanguageContext';
+import './languageOption.css';
 
 export default function LanguageOption() {
-  const { language, changeLanguage } = useContext(LanguageContext);
+  const { language, changeLanguage } = useLanguageContext();
   const navigate = useNavigate();
 
   const handleLanguageChange = (selectedLanguage) => {
@@ -22,10 +22,13 @@ export default function LanguageOption() {
         {langSelectOption.map((lang) => (
           <NavDropdown.Item
             key={lang.value}
-            className={language === lang.value ? "selected" : ""}
-            onClick={() => handleLanguageChange(lang.value)}
-          >
-            <img src={lang.label} style={{ width: "20px" }} alt={lang.value} />
+            className={language === lang.value ? 'selected' : ''}
+            onClick={() => handleLanguageChange(lang.value)}>
+            <img
+              src={lang.label}
+              style={{ width: '20px' }}
+              alt={lang.value}
+            />
             {lang.value}
           </NavDropdown.Item>
         ))}

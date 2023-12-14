@@ -1,28 +1,21 @@
-import { useRef, useState } from "react";
-import ImagePreview from "../../../components/ImagePreview";
-import useFileReader from "../../../hooks/useFileReader";
-import "../../YourTeamPanel/components/addTeamWindow.css";
-import useOpponents from "../hooks/useOpponents";
-import translate from "../locales/locales.json";
-import useLanguageContext from "../../../hooks/useLanguageContext";
+import { useRef, useState } from 'react';
+import ImagePreview from '../../../components/ImagePreview';
+import useFileReader from '../../../hooks/useFileReader';
+import '../../YourTeamPanel/components/addTeamWindow.css';
+import useOpponents from '../hooks/useOpponents';
+import translate from '../locales/locales.json';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 function EditOpponentWindow({ player, open, onClose, Teams }) {
   const { language } = useLanguageContext();
   const elements = [
-    { name: translate.firstOpponentName[language], className: "firstName" },
-    { name: translate.secondOpponentName[language], className: "secondName" },
+    { name: translate.firstOpponentName[language], className: 'firstName' },
+    { name: translate.secondOpponentName[language], className: 'secondName' },
   ];
 
   const [image, setImage] = useState(player.img);
-  const {
-    handleSubmit,
-    opponent,
-    teamOptions,
-    handleTeamChange,
-    setOpponent,
-    handleValueChange,
-    selectedTeam,
-  } = useOpponents(Teams, image, player);
+  const { handleSubmit, opponent, teamOptions, handleTeamChange, setOpponent, handleValueChange, selectedTeam } =
+    useOpponents(Teams, image, player);
   const { preview, setPreview } = useFileReader(image);
 
   const fileInputRef = useRef(null);
@@ -31,7 +24,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
   };
 
   return (
-    <div className={open ? "active-modal m-edit" : "modal"}>
+    <div className={open ? 'active-modal m-edit' : 'modal'}>
       <div className="add-window">
         {elements.map((item, i) => (
           <>
@@ -52,20 +45,18 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
           className="form-control"
           value={selectedTeam}
           defaultValue={selectedTeam}
-          onChange={(e) => handleTeamChange(e.target.value)}
-        >
+          onChange={(e) => handleTeamChange(e.target.value)}>
           <option value=""></option>
-          {teamOptions &&
-            teamOptions.map((team) => (
-              <option value={team.value}>{team.label}</option>
-            ))}
+          {teamOptions && teamOptions.map((team) => <option value={team.value}>{team.label}</option>)}
         </select>
-        <button onClick={onButtonClick} className="btn primary-btn add-img">
+        <button
+          onClick={onButtonClick}
+          className="btn primary-btn add-img">
           {translate.addCrest[language]}
         </button>
         <input
           type="file"
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
@@ -88,8 +79,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
               setOpponent(null);
               setImage(null);
             }}
-            className="btn primary-btn"
-          >
+            className="btn primary-btn">
             {translate.cancel[language]}
           </button>
           <button
@@ -98,8 +88,7 @@ function EditOpponentWindow({ player, open, onClose, Teams }) {
               onClose();
               setImage(null);
             }}
-            className="btn primary-btn"
-          >
+            className="btn primary-btn">
             {translate.save[language]}
           </button>
         </div>

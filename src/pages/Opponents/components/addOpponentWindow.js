@@ -1,18 +1,18 @@
-import { useContext, useRef, useState } from "react";
-import Select from "react-select";
-import ImagePreview from "../../../components/ImagePreview";
-import { LanguageContext } from "../../../context/LanguageContext";
-import useFileReader from "../../../hooks/useFileReader";
-import "../../YourTeamPanel/components/addTeamWindow.css";
-import useOpponents from "../hooks/useOpponents";
-import translate from "../locales/locales.json";
+import { useRef, useState } from 'react';
+import Select from 'react-select';
+import ImagePreview from '../../../components/ImagePreview';
+import useFileReader from '../../../hooks/useFileReader';
+import '../../YourTeamPanel/components/addTeamWindow.css';
+import useOpponents from '../hooks/useOpponents';
+import translate from '../locales/locales.json';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 function AddOpponentWindow({ open, onClose, Teams }) {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
 
   const elements = [
-    { name: translate.firstOpponentName[language], className: "firstName" },
-    { name: translate.secondOpponentName[language], className: "secondName" },
+    { name: translate.firstOpponentName[language], className: 'firstName' },
+    { name: translate.secondOpponentName[language], className: 'secondName' },
   ];
   const [image, setImage] = useState(null);
   const { preview, setPreview } = useFileReader(image);
@@ -27,7 +27,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
   };
 
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className={open ? 'active-modal' : 'modal'}>
       <div className="add-window">
         {elements.map((item, i) => (
           <>
@@ -42,13 +42,18 @@ function AddOpponentWindow({ open, onClose, Teams }) {
           </>
         ))}
         <label>{translate.team[language]}</label>
-        <Select options={teamOptions} onChange={(option) => handleTeamChange(option.value)} />
-        <button onClick={onButtonClick} className="btn primary-btn add-img">
+        <Select
+          options={teamOptions}
+          onChange={(option) => handleTeamChange(option.value)}
+        />
+        <button
+          onClick={onButtonClick}
+          className="btn primary-btn add-img">
           {translate.addCrest[language]}
         </button>
         <input
           type="file"
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
@@ -60,7 +65,10 @@ function AddOpponentWindow({ open, onClose, Teams }) {
             }
           }}
         />
-        <ImagePreview preview={preview} setPreview={setPreview} />
+        <ImagePreview
+          preview={preview}
+          setPreview={setPreview}
+        />
         <div className="buttons-container">
           <button
             onClick={() => {
@@ -68,8 +76,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
               setOpponent(null);
               setImage(null);
             }}
-            className="btn primary-btn"
-          >
+            className="btn primary-btn">
             {translate.cancel[language]}
           </button>
           <button
@@ -78,8 +85,7 @@ function AddOpponentWindow({ open, onClose, Teams }) {
               setImage(null);
               onClose(true);
             }}
-            className="btn primary-btn"
-          >
+            className="btn primary-btn">
             {translate.save[language]}
           </button>
         </div>

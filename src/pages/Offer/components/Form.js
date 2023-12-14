@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./MainContentOffer.css";
-import { countries } from "./countries";
-import Input from "./Input";
-import translate from "../locales/translate.json";
-import { LanguageContext } from "../../../context/LanguageContext";
-import useCheckActiveButton from "../hooks/useCheckActiveButton";
-import { getFunctions, httpsCallable } from "firebase/functions";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-
+import { useEffect, useState } from 'react';
+import './MainContentOffer.css';
+import { countries } from './countries';
+import Input from './Input';
+import translate from '../locales/translate.json';
+import useCheckActiveButton from '../hooks/useCheckActiveButton';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../../firebase/config';
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 export default function Form({
   paymentData,
@@ -22,32 +21,32 @@ export default function Form({
   const isActiveButton = useCheckActiveButton(paymentData, isChecked);
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
   const functions = getFunctions();
-  const payUPayment = httpsCallable(functions, "PayUPayment");
-  const createTransactionInfo = httpsCallable(functions, "createTransactionInfo");
+  const payUPayment = httpsCallable(functions, 'PayUPayment');
+  const createTransactionInfo = httpsCallable(functions, 'createTransactionInfo');
 
   const handleSave = async () => {
     setIsLoading(true);
-   
+
     try {
       const res = await createTransactionInfo({
         user: {
           email: user.email,
-          uid: user.uid
-      }});
+          uid: user.uid,
+        },
+      });
       const { data } = await payUPayment(paymentData);
-      
-      
+
       const url = new URL(data);
       const searchParams = new URLSearchParams(url.search);
-      const orderId = searchParams.get("orderId");
-      const orderRef = doc(db, "orderId", user.uid);
+      const orderId = searchParams.get('orderId');
+      const orderRef = doc(db, 'orderId', user.uid);
       setDoc(orderRef, {
         orderId: orderId,
         uid: user.uid,
       });
-      
+
       window.location.href = data;
     } catch (error) {
       console.error(error);
@@ -60,7 +59,6 @@ export default function Form({
     }
   }, [paymentData.companyName, setIsChecked]);
 
-
   return (
     <>
       <div className="fax-container">
@@ -71,10 +69,11 @@ export default function Form({
           className="form-control"
           value={paymentData.buyer.delivery.countryCode}
           onChange={(e) => handleDeliveryDataChange(e)}
-          required
-        >
+          required>
           {countries.map((country, i) => (
-            <option key={i} value={country.value}>
+            <option
+              key={i}
+              value={country.value}>
               {country.label}
             </option>
           ))}
@@ -128,9 +127,15 @@ export default function Form({
           value={paymentData.buyer.delivery.city}
           handleDataChange={(e) => handleDeliveryDataChange(e)}
         />
-        <div className="checkbox-container" style={{ marginBottom: "20px" }}>
+        <div
+          className="checkbox-container"
+          style={{ marginBottom: '20px' }}>
           <label>
-            <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+            />
             <span>{translate.companyData[language]}</span>
           </label>
         </div>
@@ -156,9 +161,8 @@ export default function Form({
           onClick={handleSave}
           type="submit"
           className="btn primary-btn"
-          style={{ width: "200px" }}
-          disabled={!isActiveButton}
-        >
+          style={{ width: '200px' }}
+          disabled={!isActiveButton}>
           {translate.buy[language]}
         </button>
         {isLoading && <p>...{translate.loading[language]}</p>}

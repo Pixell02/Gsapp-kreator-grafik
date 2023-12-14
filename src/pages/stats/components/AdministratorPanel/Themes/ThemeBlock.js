@@ -1,15 +1,15 @@
-import { Switch } from "antd";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PosterLinkBlock from "../../../../../components/main-content-elements/PosterLinkBlock";
-import { LanguageContext } from "../../../../../context/LanguageContext";
-import { db } from "../.././../../../firebase/config";
-import "./themeBlock.css";
+import { Switch } from 'antd';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PosterLinkBlock from '../../../../../components/main-content-elements/PosterLinkBlock';
+import { db } from '../.././../../../firebase/config';
+import './themeBlock.css';
+import { useLanguageContext } from '../../../../../context/LanguageContext';
 
 export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedTheme }) {
   const navigate = useNavigate();
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
 
   const [itemToEdit, setItemToEdit] = useState(null);
 
@@ -18,13 +18,13 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
   };
 
   const handleToggle = (theme) => {
-    const docRef = doc(db, "catalog", theme.id);
+    const docRef = doc(db, 'catalog', theme.id);
     const updatedPublicValue = !theme.public;
 
     updateDoc(docRef, {
       public: updatedPublicValue,
     }).then(() => {
-      console.log("made");
+      console.log('made');
     });
   };
 
@@ -39,11 +39,11 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
   });
 
   const handleClickEdit = (e, theme) => {
-    setIsOpen({ isOpen: true, type: "edit" });
+    setIsOpen({ isOpen: true, type: 'edit' });
     setSelectedTheme(theme);
   };
   const handleClickDelete = (e, theme) => {
-    setIsOpen({ isOpen: true, type: "delete" });
+    setIsOpen({ isOpen: true, type: 'delete' });
     setSelectedTheme(theme);
   };
   const editClick = (item) => {
@@ -51,10 +51,10 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
     navigate(`/${language}/posterCreator/theme/${item.uuid}`);
   };
   const handleDeleteClick = async (id) => {
-    const Pref = doc(db, "piecesOfPoster", id);
+    const Pref = doc(db, 'piecesOfPoster', id);
     await deleteDoc(Pref);
 
-    const Cref = doc(db, "coords", id);
+    const Cref = doc(db, 'coords', id);
     await deleteDoc(Cref);
   };
 
@@ -64,19 +64,26 @@ export default function ThemeBlock({ themes, posters, setIsOpen, setSelectedThem
         <div className="theme-container mt-3 d-flex align-items-center">
           <div className="d-flex w-100 mx-3 theme-content">
             <div className="theme-name">
-              {theme.theme}{" "}
+              {theme.theme}{' '}
               <div>
-                <button className="btn" onClick={(e) => handleClickEdit(e, theme)}>
+                <button
+                  className="btn"
+                  onClick={(e) => handleClickEdit(e, theme)}>
                   Edytuj nazwę
                 </button>
               </div>
             </div>
             <div className="d-flex w-100 justify-content-end mt-3 mx-2">
-              <button className="btn mx-3" onClick={(e) => handleClickDelete(e, theme)}>
+              <button
+                className="btn mx-3"
+                onClick={(e) => handleClickDelete(e, theme)}>
                 Usuń
               </button>
-              {theme.public ? <span>Publiczny</span> : <span>Prywatny</span>}{" "}
-              <Switch checked={theme.public} onChange={() => handleToggle(theme)} />
+              {theme.public ? <span>Publiczny</span> : <span>Prywatny</span>}{' '}
+              <Switch
+                checked={theme.public}
+                onChange={() => handleToggle(theme)}
+              />
             </div>
           </div>
           <div className="d-flex w-100 poster-content">

@@ -1,14 +1,12 @@
-import React from "react";
-import Title from "../../../components/main-content-elements/Title";
-import "./MainYourCatalog.css";
-import { useContext } from "react";
-import { LanguageContext } from "../../../context/LanguageContext";
-import IndividualPosters from "./IndividualPosters";
-import translate from "../locales/translate.json"
-import Navbar from "./Navbar";
+import React from 'react';
+import Title from '../../../components/main-content-elements/Title';
+import './MainYourCatalog.css';
+import IndividualPosters from './IndividualPosters';
+import translate from '../locales/translate.json';
+import Navbar from './Navbar';
+import { useLanguageContext } from '../../../context/LanguageContext';
 export default function MainYourCatalog() {
- 
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
 
   return (
     <div className="main-content d-flex flex-column">

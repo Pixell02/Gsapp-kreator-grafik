@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import RegisterForm from "../../components/form-elements/RegisterForm";
-import translate from "./register.json";
-import "../../App.css";
-import { LanguageContext } from "../../context/LanguageContext";
+import { Link } from 'react-router-dom';
+import RegisterForm from '../../components/form-elements/RegisterForm';
+import translate from './register.json';
+import '../../App.css';
+import { useLanguageContext } from '../../context/LanguageContext';
 
 function Register() {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
   return (
     <div className="page-container login-container">
       <div className="content-wrap">

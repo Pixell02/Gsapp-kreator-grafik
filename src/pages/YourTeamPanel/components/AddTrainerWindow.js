@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import "./addTeamWindow.css";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import translate from "../../Players/locales/translate.json";
-import InputImage from "../../../components/InputImage";
-import ImagePreview from "../../../components/ImagePreview";
-import ButtonContainer from "../../../components/ButtonContainer";
-import useFileReader from "../../../hooks/useFileReader";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import useStorage from "../../../hooks/useStorage";
-import { useParams } from "react-router-dom";
-import useLanguageContext from "../../../hooks/useLanguageContext";
-import Select from "react-select";
-import { useTeams } from "../../Players/components/useTeams";
+import React, { useState } from 'react';
+import './addTeamWindow.css';
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import translate from '../../Players/locales/translate.json';
+import InputImage from '../../../components/InputImage';
+import ImagePreview from '../../../components/ImagePreview';
+import ButtonContainer from '../../../components/ButtonContainer';
+import useFileReader from '../../../hooks/useFileReader';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../../firebase/config';
+import useStorage from '../../../hooks/useStorage';
+import { useParams } from 'react-router-dom';
+import Select from 'react-select';
+import { useTeams } from '../../Players/components/useTeams';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 const AddTrainerWindow = ({ Team, open, onClose }) => {
   const { user } = useAuthContext();
@@ -23,9 +23,9 @@ const AddTrainerWindow = ({ Team, open, onClose }) => {
   const { handleAddImage } = useStorage();
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Team);
   const [trainerData, setTrainerData] = useState({
-    firstName: "",
-    secondName: "",
-    img: "",
+    firstName: '',
+    secondName: '',
+    img: '',
     uid: user.uid,
   });
   const handleValueChange = (e) => {
@@ -41,17 +41,17 @@ const AddTrainerWindow = ({ Team, open, onClose }) => {
     onClose();
     setTrainerData((prev) => ({
       ...prev,
-      firstName: "",
-      secondName: "",
-      team: "",
+      firstName: '',
+      secondName: '',
+      team: '',
     }));
     setImage(null);
   };
   const handleSubmit = async () => {
     if (!trainerData.firstName || !trainerData.secondName || !selectedTeam) {
-      return alert("puste pole");
+      return alert('puste pole');
     } else {
-      const docRef = collection(db, "Trainers");
+      const docRef = collection(db, 'Trainers');
       if (!preview) {
         addDoc(docRef, {
           ...trainerData,
@@ -68,22 +68,39 @@ const AddTrainerWindow = ({ Team, open, onClose }) => {
           img: downloadURL,
         });
       }
-      onClose()
+      onClose();
     }
   };
 
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className={open ? 'active-modal' : 'modal'}>
       <div className="add-window yourTeam-panel-window">
         <label>{translate.firstName[language]}</label>
-        <input value={trainerData.firstName} className="firstName" onChange={handleValueChange} />
+        <input
+          value={trainerData.firstName}
+          className="firstName"
+          onChange={handleValueChange}
+        />
         <label>{translate.lastName[language]}</label>
-        <input value={trainerData.secondName} className="secondName" onChange={handleValueChange} />
+        <input
+          value={trainerData.secondName}
+          className="secondName"
+          onChange={handleValueChange}
+        />
         <label>{translate.team[language]}</label>
-        <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
+        <Select
+          options={teamOptions}
+          onChange={(e) => handleTeamChange(e.value)}
+        />
         <InputImage setImage={setImage} />
-        <ImagePreview preview={preview} setPreview={setPreview} />
-        <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
+        <ImagePreview
+          preview={preview}
+          setPreview={setPreview}
+        />
+        <ButtonContainer
+          handleClick={handleClick}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </div>
   );

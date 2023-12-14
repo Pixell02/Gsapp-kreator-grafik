@@ -1,25 +1,22 @@
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
-import { LanguageContext } from "../../../context/LanguageContext";
-import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import useStorage from "../../../hooks/useStorage";
-import { useTeams } from "../../Players/components/useTeams";
-import translate from "../locales/locales.json";
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { db } from '../../../firebase/config';
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import useStorage from '../../../hooks/useStorage';
+import { useTeams } from '../../Players/components/useTeams';
+import translate from '../locales/locales.json';
+import { useLanguageContext } from '../../../context/LanguageContext';
 
 const useOpponents = (Teams, image, data) => {
   const { user } = useAuthContext();
   const [opponent, setOpponent] = useState({
-    firstName: data?.firstName || "",
-    secondName: data?.secondName || "",
+    firstName: data?.firstName || '',
+    secondName: data?.secondName || '',
   });
 
-  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(
-    Teams,
-    data?.team
-  );
-  const { language } = useContext(LanguageContext);
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, data?.team);
+  const { language } = useLanguageContext();
   const { handleAddImage } = useStorage();
   const { id } = useParams();
 
@@ -37,7 +34,7 @@ const useOpponents = (Teams, image, data) => {
     } else if (!selectedTeam) {
       alert(translate.noTeam[language]);
     } else {
-      const docRef = collection(db, "Opponents");
+      const docRef = collection(db, 'Opponents');
       if (image?.size) {
         const downloadURL = await handleAddImage(
           image,
@@ -52,11 +49,11 @@ const useOpponents = (Teams, image, data) => {
             team: selectedTeam,
           });
         } else {
-          const ref = doc(collection(db, "Opponents"), data.id);
+          const ref = doc(collection(db, 'Opponents'), data.id);
           updateDoc(ref, {
             firstName: opponent.firstName.trim(),
             secondName: opponent.secondName.trim(),
-            img: downloadURL || "",
+            img: downloadURL || '',
             team: selectedTeam,
           });
         }
@@ -65,23 +62,23 @@ const useOpponents = (Teams, image, data) => {
           addDoc(docRef, {
             firstName: opponent.firstName.trim(),
             secondName: opponent.secondName.trim(),
-            img: "",
+            img: '',
             uid: id ? id : user.uid,
             team: selectedTeam,
           });
         } else {
-          const ref = doc(collection(db, "Opponents"), data.id);
+          const ref = doc(collection(db, 'Opponents'), data.id);
           updateDoc(ref, {
             firstName: opponent.firstName.trim(),
             secondName: opponent.secondName.trim(),
-            img: "",
+            img: '',
             team: selectedTeam,
           });
         }
       }
       setOpponent({
-        firstName: "",
-        secondName: "",
+        firstName: '',
+        secondName: '',
       });
     }
   };

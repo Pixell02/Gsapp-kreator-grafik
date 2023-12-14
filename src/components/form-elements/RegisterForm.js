@@ -1,48 +1,47 @@
-import { useContext, useState } from "react";
-import { useSignup } from "../../hooks/useSignup";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-import { auth } from "../../firebase/config";
+import { useState } from 'react';
+import { useSignup } from '../../hooks/useSignup';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
 // import styles and images
-import "./formPage.css";
-import google from "../../img/google.png";
-import translation from "./registerForm.json"
-import { LanguageContext } from "../../context/LanguageContext";
-import LanguageOption from "../LanguageOption";
+import './formPage.css';
+import google from '../../img/google.png';
+import translation from './registerForm.json';
+import LanguageOption from '../LanguageOption';
+import { useLanguageContext } from '../../context/LanguageContext';
 
 export default function RegisterForm(props) {
-  const {language} = useContext(LanguageContext)
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { language } = useLanguageContext();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { error, signup } = useSignup();
   const { dispatch } = useAuthContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(email, password)
+    signup(email, password);
   };
 
   const signUpWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider).then((res) => {
-        dispatch({ type: "LOGIN", payload: res.user });
+        dispatch({ type: 'LOGIN', payload: res.user });
       });
     } catch (err) {
       console.log(err);
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form
+      onSubmit={handleSubmit}
+      className="form">
       <div className="form-group">
         <div className="text-left">
           <div className="d-flex w-100">
             <div className="w-75">
-            <p className="login">{props.name}</p>
+              <p className="login">{props.name}</p>
             </div>
             <LanguageOption />
           </div>
@@ -50,10 +49,17 @@ export default function RegisterForm(props) {
         <div className="google-btn">
           <button onClick={signUpWithGoogle}>
             <div className="logo-container">
-              <img src={google} alt="google_logo" className="logo" />
+              <img
+                src={google}
+                alt="google_logo"
+                className="logo"
+              />
             </div>
             <div className="login-content">
-              <span> {props.name} {translation.usingGoogle[language]}</span>
+              <span>
+                {' '}
+                {props.name} {translation.usingGoogle[language]}
+              </span>
             </div>
           </button>
         </div>
@@ -79,7 +85,6 @@ export default function RegisterForm(props) {
         </div>
         <div className="text-left register-container">{props.footer}</div>
       </div>
-      
     </form>
   );
 }

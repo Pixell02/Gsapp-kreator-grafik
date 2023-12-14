@@ -1,47 +1,55 @@
-import { useContext, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { LanguageContext } from "../../context/LanguageContext";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { useCollection } from "../../hooks/useCollection";
-import background from "../../img/back.png";
-import Canvas from "./Canvas";
-import "./WorkSpace.css";
-import { exportImg } from "./components/exportImg";
-import AdminButton from "./components2/AdminButton";
-import EditPanel from "./components2/EditPanel";
-import { CanvasContextProvider } from "./context/CanvasPropertiesContext";
-import useInitScale from "./hooks/useInitScale";
-import useIsTheme from "./hooks/useIsTheme";
-import usePosters from "./hooks/usePosters";
-import translate from "./locales/translate.json";
-import useThemeContext from "./hooks/useThemeContext";
+import { useRef } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useCollection } from '../../hooks/useCollection';
+import background from '../../img/back.png';
+import Canvas from './Canvas';
+import './WorkSpace.css';
+import { exportImg } from './components/exportImg';
+import AdminButton from './components2/AdminButton';
+import EditPanel from './components2/EditPanel';
+import { CanvasContextProvider } from './context/CanvasPropertiesContext';
+import useInitScale from './hooks/useInitScale';
+import useIsTheme from './hooks/useIsTheme';
+import usePosters from './hooks/usePosters';
+import translate from './locales/translate.json';
+import useThemeContext from './hooks/useThemeContext';
+import { useLanguageContext } from '../../context/LanguageContext';
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef();
   const { user } = useAuthContext();
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
   const { themeColor } = useThemeContext();
-  const { documents: Licenses } = useCollection("user", ["uid", "==", user.uid]);
+  const { documents: Licenses } = useCollection('user', ['uid', '==', user.uid]);
   const { dataURL, additionalLayer, themeOptions } = usePosters(poster);
   const { hasTheme } = useIsTheme();
   const { initScale } = useInitScale(dataURL);
   return (
     <CanvasContextProvider>
-      {Licenses && Licenses[0].license === "no-license" && (
+      {Licenses && Licenses[0].license === 'no-license' && (
         <div className="license-content">
           <p>
             Brak licencji <Link to="/offer">Kup dostęp</Link>
           </p>
         </div>
       )}
-      {Licenses && Licenses[0].license !== "no-license" && (
+      {Licenses && Licenses[0].license !== 'no-license' && (
         <div className="workspace-container">
           <div className="preview-container">
-            <TransformWrapper minScale={0.1} initialScale={initScale} panning={{ disabled: true }}>
+            <TransformWrapper
+              minScale={0.1}
+              initialScale={initScale}
+              panning={{ disabled: true }}>
               <TransformComponent>
                 <div className="d-flex w-100 h-100">
-                  {fabricRef && dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef} />}
+                  {fabricRef && dataURL && (
+                    <Canvas
+                      dataURL={dataURL}
+                      fabricRef={fabricRef}
+                    />
+                  )}
                 </div>
               </TransformComponent>
             </TransformWrapper>
@@ -63,20 +71,26 @@ function WorkSpace() {
                   additionalLayer={additionalLayer}
                 />
               )}
-              <button className="btn primary-btn save" onClick={() => exportImg(Licenses, themeColor, user, poster)}>
+              <button
+                className="btn primary-btn save"
+                onClick={() => exportImg(Licenses, themeColor, user, poster)}>
                 {translate.save[language]}
               </button>
             </div>
-            {Licenses && Licenses[0].license === "free-trial" && (
+            {Licenses && Licenses[0].license === 'free-trial' && (
               <div className="license-place">
                 <span className="license-content">
-                  {translate.freeUsesFirstPart[language]} {Licenses[0].numberOfFreeUse} {translate.freeUsesLastPart[language]}
+                  {translate.freeUsesFirstPart[language]} {Licenses[0].numberOfFreeUse}{' '}
+                  {translate.freeUsesLastPart[language]}
                 </span>
               </div>
             )}
             <div className="empty-field"></div>
             <div className="background-image">
-              <img src={background} alt="background" />
+              <img
+                src={background}
+                alt="background"
+              />
             </div>
           </div>
         </div>
