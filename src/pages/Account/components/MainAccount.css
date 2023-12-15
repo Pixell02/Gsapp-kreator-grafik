@@ -1,0 +1,115 @@
+.account-content {
+  display: flex;
+  flex-direction: column;
+}
+.account-content .account-items input[type="text"],
+.account-content .account-items label {
+  border: none;
+  margin-left: 20px;
+}
+.account-content .account-items input[type="text"] {
+  background-color: rgb(241, 241, 241);
+}
+.account-content .account-items input[type="text"]:first-child,
+.account-content .account-items label:first-child {
+  margin-top: 10px;
+}
+.surName, .name {
+    width: 90% !important;
+}
+.account-data-container {
+  height: 50px;
+  background-color: rgba(255, 255, 204, 0.5);
+  display: flex;
+  align-items: center;
+}
+.account-data {
+  margin-left: 30px;
+}
+.label-content {
+  width: 100%;
+}
+.license-container {
+  display: flex;
+  padding: 20px 0 20px 0;
+  margin-top: 50px;
+  margin-left: 20px;
+  height: 100%;
+  background-color: white;
+}
+
+.icon-verified {
+  margin-left: 20px;
+  width: 25px;
+  height: 25px;
+}
+.form-title {
+  margin-top: 20px;
+}
+.inner-content-country-label {
+  width: 97%;
+  margin: 10px 0 10px 10px;
+}
+.country {
+  margin-left: 0 !important;
+}
+.license-container input,
+.fax-container input {
+  padding-left: 10px !important;
+}
+.checkbox-container {
+  display: flex;
+  width: 100%;
+}
+.fax-container .data-content {
+  display: flex;
+  width: 100% !important;
+  justify-content: flex-start;
+  flex-direction: column !important;
+}
+.data-content .label-content input {
+  width: 95% !important;
+}
+
+.data-content .label-content input::placeholder {
+  margin-left: 10px !important;
+}
+.data-content .label-content {
+  display: flex;
+  flex-direction: column !important;
+}
+.data-content .label-content .label-name {
+  display: flex;
+  flex-direction: row;
+}
+.btn-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  margin: 20px 0 20px 0;
+}
+.license-container {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+}
+.license-container .license-type {
+  display: flex;
+  flex-direction: column;
+}
+.license-container .license-type .license-content {
+  width: 95%;
+}
+.license-container .license-content {
+  
+  display: flex;
+  justify-content: flex-start;
+}
+.fax-container {
+  margin: 100px auto 100px auto;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}

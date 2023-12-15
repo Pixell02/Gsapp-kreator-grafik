@@ -1,0 +1,25 @@
+ .main-content {
+  padding-left: 180px;
+  width: 100%;
+  display: flex;
+}
+.main-content .ml-5 {
+  width: 100%;
+}
+
+.title-container {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 50vh;
+}
+ .empty-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}

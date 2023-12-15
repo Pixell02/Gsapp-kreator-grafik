@@ -1,0 +1,17 @@
+.slab-container {
+  background-color: white;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  height: 50px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  margin: 20px 30px 0 20px;
+}
+.slab-container .name-container {
+  display: flex;
+  width: 100%;
+}
+.slab-container .name-container span {
+  display: flex;
+  width: 100%;
+}

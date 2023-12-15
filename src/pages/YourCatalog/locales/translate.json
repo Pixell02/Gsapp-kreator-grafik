@@ -1,0 +1,79 @@
+{
+  "createTeam": {
+  "pl": "Dodaj drużynę",
+  "en": "Create Team",
+  "de": "Team erstellen",
+  "fr": "Créer une équipe",
+  "es": "Crear equipo"
+  },
+  "addPlayer": {
+  "pl": "Dodaj zawodników",
+  "en": "Add Players",
+  "de": "Spieler hinzufügen",
+  "fr": "Ajouter des joueurs",
+  "es": "Agregar jugadores"
+  },
+  "addOpponent": {
+  "pl": "Dodaj rywala",
+  "en": "Add Opponent",
+  "de": "Gegner hinzufügen",
+  "fr": "Ajouter un adversaire",
+  "es": "Agregar oponente"
+  },
+  "generate": {
+  "pl": "Generuj grafikę",
+  "en": "Generate Graphics",
+  "de": "Grafiken generieren",
+  "fr": "Générer des graphiques",
+  "es": "Generar gráficos"
+  },
+  "order": {
+  "pl": "Zamów własne grafiki",
+  "en": "Order Custom Graphics",
+  "de": "Eigene Grafiken bestellen",
+  "fr": "Commander des graphiques personnalisés",
+  "es": "Ordenar gráficos personalizados"
+  },
+  "yourCatalog": {
+    "pl": "Twój katalog",
+    "en": "Your Catalog",
+    "de": "Ihr Katalog",
+    "es": "Tu catálogo",
+    "fr": "Votre catalogue"
+  },
+  "navbar": {
+    "pl": "Pasek nawigacji",
+    "en": "Navigation Bar",
+    "de": "Navigationsleiste",
+    "es": "Barra de navegación",
+    "fr": "Barre de navigation"
+  },
+  "yourPosters": {
+    "pl": "Twoje plakaty",
+    "en": "Your Posters",
+    "de": "Deine Poster",
+    "es": "Tus carteles",
+    "fr": "Vos affiches"
+  },
+  "yourfavorites": {
+    "pl": "Twoje ulubione",
+    "en": "Your Favorites",
+    "de": "Deine Favoriten",
+    "es": "Tus favoritos",
+    "fr": "Vos favoris"
+  },
+  "notAvailable": {
+    "pl": "Funkcja obecnie nie dostępna",
+    "en": "Function currently not available",
+    "de": "Funktion derzeit nicht verfügbar",
+    "es": "Función actualmente no disponible",
+    "fr": "Fonction actuellement indisponible"
+  },
+  "noContent": {
+    "pl": "Brak plakatów indywidualnych",
+    "en": "No individual posters available",
+    "de": "Keine individuellen Plakate verfügbar",
+    "es": "No hay carteles individuales disponibles",
+    "fr": "Aucun affiche individuelle disponible"
+  }
+  }

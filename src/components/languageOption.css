@@ -1,0 +1,7 @@
+.lang-container {
+  display: block;
+  color: black;
+}
+.lang-container option {
+  color: black;
+}

@@ -1,0 +1,80 @@
+{
+  "team": {
+    "pl": "Drużyna",
+    "en": "Team",
+    "de": "Mannschaft",
+    "es": "Equipo",
+    "fr": "Équipe"
+  },
+  "emptyField": {
+    "pl": "Puste pole",
+    "en": "Empty field",
+    "de": "Leeres Feld",
+    "es": "Campo vacío",
+    "fr": "Champ vide"
+  },
+  "noTeam": {
+    "pl": "Nie wybrano drużyny",
+    "en": "No team selected",
+    "de": "Keine Mannschaft ausgewählt",
+    "es": "Ningún equipo seleccionado",
+    "fr": "Aucune équipe sélectionnée"
+  },
+  "cancel": {
+    "pl": "Anuluj",
+    "en": "Cancel",
+    "de": "Abbrechen",
+    "es": "Cancelar",
+    "fr": "Annuler"
+  },
+  "save": {
+    "pl": "Zapisz",
+    "en": "Save",
+    "de": "Speichern",
+    "es": "Guardar",
+    "fr": "Enregistrer"
+  },
+  "maxSize": {
+    "pl": "Maksymalny rozmiar obrazu to 1MB",
+    "en": "Maximum image size is 1MB",
+    "de": "Die maximale Bildgröße beträgt 1 MB",
+    "es": "El tamaño máximo de la imagen es de 1 MB",
+    "fr": "La taille maximale de l'image est de 1 Mo"
+  },
+  "opponents": {
+  "pl": "Przeciwnicy",
+  "en": "Opponents",
+  "de": "Gegner",
+  "es": "Oponentes",
+  "fr": "Adversaires"
+},
+"addOpponent": {
+  "pl": "Dodaj przeciwnika",
+  "en": "Add Opponent",
+  "de": "Gegner hinzufügen",
+  "es": "Agregar oponente",
+  "fr": "Ajouter un adversaire"
+},
+"firstOpponentName": {
+  "pl": "Pierwsza część nazwy przeciwnika",
+  "en": "First Part of Opponent Name",
+  "de": "Erster Teil des Gegnernamens",
+  "es": "Primera parte del nombre del oponente",
+  "fr": "Première partie du nom de l'adversaire"
+},
+"secondOpponentName": {
+  "pl": "Druga część nazwy przeciwnika",
+  "en": "Second Part of Opponent Name",
+  "de": "Zweiter Teil des Gegnernamens",
+  "es": "Segunda parte del nombre del oponente",
+  "fr": "Deuxième partie du nom de l'adversaire"
+},
+"addCrest": {
+  "pl": "Dodaj herb",
+  "en": "Add Crest",
+  "de": "Wappen hinzufügen",
+  "es": "Agregar escudo",
+  "fr": "Ajouter un blason"
+}
+
+}

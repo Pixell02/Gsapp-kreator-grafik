@@ -1,0 +1,24 @@
+{
+  "haveAccount": {
+    "pl": "Masz już konto?",
+    "en": "Do you already have an account?",
+    "es": "¿Ya tienes una cuenta?",
+    "de": "Hast du bereits ein Konto?",
+    "fr": "Avez-vous déjà un compte ?"
+  },
+  "register": {
+    "pl": "Zarejestruj się",
+    "en": "Register",
+    "es": "Registrarse",
+    "de": "Registrieren",
+    "fr": "S'inscrire"
+  },
+  "login": {
+    "pl": "Zaloguj się",
+    "en": "Log in",
+    "es": "Iniciar sesión",
+    "de": "Einloggen",
+    "fr": "Se connecter"
+  }
+
+}

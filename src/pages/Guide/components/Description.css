@@ -1,0 +1,44 @@
+.chapter-container {
+    width: 100%;
+    display: flex;
+    max-height: 500px;
+    background-color: white;
+}
+.chapter-content {
+    margin-top: 0;
+}
+.chapter-number{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+.video-container {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.empty-container {
+    margin-right: 10px;
+    width: 100%
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .chapter-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 600px;
+    }
+    .chapter-number {
+        width: 100%;
+    }
+    .video-container {
+        width: 100%;
+    }
+    .video {
+       margin-top: 200px;
+    }
+}

@@ -1,0 +1,8 @@
+.rules-footer {
+  background-color: white;
+  height: 50px;
+  align-items: center;
+}
+.rules-footer a {
+  color: black;
+}

@@ -1,0 +1,128 @@
+{
+  "account": {
+  "pl": "Konto",
+  "de": "Konto",
+  "en": "Account",
+  "fr": "Compte",
+  "es": "Cuenta"
+  },
+  "billing": {
+  "pl": "Dane do faktury",
+  "de": "Rechnungsdaten",
+  "en": "Billing Information",
+  "fr": "Informations de facturation",
+  "es": "Información de facturación"
+  },
+  "country": {
+  "pl": "Państwo",
+  "de": "Land",
+  "en": "Country",
+  "fr": "Pays",
+  "es": "País"
+  },
+  "firstName": {
+  "pl": "Imię",
+  "de": "Vorname",
+  "en": "First Name",
+  "fr": "Prénom",
+  "es": "Nombre"
+  },
+  "lastName": {
+  "pl": "Nazwisko",
+  "de": "Nachname",
+  "en": "Last Name",
+  "fr": "Nom de famille",
+  "es": "Apellido"
+  },
+  "adress": {
+  "pl": "adres",
+  "de": "Adresse",
+  "en": "Address",
+  "fr": "Adresse",
+  "es": "Dirección"
+  },
+  "postalCode": {
+  "pl": "Kod pocztowy",
+  "de": "Postleitzahl",
+  "en": "Postal Code",
+  "fr": "Code postal",
+  "es": "Código Postal"
+  },
+  "city": {
+  "pl": "Miasto",
+  "de": "Stadt",
+  "en": "City",
+  "fr": "Ville",
+  "es": "Ciudad"
+  },
+  "companyData": {
+  "pl": "Dane firmowe",
+  "de": "Firmendaten",
+  "en": "Company Information",
+  "fr": "Informations de l'entreprise",
+  "es": "Información de la empresa"
+  },
+  "vatId": {
+  "pl": "NIP",
+  "de": "USt-IdNr.",
+  "en": "VAT ID",
+  "fr": "Numéro de TVA",
+  "es": "Número de IVA"
+  },
+  "companyName": {
+  "pl": "Nazwa firmy",
+  "de": "Firmenname",
+  "en": "Company Name",
+  "fr": "Nom de l'entreprise",
+  "es": "Nombre de la empresa"
+  },
+  "save": {
+  "pl": "Zapisz",
+  "de": "Speichern",
+  "en": "Save",
+  "fr": "Enregistrer",
+  "es": "Guardar"
+  },
+  "youHave": {
+    "pl": "Masz jeszcze",
+    "de": "Sie haben noch",
+    "en": "You have",
+    "fr": "Vous avez encore",
+    "es": "Todavía tienes"
+    },
+    "freeUses": {
+    "pl": "darmowych użyć",
+    "de": "kostenlose Verwendungen",
+    "en": "free uses",
+    "fr": "utilisations gratuites",
+    "es": "usos gratuitos"
+    },
+    "expireLicense": {
+    "pl": "Twoja licencja skończyła się",
+    "de": "Ihre Lizenz ist abgelaufen",
+    "en": "Your license has expired",
+    "fr": "Votre licence a expiré",
+    "es": "Tu licencia ha expirado"
+    },
+    "license": {
+    "pl": "Licencja",
+    "de": "Lizenz",
+    "en": "License",
+    "fr": "Licence",
+    "es": "Licencia"
+    },
+    "licenseType": {
+    "pl": "Typ licencji",
+    "de": "Lizenztyp",
+    "en": "License Type",
+    "fr": "Type de licence",
+    "es": "Tipo de licencia"
+    },
+    "expireDate": {
+    "pl": "Data wygaśnięcia",
+    "de": "Ablaufdatum",
+    "en": "Expiration Date",
+    "fr": "Date d'expiration",
+    "es": "Fecha de vencimiento"
+    }
+  }

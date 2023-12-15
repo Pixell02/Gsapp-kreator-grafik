@@ -1,0 +1,28 @@
+.theme-container {
+  width: 95%;
+  height: auto;
+  background-color: white;
+  border: rgb(228, 228, 228);
+  flex-direction: column;
+}
+.block-item .link-container {
+  width: 200px;
+  height: 150px;
+  background: none;
+}
+.theme-container .theme-content {
+  height: 50px;
+}
+.poster-content {
+  height: 220px;
+  background-color: rgb(231, 231, 231);
+  display: flex;
+}
+.poster-content .block-item {
+  margin-left: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.block-item .link-container {
+  margin: 0 20px 0 20px;
+}

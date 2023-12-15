@@ -1,0 +1,128 @@
+.item-window {
+  margin: 20px 50px 20px 0 !important;
+  width: 200px;
+  height: 150px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  z-index: 0;
+}
+.add-window {
+  margin-top: 100px;
+}
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.name-content {
+  justify-content: left;
+  margin: 2px 0px 0px 5px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  color: black;
+  display: flex;
+  height: 24.5px;
+}
+.image-content {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  z-index: -1;
+}
+.image-content img {
+  max-height: 100%;
+  max-width: 150px;
+  z-index: -1;
+}
+.catalog-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.option-container .button {
+  border: 0;
+  background: none;
+  max-width: 20px;
+  margin-right: 10px;
+  max-height: 20px;
+}
+.icon-item {
+  position: fixed;
+  margin: 5px 0 20px 170px;
+}
+
+.show-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 30px;
+  animation-name: clear-show;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes clear-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.show-list .edit-element,
+.show-list .delete-element {
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  animation-name: clear-show;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+.show-list .edit-element :hover,
+.show-list .delete-element :hover {
+  background-color: rgb(204, 204, 204) !important;
+  transition: ease-in-out 0.2s;
+}
+
+.show-list .edit-element button,
+.show-list .delete-element button {
+  padding: 10px;
+  width: 100%;
+  margin-left: 0;
+  animation-name: clear-show;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+.option-container {
+  border: 0 !important;
+  z-index: 100 !important;
+  background: none;
+  display: flex;
+  justify-content: right;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+.option-container ul {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+  display: flex;
+}
+.show-option {
+  margin-top: 5px;
+}
+@media only screen and (max-height: 768px) {
+  .add-window {
+    margin-top: 150px !important;
+  }
+}

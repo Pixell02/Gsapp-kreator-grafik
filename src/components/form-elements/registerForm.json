@@ -1,0 +1,30 @@
+{
+  "usingGoogle": {
+    "pl": "za pomocą Google",
+    "en": "using Google",
+    "es": "utilizando Google",
+    "de": "mit Google",
+    "fr": "en utilisant Google"
+  },
+  "email": {
+    "pl": "e-mail *",
+    "en": "email *",
+    "es": "correo electrónico *",
+    "de": "E-Mail *",
+    "fr": "courriel *"
+  },
+  "password": {
+    "pl": "hasło *",
+    "en": "password *",
+    "es": "contraseña *",
+    "de": "Passwort *",
+    "fr": "mot de passe *"
+  },
+  "passwordValidation": {
+    "pl": "Hasło musi mieć co najmniej 6 znaków, bądź użytkownik już istnieje",
+    "en": "Password must be at least 6 characters long or user already exists",
+    "es": "La contraseña debe tener al menos 6 caracteres o el usuario ya existe",
+    "de": "Das Passwort muss mindestens 6 Zeichen lang sein oder der Benutzer existiert bereits",
+    "fr": "Le mot de passe doit comporter au moins 6 caractères ou l'utilisateur existe déjà"
+  }
+}

@@ -1,0 +1,16 @@
+.w-100 .react-draggable,
+.w-100 .react-draggable-dragged {
+  width: 100% !important;
+}
+
+.help-line {
+  height: 1px !important;
+  cursor: move;
+  position: absolute;
+  z-index: 5;
+}
+.help-line .guideLine {
+  height: 1px !important;
+  background-color: aqua;
+  width: 100%;
+}

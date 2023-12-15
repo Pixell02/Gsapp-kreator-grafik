@@ -1,0 +1,277 @@
+.licenseCount-container {
+  display: flex;
+  flex-direction: column;
+}
+.licenseCount-container .licenseType-container {
+  width: 200px;
+  display: flex;
+}
+.licenseCount-container .licenseType-container .licenseName {
+  margin: 5px 0 5px 0;
+  width: 150px;
+}
+.licenseCount-container .licenseType-container .count-container {
+  display: flex;
+  align-items: center;
+}
+.usersPosters-container .users-poster-container .users-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.upper-container {
+  justify-content: space-around;
+}
+.table-container {
+  height: 500px;
+  overflow-y: scroll;
+}
+.button-option {
+  background-color: white;
+  border: none;
+  margin-right: 10px;
+}
+
+.show-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 30px;
+  animation-name: clear-show;
+  z-index: 100;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+.ml-5 .pt-2 label span {
+  font-size: 10px;
+  color: black;
+}
+
+@keyframes clear-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.show-list .edit-element,
+.show-list .delete-element {
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  animation-name: clear-show;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+.show-list .edit-element :hover,
+.show-list .delete-element :hover {
+  background-color: rgb(204, 204, 204) !important;
+  transition: ease-in-out 0.2s;
+}
+
+.show-list .edit-element button,
+.show-list .delete-element button {
+  padding: 10px;
+  width: 100%;
+  margin-left: 0;
+  animation-name: clear-show;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+.item-window {
+  margin: 20px 50px 20px 0 !important;
+  width: 200px;
+  height: 150px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  z-index: 0;
+}
+.add-window {
+  margin-top: 100px;
+}
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.name-content {
+  justify-content: left;
+  margin: 2px 0px 0px 5px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  color: black;
+  display: flex;
+  height: 24.5px;
+}
+.image-content {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  z-index: -1;
+}
+.image-content img {
+  max-height: 100%;
+  max-width: 150px;
+  z-index: -1;
+}
+.catalog-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.option-container button {
+  border: 0;
+  background: none;
+}
+.icon-item {
+  position: fixed;
+  margin: 5px 0 20px 170px;
+}
+
+.option-container {
+  border: 0 !important;
+  background: none;
+  display: flex;
+  justify-content: right;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+.option-container ul {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+  display: flex;
+}
+.show-option {
+  margin-top: 5px;
+}
+
+.favorite-users-posters {
+  border-left: 1px solid rgb(185, 185, 185);
+  padding-left: 30px;
+  border-right: 1px solid rgb(185, 185, 185);
+  padding-right: 30px;
+}
+.dimension {
+  width: 200px;
+}
+
+.users-poster-container {
+  overflow: auto;
+  height: 400px;
+}
+.team-name-container {
+  display: flex;
+  justify-content: center;
+}
+.profile-image-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-image-container .profile-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-image-container .profile-image img {
+  width: 100px;
+  max-width: 100px;
+  height: auto;
+  max-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+.users-content-container {
+  height: 400px;
+  overflow: auto;
+}
+
+.cos-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+  width: 100%;
+  height: auto;
+}
+.users-posters {
+  display: flex;
+  flex-wrap: wrap;
+}
+.users-id {
+  margin-left: 40px;
+}
+
+.item-category-window {
+  display: flex;
+  flex-direction: column;
+}
+.orders {
+  background-color: gray;
+  height: 100px;
+}
+
+.order-btn {
+  background-color: black !important;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 10px !important;
+}
+ul {
+  height: auto;
+}
+.navbar-container {
+  height: 20px;
+}
+hr {
+  margin-top: 0;
+}
+
+ul .trapezoid,
+ul .trapezoid-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  cursor: pointer;
+  height: 0;
+  border-bottom: 35px solid #333;
+  border-left: 30px solid;
+  border-right: 30px solid;
+  color: white;
+}
+.trapezoid span,
+.trapezoid-active span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-right: 10px;
+  margin-top: 35px;
+}
+ul .trapezoid-active {
+  border-bottom: 35px solid #757575 !important;
+}
