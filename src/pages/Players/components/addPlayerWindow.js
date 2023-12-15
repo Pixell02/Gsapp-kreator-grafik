@@ -12,12 +12,13 @@ import { useTeams } from './useTeams';
 import { addPlayerLog, addPlayerWithImgLog } from '../../stats/components/addLogs';
 import translate from '../locales/translate.json';
 import { useLanguageContext } from '../../../context/LanguageContext';
+import { LicenseContext } from '../../../context/LicenseContext';
 
 function AddPlayerWindow({ open, onClose, Teams, email }) {
   const { id } = useParams();
   const { user } = useAuthContext();
-  const { language } = useContext(useLanguageContext);
-  const { license } = useLanguageContext();
+  const { language } = useLanguageContext();
+  const { license } = useContext(LicenseContext);
   const [firstPlayerName, setFirstPlayerName] = useState('');
   const [secondPlayerName, setSecondPlayerName] = useState('');
   const [number, setNumber] = useState('');

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { useCollection } from '../../../hooks/useCollection';
 import { useDoc } from '../../../hooks/useDoc';
 import { useAuthContext } from '../../../hooks/useAuthContext';
@@ -9,27 +8,25 @@ import { useState } from 'react';
 
 const useTeamPosters = () => {
   const { user } = useAuthContext();
-  const { documents: License } = useDoc("user", ["uid", "==", user.uid]);
-  const { documents: yourPoster } = useCollection("yourCatalog", ["uid", "==", user.uid]);
+  const { documents: License } = useDoc('user', ['uid', '==', user.uid]);
+  const { documents: yourPoster } = useCollection('yourCatalog', ['uid', '==', user.uid]);
+
   const [teamPosters, setTeamPosters] = useState(null);
   useEffect(() => {
     if (License?.team) {
-      const ref = query(collection(db, "yourCatalog"), where("uid", "==", License.team))
+      const ref = query(collection(db, 'yourCatalog'), where('uid', '==', License.team));
       onSnapshot(ref, (snapshot) => {
-            
-        let results = []
-        snapshot.docs.forEach(doc => {
-            results.push({...doc.data(), id: doc.id})
-            
-        })
-        
-        setTeamPosters(results)
-    })
+        let results = [];
+        snapshot.docs.forEach((doc) => {
+          results.push({ ...doc.data(), id: doc.id });
+        });
 
+        setTeamPosters(results);
+      });
     }
-  },[License])
+  }, [License]);
 
-  return {yourPoster, teamPosters, License}
-}
+  return { yourPoster, teamPosters, License };
+};
 
-export default useTeamPosters
+export default useTeamPosters;

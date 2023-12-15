@@ -16,6 +16,7 @@ import TextLineInput from './SingleElements/TextLineInput';
 import ThemeOption from './SingleElements/ThemeOption';
 import useThemeContext from '../../hooks/useThemeContext';
 import { useLanguageContext } from '../../../../context/LanguageContext';
+import { useCalendarCoords } from '../../context/CalendarContext';
 
 const SingleElements = ({ coords, fabricRef, themeOptions, Opponents, Players, setIsModalOpen, additionalLayer }) => {
   const { language } = useLanguageContext();
@@ -23,6 +24,7 @@ const SingleElements = ({ coords, fabricRef, themeOptions, Opponents, Players, s
   const { themeColor } = useThemeContext();
   const playersImageArray = Array.isArray(coords.playerImage) ? coords.playerImage : [coords.playerImage];
   const largerArray = playersArray?.length > playersImageArray?.length ? playersArray : playersImageArray;
+  const { graphicProperties } = useCalendarCoords();
 
   return (
     <div>
@@ -33,10 +35,7 @@ const SingleElements = ({ coords, fabricRef, themeOptions, Opponents, Players, s
         />
       )}
       {(coords.opponentImage || coords.opponentFirstName || coords.opponentSecondName || coords.opponentName) && (
-        <Radio
-          fabricRef={fabricRef}
-          coords={coords}
-        />
+        <Radio />
       )}
       {themeColor && <ThemeOption themeOptions={themeOptions} />}
       {coords.additionalText && (
@@ -69,6 +68,7 @@ const SingleElements = ({ coords, fabricRef, themeOptions, Opponents, Players, s
             fabricRef={fabricRef}
             coords={coords.typePlace}
             name={translate.typePlace[language]}
+            defaultValue={graphicProperties.selectedPlacePreset}
           />
         </>
       )}
@@ -77,6 +77,7 @@ const SingleElements = ({ coords, fabricRef, themeOptions, Opponents, Players, s
           fabricRef={fabricRef}
           coords={coords.typeData}
           name={translate.typeDate[language]}
+          defaultValue={graphicProperties.date}
         />
       )}
       {coords.yourKolejka && (
