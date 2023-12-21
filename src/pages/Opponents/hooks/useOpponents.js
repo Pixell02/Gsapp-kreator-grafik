@@ -1,12 +1,12 @@
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { LanguageContext } from "../../../context/LanguageContext";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import useStorage from "../../../hooks/useStorage";
-import { useTeams } from "../../Players/components/useTeams";
+import { useTeams } from "../../Players/hooks/useTeams";
 import translate from "../locales/locales.json";
+import { useLanguageContext } from "../../../context/LanguageContext";
 
 const useOpponents = (Teams, image, data) => {
   const { user } = useAuthContext();
@@ -15,11 +15,8 @@ const useOpponents = (Teams, image, data) => {
     secondName: data?.secondName || "",
   });
 
-  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(
-    Teams,
-    data?.team
-  );
-  const { language } = useContext(LanguageContext);
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, data?.team);
+  const { language } = useLanguageContext();
   const { handleAddImage } = useStorage();
   const { id } = useParams();
 

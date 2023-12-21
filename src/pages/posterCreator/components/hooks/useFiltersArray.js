@@ -8,7 +8,7 @@ const useFiltersArray = () => {
           filterObject[key] = { [key]: item[filterKey] };
         });
       } else {
-        filterObject.blendColor = {...item}
+        filterObject.blendColor = { ...item };
       }
     });
     return filterObject;

@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { LanguageContext } from "../context/LanguageContext";
+import { useEffect, useState } from "react";
 import translate from "../pages/Opponents/locales/locales.json";
+import { useLanguageContext } from "../context/LanguageContext";
 const useFileReader = (image) => {
   const [preview, setPreview] = useState(null);
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
   useEffect(() => {
     if (image?.size) {
       if (Math.round(image.size / 1024) < 1000) {

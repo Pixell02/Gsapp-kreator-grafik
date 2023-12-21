@@ -1,14 +1,13 @@
-import { collection, deleteDoc, deleteField, doc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { db } from "../../../firebase/config";
-import { useAuthContext } from "../../../hooks/useAuthContext";
+import { collection, deleteDoc, deleteField, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import { db } from '../../../firebase/config';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 const useAccountData = (accounts, License) => {
   const { user } = useAuthContext();
   const [accountData, setAccountData] = useState(null);
   const [users, setUsers] = useState([]);
-  const [alert, setAlert] = useState("");
+  const [alert, setAlert] = useState('');
 
   useEffect(() => {
     if (accounts?.users?.length > 0) {
@@ -16,62 +15,62 @@ const useAccountData = (accounts, License) => {
     }
   }, [accounts]);
 
-  const handleDeleteTeam = async() => {
-    const ref = doc(db, "teamAccounts", accounts.id);
+  const handleDeleteTeam = async () => {
+    const ref = doc(db, 'teamAccounts', accounts.id);
     users.forEach(async users => {
-      const q = query(collection(db, "user"), where("uid", "==", users.uid))
+      const q = query(collection(db, 'user'), where('uid', '==', users.uid));
       const userSnapshot = await getDocs(q);
-    let userId;
-    userSnapshot.forEach((doc) => {
-      userId = doc.id;
-    });
-      const userRef = doc(db, "user", userId);
+      let userId;
+      userSnapshot.forEach(doc => {
+        userId = doc.id;
+      });
+      const userRef = doc(db, 'user', userId);
       updateDoc(userRef, {
-        team: deleteField()
-      })
-    })
+        team: deleteField(),
+      });
+    });
     await deleteDoc(ref);
-  }
+  };
 
-  const handleDeleteUser = async (id) => {
-    const ref = doc(db, "teamAccounts", accounts.id);
-    const q = query(collection(db, "user"), where("uid", "==", id));
+  const handleDeleteUser = async id => {
+    const ref = doc(db, 'teamAccounts', accounts.id);
+    const q = query(collection(db, 'user'), where('uid', '==', id));
     const userSnapshot = await getDocs(q);
     let userId;
-    userSnapshot.forEach((doc) => {
+    userSnapshot.forEach(doc => {
       userId = doc.id;
     });
-    const userRef = doc(db, "user", userId);
+    const userRef = doc(db, 'user', userId);
     updateDoc(userRef, {
-      team: deleteField()
-    })
+      team: deleteField(),
+    });
 
-    const filteredUsers = users.filter((user) => user.uid !== id);
+    const filteredUsers = users.filter(user => user.uid !== id);
     updateDoc(ref, {
       users: filteredUsers,
     });
   };
 
-  const handleAddUser = async (accountData) => {
-    const q = query(collection(db, "email"), where("email", "==", accountData));
+  const handleAddUser = async accountData => {
+    const q = query(collection(db, 'email'), where('email', '==', accountData));
     const querySnapshot = await getDocs(q);
     let userEmail;
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       userEmail = doc.data();
     });
-    const q2 = query(collection(db, "user"), where("uid", "==", userEmail.uid));
+    const q2 = query(collection(db, 'user'), where('uid', '==', userEmail.uid));
     const snapshot = await getDocs(q2);
     let userTeam;
-    snapshot.forEach((doc) => {
+    snapshot.forEach(doc => {
       userTeam = doc.data();
     });
     if (!userTeam) {
-      setAlert("użytkownik nie istnieje");
+      setAlert('użytkownik nie istnieje');
     } else {
       if (userTeam.team) {
-        setAlert("użytkownik już został dodany do grupy, bądź jest już do jakieś przypisany");
+        setAlert('użytkownik już został dodany do grupy, bądź jest już do jakieś przypisany');
       } else {
-        const ref = doc(db, "teamAccounts", accounts.id);
+        const ref = doc(db, 'teamAccounts', accounts.id);
         updateDoc(ref, {
           users: [
             ...users,
@@ -81,26 +80,26 @@ const useAccountData = (accounts, License) => {
             },
           ],
         });
-        const licenseQuery = query(collection(db, "user"), where("uid", "==", userEmail.uid));
+        const licenseQuery = query(collection(db, 'user'), where('uid', '==', userEmail.uid));
         const querySnapshot = await getDocs(licenseQuery);
         let result;
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
           result = doc.id;
         });
-        const userRef = doc(db, "user", result);
-        if (License.license === "full-license") {
+        const userRef = doc(db, 'user', result);
+        if (License.license === 'full-license') {
           setDoc(userRef, {
-            license: "full-license",
+            license: 'full-license',
             expireDate: License.expireDate,
             team: user.uid,
-            uid: userEmail.uid
+            uid: userEmail.uid,
           });
         } else {
           updateDoc(userRef, {
             team: user.uid,
           });
         }
-        setAlert("użytkownik dodany");
+        setAlert('użytkownik dodany');
       }
     }
   };

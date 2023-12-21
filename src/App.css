@@ -242,11 +242,6 @@ body {
 .upper-container {
   width: 100%;
 }
-@media only screen and (max-width: 1250px) {
-  .content-wrap .main-content {
-    padding-left: 50px !important;
-  }
-  .content-wrap {
-    width: 100% !important;
-  }
+.content-wrap .main-content {
+  padding-left: 50px !important;
 }

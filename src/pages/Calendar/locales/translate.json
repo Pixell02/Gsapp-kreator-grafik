@@ -1,0 +1,23 @@
+{
+  "individualGraphics": {
+    "pl": "grafiki indywidualne",
+    "de": "Individuelle Grafiken",
+    "en": "Individual Graphics",
+    "fr": "Graphiques individuels",
+    "es": "Gráficos individuales"
+  },
+  "themes": {
+    "pl": "motywy",
+    "de": "Themen",
+    "en": "Themes",
+    "fr": "Thèmes",
+    "es": "Temas"
+  },
+  "type": {
+    "pl": "typ",
+    "de": "Typ",
+    "en": "Type",
+    "fr": "Type",
+    "es": "Tipo"
+  }
+}

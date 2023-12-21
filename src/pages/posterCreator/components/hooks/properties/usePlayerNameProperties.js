@@ -32,10 +32,10 @@ const usePlayerNameProperties = (fabricRef) => {
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   const fill = useTextFillChange(fabricRef);
   useEffect(() => {
+    if (!coords) return;
     if (Object.keys(coords).length === 0) return;
     if (coords?.type !== "playerGoal") return;
     setGlobalProperties((prevState) => {
-      
       const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
       const updatedCoords = getUniqueTextArray([...(prevState.player || []), updatedCoordsWithThemeOption]);
 

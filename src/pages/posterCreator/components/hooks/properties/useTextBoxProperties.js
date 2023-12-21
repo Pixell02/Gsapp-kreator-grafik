@@ -34,11 +34,12 @@ const useTextBoxProperties = (fabricRef) => {
   const { setThemeOption, setUniversalThemeOption } = useThemeOption();
   const fill = useTextFillChange(fabricRef);
   useEffect(() => {
+    if (!coords) return;
     if (Object.keys(coords).length === 0) return;
     if (coords?.type === "universalTextBox" || coords?.type === "textBox")
       setGlobalProperties((prevState) => {
         let updatedCoords = {};
-        
+
         if (coords?.type === "universalTextBox") {
           const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.TextBox || [], coords);
           updatedCoords = {

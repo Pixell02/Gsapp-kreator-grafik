@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
-import useTeamOption from "../hooks/useTeamOption";
+import { useEffect, useState } from 'react';
+import useFetch from '../../../hooks/useFetch';
+import useTeamOption from '../hooks/useTeamOption';
 
 export const useYourTeamNameAndLogo = () => {
   const [LogoLink, setLogoLink] = useState(null);
@@ -14,7 +14,7 @@ export const useYourTeamNameAndLogo = () => {
     }
   }, [teamOption]);
 
-  const getTeamOption = (option) => {
+  const getTeamOption = option => {
     setLogoLink(option.value);
     setYourName(option.label);
   };

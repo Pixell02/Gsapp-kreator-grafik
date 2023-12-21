@@ -13,7 +13,7 @@ const useStorage = () => {
     const path = ref(storage, link);
     const uploadTask = uploadBytesResumable(path, image, metadata);
 
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {

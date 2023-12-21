@@ -142,7 +142,6 @@ export const createPlayerImage = (fabricRef, name, image, type) => {
 };
 
 export const createFabricTextBox = (fabricRef, name, className) => {
-  
   const text = new fabric.Textbox(name, {
     top: 400,
     left: 400,
@@ -182,7 +181,7 @@ export const createPlayerNameText = (fabricRef, name, className) => {
   fabricRef.current.renderAll();
 };
 
-export const createUniversalText = (fabricRef, name, className) => {
+export const createUniversalText = (fabricRef, name) => {
   const quantity = countElementsWithGivenType(fabricRef.current._objects, "universalText");
   const text = new fabric.IText(name, {
     top: 400,

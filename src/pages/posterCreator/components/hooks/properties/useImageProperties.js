@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import useCoords from "../useCoords";
 import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
 import useUniqueKey from "../useUniqueKey";
-import useFiltersArray from "../useFiltersArray";
 import useThemeOption from "../useThemeOption";
 import useImageThemeColor from "../useImageThemeColor";
 
@@ -17,27 +16,27 @@ const useImageProperties = (fabricRef) => {
     "ScaleToWidth",
     "ScaleToHeight",
     "type",
-    "filters"
+    "filters",
   ];
   const { coords, handleInputChange } = useCoords(fabricRef, propertyKeys, "FilteredImage");
   const { setGlobalProperties } = useGlobalPropertiesContext();
-  const { setImageThemeOption } = useThemeOption()
+  const { setImageThemeOption } = useThemeOption();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
-  const fill = useImageThemeColor(fabricRef);
+  useImageThemeColor(fabricRef);
   useEffect(() => {
+    if (!coords) return;
     if (Object.keys(coords).length === 0) return;
     if (coords?.type !== "FilteredImage") return;
     setGlobalProperties((prevState) => {
-      const updatedCoordsWithThemeOption = setImageThemeOption(prevState.Images || [], coords)
+      const updatedCoordsWithThemeOption = setImageThemeOption(prevState.Images || [], coords);
       const updatedCoords = getUniqueTextArray([...(prevState.Images || []), updatedCoordsWithThemeOption]);
-      
+
       return {
         ...prevState,
         Images: updatedCoords,
       };
     });
   }, [coords]);
-
 
   return { coords, handleInputChange };
 };

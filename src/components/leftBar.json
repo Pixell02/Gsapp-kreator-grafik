@@ -13,6 +13,13 @@
     "de": "Dein Katalog",
     "fr": "Votre catalogue"
   },
+  "calendar": {
+    "pl": "Kalendarz",
+    "en": "Calendar",
+    "es": "Calendario",
+    "de": "Kalender",
+    "fr": "Calendrier"
+},
   "yourTeamPanel": {
     "pl": "Panel drużyny",
     "en": "Your Team Panel",

@@ -1,41 +1,23 @@
-import React, { useContext, useRef } from 'react'
-import { BackgroundContext } from '../../Context/BackgroundContext';
-import useFabric from './useFabric';
+import { useRef } from "react";
+import useBackgroundContext from "./useBackgroundContext";
 
-export const useAddBackground = (fabricRef) => {
-  const { image, setImage } = useContext(BackgroundContext);
+export const useAddBackground = () => {
+  const { image, setImage } = useBackgroundContext();
   const fileInputRef = useRef(null);
-  const { initFabric } = useFabric();
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
 
   const handleAddBackground = (file) => {
     if (file) {
-      setImage(prev => ({
+      setImage((prev) => ({
         ...prev,
         file,
-        color: file.name.split('.')[0],
-        src: URL.createObjectURL(file)
-      }))
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-      img.onload = () => {
-        const image = {
-          src: img.src,
-          width: img.width,
-          height: img.height,
-          color: file.name.split('.')[0],
-        }
-        initFabric(fabricRef, image)
-      }
-      
-      
-    } 
-  }
+        color: file.name.split(".")[0],
+        src: URL.createObjectURL(file),
+      }));
+    }
+  };
 
-  
-
-
-  return {handleAddBackground, onButtonClick, fileInputRef, image}
-}
+  return { handleAddBackground, onButtonClick, fileInputRef, image };
+};

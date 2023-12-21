@@ -1,19 +1,17 @@
-import { useState, useEffect } from 'react';
-import { auth } from '../firebase/config';
-import { useAuthContext } from './useAuthContext';
+import { useState, useEffect } from "react";
+import { useAuthContext } from "./useAuthContext";
 
 const useUserInformation = (userId) => {
-    
-  const [usersEmail, setUserEmail] = useState('');
-  const [userCreatedAt, setUserCreatedAt] = useState('');
-    const { user } = useAuthContext();
+  const [usersEmail, setUserEmail] = useState("");
+  const [userCreatedAt, setUserCreatedAt] = useState("");
+  const { user } = useAuthContext();
   useEffect(() => {
-    const fetchUserData = async (userId) => {
+    const fetchUserData = async () => {
       try {
         setUserEmail(user.email);
         setUserCreatedAt(formatDate(user.metadata.creationTime));
       } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error("Error fetching user:", error);
       }
     };
 
@@ -21,7 +19,6 @@ const useUserInformation = (userId) => {
       fetchUserData();
     }
   }, [userId]);
-  
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

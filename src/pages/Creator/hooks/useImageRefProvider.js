@@ -1,15 +1,14 @@
-import React, { useContext } from 'react'
-import { ImageRefContext } from '../context/ImageRefContext'
+import { useContext } from "react";
+import { ImageRefContext } from "../context/ImageRefContext";
 
 const useImageRefProvider = () => {
-
-  const context = useContext(ImageRefContext)
+  const context = useContext(ImageRefContext);
 
   if (!context) {
-    throw Error("ImageContext")
+    throw Error("ImageContext");
   }
 
-  return context
-}
+  return context;
+};
 
-export default useImageRefProvider
+export default useImageRefProvider;

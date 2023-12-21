@@ -4,7 +4,7 @@ import useHandleKeyPress from "./useHandleKeyPress";
 import useFiltersArray from "./useFiltersArray";
 
 const useCoords = (fabricRef, propertyKeys, type) => {
-  const [coords, setCoords] = useState({});
+  const [coords, setCoords] = useState(null);
   const { updateActiveObjectCoords, handleInputChange, handleSelectChange } = useHandleChangeEvents(
     fabricRef,
     coords,
@@ -17,16 +17,16 @@ const useCoords = (fabricRef, propertyKeys, type) => {
       const canvas = fabricRef.current;
       if (!canvas) return;
       const activeObject = canvas.getActiveObject();
-      if (!activeObject) return setCoords({});
+      if (!activeObject) return setCoords(null);
       const newCoords = {
-        Top: parseInt(activeObject.top),
-        Left: parseInt(activeObject.left),
+        Top: parseInt(activeObject.top?.toFixed(0)),
+        Left: parseInt(activeObject.left?.toFixed(0)),
         className: activeObject.className,
-        Angle: parseInt(activeObject.angle),
-        Width: parseInt((activeObject.width * activeObject.scaleX).toFixed(0)),
-        Height: parseInt((activeObject.height * activeObject.scaleY.toFixed(2)).toFixed(0)),
-        ScaleToWidth: parseInt((activeObject.width * activeObject.scaleX.toFixed(2)).toFixed(0)),
-        ScaleToHeight: parseInt((activeObject.height * activeObject.scaleY).toFixed(0)),
+        Angle: parseInt(activeObject.angle?.toFixed(0)),
+        Width: parseInt(activeObject.width * activeObject.scaleX),
+        Height: parseInt(activeObject.height * activeObject.scaleY),
+        ScaleToWidth: parseInt(activeObject.width * activeObject.scaleX),
+        ScaleToHeight: parseInt(activeObject.height * activeObject.scaleY),
         FontSize: parseInt(activeObject.fontSize),
         FontFamily: activeObject.fontFamily,
         CharSpacing: parseInt(activeObject.charSpacing),
@@ -41,22 +41,23 @@ const useCoords = (fabricRef, propertyKeys, type) => {
         filters: activeObject.filters,
         Formatter: activeObject.Formatter,
       };
+
       const selectedProperties = {};
       propertyKeys.forEach((key) => {
-          if (newCoords[key] !== undefined) {
-            selectedProperties[key] = newCoords[key];
-          }
-        });
-      if (newCoords.type === "FilteredImage") {
-        if (newCoords.filters?.length > 0) {
-        const coordsWithFilter = handleReadFilters(newCoords.filters);
-        console.log(coordsWithFilter)
-        selectedProperties.filters = coordsWithFilter;
-      }
+        if (newCoords[key] !== undefined) {
+          selectedProperties[key] = newCoords[key];
+        }
+      });
+
+      if (selectedProperties.type === "FilteredImage") {
+        if (selectedProperties.filters) {
+          const coordsWithFilter = handleReadFilters(selectedProperties.filters);
+          selectedProperties.filters = coordsWithFilter;
+        }
       }
       setCoords(selectedProperties);
     };
-    if (fabricRef?.current?._objects) {
+    if (fabricRef.current?._objects) {
       fabricRef.current?.on("object:modified", handleObjectModified);
       fabricRef.current?.on("mouse:down", handleObjectModified);
       document.addEventListener("keydown", handleDeleteKeyPress);
@@ -67,7 +68,6 @@ const useCoords = (fabricRef, propertyKeys, type) => {
       };
     }
   }, [handleDeleteKeyPress, fabricRef, propertyKeys, handleReadFilters, type]);
-
 
   return { coords, updateActiveObjectCoords, handleInputChange, handleSelectChange };
 };

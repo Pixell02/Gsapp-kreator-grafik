@@ -19,7 +19,7 @@ const useThemeOption = () => {
   };
   const setUniversalThemeOption = (prevState, coords) => {
     const index = prevState?.findIndex((option) => option.className === coords.className);
-    
+
     if (index === -1) {
       return {
         ...coords,
@@ -50,36 +50,40 @@ const useThemeOption = () => {
     if (index === -1) {
       return {
         ...coords,
-        filters: coords.filters && {
-          ...coords.filters,
-          blendColor: coords.filters.blendColor && {
-            themeOption: [
-              {
-                label: color,
-                color: coords.filters?.blendColor?.color,
-              },
-            ],
+        ...(Object.keys(coords.filters).length > 0 && {
+          filters: coords.filters && {
+            ...coords.filters,
+            blendColor: coords.filters.blendColor && {
+              themeOption: [
+                {
+                  label: color, // Use the provided color parameter
+                  color: coords.filters?.blendColor?.color,
+                },
+              ],
+            },
           },
-        },
+        }),
       };
     } else {
       return {
         ...coords,
-        filters: coords.filters && {
-          ...coords.filters,
-          blendColor: coords.filters.blendColor && {
-            ...coords.filters.blendColor,
-            themeOption: [
-              ...(prevState[index]?.filters?.blendColor?.themeOption || []).filter(
-                (option) => option.label !== color
-              ),
-              {
-                label: color,
-                color: coords.filters?.blendColor?.color,
-              },
-            ],
+        ...(Object.keys(coords.filters).length > 0 && {
+          filters: coords.filters && {
+            ...coords.filters,
+            blendColor: coords.filters.blendColor && {
+              ...coords.filters.blendColor,
+              themeOption: [
+                ...(prevState[index]?.filters?.blendColor?.themeOption || []).filter(
+                  (option) => option.label !== color
+                ),
+                {
+                  label: color, // Use the provided color parameter
+                  color: coords.filters?.blendColor?.color,
+                },
+              ],
+            },
           },
-        },
+        }),
       };
     }
   };
