@@ -1,12 +1,18 @@
-import { useState } from 'react';
-import { createContext } from 'react';
+import { useContext, useState } from "react";
+import { createContext } from "react";
 
-const radioContext = createContext();
+export const radioContext = createContext();
 
 export const RadioProvider = ({ children }) => {
-  const [radioChecked, setRadioChecked] = useState('radio1');
+  const [radioChecked, setRadioChecked] = useState("radio1");
 
   return <radioContext.Provider value={{ radioChecked, setRadioChecked }}>{children}</radioContext.Provider>;
 };
 
-export default radioContext;
+export const useRadioContext = () => {
+  const context = useContext(radioContext);
+  if (!context) {
+    throw new Error("useRadioContext must be used within a RadioProvider");
+  }
+  return context;
+};
