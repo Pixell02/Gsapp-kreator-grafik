@@ -19,7 +19,6 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
         return null;
     }
   };
-
   if (!fabricRef.current) return;
   layersName.forEach((layer, i) => {
     for (const key in globalProperties) {
@@ -119,7 +118,7 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
               fontSize: globalProperties[key]?.FontSize,
               textAlign: globalProperties[key]?.TextAlign || "center",
               className: layer.className,
-              angle: globalProperties[key]?.Angle,
+              angle: globalProperties[key]?.Angle || 0,
               fill: globalProperties[key]?.Fill,
               fontFamily: globalProperties[key]?.FontFamily,
               type: "text",
@@ -130,11 +129,13 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
             text.set({
               scaleX: globalProperties[key]?.ScaleToWidth / text.width,
             });
-            fabricRef.current.add(text);
-            fabricRef.current.renderAll();
+            fabricRef.current?.add(text);
+            fabricRef.current?.renderAll();
           });
         } else if (layer.type === "playerGoal") {
-          const array = globalProperties[key];
+          const array = Array.isArray(globalProperties[key]) ? globalProperties[key] : [globalProperties[key]];
+          console.log(array);
+          if (!array) return;
           array.forEach((item) => {
             let value;
             if ((item.Format || item.format) === "dotted") {

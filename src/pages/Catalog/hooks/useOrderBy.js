@@ -1,28 +1,24 @@
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { db } from '../../../firebase/config';
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { useEffect } from "react";
+import { useState } from "react";
+import { db } from "../../../firebase/config";
 
 const useOrderBy = (c, o) => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDocuments = async () => {
-      try {
-        const q = query(collection(db, c), orderBy(o));
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const ref = query(collection(db, c), orderBy(o));
+    const unsub = onSnapshot(ref, (snapshot) => {
+      setLoading(false);
+      const results = [];
+      snapshot.docs.forEach((doc) => {
+        results.push({ ...doc.data(), id: doc.id });
+      });
 
-        setDocuments(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Błąd pobierania dokumentów:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchDocuments();
+      setDocuments(results);
+    });
+    return () => unsub();
   }, [c]);
 
   return { documents, loading };

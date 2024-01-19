@@ -20,8 +20,7 @@ const OptionButton = ({ item, editClick, type, hideElement }) => {
 
   const handleDeleteClick = async (id, location) => {
     const ref = doc(db, location, id);
-    await deleteDoc(ref);
-    // }
+    await deleteDoc(ref).then(() => console.log("deleted"));
   };
   return (
     <div className="option-container">
@@ -32,7 +31,6 @@ const OptionButton = ({ item, editClick, type, hideElement }) => {
         <div className="show-list">
           <div className="edit-element">
             <button
-              key={item.id}
               onClick={() => {
                 editClick(item, type);
               }}
@@ -41,9 +39,7 @@ const OptionButton = ({ item, editClick, type, hideElement }) => {
             </button>
           </div>
           <div className="delete-element">
-            <button key={item.id} onClick={() => handleDeleteClick(item.id, type)}>
-              Usuń
-            </button>
+            <button onClick={() => handleDeleteClick(item.id, type)}>Usuń</button>
           </div>
         </div>
       )}

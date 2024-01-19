@@ -1,9 +1,10 @@
-import { addDoc, collection } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { db } from '../../../../../../firebase/config';
+import { addDoc, collection } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import { db } from "../../../../../../firebase/config";
 
 export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, selectedSportOption }) {
-  const [themeName, setThemeName] = useState('');
+  const [themeName, setThemeName] = useState("");
 
   useEffect(() => {
     if (themes) {
@@ -12,7 +13,7 @@ export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, s
   }, [themes]);
 
   const handleSaveTheme = () => {
-    const docRef = collection(db, 'catalog');
+    const docRef = collection(db, "catalog");
     addDoc(docRef, {
       lang: selectedLangOption,
       public: false,
@@ -22,7 +23,7 @@ export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, s
     setIsOpen();
   };
 
-  return (
+  return ReactDOM.createPortal(
     <div className="modal-container">
       <div className="modal-window h-25 p-3">
         <div className="title">
@@ -30,27 +31,20 @@ export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, s
         </div>
         <div className="d-flex flex-column">
           <label className="w-100">Nazwa motywu</label>
-          <input
-            type="text"
-            value={themeName}
-            onChange={e => setThemeName(e.target.value)}
-          />
+          <input type="text" value={themeName} onChange={(e) => setThemeName(e.target.value)} />
         </div>
         <div className="btn-container w-100 d-flex align-items-end">
           <div className="w-100 d-flex justify-content-end">
-            <button
-              className="btn"
-              onClick={setIsOpen}>
+            <button className="btn" onClick={setIsOpen}>
               Anuluj
             </button>
-            <button
-              className="btn"
-              onClick={() => handleSaveTheme()}>
+            <button className="btn" onClick={() => handleSaveTheme()}>
               Dodaj
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("portal")
   );
 }

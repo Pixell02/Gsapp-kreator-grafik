@@ -1,10 +1,4 @@
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
@@ -75,18 +69,12 @@ export const useSearch = (collectionName, radioValue, searchText) => {
           where("email", "<=", searchText + "\uf8ff")
         );
       } else if (radioValue === "id") {
-        queryRef = query(
-          collectionRef,
-          where("uid", ">=", searchText),
-          where("uid", "<=", searchText + "\uf8ff")
-        );
+        queryRef = query(collectionRef, where("uid", ">=", searchText), where("uid", "<=", searchText + "\uf8ff"));
       } else {
         queryRef = collectionRef;
       }
 
-      const unsubscribe = onSnapshot(queryRef, (snapshot) =>
-        fetchData(queryRef)
-      );
+      const unsubscribe = onSnapshot(queryRef, (snapshot) => fetchData(queryRef));
       return unsubscribe;
     }
   }, [collectionName, radioValue, searchText]);
@@ -113,15 +101,10 @@ export const useSearch = (collectionName, radioValue, searchText) => {
       teamsSnapshot.docs.forEach((doc) => {
         TeamsResults.push({ id: doc.id, ...doc.data() });
       });
-      console.log(results);
       // setDocuments(results);
       const users = results.map((user) => {
-        const userEmail = emailResults.find(
-          (emailUser) => emailUser.uid === user.uid
-        );
-        const userTeam = TeamsResults.find(
-          (teamUser) => teamUser.uid === user.uid
-        );
+        const userEmail = emailResults.find((emailUser) => emailUser.uid === user.uid);
+        const userTeam = TeamsResults.find((teamUser) => teamUser.uid === user.uid);
 
         return {
           ...user,

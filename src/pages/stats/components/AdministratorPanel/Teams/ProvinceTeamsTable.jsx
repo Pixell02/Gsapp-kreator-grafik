@@ -1,22 +1,22 @@
-import { collection, deleteDoc, doc } from 'firebase/firestore';
-import { deleteObject, getStorage, ref } from 'firebase/storage';
-import React from 'react';
-import { db } from '../../../../../firebase/config';
-import useFindTeam from './hooks/useFindTeam';
+import { collection, deleteDoc, doc } from "firebase/firestore";
+import { deleteObject, getStorage, ref } from "firebase/storage";
+import React from "react";
+import { db } from "../../../../../firebase/config";
+import useFindTeam from "./hooks/useFindTeam";
 
 const ProvinceTeamsTable = ({ selectedProvince }) => {
   const { documents: Teams } = useFindTeam(selectedProvince);
 
-  const handleDelete = async item => {
-    const docRef = doc(collection(db, 'AllTeams'), item.id);
+  const handleDelete = async (item) => {
+    const docRef = doc(collection(db, "AllTeams"), item.id);
     const storage = getStorage();
     const desertRef = ref(storage, `województwo/${item.province}/${item.name}`);
     deleteObject(desertRef)
       .then(() => {
         // File deleted successfully
       })
-      .catch(error => {
-        // Uh-oh, an error occurred!
+      .catch((error) => {
+        console.log(error);
       });
     await deleteDoc(docRef);
   };
@@ -32,14 +32,10 @@ const ProvinceTeamsTable = ({ selectedProvince }) => {
           </th>
         </thead>
         <tbody className="d-flex w-100">
-          {Teams?.map(item => (
+          {Teams?.map((item) => (
             <>
               <tr className="d-flex justify-content-center w-100">
-                <img
-                  src={item.src}
-                  style={{ height: '50px', width: 'auto' }}
-                  alt={item.name}
-                />
+                <img src={item.src} style={{ height: "50px", width: "auto" }} alt={item.name} />
               </tr>
               <tr className="d-flex justify-content-center w-100">
                 <span>{item.name}</span>

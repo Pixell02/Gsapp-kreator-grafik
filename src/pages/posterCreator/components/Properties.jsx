@@ -7,8 +7,11 @@ import TextBoxUniversalProperties from "./components2/TextBoxUniversalProperties
 import TextProperties from "./components2/TextProperties";
 import TextUniversalProperties from "./components2/TextUniversalProperties";
 import TextboxProperties from "./components2/TextboxProperties";
+import useGlobalPropertiesContext from "./hooks/useGlobalPropertiesContext";
 
 export default function Properties({ fabricRef }) {
+  const { globalProperties } = useGlobalPropertiesContext();
+  console.log(globalProperties);
   return (
     <div className="overflow-scroll d-flex h-100">
       <ImageFiltersProvider>

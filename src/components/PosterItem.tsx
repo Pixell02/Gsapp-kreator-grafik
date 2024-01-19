@@ -4,8 +4,10 @@ import { useLanguageContext } from "../context/LanguageContext";
 
 export type poster = {
   uid: string;
+  uuid: string;
   name: string;
   src: string;
+  themeId: string;
   firstName: string;
   secondName: string;
 };

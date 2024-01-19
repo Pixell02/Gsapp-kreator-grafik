@@ -1,21 +1,13 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { useCollection } from "../../../hooks/useCollection";
 import { useParams } from "react-router-dom";
-
+import { useDoc } from "../../../hooks/useDoc";
+import { useCalendarContext } from "../context/CalendarContext";
 
 const useCoords = () => {
   const { poster } = useParams();
-  const { documents: coordinates } = useCollection("coords", ["uid", "==", poster]);
-  const [coords, setCoords] = useState(null);
-  useEffect(() => {
-    if (coordinates)
-      if (coordinates.length > 0) {
-        setCoords(coordinates[0]);
-      }
-  }, [coordinates]);
+  const { calendarPoster } = useCalendarContext();
+  const { documents: coords } = useDoc("coords", ["uid", "==", calendarPoster?.uuid || poster]);
 
-  return {coords}
-}
+  return { coords };
+};
 
-export default useCoords
+export default useCoords;

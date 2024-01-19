@@ -1,35 +1,28 @@
-import React from 'react';
-import verified from '../../../img/verified.png';
-import discard from '../../../img/discard.png';
-import { Link } from 'react-router-dom';
-import translate from '../locales/translate.json';
-import { useLanguageContext } from '../../../context/LanguageContext';
+import React from "react";
+import verified from "../../../img/verified.png";
+import discard from "../../../img/discard.png";
+import { Link } from "react-router-dom";
+import translate from "../locales/translate.json";
+import { useLanguageContext } from "../../../context/LanguageContext";
 
 export default function Licenses({ License }) {
   const { language } = useLanguageContext();
-  console.log(License);
   return (
     <div>
-      {License && License[0]?.license === 'free-trial' && (
+      {License && License[0]?.license === "free-trial" && (
         <div className="license-container">
           <div className="license-content">
-            <img
-              src={verified}
-              className="icon-verified"
-            />{' '}
+            <img src={verified} className="icon-verified" />{" "}
             <span>
               {translate.youHave[language]} {License[0]?.numberOfFreeUse} {translate.freeUses[language]}
             </span>
           </div>
         </div>
       )}
-      {License && License[0]?.license === 'no-license' && (
+      {License && License[0]?.license === "no-license" && (
         <div className="license-container">
           <div className="license-content">
-            <img
-              src={discard}
-              className="icon-verified"
-            />{' '}
+            <img src={discard} className="icon-verified" />{" "}
             <span>
               {translate.expireLicense[language]}
               <Link to="/offer">Kup dostęp</Link>
@@ -37,26 +30,16 @@ export default function Licenses({ License }) {
           </div>
         </div>
       )}
-      {License && License[0]?.license === 'full-license' && (
+      {License && License[0]?.license === "full-license" && (
         <div className="license-container ">
-          <p style={{ marginLeft: '20px' }}>{translate.license[language]}</p>
+          <p style={{ marginLeft: "20px" }}>{translate.license[language]}</p>
           <div className="license-type">
             <label>{translate.licenseType[language]}</label>
-            <input
-              type="text"
-              className="license-content"
-              value="UNLIMITED"
-              disabled
-            />
+            <input type="text" className="license-content" value="UNLIMITED" disabled />
           </div>
           <div className="license-type">
             <label>{translate.expireDate[language]}</label>
-            <input
-              type="text"
-              className="license-content"
-              value={License[0].expireDate}
-              disabled
-            />
+            <input type="text" className="license-content" value={License[0].expireDate} disabled />
           </div>
           <label>Format MM-DD-YYYY</label>
         </div>

@@ -1,20 +1,12 @@
 import React from "react";
 import "./startingPlayers.css";
 import { useTeamContext } from "../../../../context/teamContext";
-import { useEffect } from "react";
-import showReserve from "../../SingleElements/playerOption/showReserve";
-import useThemeContext from "../../../../hooks/useThemeContext";
+import useReserveFabricObject from "../hooks/useReserveFabricObject";
 
 const ReservePlayers = ({ fabricRef, coords, isModalOpen }) => {
-  const { reservePlayers, selectedReserve, handleReserveChecked } = useTeamContext();
-  const { themeColor } = useThemeContext();
+  const { reservePlayers, handleReserveChecked } = useTeamContext();
 
-  useEffect(() => {
-    if (fabricRef.current?._objects && selectedReserve) {
-      console.log(themeColor);
-      showReserve(fabricRef, selectedReserve, coords, themeColor);
-    }
-  }, [selectedReserve, fabricRef, coords, themeColor]);
+  const { selectedReserve } = useReserveFabricObject(fabricRef, coords.reserveOne);
 
   return (
     <div className={isModalOpen.id === 2 ? "w-100 d-flex align-items-center flex-column" : "d-none"}>

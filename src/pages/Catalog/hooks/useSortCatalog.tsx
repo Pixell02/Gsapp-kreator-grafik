@@ -4,16 +4,6 @@ import { useEffect, useState } from "react";
 const useSortCatalog = (catalog: DocumentData[] | null) => {
   const [isOpen, setIsOpen] = useState<DocumentData[] | null>(null);
 
-  // const handleExpandedChange = (i: string) => {
-  //   if (!isOpen || !isOpen.length) return;
-  //   const index = Number(i);
-  //   if (index < 0 || index >= isOpen.length) return;
-
-  //   const newArray = [...isOpen];
-  //   newArray[index] = { ...newArray[index], expanded: !newArray[index].expanded };
-  //   setIsOpen(newArray);
-  // };
-
   useEffect(() => {
     if (catalog) {
       const updatedCatalog: DocumentData[] = catalog.map((item) => ({ ...item, expanded: false }));

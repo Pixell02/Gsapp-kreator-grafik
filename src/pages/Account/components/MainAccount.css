@@ -2,21 +2,13 @@
   display: flex;
   flex-direction: column;
 }
-.account-content .account-items input[type="text"],
-.account-content .account-items label {
-  border: none;
-  margin-left: 20px;
-}
+
 .account-content .account-items input[type="text"] {
   background-color: rgb(241, 241, 241);
+  padding: 0 0 0 10px;
+  width: 99%;
 }
-.account-content .account-items input[type="text"]:first-child,
-.account-content .account-items label:first-child {
-  margin-top: 10px;
-}
-.surName, .name {
-    width: 90% !important;
-}
+
 .account-data-container {
   height: 50px;
   background-color: rgba(255, 255, 204, 0.5);
@@ -28,6 +20,7 @@
 }
 .label-content {
   width: 100%;
+  margin: 10px 0 10px 0;
 }
 .license-container {
   display: flex;
@@ -47,16 +40,12 @@
   margin-top: 20px;
 }
 .inner-content-country-label {
-  width: 97%;
-  margin: 10px 0 10px 10px;
+  width: 95%;
 }
 .country {
   margin-left: 0 !important;
 }
-.license-container input,
-.fax-container input {
-  padding-left: 10px !important;
-}
+
 .checkbox-container {
   display: flex;
   width: 100%;
@@ -67,13 +56,7 @@
   justify-content: flex-start;
   flex-direction: column !important;
 }
-.data-content .label-content input {
-  width: 95% !important;
-}
 
-.data-content .label-content input::placeholder {
-  margin-left: 10px !important;
-}
 .data-content .label-content {
   display: flex;
   flex-direction: column !important;
@@ -101,7 +84,6 @@
   width: 95%;
 }
 .license-container .license-content {
-  
   display: flex;
   justify-content: flex-start;
 }

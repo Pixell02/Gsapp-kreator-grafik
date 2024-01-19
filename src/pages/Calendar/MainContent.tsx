@@ -9,6 +9,10 @@ import "react-calendar/dist/Calendar.css";
 import useDate from "./hooks/useDate";
 import { useState } from "react";
 import EventModal from "./components/EventModal";
+import { CalendarProvider } from "../Creator/context/CalendarContext";
+import useSearchDocsByQuery from "../../hooks/useSearchDocsByQuery";
+import PosterLink from "../Catalog/components/PosterLink";
+import { poster } from "./components/PosterBlock";
 
 type translationProps = {
   calendar: props;
@@ -17,11 +21,16 @@ type translationProps = {
 const MainContent = () => {
   const { language } = useLanguageContext();
   const translate: translationProps = translation;
-  const { date, onChange } = useDate();
+  const { date, onChange, momentDate } = useDate();
+  const { documents: graphics } = useSearchDocsByQuery("calendarPoster", "date", "==", momentDate as string);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="main-content">
-      {isOpen && <EventModal />}
+      {isOpen && (
+        <CalendarProvider>
+          <EventModal setIsOpen={setIsOpen} date={momentDate} />
+        </CalendarProvider>
+      )}
       <div className="ml-5">
         <ReturnButton />
         <Title title={translate.calendar[language]} />
@@ -30,6 +39,9 @@ const MainContent = () => {
         </button>
         <ItemContainer>
           <Calendar onChange={onChange} value={date} />
+          {graphics?.map((item) => (
+            <PosterLink poster={item as poster} />
+          ))}
         </ItemContainer>
       </div>
     </div>

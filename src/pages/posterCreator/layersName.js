@@ -36,13 +36,13 @@ export const layersName = [
   {
     name: "gole gospodarza",
     type: "textBox",
-    text: "42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n ",
+    text: "42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n ",
     className: "yourPlayerOneGoal",
   },
   {
     name: "gole przeciwnika",
     type: "textBox",
-    text: "42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n ",
+    text: "42' Nazwisko \n 42' Nazwisko \n 42' Nazwisko \n ",
     className: "opponentPlayerOneGoal",
   },
   { name: "miejsce", type: "text", text: "miejsce", className: "typePlace" },

@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
-import useCanvasPropertiesContext from './hooks/useCanvasPropertiesContext';
-import useFabricCanvas from './hooks/useFabricCanvas';
+import { useEffect } from "react";
+import useCanvasPropertiesContext from "./hooks/useCanvasPropertiesContext";
+import useFabricCanvas from "./hooks/useFabricCanvas";
 
 function Canvas({ dataURL, fabricRef }) {
   const { width, setWidth, height, setHeight } = useCanvasPropertiesContext();
   const { initFabric } = useFabricCanvas();
   // const { documents: sponsors } = useCollection("Sponsors", ["uid", "==", user.uid])
-
   useEffect(() => {
     const img = new Image();
     img.src = dataURL;
-
+    if (!dataURL) return;
     img.onload = () => {
       setWidth(img.width);
       setHeight(img.height);
@@ -30,13 +29,7 @@ function Canvas({ dataURL, fabricRef }) {
         <img key={index} src={image.img} alt={`Img ${index + 1}`} />
       ))}
     </div> */}
-      <canvas
-        id="canvas"
-        className="resposive-canvas"
-        ref={fabricRef}
-        width={width}
-        height={height}
-      />
+      <canvas id="canvas" className="resposive-canvas" ref={fabricRef} width={width} height={height} />
     </>
   );
 }

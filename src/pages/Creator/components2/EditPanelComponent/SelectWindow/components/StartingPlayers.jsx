@@ -2,20 +2,12 @@ import { useState } from "react";
 import { useTeamContext } from "../../../../context/teamContext";
 import "./startingPlayers.css";
 import { useEffect } from "react";
-import squadPlayer from "../../SingleElements/playerOption/squadPlayer";
 import Select from "react-select";
-import useThemeContext from "../../../../hooks/useThemeContext";
+import useSquadFabricObject from "../hooks/useSquadFabricObject";
 const StartingPlayers = ({ fabricRef, coords, isModalOpen }) => {
-  const { Players, selectedPlayers, handlePlayerChecked } = useTeamContext();
-  const { themeColor } = useThemeContext();
-  const [goalkeeper, setGoalkeeper] = useState(null);
-  const [capitan, setCapitan] = useState(null);
-  const [playerSelect, setPlayerSelect] = useState();
-  useEffect(() => {
-    if (fabricRef.current?._objects && selectedPlayers) {
-      squadPlayer(fabricRef, selectedPlayers, coords, themeColor, goalkeeper, capitan);
-    }
-  }, [selectedPlayers, goalkeeper, capitan, themeColor, fabricRef, coords]);
+  const { Players, handlePlayerChecked } = useTeamContext();
+  const { selectedPlayers, setCapitan, setGoalKeeper } = useSquadFabricObject(fabricRef, coords.playerOne);
+  const [playerSelect, setPlayerSelect] = useState(null);
   useEffect(() => {
     const option = selectedPlayers?.map((player) => ({
       label: (player.number || "") + " " + player.firstName + " " + player.secondName,
@@ -56,7 +48,7 @@ const StartingPlayers = ({ fabricRef, coords, isModalOpen }) => {
       <span>Kapitan</span>
       <Select options={playerSelect} onChange={(option) => setCapitan(option.value)} />
       <span>Bramkarz</span>
-      <Select options={playerSelect} onChange={(option) => setGoalkeeper(option.value)} />
+      <Select options={playerSelect} onChange={(option) => setGoalKeeper(option.value)} />
     </div>
   );
 };

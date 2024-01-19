@@ -7,7 +7,7 @@ export const exportImg = (Licenses, posters, user, poster) => {
   const image = document.querySelector(".canvas-container");
   const transform = document.querySelector(".react-transform-component");
   transform.style.transform = "scale(1)";
-  if (Licenses[0].license === "free-trial") {
+  if (Licenses.license === "free-trial") {
     const watermark = document.createElement("img");
     watermark.className = "watermark-img";
     watermark.src = watermarkImg;
@@ -22,18 +22,18 @@ export const exportImg = (Licenses, posters, user, poster) => {
     link.href = dataURL;
     link.click();
 
-    const docRef = doc(db, "user", Licenses[0].id);
-    if (Licenses[0].license === "free-trial") {
+    const docRef = doc(db, "user", Licenses.id);
+    if (Licenses.license === "free-trial") {
       updateDoc(docRef, {
-        numberOfFreeUse: Licenses[0].numberOfFreeUse - 1,
+        numberOfFreeUse: Licenses.numberOfFreeUse - 1,
       });
     }
     let checkLicense = [];
-    const colRef = doc(db, "user", Licenses[0].id);
+    const colRef = doc(db, "user", Licenses.id);
     getDoc(colRef).then((doc) => {
       checkLicense.push(doc.data());
-      if (checkLicense[0].license === "free-trial") {
-        if (checkLicense[0].numberOfFreeUse < 1) {
+      if (checkLicense.license === "free-trial") {
+        if (checkLicense.numberOfFreeUse < 1) {
           updateDoc(docRef, {
             license: "no-license",
             numberOfFreeUse: deleteField(),
@@ -41,14 +41,15 @@ export const exportImg = (Licenses, posters, user, poster) => {
         }
       }
     });
-    if (Licenses[0].license === "free-trial") {
+    if (Licenses.license === "free-trial") {
       document.querySelector(".watermark-img").remove();
     }
 
-    posters.createdDate = Date.now();
-    posters.posterId = poster;
-    posters.user = user.uid;
     const generatorRef = collection(db, "generated");
-    addDoc(generatorRef, posters);
+    addDoc(generatorRef, {
+      createdDate: Date.now(),
+      posterId: poster,
+      user: user.uid,
+    });
   });
 };

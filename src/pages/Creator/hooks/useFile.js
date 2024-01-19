@@ -2,7 +2,8 @@ import imageCompression from "browser-image-compression";
 import { fabric } from "fabric";
 import { useEffect, useState } from "react";
 import useImageFilters from "./useImageFilters";
-import useThemeContext from "./useThemeContext";
+import { useThemeContext } from "../context/ThemeContext";
+
 const useFile = (fabricRef, coords, filters) => {
   const { activeFilters } = useImageFilters(filters);
   const { themeColor } = useThemeContext();
@@ -14,12 +15,13 @@ const useFile = (fabricRef, coords, filters) => {
     if (file) {
       try {
         const compressedImage = await compressImage(file);
+
         const fabricImage = new fabric.Image(compressedImage, {
           filters: activeFilters,
           top: coords.Top,
           left: coords.Left,
-          originX: coords.OriginX,
-          originY: coords.OriginY,
+          originX: "center",
+          originY: "center",
           className: coords.className,
           type: coords.type,
         });
@@ -40,6 +42,7 @@ const useFile = (fabricRef, coords, filters) => {
     if (ImagesObjects.length === 0) return;
     const ImageObject = ImagesObjects[0];
     const blendColor = coords.filters.blendColor;
+    if (!blendColor) return;
     const selectedColor = coords.filters.blendColor.themeOption.find((option) => option.label === themeColor.label);
     if (!selectedColor) return;
     const blendColorFilter = new fabric.Image.filters.BlendColor({
@@ -58,6 +61,7 @@ const useFile = (fabricRef, coords, filters) => {
       useWebWorker: true,
     };
 
+    // eslint-disable-next-line no-useless-catch
     try {
       const compressedFile = await imageCompression(file, options);
       return await convertBlobToImage(compressedFile);
