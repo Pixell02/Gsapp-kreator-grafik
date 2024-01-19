@@ -95,7 +95,7 @@
 }
 @font-face {
   font-family: "kenyan coffee";
-  src: url(./fonts/kenyan\ coffee\ rg.otf);
+  src: url(./fonts/kenyan-coffee-rg.otf);
 }
 @font-face {
   font-family: "paladins expanded";
@@ -106,15 +106,15 @@
 
 @font-face {
   font-family: "kenyan coffee italic";
-  src: url(./fonts/kenyan\ coffee\ rg\ it.otf);
+  src: url(./fonts/kenyan-coffee-rg-it.otf);
 }
 @font-face {
   font-family: "kenyan coffee bold";
-  src: url(./fonts/kenyan\ coffee\ bd.otf);
+  src: url(./fonts/kenyan-coffee-bd.otf);
 }
 @font-face {
   font-family: "kenyan coffee bold italic";
-  src: url(./fonts/kenyan\ coffee\ bd\ it.otf);
+  src: url(./fonts/kenyan-coffee-bd-it.otf);
 }
 @font-face {
   font-family: "Nexa-trial-Heavy";
@@ -129,16 +129,16 @@
 
 @font-face {
   font-family: "Made Outer Sans Black";
-  src: url(./fonts/MADE\ Outer\ Sans\ Black\ PERSONAL\ USE.otf);
+  src: url(./fonts/MADEOuterSansBlackPERSONALUSE.otf);
 }
 @font-face {
   font-family: "Made Outer Sans Regular";
-  src: url(./fonts/MADE\ Outer\ Sans\ Regular\ PERSONAL\ USE.otf);
+  src: url(./fonts/MADEOuterSansRegularPERSONALUSE.otf);
 }
 
 @font-face {
   font-family: "Made Outer Sans Thin";
-  src: url(./fonts/MADE\ Outer\ Sans\ Thin\ PERSONAL\ USE.otf);
+  src: url(./fonts/MADEOuterSansThinPERSONALUSE.otf);
 }
 @font-face {
   font-family: "helvetica";
@@ -204,6 +204,10 @@ body {
 .container {
   display: flex;
   justify-content: center;
+}
+.active-modal .add-window .border .catalog-content {
+  min-height: 300px;
+  max-height: 500px;
 }
 
 .row {
