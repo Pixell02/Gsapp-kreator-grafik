@@ -1,7 +1,10 @@
-import { fabric } from 'fabric';
-import React, { useEffect } from 'react';
+import { fabric } from "fabric";
+import { useEffect } from "react";
+import { useThemeContext } from "../../../context/ThemeContext";
 
-const AdditionalImageLayer = ({ additionalLayer, fabricRef }) => {
+const AdditionalImageLayer = ({ fabricRef }) => {
+  const { additionalLayer } = useThemeContext();
+
   useEffect(() => {
     if (additionalLayer) {
       const img = new Image();
@@ -10,7 +13,7 @@ const AdditionalImageLayer = ({ additionalLayer, fabricRef }) => {
         fabric.Image.fromURL(img.src, function (img) {
           img.set({
             selectable: false,
-            className: 'additionalLayer',
+            className: "additionalLayer",
           });
           fabricRef.current.add(img);
           fabricRef.current.bringToFront();
