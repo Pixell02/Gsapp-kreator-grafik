@@ -2,19 +2,39 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../../../../hooks/useAuthContext";
 import { useCollection } from "../../../../../../hooks/useCollection";
 import useTeamLicenseCollection from "../../../../../../hooks/useTeamLicenseCollection";
+import { useCalendarContext } from "../../../../context/CalendarContext";
 
 const useSquadPlayers = () => {
   const { user } = useAuthContext();
   const [Players, setPlayers] = useState(null);
-  const { documents: TeamPlayers } = useCollection("Players", [
-    "uid",
-    "==",
-    user.uid,
-  ]);
+  const { documents: TeamPlayers } = useCollection("Players", ["uid", "==", user.uid]);
   const { documents: LicensedPlayers } = useTeamLicenseCollection("Players");
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [selectedReserve, setSelectedReserve] = useState([]);
+  const { calendarData, setCalendarData } = useCalendarContext();
+  const [isPlayersLoaded, setIsPlayersLoaded] = useState(false);
+  const [isReserveLoaded, setIsReserveLoaded] = useState(false);
+  useEffect(() => {
+    if (isPlayersLoaded) return;
+    if (calendarData?.selectedPlayers) {
+      setSelectedPlayers(calendarData.selectedPlayers);
+      setIsPlayersLoaded(true);
+    }
+  }, [calendarData]);
+  useEffect(() => {
+    if (isReserveLoaded) return;
+    if (calendarData?.selectedReserve) {
+      setSelectedReserve(calendarData.selectedReserve);
+      setIsReserveLoaded(true);
+    }
+  }, [calendarData]);
 
+  useEffect(() => {
+    setCalendarData({ ...calendarData, selectedPlayers: selectedPlayers });
+  }, [selectedPlayers]);
+  useEffect(() => {
+    setCalendarData({ ...calendarData, selectedReserve: selectedReserve });
+  }, [selectedReserve]);
   useEffect(() => {
     if (TeamPlayers?.length > 0) {
       setPlayers([...TeamPlayers]);
@@ -45,11 +65,7 @@ const useSquadPlayers = () => {
       );
     } else {
       if (selectedPlayers.length !== 11) {
-        setSelectedPlayers((prevSelectedPlayers) => [
-          ...prevSelectedPlayers,
-          { firstName, secondName, number, age },
-        ]);
-      } else {
+        setSelectedPlayers((prevSelectedPlayers) => [...prevSelectedPlayers, { firstName, secondName, number, age }]);
       }
     }
   };
@@ -74,11 +90,7 @@ const useSquadPlayers = () => {
       );
     } else {
       if (selectedReserve.length !== 9) {
-        setSelectedReserve((prevselectedReserves) => [
-          ...prevselectedReserves,
-          { firstName, secondName, number, age },
-        ]);
-      } else {
+        setSelectedReserve((prevselectedReserves) => [...prevselectedReserves, { firstName, secondName, number, age }]);
       }
     }
   };
