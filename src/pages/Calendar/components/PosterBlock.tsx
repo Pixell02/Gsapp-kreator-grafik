@@ -2,8 +2,10 @@ export type poster = {
   uid: string;
   name: string;
   src: string;
+  coords?: string;
   firstName: string;
   secondName: string;
+  uuid: string;
 };
 
 type props = {
