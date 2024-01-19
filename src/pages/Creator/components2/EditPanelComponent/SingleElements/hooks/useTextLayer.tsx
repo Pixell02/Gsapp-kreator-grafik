@@ -1,11 +1,11 @@
 import { fabric } from "fabric";
 import FontFaceObserver from "fontfaceobserver";
-import { useEffect, useRef, useState } from "react";
-import findThemeOption from "../functions/themeOption";
-import useThemeContext from "../../../../hooks/useThemeContext";
+import { useEffect, useState } from "react";
 import { Text } from "fabric/fabric-impl";
+import { useThemeContext } from "../../../../context/ThemeContext";
+import { DocumentData } from "firebase/firestore";
 
-export type coordsProps = {
+export type textCoordsProps = {
   Top: number;
   Left: number;
   FontSize: number;
@@ -17,16 +17,18 @@ export type coordsProps = {
   Angle?: number;
   CharSpacing?: number;
   ScaleToWidth: number;
-  themeOption?: boolean;
+  themeOption: DocumentData;
   FontStyle: "" | "normal" | "italic" | "oblique" | undefined;
 };
 
-const useTextLayer = (fabricRef: React.MutableRefObject<fabric.Canvas>, coords: coordsProps, name?: string) => {
-  const [textValue, setTextValue] = useState("");
+const useTextLayer = (coords: textCoordsProps, fabricRef?: React.MutableRefObject<fabric.Canvas | null>) => {
+  const [textValue, setTextValue] = useState<string>("");
   const { themeColor } = useThemeContext();
-  const textObjectRef = useRef<Text | null>(null);
+  const [textObject, setTextObject] = useState<Text | null>(null);
   useEffect(() => {
+    if (!coords || !fabricRef?.current) return;
     const font = new FontFaceObserver(coords.FontFamily);
+    if (textObject) return;
     font.load().then(() => {
       const text = new fabric.Text("", {
         selectable: false,
@@ -34,36 +36,56 @@ const useTextLayer = (fabricRef: React.MutableRefObject<fabric.Canvas>, coords: 
         left: coords.Left,
         fontSize: coords.FontSize,
         fill: coords.Fill,
+        width: coords.ScaleToWidth,
         originX: coords.OriginX,
         originY: coords.OriginY,
         fontFamily: coords.FontFamily,
         angle: coords.Angle || 0,
-        charSpacing: coords.CharSpacing ? coords.CharSpacing : 0,
-        fontStyle: coords.FontStyle ? coords.FontStyle : "normal",
+        charSpacing: coords.CharSpacing || 0,
+        fontStyle: coords.FontStyle || "normal",
       });
-      if (coords.themeOption && themeColor) {
-        findThemeOption(coords, themeColor, text);
-      }
-      fabricRef.current.add(text);
-      textObjectRef.current = text;
-      fabricRef.current.renderAll();
+      fabricRef.current?.add(text);
+      setTextObject(text);
+      fabricRef.current?.renderAll();
     });
-  }, [themeColor, fabricRef, name, coords]);
+  }, [coords, fabricRef]);
 
   useEffect(() => {
-    if (!textObjectRef.current) return;
-    const text = textObjectRef.current;
-    text.set("text", textValue);
-    if (text.width && text?.width >= coords.ScaleToWidth) {
-      text.scaleToWidth(coords.ScaleToWidth);
+    if (!textObject) return;
+    textObject.set("text", textValue || "");
+    if (textObject.width && textObject.width >= coords.ScaleToWidth) {
+      textObject.scaleToWidth(coords.ScaleToWidth);
       if (coords.Angle && coords?.Angle > 0) {
-        text.scaleToHeight(coords.ScaleToWidth);
+        textObject.scaleToHeight(coords.ScaleToWidth);
       }
+    } else {
+      textObject.set({ scaleX: 1, scaleY: 1 });
     }
+    if (!fabricRef?.current) return;
     fabricRef.current.renderAll();
-  }, [textObjectRef, textValue, fabricRef, coords]);
+  }, [textObject, textValue, fabricRef, coords]);
 
-  return { textValue, setTextValue };
+  useEffect(() => {
+    const findThemeOption = (themeOption: DocumentData) => {
+      if (!fabricRef?.current) return;
+      const matchedTheme = themeOption.find(
+        (theme: { label: string; color: string; Fill: string }) =>
+          theme.color === themeColor?.label || theme.label === themeColor?.label
+      );
+
+      const selectedFill = matchedTheme ? matchedTheme.Fill : coords.Fill;
+
+      textObject?.set({
+        fill: selectedFill,
+      });
+      fabricRef.current.renderAll();
+    };
+    if (themeColor && textObject && coords.themeOption && fabricRef?.current) {
+      findThemeOption(coords.themeOption);
+    }
+  }, [themeColor, textObject]);
+
+  return { textValue, setTextValue, textObject, setTextObject };
 };
 
 export default useTextLayer;
