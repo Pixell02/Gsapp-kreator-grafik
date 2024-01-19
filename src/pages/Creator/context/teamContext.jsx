@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { createContext } from "react";
 import useSquadPlayers from "../components2/EditPanelComponent/SelectWindow/hooks/useSquadPlayers";
 import { useEffect } from "react";
+import { useCalendarContext } from "./CalendarContext";
 
 const TeamContext = createContext();
 
@@ -9,7 +10,22 @@ export const TeamProvider = ({ children }) => {
   const [selectedTeam, setSelectTeam] = useState(null);
   const [reservePlayers, setReservePlayers] = useState(null);
   const [filteredPlayers, setFilteredPlayers] = useState(null);
+  const [selectedPreset, setSelectedPreset] = useState(null);
+  const { calendarData, setCalendarData } = useCalendarContext();
   const { Players, selectedPlayers, handlePlayerChecked, handleReserveChecked, selectedReserve } = useSquadPlayers();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!selectedPreset) return;
+    setCalendarData({ ...calendarData, selectedPreset: selectedPreset });
+  }, [selectedPreset]);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!calendarData?.selectedPreset) return;
+    setSelectedPreset(calendarData?.selectedPreset);
+    setIsLoading(true);
+  }, [calendarData]);
 
   useEffect(() => {
     const filteredPlayers = Players?.filter(
@@ -28,6 +44,8 @@ export const TeamProvider = ({ children }) => {
     <TeamContext.Provider
       value={{
         selectedTeam,
+        selectedPreset,
+        setSelectedPreset,
         setSelectTeam,
         selectedPlayers,
         reservePlayers,
