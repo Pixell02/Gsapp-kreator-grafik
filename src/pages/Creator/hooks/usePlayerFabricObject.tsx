@@ -4,13 +4,7 @@ import { fabric } from "fabric";
 import useFetch from "../../../hooks/useFetch";
 import useImageLayer from "./useImageLayer";
 import useTextLayer, { textCoordsProps } from "../components2/EditPanelComponent/SingleElements/hooks/useTextLayer";
-import { useCalendarContext } from "../context/CalendarContext";
-
-type Player = {
-  firstName: string;
-  secondName: string;
-  img: string;
-};
+import { Player, useCalendarContext } from "../context/CalendarContext";
 
 type ImageProps = {
   Top: number;
