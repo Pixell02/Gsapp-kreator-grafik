@@ -3,16 +3,19 @@ import React, { useEffect, useState } from "react";
 import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
 import { useThemeContext } from "../context/ThemeContext";
+import useFont from "./useFont";
 
 const useTextboxLayer = (coords: DocumentData, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
   const [textValue, setTextValue] = useState<string>("");
   const [textboxObject, setTextboxObject] = useState<fabric.Textbox | null>(null);
+  const { fontFace } = useFont(coords?.FontFamily);
   const { themeColor } = useThemeContext();
   useEffect(() => {
-    if (textboxObject || !coords) return;
+    if (textboxObject || !coords || !fontFace) return;
     const font = new FontFaceObserver(coords.FontFamily);
     if (!font) return;
-    font.load().then(() => {
+    fontFace.load().then((font) => {
+      document.fonts.add(font);
       const text = new fabric.Textbox("", {
         top: coords.Top,
         left: coords.Left,
@@ -31,7 +34,7 @@ const useTextboxLayer = (coords: DocumentData, fabricRef?: React.MutableRefObjec
       setTextboxObject(text);
       fabricRef?.current.renderAll();
     });
-  }, [textboxObject, coords, fabricRef]);
+  }, [textboxObject, coords, fabricRef, fontFace]);
 
   useEffect(() => {
     if (!textboxObject) return;

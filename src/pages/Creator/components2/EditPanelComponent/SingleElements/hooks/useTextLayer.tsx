@@ -1,9 +1,9 @@
 import { fabric } from "fabric";
-import FontFaceObserver from "fontfaceobserver";
 import { useEffect, useState } from "react";
 import { Text } from "fabric/fabric-impl";
 import { useThemeContext } from "../../../../context/ThemeContext";
 import { DocumentData } from "firebase/firestore";
+import useFont from "../../../../hooks/useFont";
 
 export type textCoordsProps = {
   Top: number;
@@ -24,12 +24,13 @@ export type textCoordsProps = {
 const useTextLayer = (coords: textCoordsProps, fabricRef?: React.MutableRefObject<fabric.Canvas | null>) => {
   const [textValue, setTextValue] = useState<string>("");
   const { themeColor } = useThemeContext();
+  const { fontFace } = useFont(coords?.FontFamily);
   const [textObject, setTextObject] = useState<Text | null>(null);
   useEffect(() => {
-    if (!coords || !fabricRef?.current) return;
-    const font = new FontFaceObserver(coords.FontFamily);
+    if (!coords || !fabricRef?.current || !fontFace) return;
     if (textObject) return;
-    font.load().then(() => {
+    fontFace.load().then((font) => {
+      document.fonts.add(font);
       const text = new fabric.Text("", {
         selectable: false,
         top: coords.Top,
@@ -48,7 +49,7 @@ const useTextLayer = (coords: textCoordsProps, fabricRef?: React.MutableRefObjec
       setTextObject(text);
       fabricRef.current?.renderAll();
     });
-  }, [coords, fabricRef]);
+  }, [coords, fabricRef, fontFace]);
 
   useEffect(() => {
     if (!textObject) return;

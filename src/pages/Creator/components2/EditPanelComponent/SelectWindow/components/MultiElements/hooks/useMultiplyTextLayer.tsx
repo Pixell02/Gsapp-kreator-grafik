@@ -4,6 +4,7 @@ import { fabric } from "fabric";
 import { DocumentData } from "firebase/firestore";
 import { useThemeContext } from "../../../../../../context/ThemeContext";
 import { Properties } from "./useProperties";
+import useFont from "../../../../../../hooks/useFont";
 
 const useMultiplyTextLayer = (
   coords: DocumentData,
@@ -13,28 +14,32 @@ const useMultiplyTextLayer = (
 ) => {
   const [textValue, setTextValue] = useState<string>("");
   const [textObject, setTextObject] = useState<Text | null>(null);
+  const { fontFace } = useFont(coords?.FontFamily);
   const { themeColor } = useThemeContext();
   useEffect(() => {
-    if (!coords || !properties || !fabricRef?.current) return;
+    if (!coords || !properties || !fabricRef?.current || !fontFace) return;
     if (textObject) return;
-    const text = new fabric.Text("", {
-      charSpacing: coords.CharSpacing || 0,
-      fontStyle: coords.FontStyle || "normal",
-      originX: coords.OriginX,
-      textAlign: coords.OriginX,
-      originY: coords.OriginY,
-      width: coords.ScaleToWidth,
-      top: properties.orientation === "vertically" ? coords.Top + (i - 1) * properties.Margin : coords.Top,
-      left: properties.orientation === "horizontally" ? coords.Left + (i - 1) * properties.Margin : coords.Left,
-      fill: coords.Fill,
-      fontSize: coords.FontSize,
-      fontFamily: coords.FontFamily,
-      angle: coords.Angle || 0,
+    fontFace.load().then((font) => {
+      document.fonts.add(font);
+      const text = new fabric.Text("", {
+        charSpacing: coords.CharSpacing || 0,
+        fontStyle: coords.FontStyle || "normal",
+        originX: coords.OriginX,
+        textAlign: coords.OriginX,
+        originY: coords.OriginY,
+        width: coords.ScaleToWidth,
+        top: properties.orientation === "vertically" ? coords.Top + (i - 1) * properties.Margin : coords.Top,
+        left: properties.orientation === "horizontally" ? coords.Left + (i - 1) * properties.Margin : coords.Left,
+        fill: coords.Fill,
+        fontSize: coords.FontSize,
+        fontFamily: coords.FontFamily,
+        angle: coords.Angle || 0,
+      });
+      fabricRef?.current.add(text);
+      setTextObject(text);
+      fabricRef?.current.renderAll();
     });
-    fabricRef?.current.add(text);
-    setTextObject(text);
-    fabricRef?.current.renderAll();
-  }, [coords, properties, fabricRef]);
+  }, [coords, properties, fabricRef, fontFace]);
 
   useEffect(() => {
     if (!textObject) return;
