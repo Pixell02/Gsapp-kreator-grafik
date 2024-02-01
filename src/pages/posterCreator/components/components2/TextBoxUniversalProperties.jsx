@@ -1,18 +1,25 @@
 import React from "react";
 import useTextBoxProperties from "../hooks/properties/useTextBoxProperties";
-import fonts from "./fonts";
 import originX from "./originX";
 import originY from "./originY";
+import { useFontContext } from "../../Context/FontsContext";
 
 const TextBoxUniversalProperties = ({ fabricRef }) => {
   const { coords, handleInputChange, handleSelectChange } = useTextBoxProperties(fabricRef);
+  const { fontOptions } = useFontContext();
   return (
     <>
       {coords?.type === "universalTextBox" && (
         <div>
           <div className="d-flex align-items-center">
             <span className="mx-2">Nazwa obiektu</span>{" "}
-            <input className="w-50" type="text" name="className" value={coords.className} onChange={handleInputChange} />
+            <input
+              className="w-50"
+              type="text"
+              name="className"
+              value={coords.className}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="d-flex">
             <div>
@@ -58,11 +65,13 @@ const TextBoxUniversalProperties = ({ fabricRef }) => {
           </select>
           <div className="d-flex mx-2 w-100 align-items-center justify-content-start">
             <div className="d-flex w-50">
-              kolor: <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
+              kolor:{" "}
+              <input type="color" value={coords.Fill} className="w-50" name="Fill" onChange={handleInputChange} />
             </div>
             <div className="d-flex">
               <div>
-                kąt: <input type="number" value={coords.Angle} className="w-50" name="Angle" onChange={handleInputChange} />
+                kąt:{" "}
+                <input type="number" value={coords.Angle} className="w-50" name="Angle" onChange={handleInputChange} />
               </div>
             </div>
             <div className="d-flex w-50 align-items-center justify-content-start">
@@ -91,12 +100,18 @@ const TextBoxUniversalProperties = ({ fabricRef }) => {
                 defaultValue={coords.FontFamily}
                 onChange={(e) => handleSelectChange(e)}
               >
-                {fonts && fonts.map((team) => <option value={team.value}>{team.label}</option>)}
+                {fontOptions && fontOptions.map((team) => <option value={team.value}>{team.label}</option>)}
               </select>
             </div>
             <div className="w-100 ml-1">
               rozmiar czcionki :{" "}
-              <input type="number" className="w-50" name="FontSize" value={coords.FontSize} onChange={handleInputChange} />
+              <input
+                type="number"
+                className="w-50"
+                name="FontSize"
+                value={coords.FontSize}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
           <div>
@@ -113,7 +128,12 @@ const TextBoxUniversalProperties = ({ fabricRef }) => {
           </div>
           <div>
             punkt odniesienia Y :{" "}
-            <select name="OriginY" className="form-control" value={coords.OriginY} onChange={(e) => handleSelectChange(e)}>
+            <select
+              name="OriginY"
+              className="form-control"
+              value={coords.OriginY}
+              onChange={(e) => handleSelectChange(e)}
+            >
               {originY && originY.map((team) => <option value={team.value}>{team.label}</option>)}
             </select>{" "}
           </div>

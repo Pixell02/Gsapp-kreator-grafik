@@ -1,12 +1,12 @@
 import React from "react";
 import useTextProperties from "../hooks/properties/useTextProperties";
-import fonts from "./fonts";
 import originX from "./originX";
 import originY from "./originY";
+import { useFontContext } from "../../Context/FontsContext";
 
 export default function TextProperties({ fabricRef }) {
   const { coords, fill, handleInputChange, handleSelectChange } = useTextProperties(fabricRef);
-
+  const { fontOptions } = useFontContext();
   return (
     <>
       {(coords?.type === "text" || coords?.type === "multiplyText") && (
@@ -34,7 +34,13 @@ export default function TextProperties({ fabricRef }) {
             <div className="d-flex w-100">
               kolor: <input type="color" value={fill} className="w-25" name="Fill" onChange={handleInputChange} />
               <span style={{ fontSize: "10px", width: "50px" }}>odstęp między literami:</span>
-              <input type="number" value={coords.CharSpacing} className="w-25" name="charSpacing" onChange={handleInputChange} />
+              <input
+                type="number"
+                value={coords.CharSpacing}
+                className="w-25"
+                name="charSpacing"
+                onChange={handleInputChange}
+              />
             </div>
           </div>
 
@@ -57,10 +63,9 @@ export default function TextProperties({ fabricRef }) {
                 name="fontFamily"
                 className="form-control w-75"
                 value={coords.FontFamily}
-                defaultValue={coords.FontFamily}
                 onChange={(e) => handleSelectChange(e)}
               >
-                {fonts && fonts.map((team) => <option value={team.value}>{team.label}</option>)}
+                {fontOptions && fontOptions.map((font) => <option value={font.value}>{font.label}</option>)}
               </select>
             </div>
           </div>
@@ -69,11 +74,24 @@ export default function TextProperties({ fabricRef }) {
             <div className="w-100 ml-1 d-flex flex-row">
               <div className="w-50 d-flex flex-column">
                 <span style={{ fontSize: "10px" }}>rozmiar czcionki :</span>
-                <input type="number" className="w-50" name="FontSize" value={coords.FontSize} onChange={handleInputChange} />
+                <input
+                  type="number"
+                  className="w-50"
+                  name="FontSize"
+                  value={coords.FontSize}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="d-flex w-50 flex-column">
                 <div>
-                  kąt: <input type="number" value={coords.Angle} className="w-50" name="Angle" onChange={handleInputChange} />
+                  kąt:{" "}
+                  <input
+                    type="number"
+                    value={coords.Angle}
+                    className="w-50"
+                    name="Angle"
+                    onChange={handleInputChange}
+                  />
                 </div>
               </div>
             </div>

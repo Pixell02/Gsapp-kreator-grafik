@@ -1,12 +1,12 @@
 import React from "react";
-import fonts from "./fonts";
 import originX from "./originX";
 import originY from "./originY";
 import useTextBoxProperties from "../hooks/properties/useTextBoxProperties";
+import { useFontContext } from "../../Context/FontsContext";
 
 export default function TextboxProperties({ fabricRef }) {
   const { coords, handleInputChange, handleSelectChange } = useTextBoxProperties(fabricRef);
-
+  const { fontOptions } = useFontContext();
   return (
     <>
       {coords?.type === "textBox" && (
@@ -105,7 +105,7 @@ export default function TextboxProperties({ fabricRef }) {
                 defaultValue={coords.FontFamily}
                 onChange={(e) => handleSelectChange(e)}
               >
-                {fonts && fonts.map((team) => <option value={team.value}>{team.label}</option>)}
+                {fontOptions && fontOptions.map((team) => <option value={team.value}>{team.label}</option>)}
               </select>
             </div>
             <div className="w-100 ml-1">
