@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 import translate from "../pages/Opponents/locales/locales.json";
 import { useLanguageContext } from "../context/LanguageContext";
-const useFileReader = (image) => {
+import useFetch from "./useFetch";
+const useFileReader = (file) => {
   const [preview, setPreview] = useState(null);
+  const { image } = useFetch(file);
   const { language } = useLanguageContext();
   useEffect(() => {
-    if (image?.size) {
-      if (Math.round(image.size / 1024) < 1000) {
+    if (file?.size) {
+      if (Math.round(file.size / 1024) < 1000) {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result);
         };
-        reader.readAsDataURL(image);
+        reader.readAsDataURL(file);
       } else {
         setPreview(null);
         alert(translate.maxSize[language]);
       }
     } else {
-      setPreview(null);
+      setPreview(image);
     }
-  }, [image, setPreview, language]);
+  }, [file, image]);
 
   return { preview, setPreview };
 };

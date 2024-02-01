@@ -61,7 +61,7 @@ function WorkSpace() {
             {Licenses?.license === "free-trial" && (
               <div className="license-place">
                 <span className="license-content">
-                  {translate.freeUsesFirstPart[language]} {Licenses[0].numberOfFreeUse}{" "}
+                  {translate.freeUsesFirstPart[language]} {Licenses.numberOfFreeUse}{" "}
                   {translate.freeUsesLastPart[language]}
                 </span>
               </div>

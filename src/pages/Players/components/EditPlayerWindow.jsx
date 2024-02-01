@@ -40,7 +40,6 @@ function EditPlayerWindow({ data, onClose, Teams }) {
       const uploadImages = async () => {
         const images = await Promise.all(
           player.img.map(async (item) => {
-            console.log(item.src);
             if (item.src === null || item.src === "") return { type: item.type, src: "" };
             else if (typeof item.src === "string") return { type: item.type, src: item.src };
             else if (typeof item.src === "object") {

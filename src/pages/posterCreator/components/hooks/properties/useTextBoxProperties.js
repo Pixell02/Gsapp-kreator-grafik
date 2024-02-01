@@ -27,6 +27,7 @@ const useTextBoxProperties = (fabricRef) => {
     "Format",
     "Formatter",
     "LineHeight",
+    "text",
   ];
   const { coords, handleInputChange, handleSelectChange } = useCoords(fabricRef, propertyKeys);
   const { setGlobalProperties } = useGlobalPropertiesContext();

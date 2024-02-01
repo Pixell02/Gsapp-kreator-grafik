@@ -3,20 +3,23 @@ import WorkSpace from "./WorkSpace";
 import { MultiPropertiesProvider } from "./Context/MultiPropertiesContext";
 import { ImageRefProvider } from "../Creator/context/ImageRefContext";
 import { BackgroundProvider } from "./Context/BackgroundContext";
+import { FontProvider } from "./Context/FontsContext";
 
 export default function PosterCreator() {
   return (
     <MultiPropertiesProvider>
-      <BackgroundProvider>
-        <ImageRefProvider>
-          <div className="page-container">
-            <div className="content-wrap">
-              <LeftBar />
-              <WorkSpace />
+      <FontProvider>
+        <BackgroundProvider>
+          <ImageRefProvider>
+            <div className="page-container">
+              <div className="content-wrap">
+                <LeftBar />
+                <WorkSpace />
+              </div>
             </div>
-          </div>
-        </ImageRefProvider>
-      </BackgroundProvider>
+          </ImageRefProvider>
+        </BackgroundProvider>
+      </FontProvider>
     </MultiPropertiesProvider>
   );
 }

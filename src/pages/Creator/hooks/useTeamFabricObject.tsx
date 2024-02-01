@@ -80,7 +80,6 @@ const useTeamFabricObject = (coords: DocumentData, fabricRef?: React.MutableRefO
       fabricRef?.current.renderAll();
     };
     if (!fabricRef?.current._objects) return;
-    console.log(Object.keys(coords));
     updateText(firstName, radioChecked === "radio1" ? coords.yourTeamFirstName : coords.opponentFirstName);
     updateText(secondName, radioChecked === "radio1" ? coords.yourTeamSecondName : coords.opponentSecondName);
     updateText(fullName, radioChecked === "radio1" ? coords.yourTeamName : coords.opponentName);

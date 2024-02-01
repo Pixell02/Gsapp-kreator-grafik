@@ -4,7 +4,6 @@ import useProperties from "./useProperties";
 
 const useResults = (coords, i, fabricRef) => {
   const { properties } = useProperties(coords);
-  console.log(coords);
   const [hostResult, setHostResult] = useState("");
   const [guestResult, setGuestResult] = useState("");
   const { setTextValue: setHostResultOne } = useMultiplyTextLayer(coords.yourTeamResultOne, i, properties, fabricRef);

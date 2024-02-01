@@ -21,6 +21,7 @@ const useCoords = (fabricRef, propertyKeys, type) => {
       const newCoords = {
         Top: parseInt(activeObject.top?.toFixed(0)),
         Left: parseInt(activeObject.left?.toFixed(0)),
+        text: activeObject.text,
         className: activeObject.className,
         Angle: parseInt(activeObject.angle?.toFixed(0)),
         Width: parseInt(activeObject.width * activeObject.scaleX),

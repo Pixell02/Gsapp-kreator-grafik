@@ -6,7 +6,7 @@ const useStorage = () => {
 
   const storage = getStorage();
   const metadata = {
-    contentType: "image/png",
+    contentType: "application/octet-stream",
   };
 
   const handleAddImage = (image, link) => {

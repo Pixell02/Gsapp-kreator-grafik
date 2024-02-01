@@ -1,202 +1,144 @@
-import { useRef, useState } from 'react';
-import './addTeamWindow.css';
-import bin from '../../../img/binIcon.png';
-import { deleteDoc } from 'firebase/firestore';
-import { db } from '../../../firebase/config';
-import { useAuthContext } from '../../../hooks/useAuthContext';
-
-import { doc, updateDoc } from 'firebase/firestore';
-
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import updateData from '../EditYourTeamWindow/updateData';
-import translate from './locales/yourTeamPanel.json';
-import deleteData from '../EditYourTeamWindow/deleteData';
-import { useLanguageContext } from '../../../context/LanguageContext';
+import { useRef, useState } from "react";
+import "./addTeamWindow.css";
+import { deleteDoc } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import { doc, updateDoc } from "firebase/firestore";
+import updateData from "../EditYourTeamWindow/updateData";
+import translate from "./locales/yourTeamPanel.json";
+import deleteData from "../EditYourTeamWindow/deleteData";
+import { useLanguageContext } from "../../../context/LanguageContext";
+import ImagePreview from "../../../components/ImagePreview";
+import useStorage from "../../../hooks/useStorage";
+import useFileReader from "../../../hooks/useFileReader";
+import ColorSelect from "./ColorSelect";
 
 const options = [
-  { value: 'piłka nożna', label: 'piłka nożna' },
-  { value: 'siatkówka', label: 'siatkówka' },
-  { value: 'koszykówka', label: 'koszykówka' },
-  { value: 'piłka ręczna', label: 'piłka ręczna' },
-  { value: 'hokej', label: 'hokej' },
+  { value: "piłka nożna", label: "piłka nożna" },
+  { value: "siatkówka", label: "siatkówka" },
+  { value: "koszykówka", label: "koszykówka" },
+  { value: "piłka ręczna", label: "piłka ręczna" },
+  { value: "hokej", label: "hokej" },
 ];
-function EditYourTeamWindow({ yourTeam, open, onClose }) {
+function EditYourTeamWindow({ data, open, onClose }) {
   const { language } = useLanguageContext();
   const { user } = useAuthContext();
-  const [firstTeamName, setFirstTeamName] = useState(yourTeam.firstName);
-  const [secondTeamName, setSecondTeamName] = useState(yourTeam.secondName);
-  const [isImage, setIsImage] = useState(true);
-  const [sport, setSport] = useState(yourTeam.sport);
-  const [image, setImage] = useState(yourTeam.img);
-  const [preview, setPreview] = useState(yourTeam.img);
-  const [oldName] = useState(yourTeam.firstName + ' ' + yourTeam.secondName);
+  const [teamData, setTeamData] = useState({
+    firstName: data.firstName,
+    secondName: data.secondName,
+    sport: data.sport,
+    color: data.color || null,
+    img: data.img,
+    uid: user.uid,
+  });
+  const { preview, setPreview } = useFileReader(teamData.img);
+  const { handleAddImage } = useStorage();
+  const [oldName] = useState(data.firstName + " " + data.secondName);
+
+  const handlePreviewDelete = () => {
+    setPreview(null);
+    setTeamData((prev) => ({ ...prev, img: "" }));
+  };
+
+  const handleValueChange = (e) => {
+    const { className, value } = e.target;
+    setTeamData((prev) => ({ ...prev, [className]: value.trim() }));
+  };
 
   const fileInputRef = useRef(null);
   const onButtonClick = () => {
     fileInputRef.current.click();
   };
   const handleEdit = (e) => {
-    setIsImage(false);
     const file = e.target.files[0];
-    if (file.size > 1000000) {
-      alert('Maksymalny rozmiar obrazu to 1MB');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-    setImage(file);
+    setTeamData((prev) => ({ ...prev, img: file }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!firstTeamName) {
-      alert('puste pole');
-    } else if (!secondTeamName) {
-      alert('puste pole');
+  const handleSubmit = async () => {
+    if (!teamData.firstName || !teamData.secondName || !teamData.sport) {
+      alert("puste pole");
     } else {
-      if (!isImage) {
-        const storage = getStorage();
-        const metadata = {
-          contentType: 'image/png',
-        };
-        const player = ref(storage, `${user.uid}/herb/${firstTeamName}_${secondTeamName}`);
+      const uploadImage = async () => {
+        const item = teamData.img;
+        if (!item || item === null || item === "") {
+          return { img: item };
+        } else if (typeof item === "string") {
+          return { img: item };
+        } else if (typeof item === "object") {
+          const downloadURL = await handleAddImage(
+            item,
+            `${teamData.uid}/herb/${teamData.firstName}_${teamData.secondName}`
+          );
+          return {
+            img: downloadURL,
+          };
+        }
+      };
+      const image = await uploadImage();
+      const docRef = doc(db, "Teams", data.id);
+      updateDoc(docRef, { ...teamData, img: image.img });
+      updateData(user.uid, oldName, teamData.firstName, teamData.secondName);
 
-        const uploadTask = uploadBytesResumable(player, image, metadata);
-
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-              case 'paused':
-                console.log('Upload is paused');
-                break;
-              case 'running':
-                console.log('Upload is running');
-                break;
-              default:
-                console.log('default');
-            }
-          },
-          (error) => {
-            console.log(error);
-          },
-          async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              const docRef = doc(db, 'Teams', yourTeam.id);
-              updateDoc(docRef, {
-                firstName: firstTeamName.trim(),
-                secondName: secondTeamName.trim(),
-                img: downloadURL,
-                sport: sport,
-              });
-              updateData(user.uid, oldName, firstTeamName, secondTeamName);
-            });
-          }
-        );
-      } else {
-        const docRef = doc(db, 'Teams', yourTeam.id);
-        updateDoc(docRef, {
-          firstName: firstTeamName.trim(),
-          secondName: secondTeamName.trim(),
-          sport: sport,
-        });
-        updateData(user.uid, oldName, firstTeamName, secondTeamName);
-      }
       onClose();
-      setFirstTeamName('');
-      setSecondTeamName(null);
-      setImage(null);
     }
   };
 
   return (
-    <div className={open ? 'active-modal mg-edit' : 'modal'}>
+    <div className={open ? "active-modal mg-edit" : "modal"}>
       <div className="add-window mt-5">
         <label>{translate.firstTeamName[language]}</label>
-        <input
-          type="text"
-          onChange={(e) => setFirstTeamName(e.target.value)}
-          value={firstTeamName}
-          className="firstPlayerName"
-        />
+        <input type="text" onChange={handleValueChange} value={teamData.firstName} className="firstName" />
 
         <label>{translate.secondTeamName[language]}</label>
-        <input
-          type="text"
-          onChange={(e) => setSecondTeamName(e.target.value)}
-          value={secondTeamName}
-          className="Number"
-        />
+        <input type="text" onChange={handleValueChange} value={teamData.secondName} className="secondName" />
         <label>{translate.discipline[language]}</label>
 
         <select
           name="country"
           className="form-control"
-          value={sport}
-          onChange={(e) => setSport(e.target.value)}
-          required>
+          value={teamData.sport}
+          onChange={(e) => setTeamData((prev) => ({ ...prev, sport: e.target.value }))}
+          required
+        >
           {options.map((option) => (
             <option value={option.value}>{option.label}</option>
           ))}
         </select>
-
-        <button
-          onClick={onButtonClick}
-          className="btn primary-btn add-img">
+        <ColorSelect teamData={teamData} setTeamData={setTeamData} />
+        <button onClick={onButtonClick} className="btn primary-btn add-img">
           {translate.addLogo[language]}
         </button>
         <input
           type="file"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           ref={fileInputRef}
           accept="image/png"
           onChange={(e) => {
             handleEdit(e);
           }}
         />
-        <div className="add-logo-window">
-          <div className="image-container">{preview && <img src={preview} />}</div>
-          <div className="bin-container">
-            {preview && (
-              <img
-                src={bin}
-                onClick={() => setPreview(null)}
-              />
-            )}
-          </div>
-        </div>
+        <ImagePreview preview={preview} setPreview={handlePreviewDelete} />
         <div className="buttons-container">
           <button
             className="btn"
             onClick={() => {
-              deleteData(user.uid, firstTeamName, secondTeamName);
-              const docRef = doc(db, 'Teams', yourTeam.id);
+              deleteData(user.uid, oldName);
+              const docRef = doc(db, "Teams", data.id);
               deleteDoc(docRef);
               onClose();
-              setFirstTeamName('');
-              setSecondTeamName('');
-              setImage(null);
-            }}>
+            }}
+          >
             {translate.delete[language]}
           </button>
           <button
             onClick={() => {
               onClose();
-              setFirstTeamName('');
-              setSecondTeamName('');
-              setImage(null);
             }}
-            className="btn primary-btn">
+            className="btn primary-btn"
+          >
             {translate.Cancel[language]}
           </button>
-          <button
-            onClick={handleSubmit}
-            className="btn primary-btn">
+          <button onClick={handleSubmit} className="btn primary-btn">
             {translate.Save[language]}
           </button>
         </div>

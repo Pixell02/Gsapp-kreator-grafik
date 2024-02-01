@@ -28,12 +28,12 @@ export const exportImg = (Licenses, posters, user, poster) => {
         numberOfFreeUse: Licenses.numberOfFreeUse - 1,
       });
     }
-    let checkLicense = [];
     const colRef = doc(db, "user", Licenses.id);
     getDoc(colRef).then((doc) => {
-      checkLicense.push(doc.data());
-      if (checkLicense.license === "free-trial") {
-        if (checkLicense.numberOfFreeUse < 1) {
+      const license = doc.data();
+      console.log(license);
+      if (license.license === "free-trial") {
+        if (license.numberOfFreeUse < 1) {
           updateDoc(docRef, {
             license: "no-license",
             numberOfFreeUse: deleteField(),

@@ -1,30 +1,32 @@
 import { NavDropdown } from "react-bootstrap";
+import Modals from "./navbar/Modals";
+import { useState } from "react";
 
 export default function WorkSpaceNavbar({ setHelpLinesModal, helpLinesModal }) {
+  const [modalIndex, setModalIndex] = useState(0);
+  const array = [
+    { label: "obszar roboczy", options: [{ name: "do GIFów", onClick: null }] },
+    {
+      label: "Opcje",
+      options: [
+        { name: "Dodaj linię pomocniczą", onClick: () => setHelpLinesModal(!helpLinesModal) },
+        { name: "Dodaj czcionkę", onClick: () => setModalIndex(1) },
+      ],
+    },
+  ];
+
   return (
     <div className=" nav-container w-100 bg-light">
+      {modalIndex !== 0 && <Modals modalIndex={modalIndex} setModalIndex={setModalIndex} />}
       <div className="collapse navbar-collapse d-flex flex-row w-100">
-        <div className="navbar-nav d-flex flex-row ml-5" style={{ marginLeft: "100px" }}>
-          <NavDropdown title="obszar roboczy">
-            <NavDropdown.Item>do GIFów</NavDropdown.Item>
-          </NavDropdown>
-
-          <div className="ml-5 d-flex">
-            <NavDropdown title="Opcje">
-              <NavDropdown.Item onClick={() => setHelpLinesModal(!helpLinesModal)}>
-                Dodaj linię pomocniczą
-              </NavDropdown.Item>
-              <NavDropdown.Item>Dodaj kilka teł</NavDropdown.Item>
-              <NavDropdown.Item>Filtry na zawodnika</NavDropdown.Item>
+        <div className="navbar-nav d-flex flex-row ml-5" style={{ marginLeft: "20px" }}>
+          {array.map((item, i) => (
+            <NavDropdown key={i} className="ml-5" title={item.label}>
+              {item?.options?.map((option) => (
+                <NavDropdown.Item onClick={option?.onClick}>{option?.name}</NavDropdown.Item>
+              ))}
             </NavDropdown>
-          </div>
-        </div>
-        <div className="d-flex justify-content-end w-100">
-          <div className="d-flex flex-row align-items-center justify-content-end">
-            w:
-            <input className="w-25" type="number" disabled />
-            sz: <input className="w-25" type="number" disabled />
-          </div>
+          ))}
         </div>
       </div>
     </div>

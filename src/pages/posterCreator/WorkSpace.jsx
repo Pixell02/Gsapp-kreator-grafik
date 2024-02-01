@@ -17,9 +17,7 @@ export default function WorkSpace() {
   return (
     <GlobalPropertiesProvider>
       <>
-        {helpLinesModal ? (
-          <HelpLinesModal helpLinesModal={helpLinesModal} setHelpLinesModal={setHelpLinesModal} />
-        ) : null}
+        {helpLinesModal && <HelpLinesModal helpLinesModal={helpLinesModal} setHelpLinesModal={setHelpLinesModal} />}
         {isOpen && <Modal setIsOpen={setIsOpen} />}
         <div className="add-creator-container d-flex h-100">
           <ThemeBackgroundWindow fabricRef={fabricRef} />

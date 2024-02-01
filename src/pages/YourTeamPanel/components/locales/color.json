@@ -1,0 +1,13 @@
+{
+  "red": { "pl": "czerwony", "en": "red", "es": "rojo", "fr": "rouge", "de": "rot" },
+  "green": { "pl": "zielony", "en": "green", "es": "verde", "fr": "vert", "de": "grün" },
+  "blue": { "pl": "niebieski", "en": "blue", "es": "azul", "fr": "bleu", "de": "blau" },
+  "yellow": { "pl": "żółty", "en": "yellow", "es": "amarillo", "fr": "jaune", "de": "gelb" },
+  "purple": { "pl": "fioletowy", "en": "purple", "es": "púrpura", "fr": "violet", "de": "lila" },
+  "turquoise": { "pl": "turkusowy", "en": "turquoise", "es": "turquesa", "fr": "turquoise", "de": "türkis" },
+  "brown": { "pl": "brązowy", "en": "brown", "es": "marrón", "fr": "marron", "de": "braun" },
+  "pink": { "pl": "różowy", "en": "pink", "es": "rosa", "fr": "rose", "de": "rosa" },
+  "gray": { "pl": "szary", "en": "gray", "es": "gris", "fr": "gris", "de": "grau" },
+  "white": { "pl": "biały", "en": "white", "es": "blanco", "fr": "blanc", "de": "weiß" },
+  "black": { "pl": "czarny", "en": "black", "es": "negro", "fr": "noir", "de": "schwarz" }
+}

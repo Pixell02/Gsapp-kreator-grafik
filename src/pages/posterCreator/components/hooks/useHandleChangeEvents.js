@@ -1,4 +1,3 @@
-import FontFaceObserver from "fontfaceobserver";
 import useFormatOption from "./useFormatOption";
 
 const useHandleChangeEvents = (fabricRef, coords, setCoords) => {
@@ -74,7 +73,7 @@ const useHandleChangeEvents = (fabricRef, coords, setCoords) => {
     activeObject.set("text", text);
     activeObject.set("Format", value);
     canvas.renderAll();
-    setCoords({...coords, Format: value });
+    setCoords({ ...coords, Format: value });
   };
 
   const updateReserveFormat = (value) => {
@@ -86,7 +85,7 @@ const useHandleChangeEvents = (fabricRef, coords, setCoords) => {
     activeObject.set("text", text);
     activeObject.set("Format", value);
     canvas.renderAll();
-    setCoords({...coords, Format: value });
+    setCoords({ ...coords, Format: value });
   };
 
   const handleInputChange = (e) => {
@@ -95,7 +94,7 @@ const useHandleChangeEvents = (fabricRef, coords, setCoords) => {
 
     setCoords({
       ...coords,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -103,11 +102,8 @@ const useHandleChangeEvents = (fabricRef, coords, setCoords) => {
     const { value, name } = e.target;
 
     if (name === "fontFamily") {
-      const font = new FontFaceObserver(value);
-      font.load().then(() => {
-        updateActiveObjectCoords(name, value);
-        setCoords({ ...coords, [name]: value });
-      });
+      updateActiveObjectCoords(name, value);
+      setCoords({ ...coords, [name]: value });
     } else if (name === "Format") {
       if (coords.className === "playerOne") {
         updateSquadFormat(value);
