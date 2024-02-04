@@ -1,10 +1,8 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect } from "react";
+import { useState } from "react";
 
-const useInitScale = (dataURL) => {
-
-  const [initScale, setInitScale] = useState(null);
+const useInitScale = (dataURL: string) => {
+  const [initScale, setInitScale] = useState<number | null>(null);
   useEffect(() => {
     if (dataURL) {
       const image = new Image();
@@ -21,7 +19,7 @@ const useInitScale = (dataURL) => {
     }
   }, [dataURL]);
 
-  return {initScale}
-}
+  return { initScale };
+};
 
-export default useInitScale
+export default useInitScale;

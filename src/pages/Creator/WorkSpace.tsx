@@ -11,19 +11,23 @@ import EditPanel from "./components2/EditPanel";
 import { CanvasContextProvider } from "./context/CanvasPropertiesContext";
 import useInitScale from "./hooks/useInitScale";
 import useIsTheme from "./hooks/useIsTheme";
-import translate from "./locales/translate.json";
+import translation from "./locales/translate.json";
 import { useLanguageContext } from "../../context/LanguageContext";
 import { useDoc } from "../../hooks/useDoc";
 import { useThemeContext } from "./context/ThemeContext";
+import useCoords from "./hooks/useCoords";
+import { translationProps } from "../../types/translationTypes";
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef(null);
+  const translate: translationProps = translation;
   const { user } = useAuthContext();
   const { language } = useLanguageContext();
   const { themeColor, dataURL } = useThemeContext();
   const { documents: Licenses } = useDoc("user", ["uid", "==", user.uid]);
+  const { coords } = useCoords();
   const { hasTheme } = useIsTheme();
-  const { initScale } = useInitScale(dataURL);
+  const { initScale } = useInitScale(dataURL as string);
   return (
     <CanvasContextProvider>
       {Licenses?.license === "no-license" && (
@@ -36,11 +40,9 @@ function WorkSpace() {
       {Licenses?.license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
-            <TransformWrapper minScale={0.1} initialScale={initScale} panning={{ disabled: true }}>
+            <TransformWrapper minScale={0.1} initialScale={initScale as number} panning={{ disabled: true }}>
               <TransformComponent>
-                <div className="d-flex w-100 h-100">
-                  {dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef} />}
-                </div>
+                {dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef} coords={coords?.SponsorBlock} />}
               </TransformComponent>
             </TransformWrapper>
           </div>
@@ -53,7 +55,7 @@ function WorkSpace() {
               </div>
             </div>
             <div className="ms-5 me-5 mt-3">
-              {dataURL && <EditPanel fabricRef={fabricRef} />}
+              {dataURL && <EditPanel fabricRef={fabricRef} coords={coords} />}
               <button className="btn primary-btn save" onClick={() => exportImg(Licenses, themeColor, user, poster)}>
                 {translate.save[language]}
               </button>
