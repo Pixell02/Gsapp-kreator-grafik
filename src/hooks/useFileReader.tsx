@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import translate from "../pages/Opponents/locales/locales.json";
+import translation from "../pages/Opponents/locales/locales.json";
 import { useLanguageContext } from "../context/LanguageContext";
 import useFetch from "./useFetch";
-const useFileReader = (file) => {
-  const [preview, setPreview] = useState(null);
-  const { image } = useFetch(file);
+import { translationProps } from "../types/translationTypes";
+const useFileReader = (file: File | string) => {
+  const [preview, setPreview] = useState<string | null | ArrayBuffer>(null);
+  const { image } = useFetch(typeof file === "string" ? file : "");
   const { language } = useLanguageContext();
+  const translate: translationProps = translation;
   useEffect(() => {
-    if (file?.size) {
+    if (file instanceof File && file.size) {
       if (Math.round(file.size / 1024) < 1000) {
         const reader = new FileReader();
         reader.onloadend = () => {

@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import "./addTeamWindow.css";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 import { sportOptions } from "../../../components/options";
 import { useParams } from "react-router-dom";
-import translate from "./locales/yourTeamPanel.json";
+import translation from "./locales/yourTeamPanel.json";
 import useStorage from "../../../hooks/useStorage";
 import ImagePreview from "../../../components/ImagePreview";
 import useFileReader from "../../../hooks/useFileReader";
@@ -14,11 +14,18 @@ import InputImage from "../../../components/InputImage";
 import ButtonContainer from "../../../components/ButtonContainer";
 import { useLanguageContext } from "../../../context/LanguageContext";
 import ColorSelect from "./ColorSelect";
+import { translationProps } from "../../../types/translationTypes";
+import { Team } from "../../../types/teamTypes";
 
-function AddTeamWindow({ open, onClose }) {
+type props = {
+  setSelectedModal: Dispatch<SetStateAction<number>>;
+};
+
+function AddTeamWindow({ setSelectedModal }: props) {
   const { user } = useAuthContext();
   const { id } = useParams();
-  const [teamData, setTeamData] = useState({
+  const translate: translationProps = translation;
+  const [teamData, setTeamData] = useState<Team>({
     firstName: "",
     secondName: "",
     img: "",
@@ -26,18 +33,18 @@ function AddTeamWindow({ open, onClose }) {
     uid: id || user.uid,
   });
   const { language } = useLanguageContext();
-  const { handleAddImage } = useStorage();
-  const [image, setImage] = useState(null);
-  const { preview, setPreview } = useFileReader(image);
+  const { uploadImage } = useStorage();
+  const { preview, setPreview } = useFileReader(teamData.img);
 
-  const getSport = (option) => {
+  const getSport = (option: SingleValue<{ label: string; value: string }>) => {
+    if (!option?.value) return;
     setTeamData((prev) => ({
       ...prev,
       sport: option.value,
     }));
   };
 
-  const handleChangeValue = (e) => {
+  const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { className, value } = e.target;
     setTeamData((prev) => ({
       ...prev,
@@ -46,39 +53,27 @@ function AddTeamWindow({ open, onClose }) {
   };
 
   const handleSubmit = async () => {
-    if (!teamData.firstName || !teamData.secondName || !teamData.sport) {
+    if (!teamData.firstName || !teamData.secondName || teamData.sport === "") {
       return alert("puste pole");
     } else {
-      if (preview) {
-        const downloadURL = await handleAddImage(
-          image,
-          `${id ? id : user.uid}/herb/${teamData.firstName}_${teamData.secondName}`
-        );
-        addDoc(collection(db, "Teams"), {
-          ...teamData,
-          img: downloadURL,
-        });
-      } else {
-        addDoc(collection(db, "Teams"), {
-          ...teamData,
-        });
-      }
-      onClose(true);
-      setImage(null);
+      const downloadURL = await uploadImage(
+        teamData.img,
+        `${id || user.uid}/herb/${teamData.firstName}_${teamData.secondName}`
+      );
+      await addDoc(collection(db, "Teams"), {
+        ...teamData,
+        img: downloadURL?.src,
+      });
+
+      setSelectedModal(0);
     }
   };
   const handleClick = () => {
-    onClose();
-    setTeamData((prev) => ({
-      ...prev,
-      firstName: "",
-      secondName: "",
-    }));
-    setImage(null);
+    setSelectedModal(0);
   };
 
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className="active-modal">
       <div className="add-window yourTeam-panel-window">
         <label>{translate.firstTeamName[language]}</label>
         <input type="text" onChange={handleChangeValue} value={teamData.firstName} className="firstName" required />
@@ -87,7 +82,7 @@ function AddTeamWindow({ open, onClose }) {
         <label>{translate.discipline[language]}</label>
         <Select options={sportOptions} onChange={getSport} />
         <ColorSelect teamData={teamData} setTeamData={setTeamData} />
-        <InputImage setImage={setImage} />
+        <InputImage setState={setTeamData} />
         <ImagePreview preview={preview} setPreview={setPreview} />
         <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>

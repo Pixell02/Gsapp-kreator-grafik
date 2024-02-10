@@ -1,40 +1,58 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
-import ReactDOM from "react-dom";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
-import { doc, updateDoc } from "firebase/firestore";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useParams } from "react-router-dom";
+
+import Select from "react-select";
 import { useTeams } from "../hooks/useTeams";
 import { useLanguageContext } from "../../../context/LanguageContext";
-import translate from "../locales/translate.json";
+import translation from "../locales/translate.json";
 import PlayerImagePreview from "./PlayerImagePreview";
 import useStorage from "../../../hooks/useStorage";
+import { Player } from "../../../types/playerAndSquadTypes";
+import { translationProps } from "../../../types/translationTypes";
 
-function EditPlayerWindow({ data, onClose, Teams }) {
+type props = {
+  setSelectedModal: Dispatch<SetStateAction<number>>;
+};
+
+function AddPlayerWindow({ setSelectedModal }: props) {
+  const { id } = useParams();
+  const { user } = useAuthContext();
+  const translate: translationProps = translation;
   const { language } = useLanguageContext();
-  const [player, setPlayer] = useState({ ...data });
-  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Teams, player.team);
-  useEffect(() => {
-    setPlayer((prev) => ({
-      ...prev,
-      team: selectedTeam,
-    }));
-  }, [selectedTeam]);
   const { handleAddImage } = useStorage();
-  useEffect(() => {
-    setPlayer((prev) => ({
-      ...prev,
-      team: selectedTeam,
-    }));
-  }, [selectedTeam]);
-  const handleValueChange = (e) => {
+  const [player, setPlayer] = useState<Player>({
+    firstName: "",
+    secondName: "",
+    number: null,
+    img: [],
+    age: null,
+    team: "",
+    uid: id || user.uid,
+  });
+  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, className } = e.target;
     setPlayer({ ...player, [className]: value.trim() });
   };
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams();
+
+  useEffect(() => {
+    setPlayer(
+      (prev) =>
+        ({
+          ...prev,
+          team: selectedTeam,
+        } as Player)
+    );
+  }, [selectedTeam]);
 
   const handleSubmit = async () => {
     if (player.firstName === "" || player.secondName === "") {
       alert(translate.emptyField[language]);
-    } else if (!player.team) {
+    } else if (player.team === "") {
       alert(translate.noTeam[language]);
     } else {
       const uploadImages = async () => {
@@ -43,6 +61,8 @@ function EditPlayerWindow({ data, onClose, Teams }) {
             if (item.src === null || item.src === "") return { type: item.type, src: "" };
             else if (typeof item.src === "string") return { type: item.type, src: item.src };
             else if (typeof item.src === "object") {
+              // const response = await fetch(item.src);
+              // const blob = await response.blob();
               const downloadURL = await handleAddImage(
                 item.src,
                 `${player.uid}/zawodnik/${player.firstName}_${player.secondName}_${item.type}`
@@ -58,46 +78,32 @@ function EditPlayerWindow({ data, onClose, Teams }) {
         return images;
       };
       const images = await uploadImages();
-      const ref = doc(db, "Players", player.id);
-      updateDoc(ref, {
+      const ref = collection(db, "Players");
+      addDoc(ref, {
         ...player,
         img: images,
       });
-      onClose(false);
+      setSelectedModal(0);
     }
   };
-
-  return ReactDOM.createPortal(
-    <div className="active-modal m-edit">
-      <div className="add-window">
+  return (
+    <div className={"active-modal"}>
+      <div className="add-window yourTeam-panel-window">
         <label>{translate.firstName[language]}</label>
         <input type="text" onChange={handleValueChange} value={player.firstName} className="firstName" />
         <label>{translate.lastName[language]}</label>
         <input type="text" onChange={handleValueChange} value={player.secondName} className="secondName" />
         <label>{translate.birthYear[language]}</label>
-        <input type="number" onChange={handleValueChange} value={player.age} className="age" />
+        <input type="number" onChange={handleValueChange} value={player.age || undefined} className="age" />
         <label>{translate.number[language]}</label>
-        <input type="number" onChange={handleValueChange} value={player.number} className="number" />
+        <input type="number" onChange={handleValueChange} value={player.number || undefined} className="number" />
         <label>{translate.team[language]}</label>
-        <select
-          name="country"
-          className="form-control"
-          value={selectedTeam}
-          defaultValue={selectedTeam}
-          onChange={(e) => handleTeamChange(e.target.value)}
-        >
-          <option value=""></option>
-          {teamOptions?.map((team, i) => (
-            <option key={i} value={team.value}>
-              {team.label}
-            </option>
-          ))}
-        </select>
-        <PlayerImagePreview player={data} setPlayer={setPlayer} />
+        <Select options={teamOptions} onChange={(e) => handleTeamChange(e?.value as string)} />
+        <PlayerImagePreview player={player} setPlayer={setPlayer} />
         <div className="buttons-container">
           <button
             onClick={() => {
-              onClose();
+              setSelectedModal(0);
             }}
             className="btn primary-btn"
           >
@@ -108,9 +114,8 @@ function EditPlayerWindow({ data, onClose, Teams }) {
           </button>
         </div>
       </div>
-    </div>,
-    document.getElementById("portal")
+    </div>
   );
 }
 
-export default EditPlayerWindow;
+export default AddPlayerWindow;

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import "./addTeamWindow.css";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import translate from "../../Players/locales/translate.json";
+import translation from "../../Players/locales/translate.json";
 import InputImage from "../../../components/InputImage";
 import ImagePreview from "../../../components/ImagePreview";
 import ButtonContainer from "../../../components/ButtonContainer";
@@ -13,22 +13,31 @@ import { useParams } from "react-router-dom";
 import Select from "react-select";
 import { useTeams } from "../../Players/hooks/useTeams";
 import { useLanguageContext } from "../../../context/LanguageContext";
+import { translationProps } from "../../../types/translationTypes";
+import { Trainer } from "./TrainersContainer";
 
-const AddTrainerWindow = ({ Team, open, onClose }) => {
+type props = {
+  setSelectedModal: Dispatch<SetStateAction<number>>;
+};
+
+const AddTrainerWindow = ({ setSelectedModal }: props) => {
   const { user } = useAuthContext();
-  const [image, setImage] = useState(null);
   const { id } = useParams();
+  const translate: translationProps = translation;
+
   const { language } = useLanguageContext();
-  const { preview, setPreview } = useFileReader(image || null);
-  const { handleAddImage } = useStorage();
-  const { teamOptions, handleTeamChange, selectedTeam } = useTeams(Team);
-  const [trainerData, setTrainerData] = useState({
+  const [trainerData, setTrainerData] = useState<Trainer>({
     firstName: "",
     secondName: "",
+    team: "",
     img: "",
     uid: user.uid,
   });
-  const handleValueChange = (e) => {
+  const { preview, setPreview } = useFileReader(trainerData.img);
+  const { uploadImage } = useStorage();
+  const { teamOptions, handleTeamChange, selectedTeam } = useTeams();
+
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { className, value } = e.target;
 
     setTrainerData((prev) => ({
@@ -38,50 +47,41 @@ const AddTrainerWindow = ({ Team, open, onClose }) => {
   };
 
   const handleClick = () => {
-    onClose();
-    setTrainerData((prev) => ({
-      ...prev,
-      firstName: "",
-      secondName: "",
-      team: "",
-    }));
-    setImage(null);
+    setSelectedModal(0);
   };
   const handleSubmit = async () => {
     if (!trainerData.firstName || !trainerData.secondName || !selectedTeam) {
       return alert("puste pole");
     } else {
       const docRef = collection(db, "Trainers");
-      if (!preview) {
-        addDoc(docRef, {
-          ...trainerData,
-          team: selectedTeam,
-        });
-      } else {
-        const downloadURL = await handleAddImage(
-          image,
-          `${id ? id : user.uid}/trenerzy/${trainerData.firstName}_${trainerData.secondName}`
-        );
-        addDoc(docRef, {
-          ...trainerData,
-          team: selectedTeam,
-          img: downloadURL,
-        });
-      }
-      onClose();
+      const downloadURL = await uploadImage(
+        trainerData.img,
+        `${id || user.uid}/trenerzy/${trainerData.firstName}_${trainerData.secondName}`
+      );
+      await addDoc(docRef, {
+        ...trainerData,
+        img: downloadURL?.src,
+      });
+
+      setSelectedModal(0);
     }
+  };
+  const handleReadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setTrainerData((prev) => ({ ...prev, img: file }));
   };
 
   return (
-    <div className={open ? "active-modal" : "modal"}>
+    <div className="active-modal">
       <div className="add-window yourTeam-panel-window">
         <label>{translate.firstName[language]}</label>
         <input value={trainerData.firstName} className="firstName" onChange={handleValueChange} />
         <label>{translate.lastName[language]}</label>
         <input value={trainerData.secondName} className="secondName" onChange={handleValueChange} />
         <label>{translate.team[language]}</label>
-        <Select options={teamOptions} onChange={(e) => handleTeamChange(e.value)} />
-        <InputImage setImage={setImage} />
+        <Select options={teamOptions} onChange={(e) => handleTeamChange(e?.value as string)} />
+        <InputImage handleReadFile={handleReadFile} />
         <ImagePreview preview={preview} setPreview={setPreview} />
         <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>

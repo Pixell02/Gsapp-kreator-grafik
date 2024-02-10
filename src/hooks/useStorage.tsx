@@ -9,7 +9,7 @@ const useStorage = () => {
     contentType: "application/octet-stream",
   };
 
-  const handleAddImage = (image, link) => {
+  const handleAddImage = (image: File, link: string) => {
     const path = ref(storage, link);
     const uploadTask = uploadBytesResumable(path, image, metadata);
 
@@ -17,7 +17,7 @@ const useStorage = () => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setProgress(progress.toFixed(2));
           switch (snapshot.state) {
             case "paused":
@@ -48,7 +48,19 @@ const useStorage = () => {
     });
   };
 
-  return { handleAddImage, progressInfo };
+  const uploadImage = async (item: string | File, link: string) => {
+    if (item === null || item === "") return { src: "" };
+    else if (typeof item === "string") return { src: item };
+    else if (typeof item === "object") {
+      const downloadURL = await handleAddImage(item, link);
+
+      return {
+        src: downloadURL as string,
+      };
+    }
+  };
+
+  return { handleAddImage, progressInfo, uploadImage };
 };
 
 export default useStorage;

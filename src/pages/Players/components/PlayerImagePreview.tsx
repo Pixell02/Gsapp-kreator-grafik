@@ -1,46 +1,54 @@
-import { useEffect, useRef, useState } from "react";
-import translate from "../locales/translate.json";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import translation from "../locales/translate.json";
 import { useLanguageContext } from "../../../context/LanguageContext";
 import bin from "../../../img/binIcon.png";
 import useFileReader from "../../../hooks/useFileReader";
 import "./playerimagePreview.css";
+import { Player, PlayerImage } from "../../../types/playerAndSquadTypes";
+import { translationProps } from "../../../types/translationTypes";
 
-const PlayerImagePreview = ({ player, setPlayer }) => {
+type props = {
+  player: Player;
+  setPlayer: Dispatch<SetStateAction<Player>>;
+};
+
+const PlayerImagePreview = ({ player, setPlayer }: props) => {
   const { language } = useLanguageContext();
-
-  const [img, setImg] = useState([
+  const translate: translationProps = translation;
+  const [img, setImg] = useState<PlayerImage[]>([
     { type: "basic", src: player?.img[0]?.src || "" },
     { type: "celebration", src: player?.img[1]?.src || "" },
   ]);
-
+  console.log(img);
   useEffect(() => {
-    setPlayer((prev) => ({
+    setPlayer((prev: Player) => ({
       ...prev,
       img: img,
     }));
   }, [img]);
 
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedImage, setSelectedImage] = useState({ type: "basic", src: player?.img[0]?.src || "" });
 
   const { preview } = useFileReader(selectedImage.src);
 
   const onButtonClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
-  const handleDeleteImage = (item) => {
+  const handleDeleteImage = (item: PlayerImage) => {
     setSelectedImage({ type: item.type, src: "" });
   };
 
-  const handleAddImage = (e) => {
-    const file = e.target.files[0];
+  const handleAddImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
     setSelectedImage({ type: selectedImage.type, src: URL.createObjectURL(file) });
   };
 
-  const handleChange = (type) => {
+  const handleChange = (type: string) => {
     const findImage = img.find((imageItem) => imageItem.type === type);
+    if (!findImage) return;
     setSelectedImage({ type: type, src: findImage.src });
   };
 
@@ -71,7 +79,7 @@ const PlayerImagePreview = ({ player, setPlayer }) => {
               {preview || selectedImage.src ? (
                 <>
                   <div key={i} className="image-container">
-                    <img src={preview || selectedImage.src} className="image" alt="preview" />
+                    <img src={selectedImage.src} className="image" alt="preview" />
                   </div>
                   <div className="bin-container">
                     <img src={bin} onClick={() => handleDeleteImage(item)} alt="delete" />
