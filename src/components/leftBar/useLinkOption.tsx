@@ -1,20 +1,8 @@
-import React from "react";
 import * as Icon from "react-bootstrap-icons";
 import { useLanguageContext } from "../../context/LanguageContext";
 import translation from "../leftBar.json";
-import { props } from "../../types/translationTypes";
+import { translationProps } from "../../types/translationTypes";
 import Crest from "../../img/crest_2.svg";
-
-type translationProps = {
-  yourCatalog: props;
-  catalog: props;
-  yourTeamPanel: props;
-  players: props;
-  opponents: props;
-  buyAccess: props;
-  Account: props;
-  calendar: props;
-};
 
 const useLinkOption = () => {
   const { language } = useLanguageContext();
@@ -49,6 +37,11 @@ const useLinkOption = () => {
       icon: <img src={Crest} className="icon-element" />,
       text: translate.opponents[language],
       link: `/${language}/opponents`,
+    },
+    {
+      icon: <Icon.StarFill className="icon-element" />,
+      text: translate.sponsors[language],
+      link: `/${language}/sponsors`,
     },
     {
       icon: <Icon.Cash className="icon-element" />,
