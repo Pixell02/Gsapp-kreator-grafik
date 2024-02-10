@@ -54,5 +54,12 @@
     "es": "Cuenta",
     "de": "Konto",
     "fr": "Compte"
+  },
+  "sponsors": {
+    "pl": "Sponsorzy",
+    "en": "Sponsors",
+    "es": "Patrocinadores",
+    "de": "Sponsoren",
+    "fr": "Sponsors"
   }
 }

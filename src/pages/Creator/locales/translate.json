@@ -225,6 +225,9 @@
   },
   "player": {
     "pl": "Zawodnik",
-    "en": "Player"
+    "en": "Player",
+    "es": "Jugador",
+    "de": "Spieler",
+    "fr": "Joueur"
   }
 }

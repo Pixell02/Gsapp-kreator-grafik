@@ -29,8 +29,11 @@
   },
   "addTrainer": {
     "pl": "Dodaj trenera",
-    "en": "Add Trainer"
-  },
+    "en": "Add Trainer",
+    "es": "Agregar entrenador",
+    "de": "Trainer hinzufügen",
+    "fr": "Ajouter un entraîneur"
+    },
   "firstTeamName": {
     "pl": "Pierwsza część nazwy drużyny",
     "en": "First part of the team name",
