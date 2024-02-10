@@ -8,7 +8,5 @@ export type props = {
 };
 
 export type translationProps = {
-  individualGraphics: props;
-  themes: props;
-  type: props;
+  [key: string]: props;
 };
