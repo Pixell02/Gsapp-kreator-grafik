@@ -1,23 +1,10 @@
 import React from "react";
 import useColorOption from "./useColorOption";
-
-type TeamColor = {
-  primary: string;
-  secondary: string;
-};
-
-type TeamData = {
-  firstName: string;
-  secondName: string;
-  img: string;
-  sport: string;
-  color?: TeamColor;
-  uid: string;
-};
+import { Team } from "../../../types/teamTypes";
 
 type Props = {
-  teamData: TeamData;
-  setTeamData: React.Dispatch<React.SetStateAction<TeamData>>;
+  teamData: Team;
+  setTeamData: React.Dispatch<React.SetStateAction<Team>>;
 };
 
 const ColorSelect: React.FC<Props> = ({ teamData, setTeamData }) => {
@@ -33,7 +20,7 @@ const ColorSelect: React.FC<Props> = ({ teamData, setTeamData }) => {
             ...prev.color,
             primary: value,
           },
-        } as TeamData)
+        } as Team)
     );
   };
 
@@ -47,7 +34,7 @@ const ColorSelect: React.FC<Props> = ({ teamData, setTeamData }) => {
             ...prevData.color,
             secondary: value,
           },
-        } as TeamData)
+        } as Team)
     );
   };
 
