@@ -4,7 +4,7 @@ import { db } from "../../../firebase/config";
 import watermarkImg from "../../../img/2.svg";
 
 export const exportImg = (Licenses, posters, user, poster) => {
-  const image = document.querySelector(".canvas-container");
+  const image = document.querySelector(".render-container");
   const transform = document.querySelector(".react-transform-component");
   transform.style.transform = "scale(1)";
   if (Licenses.license === "free-trial") {
@@ -31,7 +31,6 @@ export const exportImg = (Licenses, posters, user, poster) => {
     const colRef = doc(db, "user", Licenses.id);
     getDoc(colRef).then((doc) => {
       const license = doc.data();
-      console.log(license);
       if (license.license === "free-trial") {
         if (license.numberOfFreeUse < 1) {
           updateDoc(docRef, {
