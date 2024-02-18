@@ -14,7 +14,6 @@ const Catalog = ({ setSelectedPoster }: setStateProps) => {
   const { data: catalog, posters } = useCatalog();
 
   const { isOpen } = useSortCatalog(catalog);
-  console.log(isOpen, posters);
   return (
     <div>
       {isOpen?.map((category, i) => (
