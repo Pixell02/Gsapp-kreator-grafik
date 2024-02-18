@@ -6,12 +6,20 @@ import { db } from "../firebase/config";
 type Props<T extends { id?: string }> = {
   item: T;
   type: string;
-  setData: Dispatch<SetStateAction<T>>;
-  setSelectedModal: Dispatch<SetStateAction<number>>;
+  setData?: Dispatch<SetStateAction<T>>;
+  setSelectedModal?: Dispatch<SetStateAction<number>>;
+  handleEdit?: (value: T) => void;
   hideElement: React.MutableRefObject<HTMLElement | null>;
 };
 
-const OptionButton = <T extends { id?: string }>({ item, type, setData, setSelectedModal, hideElement }: Props<T>) => {
+const OptionButton = <T extends { id?: string }>({
+  item,
+  type,
+  setData,
+  handleEdit,
+  setSelectedModal,
+  hideElement,
+}: Props<T>) => {
   const [itemToEdit, setItemToEdit] = useState<T | null>(null);
 
   useEffect(() => {
@@ -36,9 +44,21 @@ const OptionButton = <T extends { id?: string }>({ item, type, setData, setSelec
     }
   };
 
-  const handleEditClick = (item: T) => {
-    setData(item);
-    setSelectedModal(2);
+  const handleEditClick = () => {
+    if (handleEdit && item) {
+      handleEdit(item);
+    } else {
+      // W przeciwnym razie wywołaj funkcję do obsługi edycji z przekazaniem item
+      handleEditClickDefault(item);
+    }
+  };
+
+  const handleEditClickDefault = (item: T) => {
+    // Poprawiona funkcja do obsługi edycji z domyślną akcją
+    if (setData && setSelectedModal) {
+      setData(item);
+      setSelectedModal(2);
+    }
   };
 
   return (
@@ -49,7 +69,7 @@ const OptionButton = <T extends { id?: string }>({ item, type, setData, setSelec
       {itemToEdit === item && (
         <div className="show-list">
           <div className="edit-element">
-            <button onClick={() => handleEditClick(item)}>Edytuj</button>
+            <button onClick={handleEditClick}>Edytuj</button>
           </div>
           <div className="delete-element">
             <button onClick={() => handleDeleteClick(item?.id as string)}>Usuń</button>
