@@ -13,8 +13,8 @@ import ButtonContainer from "../../../components/ButtonContainer";
 import { useTeams } from "../../Players/hooks/useTeams";
 import Select from "react-select";
 import { useLanguageContext } from "../../../context/LanguageContext";
-import { Trainer } from "./TrainersContainer";
 import { translationProps } from "../../../types/translationTypes";
+import { Trainer } from "../../../types/teamTypes";
 
 type props = {
   data: Trainer;
