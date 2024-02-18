@@ -5,9 +5,10 @@ import { DocumentData } from "firebase/firestore";
 import { useThemeContext } from "../../../../../../context/ThemeContext";
 import { Properties } from "./useProperties";
 import useFont from "../../../../../../hooks/useFont";
+import { Text as FabricText } from "../../../../../../../../types/globalPropertiesTypes";
 
 const useMultiplyTextLayer = (
-  coords: DocumentData,
+  coords: FabricText,
   i: number,
   properties: Properties | null,
   fabricRef?: React.MutableRefObject<fabric.Canvas>

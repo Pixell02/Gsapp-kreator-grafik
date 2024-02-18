@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { DocumentData } from "firebase/firestore";
 import { useTeamContext } from "../../../../context/teamContext";
 import useTextboxLayer from "../../../../hooks/useTextboxLayer";
-import { Player, useCalendarContext } from "../../../../context/CalendarContext";
+import { useCalendarContext } from "../../../../context/CalendarContext";
+import { Player } from "../../../../../../types/teamTypes";
+import { Textbox } from "../../../../../../types/globalPropertiesTypes";
 
-const useSquadFabricObject = (fabricRef: React.MutableRefObject<fabric.Canvas>, coords: DocumentData) => {
+const useSquadFabricObject = (fabricRef: React.MutableRefObject<fabric.Canvas>, coords: Textbox) => {
   const { setTextValue } = useTextboxLayer(coords, fabricRef);
   const { selectedPlayers, selectedPreset } = useTeamContext();
   const { calendarData } = useCalendarContext();

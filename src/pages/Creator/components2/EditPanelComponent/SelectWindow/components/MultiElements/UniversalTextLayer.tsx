@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import useMultiplyTextLayer from "./hooks/useMultiplyTextLayer";
 import { useCalendarContext } from "../../../../../context/CalendarContext";
-import { textCoordsProps } from "../../../SingleElements/hooks/useTextLayer";
+import { Text } from "../../../../../../../types/globalPropertiesTypes";
 
 type props = {
   fabricRef?: React.MutableRefObject<fabric.Canvas>;
-  coords: textCoordsProps;
+  coords: Text;
   properties: {
     Margin: number;
     orientation: string;
@@ -21,7 +21,7 @@ const UniversalTextLayer = ({ fabricRef, coords, properties, i }: props) => {
   useEffect(() => {
     if (isLoaded) return;
     if (calendarData?.TextOne && calendarData.TextOne[i - 1] && calendarData.TextOne[i - 1][coords.className]) {
-      setTextValue(calendarData.TextOne[i - 1][coords.className]);
+      setTextValue(calendarData.TextOne[i - 1][coords.className] as SetStateAction<string>);
       setIsLoaded(true);
     }
   }, [calendarData]);

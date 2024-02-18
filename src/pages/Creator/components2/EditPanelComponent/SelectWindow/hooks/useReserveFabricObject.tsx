@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTeamContext } from "../../../../context/teamContext";
 import useTextboxLayer from "../../../../hooks/useTextboxLayer";
-import { DocumentData } from "firebase/firestore";
+import { Textbox } from "../../../../../../types/globalPropertiesTypes";
 
 type Player = {
   format: string;
@@ -11,7 +11,7 @@ type Player = {
   age: number;
 };
 
-const useReserveFabricObject = (fabricRef: React.MutableRefObject<fabric.Canvas>, coords: DocumentData) => {
+const useReserveFabricObject = (fabricRef: React.MutableRefObject<fabric.Canvas>, coords: Textbox) => {
   const { setTextValue } = useTextboxLayer(coords, fabricRef);
   const { selectedReserve, selectedPreset } = useTeamContext();
   useEffect(() => {
