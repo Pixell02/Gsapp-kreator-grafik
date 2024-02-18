@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import TrainingPlan from "../components/TrainingPlan";
 import { RadioProvider } from "../context/radioContext";
 import { TeamProvider } from "../context/teamContext";
-import useCoords from "../hooks/useCoords";
 import MultiElementButtons from "./EditPanelComponent/MultiElementButtons";
 import SelectWindow from "./EditPanelComponent/SelectWindow/SelectWindow";
 import SingleElements from "./EditPanelComponent/SingleElements";
 
-export default function EditPanel({ fabricRef }) {
-  const { coords } = useCoords();
+export default function EditPanel({ fabricRef, coords }) {
   const [selectedMatch, setSelectedMatch] = useState(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedPoster, setSelectedPoster] = useState(null);
@@ -19,7 +17,7 @@ export default function EditPanel({ fabricRef }) {
   return (
     <RadioProvider>
       <TeamProvider>
-        {coords && fabricRef.current._objects && (
+        {coords && fabricRef.current?._objects && (
           <>
             <div className={isModalOpen.open === true ? "show" : "hide"}>
               <SelectWindow
