@@ -5,10 +5,14 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLanguageContext } from "../../context/LanguageContext";
 import { useDoc } from "../../hooks/useDoc";
 
+type OrderId = {
+  orderId: string;
+};
+
 export default function Success() {
   const { user } = useAuthContext();
   const { language } = useLanguageContext();
-  const { documents: ordersId } = useDoc("orderId", ["uid", "==", user.uid]);
+  const { documents: ordersId } = useDoc<OrderId>("orderId", ["uid", "==", user.uid]);
   const functions = getFunctions();
   const transaction = httpsCallable(functions, "transaction");
   const navigate = useNavigate();
@@ -17,7 +21,6 @@ export default function Success() {
       const fetchData = async () => {
         try {
           const response = await transaction({ orderId: ordersId.orderId, uid: user.uid });
-          console.log(response);
           if (response) {
             navigate(`/${language}/account`);
           }
