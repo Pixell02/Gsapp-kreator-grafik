@@ -1,4 +1,5 @@
 export type poster = {
+  id?: string;
   uid: string;
   name: string;
   src: string;
