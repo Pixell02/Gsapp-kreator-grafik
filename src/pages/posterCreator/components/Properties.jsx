@@ -3,6 +3,7 @@ import ImageFilterProperties from "./components2/ImageFilterProperties";
 import ImageProperties from "./components2/ImageProperties";
 import PlayerImageProperties from "./components2/PlayerImageProperties";
 import PlayerNameProperties from "./components2/PlayerNameProperties";
+import SponsorProperties from "./components2/SponsorProperties";
 import TextBoxUniversalProperties from "./components2/TextBoxUniversalProperties";
 import TextProperties from "./components2/TextProperties";
 import TextUniversalProperties from "./components2/TextUniversalProperties";
@@ -23,6 +24,7 @@ export default function Properties({ fabricRef }) {
         <PlayerNameProperties fabricRef={fabricRef} />
         <TextUniversalProperties fabricRef={fabricRef} />
         <PlayerImageProperties fabricRef={fabricRef} />
+        <SponsorProperties fabricRef={fabricRef} />
       </ImageFiltersProvider>
     </div>
   );
