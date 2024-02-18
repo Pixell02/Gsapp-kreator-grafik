@@ -13,10 +13,10 @@ import useInitScale from "./hooks/useInitScale";
 import useIsTheme from "./hooks/useIsTheme";
 import translation from "./locales/translate.json";
 import { useLanguageContext } from "../../context/LanguageContext";
-import { useDoc } from "../../hooks/useDoc";
 import { useThemeContext } from "./context/ThemeContext";
 import useCoords from "./hooks/useCoords";
 import { translationProps } from "../../types/translationTypes";
+import { useLicenseContext } from "../../context/LicenseContext";
 function WorkSpace() {
   const { poster } = useParams();
   const fabricRef = useRef(null);
@@ -24,20 +24,20 @@ function WorkSpace() {
   const { user } = useAuthContext();
   const { language } = useLanguageContext();
   const { themeColor, dataURL } = useThemeContext();
-  const { documents: Licenses } = useDoc("user", ["uid", "==", user.uid]);
+  const { license } = useLicenseContext();
   const { coords } = useCoords();
   const { hasTheme } = useIsTheme();
   const { initScale } = useInitScale(dataURL as string);
   return (
     <CanvasContextProvider>
-      {Licenses?.license === "no-license" && (
+      {license?.license === "no-license" && (
         <div className="license-content">
           <p>
             Brak licencji <Link to="/offer">Kup dostęp</Link>
           </p>
         </div>
       )}
-      {Licenses?.license !== "no-license" && (
+      {license?.license !== "no-license" && (
         <div className="workspace-container">
           <div className="preview-container">
             <TransformWrapper minScale={0.1} initialScale={initScale as number} panning={{ disabled: true }}>
@@ -56,14 +56,14 @@ function WorkSpace() {
             </div>
             <div className="ms-5 me-5 mt-3">
               {dataURL && <EditPanel fabricRef={fabricRef} coords={coords} />}
-              <button className="btn primary-btn save" onClick={() => exportImg(Licenses, themeColor, user, poster)}>
+              <button className="btn primary-btn save" onClick={() => exportImg(license, themeColor, user, poster)}>
                 {translate.save[language]}
               </button>
             </div>
-            {Licenses?.license === "free-trial" && (
+            {license?.license === "free-trial" && (
               <div className="license-place">
                 <span className="license-content">
-                  {translate.freeUsesFirstPart[language]} {Licenses.numberOfFreeUse}{" "}
+                  {translate.freeUsesFirstPart[language]} {license.numberOfFreeUse}{" "}
                   {translate.freeUsesLastPart[language]}
                 </span>
               </div>
