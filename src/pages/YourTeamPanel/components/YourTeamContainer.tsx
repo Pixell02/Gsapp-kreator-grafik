@@ -21,8 +21,8 @@ export default function YourTeamContainer() {
   const { language } = useLanguageContext();
   const { id } = useParams();
   const { user } = useAuthContext();
-  const { documents: Team } = useCollection("Teams", ["uid", "==", id || user.uid]);
-  const { documents: licenseTeams } = useTeamLicenseCollection("Teams");
+  const { documents: Team } = useCollection<Team>("Teams", ["uid", "==", id || user.uid]);
+  const { documents: licenseTeams } = useTeamLicenseCollection<Team>("Teams");
   const [data, setData] = useState<Team | null>(null);
   const editClick = (item: Team) => {
     setSelectedModal(2);
@@ -44,7 +44,7 @@ export default function YourTeamContainer() {
           {Team?.map((team, i) => (
             <TeamBlock key={i} team={team} editClick={editClick} />
           ))}
-          {licenseTeams?.map((item: Team, i: number) => (
+          {licenseTeams?.map((item, i) => (
             <TeamBlock key={i} team={item} editClick={editClick} />
           ))}
         </div>
