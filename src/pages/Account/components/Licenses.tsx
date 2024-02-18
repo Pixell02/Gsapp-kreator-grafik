@@ -1,25 +1,28 @@
-import React from "react";
 import verified from "../../../img/verified.png";
 import discard from "../../../img/discard.png";
 import { Link } from "react-router-dom";
-import translate from "../locales/translate.json";
+import translation from "../locales/translate.json";
 import { useLanguageContext } from "../../../context/LanguageContext";
+import { useLicenseContext } from "../../../context/LicenseContext";
+import { translationProps } from "../../../types/translationTypes";
 
-export default function Licenses({ License }) {
+export default function Licenses() {
   const { language } = useLanguageContext();
+  const { license } = useLicenseContext();
+  const translate: translationProps = translation;
   return (
     <div>
-      {License && License[0]?.license === "free-trial" && (
+      {license?.license === "free-trial" && (
         <div className="license-container">
           <div className="license-content">
             <img src={verified} className="icon-verified" />{" "}
             <span>
-              {translate.youHave[language]} {License[0]?.numberOfFreeUse} {translate.freeUses[language]}
+              {translate.youHave[language]} {license?.numberOfFreeUse} {translate.freeUses[language]}
             </span>
           </div>
         </div>
       )}
-      {License && License[0]?.license === "no-license" && (
+      {license && license?.license === "no-license" && (
         <div className="license-container">
           <div className="license-content">
             <img src={discard} className="icon-verified" />{" "}
@@ -30,7 +33,7 @@ export default function Licenses({ License }) {
           </div>
         </div>
       )}
-      {License && License[0]?.license === "full-license" && (
+      {license && license?.license === "full-license" && (
         <div className="license-container ">
           <p style={{ marginLeft: "20px" }}>{translate.license[language]}</p>
           <div className="license-type">
@@ -39,7 +42,7 @@ export default function Licenses({ License }) {
           </div>
           <div className="license-type">
             <label>{translate.expireDate[language]}</label>
-            <input type="text" className="license-content" value={License[0].expireDate} disabled />
+            <input type="text" className="license-content" value={license.expireDate} disabled />
           </div>
           <label>Format MM-DD-YYYY</label>
         </div>

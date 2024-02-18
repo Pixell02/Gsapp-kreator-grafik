@@ -1,30 +1,31 @@
 import { doc, setDoc, updateDoc } from "firebase/firestore";
-import React from "react";
 import { db } from "../../../firebase/config";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useDoc } from "../../../hooks/useDoc";
-import useAccountData from "../hooks/useAccountData";
+import useAccountData from "../hooks/useAccountData.tsx";
+import { useLicenseContext } from "../../../context/LicenseContext";
+
+export type TeamAccount = {
+  id: string;
+  expireDate: string;
+  uid: string;
+  users: {
+    email: string;
+    uid: string;
+  }[];
+};
 
 const MultiAccountContainer = () => {
   const { user } = useAuthContext();
-  const { documents: accounts } = useDoc("teamAccounts", [
-    "uid",
-    "==",
-    user.uid,
-  ]);
-  const { documents: License } = useDoc("user", ["uid", "==", user.uid]);
-  const {
-    accountData,
-    setAccountData,
-    handleAddUser,
-    alert,
-    handleDeleteUser,
-    handleDeleteTeam,
-  } = useAccountData(accounts, License);
+  const { documents: accounts } = useDoc<TeamAccount>("teamAccounts", ["uid", "==", user.uid]);
+  const { license } = useLicenseContext();
+  const { accountData, setAccountData, handleAddUser, alert, handleDeleteUser, handleDeleteTeam } = useAccountData(
+    accounts as TeamAccount
+  );
 
-  const handleCreateTeamsAccount = () => {
+  const handleCreateTeamsAccount = async () => {
     const ref = doc(db, "teamAccounts", user.uid);
-    setDoc(ref, {
+    await setDoc(ref, {
       uid: user.uid,
       users: [
         {
@@ -32,34 +33,22 @@ const MultiAccountContainer = () => {
           uid: user.uid,
         },
       ],
-      expireDate: License.expireDate || "",
+      expireDate: license?.expireDate || "",
     });
-    const licenseDoc = doc(db, "user", License.id);
-    updateDoc(licenseDoc, {
+    const licenseDoc = doc(db, "user", license.id);
+    await updateDoc(licenseDoc, {
       team: user.uid,
     });
   };
 
   return (
     <div className="d-flex license-container">
-      {!accounts && License?.team && (
-        <div>
-          Twoje konto jest przypisane do licencji użytkownika o id{" "}
-          {License?.team}
-        </div>
-      )}
-      {!accounts && !License?.team && (
+      {!accounts && license?.team && <div>Twoje konto jest przypisane do licencji użytkownika o id {license.team}</div>}
+      {!accounts && license?.team && (
         <>
           <div>
-            <p className="ml-5">
-              Stwórz pakiet drużynowy i podepnij do 4 użytkowników pod swoją
-              licencje
-            </p>
-            <button
-              className="btn"
-              onClick={() => handleCreateTeamsAccount()}
-              disabled={accounts?.users?.length === 5}
-            >
+            <p className="ml-5">Stwórz pakiet drużynowy i podepnij do 4 użytkowników pod swoją licencje</p>
+            <button className="btn" onClick={() => handleCreateTeamsAccount()}>
               Stwórz
             </button>
           </div>
@@ -104,10 +93,7 @@ const MultiAccountContainer = () => {
                     <td>{users.email}</td>
                     <td>
                       {user.uid !== users.uid ? (
-                        <button
-                          onClick={() => handleDeleteUser(users.uid)}
-                          className="btn"
-                        >
+                        <button onClick={() => handleDeleteUser(users.uid)} className="btn">
                           -
                         </button>
                       ) : null}

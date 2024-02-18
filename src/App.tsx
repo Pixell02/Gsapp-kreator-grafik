@@ -34,6 +34,10 @@ function App() {
             <Route path="/:lang/resetPassword" element={<ResetPassword />} />
             <Route path="/:lang/login" element={!user ? <Login /> : <Navigate to={`/${language}/yourCatalog`} />} />
             <Route
+              path="/:lang/login/:uid"
+              element={!user ? <Login /> : <Navigate to={`/${language}/yourCatalog`} />}
+            />
+            <Route
               path="/:lang/register"
               element={!user ? <Register /> : <Navigate to={`/${language}/yourCatalog`} />}
             />

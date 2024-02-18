@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-const useUserInformation = (userId) => {
+const useUserInformation = (userId: string) => {
   const [usersEmail, setUserEmail] = useState("");
   const [userCreatedAt, setUserCreatedAt] = useState("");
   const { user } = useAuthContext();
@@ -20,7 +20,7 @@ const useUserInformation = (userId) => {
     }
   }, [userId]);
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
     return formattedDate;
