@@ -2,13 +2,15 @@ import React, { Dispatch, SetStateAction, useRef } from "react";
 import "./ItemBlock.css";
 
 import OptionButton from "../OptionButton";
-import { PlayerImage } from "../../types/playerAndSquadTypes";
+import { PlayerImage } from "../../types/teamTypes";
 
 export type Item = {
   id: string;
-  firstName: string;
+  firstName?: string;
   secondName?: string;
   name?: string;
+  team?: string;
+  uid?: string;
   img?: string | PlayerImage[];
   src?: string;
 };
