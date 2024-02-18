@@ -7,7 +7,7 @@ interface ImageRefContextValue {
 
 export const ImageRefContext = createContext<ImageRefContextValue | null>(null);
 
-export const ImageRefProvider: React.FC = ({ children }: PropsWithChildren) => {
+export const ImageRefProvider = ({ children }: PropsWithChildren) => {
   const imageRef = useRef<fabric.Image | null>(null);
   return <ImageRefContext.Provider value={{ imageRef }}>{children}</ImageRefContext.Provider>;
 };

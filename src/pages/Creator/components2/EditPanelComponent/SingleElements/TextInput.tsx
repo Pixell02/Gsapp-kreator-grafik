@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useTextLayer, { textCoordsProps } from "./hooks/useTextLayer";
+import useTextLayer from "./hooks/useTextLayer";
 import { useCalendarContext } from "../../../context/CalendarContext";
+import { Text } from "../../../../../types/globalPropertiesTypes";
 
 type props = {
-  coords: textCoordsProps;
+  coords: Text;
   fabricRef?: React.MutableRefObject<fabric.Canvas>;
   i: number;
 };

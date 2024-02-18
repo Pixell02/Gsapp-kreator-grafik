@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useCollection } from "../../../hooks/useCollection";
 import useTeamLicenseCollection from "../../../hooks/useTeamLicenseCollection";
-import { Opponent } from "../context/CalendarContext";
+import { Opponent } from "../../../types/teamTypes";
 
 type Options = {
   label: string;
@@ -12,8 +12,8 @@ type Options = {
 const useOpponents = () => {
   const [options, setOptions] = useState<Options[] | null>(null);
   const { user } = useAuthContext();
-  const { documents: LicenseOpponents } = useTeamLicenseCollection("Opponents");
-  const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
+  const { documents: LicenseOpponents } = useTeamLicenseCollection<Opponent>("Opponents");
+  const { documents: Opponents } = useCollection<Opponent>("Opponents", ["uid", "==", user.uid]);
 
   useEffect(() => {
     if (Opponents && Opponents.length > 0) {

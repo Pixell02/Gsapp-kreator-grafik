@@ -34,7 +34,7 @@ function AddTeamWindow({ setSelectedModal }: props) {
   });
   const { language } = useLanguageContext();
   const { uploadImage } = useStorage();
-  const { preview, setPreview } = useFileReader(teamData.img);
+  const { preview } = useFileReader(teamData.img);
 
   const getSport = (option: SingleValue<{ label: string; value: string }>) => {
     if (!option?.value) return;
@@ -83,7 +83,7 @@ function AddTeamWindow({ setSelectedModal }: props) {
         <Select options={sportOptions} onChange={getSport} />
         <ColorSelect teamData={teamData} setTeamData={setTeamData} />
         <InputImage setState={setTeamData} />
-        <ImagePreview preview={preview} setPreview={setPreview} />
+        <ImagePreview preview={preview as string} setState={setTeamData} />
         <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>
     </div>

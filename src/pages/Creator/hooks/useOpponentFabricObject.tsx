@@ -1,4 +1,3 @@
-import { DocumentData } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import useTextLayer from "../components2/EditPanelComponent/SingleElements/hooks/useTextLayer";
@@ -7,21 +6,32 @@ import { useRadioContext } from "../context/radioContext";
 import { SingleValue } from "react-select";
 import { Image, Text } from "fabric/fabric-impl";
 import useFetch from "../../../hooks/useFetch";
-import { Opponent } from "../context/CalendarContext";
+import { Opponent } from "../../../types/teamTypes";
+import { Coords } from "../../../types/creatorComponentsTypes";
+import { Image as FabricImage, Text as FabricText } from "../../../types/globalPropertiesTypes";
 
 type options = {
   label: string;
   value: Opponent;
 };
 
-const useOpponentFabricObject = (coords: DocumentData, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
+const useOpponentFabricObject = (coords: Coords, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
   const [selectedOption, setSelectedOption] = useState<options | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<Opponent | null>(null);
-  const { image } = useFetch(selectedTeam?.img);
-  const { setImage, imageObject: crest } = useImageLayer(coords.opponentImage, fabricRef);
-  const { setTextValue: setFirstName, textObject: firstName } = useTextLayer(coords.opponentFirstName, fabricRef);
-  const { setTextValue: setSecondName, textObject: secondName } = useTextLayer(coords.opponentSecondName, fabricRef);
-  const { setTextValue: setFullName, textObject: fullName } = useTextLayer(coords.opponentName, fabricRef);
+  const { image } = useFetch(selectedTeam?.img as string);
+  const { setImage, imageObject: crest } = useImageLayer(coords.opponentImage as FabricImage, fabricRef);
+  const { setTextValue: setFirstName, textObject: firstName } = useTextLayer(
+    coords.opponentFirstName as FabricText,
+    fabricRef
+  );
+  const { setTextValue: setSecondName, textObject: secondName } = useTextLayer(
+    coords.opponentSecondName as FabricText,
+    fabricRef
+  );
+  const { setTextValue: setFullName, textObject: fullName } = useTextLayer(
+    coords.opponentName as FabricText,
+    fabricRef
+  );
   const { radioChecked } = useRadioContext();
 
   const handleChange = (option: SingleValue<options>) => {
@@ -48,7 +58,7 @@ const useOpponentFabricObject = (coords: DocumentData, fabricRef?: React.Mutable
   }, [selectedTeam, image]);
 
   useEffect(() => {
-    const updateText = (textType: Text | null, textCoords: DocumentData) => {
+    const updateText = (textType: Text | null, textCoords: FabricText | undefined) => {
       if (textType && textCoords) {
         textType.set({
           top: textCoords.Top,
@@ -60,7 +70,7 @@ const useOpponentFabricObject = (coords: DocumentData, fabricRef?: React.Mutable
         fabricRef?.current.renderAll();
       }
     };
-    const updateImage = (imageType: Image | null, imageCoords: DocumentData) => {
+    const updateImage = (imageType: Image | null, imageCoords: FabricImage | undefined) => {
       if (imageType && imageCoords) {
         imageType.set({
           top: imageCoords.Top,

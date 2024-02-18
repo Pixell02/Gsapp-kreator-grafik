@@ -1,29 +1,18 @@
-import { DocumentData } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import { Textbox } from "fabric/fabric-impl";
 import useTextboxLayer from "./useTextboxLayer";
+import { Textbox as FabricTextbox } from "../../../types/globalPropertiesTypes";
+import { Goal } from "../../../types/creatorComponentsTypes";
 
-export type PlayerProps = {
-  firstName: string;
-  number: string;
-  secondName: string;
-};
-
-export type GoalProps = {
-  player: PlayerProps | string;
-  time: string;
-  [key: string]: PlayerProps | string;
-};
-
-const usePlayerGoals = (coords: DocumentData, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
-  const [selectedPlayers, setSelectedPlayers] = useState<GoalProps[]>([{ player: "", time: "" }]);
+const usePlayerGoals = (coords: FabricTextbox, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
+  const [selectedPlayers, setSelectedPlayers] = useState<Goal[]>([{ player: "", time: "" }]);
   const { textboxObject } = useTextboxLayer(coords, fabricRef);
 
   useEffect(() => {
     if (!textboxObject) return;
 
-    const handleFormatText = (players: GoalProps[]) => {
+    const handleFormatText = (players: Goal[]) => {
       let text: string = "";
       players.forEach((player) => {
         if (typeof player.player === "object") {

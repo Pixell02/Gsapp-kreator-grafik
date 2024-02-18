@@ -1,22 +1,20 @@
 import usePlayers from "../../../hooks/usePlayers";
 import { DocumentData } from "firebase/firestore";
-import usePlayerGoals, { GoalProps } from "../../../hooks/usePlayerGoals";
+import usePlayerGoals from "../../../hooks/usePlayerGoals";
 import HostGoal from "./HostGoal";
 import { SingleValue } from "react-select";
 import GuestGoal from "./GuestGoal";
+import { Goal } from "../../../../../types/creatorComponentsTypes";
+import { Player } from "../../../../../types/teamTypes";
 
 type componentProps = {
   fabricRef?: React.MutableRefObject<fabric.Canvas>;
   coords: DocumentData;
 };
-type playerProps = {
-  firstName: string;
-  number: string;
-  secondName: string;
-};
+
 type options = {
   label: string;
-  value: playerProps | undefined;
+  value: Player | undefined;
 };
 
 type stringProps = {
@@ -43,8 +41,8 @@ export default function PlayersGoals({ fabricRef, coords }: componentProps) {
   };
 
   const handleSelectChange = (option: SingleValue<options>, i: number) => {
-    const newPlayer: GoalProps[] = [...hostPlayers];
-    newPlayer[i].player = option?.value as playerProps;
+    const newPlayer: Goal[] = [...hostPlayers];
+    newPlayer[i].player = option?.value as Player;
     setHostPlayers(newPlayer);
   };
 

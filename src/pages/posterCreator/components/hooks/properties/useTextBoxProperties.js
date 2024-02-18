@@ -37,7 +37,7 @@ const useTextBoxProperties = (fabricRef) => {
   useEffect(() => {
     if (!coords) return;
     if (Object.keys(coords).length === 0) return;
-    if (coords?.type === "universalTextBox" || coords?.type === "textBox")
+    if (coords?.type === "universalTextBox" || coords?.type === "textBox" || coords?.type === "additionalTextBox")
       setGlobalProperties((prevState) => {
         let updatedCoords = {};
 
@@ -50,6 +50,11 @@ const useTextBoxProperties = (fabricRef) => {
           const updatedCoordsWithThemeOption = setThemeOption(prevState, coords);
           updatedCoords = {
             [coords.className]: updatedCoordsWithThemeOption,
+          };
+        } else if (coords?.type === "additionalTextBox") {
+          const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.AdditionalText || [], coords);
+          updatedCoords = {
+            AdditionalText: getUniqueTextArray([...(prevState.AdditionalText || []), updatedCoordsWithThemeOption]),
           };
         } else {
           return;

@@ -1,16 +1,10 @@
 import React from "react";
-import { PlayerProps } from "../../../hooks/usePlayerGoals";
-
-type goalProps = {
-  player: string;
-  time: string;
-  [key: string]: PlayerProps | string;
-};
+import { Goal } from "../../../../../types/creatorComponentsTypes";
 
 type GuestProps = {
   i: number;
   handleValueChange: (e: React.ChangeEvent<HTMLInputElement>, i: number, type: string) => void;
-  player: goalProps;
+  player: Goal;
   handlePlayerChange: (e: React.ChangeEvent<HTMLInputElement>, i: number) => void;
 };
 
@@ -29,7 +23,7 @@ const GuestGoal = ({ i, handleValueChange, player, handlePlayerChange }: GuestPr
       </div>
       <div className="w-75">
         <label htmlFor={`text${i}`}>GOL przeciwnika</label>
-        <input type="text" value={player.player} onChange={(e) => handlePlayerChange(e, i)} />
+        <input type="text" value={player.player as string} onChange={(e) => handlePlayerChange(e, i)} />
       </div>
     </div>
   );

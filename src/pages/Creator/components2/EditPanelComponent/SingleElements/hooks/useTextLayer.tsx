@@ -4,24 +4,9 @@ import { Text } from "fabric/fabric-impl";
 import { useThemeContext } from "../../../../context/ThemeContext";
 import { DocumentData } from "firebase/firestore";
 import useFont from "../../../../hooks/useFont";
+import { Text as FabricText } from "../../../../../../types/globalPropertiesTypes";
 
-export type textCoordsProps = {
-  Top: number;
-  Left: number;
-  FontSize: number;
-  className: string;
-  Fill: string;
-  OriginX: string;
-  OriginY: string;
-  FontFamily: string;
-  Angle?: number;
-  CharSpacing?: number;
-  ScaleToWidth: number;
-  themeOption: DocumentData;
-  FontStyle: "" | "normal" | "italic" | "oblique" | undefined;
-};
-
-const useTextLayer = (coords: textCoordsProps, fabricRef?: React.MutableRefObject<fabric.Canvas | null>) => {
+const useTextLayer = (coords: FabricText, fabricRef?: React.MutableRefObject<fabric.Canvas | null>) => {
   const [textValue, setTextValue] = useState<string>("");
   const { themeColor } = useThemeContext();
   const { fontFace } = useFont(coords?.FontFamily);

@@ -13,23 +13,16 @@ const usePlayers = (playersImage) => {
     const options = [];
     Players?.map((player) => {
       if (playersImage) {
-        if (typeof player.img === "string") {
+        player.img?.map((item) => {
           options.push({
-            label: player.firstName + " " + player.secondName,
-            value: { ...player },
+            label:
+              player.firstName +
+              " " +
+              player.secondName +
+              (item.type === "celebration" && item.src ? " (cieszynka)" : ""),
+            value: { ...player, img: item.src },
           });
-        } else {
-          player.img?.map((item) => {
-            options.push({
-              label:
-                player.firstName +
-                " " +
-                player.secondName +
-                (item.type === "celebration" && item.src ? " (cieszynka)" : ""),
-              value: { ...player, img: item.src },
-            });
-          });
-        }
+        });
       } else {
         options.push({
           label: player.firstName + " " + player.secondName,

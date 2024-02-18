@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import { Image as fabricImage } from "fabric/fabric-impl";
 
-type ImageProps = {
+type Image = {
   Top: number;
   Left: number;
-  Angle?: number;
+  className: string;
+  Angle: number;
+  Width: number;
+  Height: number;
   ScaleToWidth: number;
   ScaleToHeight: number;
+  originX: string;
+  originY: string;
+  type: string;
+  filters: [];
 };
 
-const useImageLayer = (coords: ImageProps, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
+const useImageLayer = (coords: Image, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
   const [imageObject, setImageObject] = useState<fabricImage | null>(null);
   const [image, setImage] = useState<string | ArrayBuffer>("");
   useEffect(() => {

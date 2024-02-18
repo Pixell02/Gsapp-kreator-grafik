@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useCollection } from "../../../hooks/useCollection";
 import useTeamLicenseCollection from "../../../hooks/useTeamLicenseCollection";
-import { Player } from "../../../types/playerAndSquadTypes";
+import { Player } from "../../../types/teamTypes";
 
 const usePlayers = () => {
   const { user } = useAuthContext();
-  const { documents: players } = useCollection("Players", ["uid", "==", user.uid]);
-  const { documents: LicensedPlayers } = useTeamLicenseCollection("Players");
+  const { documents: players } = useCollection<Player>("Players", ["uid", "==", user.uid]);
+  const { documents: LicensedPlayers } = useTeamLicenseCollection<Player>("Players");
   const [filteredPlayers, setFilteredPlayers] = useState<Player[] | null>(null);
   const [licensedPlayers, setLicensedPlayers] = useState<Player[] | null>(null);
 

@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import { db } from "../../../firebase/config";
 import { doc, updateDoc } from "firebase/firestore";
@@ -12,9 +12,10 @@ import ButtonContainer from "../../../components/ButtonContainer";
 type props = {
   data: Sponsor;
   setSelectedModal: Dispatch<SetStateAction<number>>;
+  sponsorNumbersArray: number[];
 };
 
-function EditSponsorWindow({ data, setSelectedModal }: props) {
+function EditSponsorWindow({ data, setSelectedModal, sponsorNumbersArray }: props) {
   const [sponsorData, setSponsorData] = useState<Sponsor>({ ...data });
 
   const { preview, setPreview } = useFileReader(data.img);
@@ -33,6 +34,8 @@ function EditSponsorWindow({ data, setSelectedModal }: props) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
+    } else if (sponsorNumbersArray.find((item) => item === sponsorData.number) && sponsorData.number !== data.number) {
+      alert("taki numer jest już przypisany");
     } else {
       const downloadURL = await uploadImage(sponsorData.img, `${sponsorData.uid}/sponsor/${sponsorData.name}`);
       const docRef = doc(db, "Sponsors", data.id as string);
@@ -47,11 +50,6 @@ function EditSponsorWindow({ data, setSelectedModal }: props) {
     setSelectedModal(0);
   };
 
-  const handleReadFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setSponsorData((prev) => ({ ...prev, img: file }));
-  };
   return (
     <div className="active-modal">
       <div className="add-window">
@@ -59,8 +57,8 @@ function EditSponsorWindow({ data, setSelectedModal }: props) {
         <input type="text" onChange={handleValueChange} value={sponsorData.name} className="name" />
         <label>Który z kolei ma się pokazywać</label>
         <input type="number" onChange={handleValueChange} min={1} value={sponsorData.number} className="number" />
-        <InputImage handleReadFile={handleReadFile} />
-        <ImagePreview preview={preview} setPreview={setPreview} />
+        <InputImage setState={setSponsorData} />
+        <ImagePreview preview={preview as string} setState={setPreview} />
         <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>
     </div>

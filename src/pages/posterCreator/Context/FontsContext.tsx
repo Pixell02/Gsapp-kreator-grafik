@@ -6,6 +6,11 @@ type FontOption = {
   value: string;
 };
 
+export type Font = {
+  name: string;
+  font: string;
+};
+
 type ContextData = {
   fontOptions: FontOption[] | null;
 };
@@ -13,7 +18,7 @@ type ContextData = {
 const fontContext = createContext<ContextData | null>(null);
 
 export const FontProvider = ({ children }: PropsWithChildren) => {
-  const { documents: fonts } = useCollection("fonts");
+  const { documents: fonts } = useCollection<Font>("fonts");
   const [fontOptions, setFontOptions] = useState<FontOption[] | null>(null);
 
   useEffect(() => {

@@ -123,8 +123,41 @@ export const createFabricImage = (fabricRef, name, image, type) => {
   });
 };
 
+export const createSponsorBlock = (fabricRef, className) => {
+  const rectangle = new fabric.Rect({
+    top: 400,
+    left: 400,
+    fill: "#FFF",
+    width: 200,
+    height: 100,
+    type: "SponsorBlock",
+    className: className,
+  });
+  fabricRef.current.add(rectangle);
+  fabricRef.current.renderAll();
+};
+
+export const createAdditionalTextbox = (fabricRef, name, className, type) => {
+  const quantity = countElementsWithGivenType(fabricRef.current._objects, type);
+  const text = new fabric.Textbox(name, {
+    top: 400,
+    left: 400,
+    fontSize: 25,
+    lineHeight: 1,
+    width: 500,
+    originX: "center",
+    originY: "top",
+    className: className + quantity,
+    textAlign: "left",
+    fill: "#000000",
+    fontFamily: "Poppins",
+    type: "additionalTextBox",
+  });
+  fabricRef.current.add(text);
+  fabricRef.current.renderAll();
+};
+
 export const createPlayerImage = (fabricRef, name, image, type) => {
-  console.log(type);
   const quantity = countElementsWithGivenType(fabricRef.current._objects, type);
   fabric.Image.fromURL(image, function (img) {
     img.set({
@@ -161,8 +194,8 @@ export const createFabricTextBox = (fabricRef, name, className) => {
   fabricRef.current.add(text);
   fabricRef.current.renderAll();
 };
-export const createPlayerNameText = (fabricRef, name, className) => {
-  const quantity = countElementsWithGivenType(fabricRef.current._objects, "playerGoal");
+export const createPlayerNameText = (fabricRef, name, className, type) => {
+  const quantity = countElementsWithGivenType(fabricRef.current._objects, type);
   const text = new fabric.IText(name, {
     top: 400,
     left: 400,
@@ -174,7 +207,7 @@ export const createPlayerNameText = (fabricRef, name, className) => {
     fill: "#000000",
     fontFamily: "Poppins",
     format: "dotted",
-    type: "playerGoal",
+    type: type,
   });
   fabricRef.current.add(text);
 

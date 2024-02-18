@@ -4,8 +4,9 @@ import FontFaceObserver from "fontfaceobserver";
 import { fabric } from "fabric";
 import { useThemeContext } from "../context/ThemeContext";
 import useFont from "./useFont";
+import { Textbox } from "../../../types/globalPropertiesTypes";
 
-const useTextboxLayer = (coords: DocumentData, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
+const useTextboxLayer = (coords: Textbox, fabricRef?: React.MutableRefObject<fabric.Canvas>) => {
   const [textValue, setTextValue] = useState<string>("");
   const [textboxObject, setTextboxObject] = useState<fabric.Textbox | null>(null);
   const { fontFace } = useFont(coords?.FontFamily);

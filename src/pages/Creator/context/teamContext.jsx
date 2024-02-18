@@ -12,9 +12,16 @@ export const TeamProvider = ({ children }) => {
   const [filteredPlayers, setFilteredPlayers] = useState(null);
   const [selectedPreset, setSelectedPreset] = useState(null);
   const { calendarData, setCalendarData } = useCalendarContext();
-  const { Players, selectedPlayers, handlePlayerChecked, handleReserveChecked, selectedReserve } = useSquadPlayers();
+  const {
+    Players,
+    selectedPlayers,
+    handlePlayerChecked,
+    setSelectedPlayers,
+    setSelectedReserve,
+    handleReserveChecked,
+    selectedReserve,
+  } = useSquadPlayers();
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     if (!selectedPreset) return;
     setCalendarData({ ...calendarData, selectedPreset: selectedPreset });
@@ -45,6 +52,8 @@ export const TeamProvider = ({ children }) => {
       value={{
         selectedTeam,
         selectedPreset,
+        setSelectedPlayers,
+        setSelectedReserve,
         setSelectedPreset,
         setSelectTeam,
         selectedPlayers,

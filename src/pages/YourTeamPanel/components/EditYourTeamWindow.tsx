@@ -14,6 +14,7 @@ import useFileReader from "../../../hooks/useFileReader";
 import ColorSelect from "./ColorSelect";
 import { Team } from "../../../types/teamTypes";
 import { translationProps } from "../../../types/translationTypes";
+import InputImage from "../../../components/InputImage";
 
 const options = [
   { value: "piłka nożna", label: "piłka nożna" },
@@ -40,14 +41,9 @@ function EditYourTeamWindow({ data, setSelectedModal }: props) {
     img: data.img,
     uid: user.uid,
   });
-  const { preview, setPreview } = useFileReader(teamData.img);
+  const { preview } = useFileReader(teamData.img);
   const { handleAddImage } = useStorage();
   const [oldName] = useState(data.firstName + " " + data.secondName);
-
-  const handlePreviewDelete = () => {
-    setPreview(null);
-    setTeamData((prev) => ({ ...prev, img: "" }));
-  };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { className, value } = e.target;
@@ -57,10 +53,6 @@ function EditYourTeamWindow({ data, setSelectedModal }: props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const onButtonClick = () => {
     fileInputRef.current?.click();
-  };
-  const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setTeamData((prev) => ({ ...prev, img: file } as Team));
   };
 
   const handleSubmit = async () => {
@@ -117,16 +109,9 @@ function EditYourTeamWindow({ data, setSelectedModal }: props) {
         <button onClick={onButtonClick} className="btn primary-btn add-img">
           {translate.addLogo[language]}
         </button>
-        <input
-          type="file"
-          style={{ display: "none" }}
-          ref={fileInputRef}
-          accept="image/png"
-          onChange={(e) => {
-            handleEdit(e);
-          }}
-        />
-        <ImagePreview preview={preview} setPreview={handlePreviewDelete} />
+        <InputImage setState={setTeamData} />
+
+        <ImagePreview preview={preview as string} setState={setTeamData} />
         <div className="buttons-container">
           <button
             className="btn"

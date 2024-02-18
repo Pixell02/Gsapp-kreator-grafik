@@ -12,6 +12,7 @@ export default function UpdateModal({ setIsOpen }) {
   const { image, setImage, backgrounds, newBackgrounds } = useBackgroundContext();
   const { handleAddImage, progressInfo } = useStorage();
   const { globalProperties } = useGlobalPropertiesContext();
+  console.log(image, backgrounds);
   const handleAddDoc = async () => {
     if (newBackgrounds) {
       newBackgrounds.forEach(async (background, i) => {
@@ -25,7 +26,6 @@ export default function UpdateModal({ setIsOpen }) {
           uuid: globalProperties.uid,
         });
       });
-      await updateDoc(doc(collection(db, "yourCatalog"), globalProperties.uid), image);
     }
     if (backgrounds) {
       backgrounds.forEach(async (item, i) => {

@@ -1,6 +1,5 @@
-import { useState } from "react";
-
 import {
+  createAdditionalTextbox,
   createFabricImage,
   createFabricText,
   createFabricTextBox,
@@ -8,6 +7,7 @@ import {
   createMultiplyText,
   createPlayerImage,
   createPlayerNameText,
+  createSponsorBlock,
   createUniversalMultiplyText,
   createUniversalText,
   createUniversalTextBox,
@@ -28,12 +28,16 @@ export const useAddFabricObject = (fabricRef) => {
       createFabricTextBox(fabricRef, layer.text, layer.className);
     } else if (layer.type === "playerImage") {
       createPlayerImage(fabricRef, layer.className, layer.image, layer.type);
-    } else if (layer.type === "playerGoal") {
-      createPlayerNameText(fabricRef, layer.text, layer.className);
+    } else if (layer.type === "playerGoal" || layer.type === "playerFirstName" || layer.type === "playerLastName") {
+      createPlayerNameText(fabricRef, layer.text, layer.className, layer.type);
     } else if (layer.type === "universalText") {
       createUniversalText(fabricRef, layer.text, layer.className);
+    } else if (layer.type === "additionalTextBox") {
+      createAdditionalTextbox(fabricRef, layer.text, layer.className, layer.type);
     } else if (layer.type === "universalTextBox") {
       createUniversalTextBox(fabricRef, layer.text, layer.className);
+    } else if (layer.type === "sponsorBlock") {
+      createSponsorBlock(fabricRef, layer.className);
     } else if (layer.type === "multiplyImage") {
       createMultiplyImage(fabricRef, layer.className, layer.image, properties.numberOfMatches);
       setIsMany(true);

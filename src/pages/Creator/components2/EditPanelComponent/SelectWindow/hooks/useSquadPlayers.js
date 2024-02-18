@@ -45,8 +45,7 @@ const useSquadPlayers = () => {
   }, [TeamPlayers, LicensedPlayers]);
 
   const handlePlayerChecked = (player) => {
-    const { firstName, secondName, number, age } = player;
-
+    const { firstName, secondName, number } = player;
     const isSelected = selectedPlayers.some(
       (selectedPlayer) =>
         selectedPlayer.firstName === firstName &&
@@ -65,13 +64,12 @@ const useSquadPlayers = () => {
       );
     } else {
       if (selectedPlayers.length !== 11) {
-        setSelectedPlayers((prevSelectedPlayers) => [...prevSelectedPlayers, { firstName, secondName, number, age }]);
+        setSelectedPlayers((prevSelectedPlayers) => [...prevSelectedPlayers, { ...player }]);
       }
     }
   };
   const handleReserveChecked = (reserve) => {
-    const { firstName, secondName, number, age } = reserve;
-
+    const { firstName, secondName, number } = reserve;
     const isSelected = selectedReserve.some(
       (selectedReserve) =>
         selectedReserve.firstName === firstName &&
@@ -80,8 +78,8 @@ const useSquadPlayers = () => {
     );
 
     if (isSelected) {
-      setSelectedReserve((prevselectedReserves) =>
-        prevselectedReserves.filter(
+      setSelectedReserve((prev) =>
+        prev.filter(
           (selectedReserve) =>
             selectedReserve.firstName !== firstName ||
             selectedReserve.secondName !== secondName ||
@@ -90,7 +88,7 @@ const useSquadPlayers = () => {
       );
     } else {
       if (selectedReserve.length !== 9) {
-        setSelectedReserve((prevselectedReserves) => [...prevselectedReserves, { firstName, secondName, number, age }]);
+        setSelectedReserve((prev) => [...prev, { ...reserve }]);
       }
     }
   };
@@ -101,6 +99,8 @@ const useSquadPlayers = () => {
     handlePlayerChecked,
     handleReserveChecked,
     selectedReserve,
+    setSelectedPlayers,
+    setSelectedReserve,
   };
 };
 

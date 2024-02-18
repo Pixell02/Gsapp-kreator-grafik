@@ -1,20 +1,20 @@
-import { doc, setDoc } from 'firebase/firestore';
-import { useParams } from 'react-router-dom';
-import { db } from '../../../../../firebase/config';
-import { useDoc } from '../../../../../hooks/useDoc';
-import useAccountData from '../../../../Account/hooks/useAccountData';
+import { doc, setDoc } from "firebase/firestore";
+import { useParams } from "react-router-dom";
+import { db } from "../../../../../firebase/config";
+import { useDoc } from "../../../../../hooks/useDoc";
+import useAccountData from "../../../../Account/hooks/useAccountData.tsx";
 
 const MultiAccountContainer = ({ email }) => {
   const params = useParams();
-  const { documents: accounts } = useDoc('teamAccounts', ['uid', '==', params.id]);
-  const { documents: License } = useDoc('user', ['uid', '==', params.id]);
+  const { documents: accounts } = useDoc("teamAccounts", ["uid", "==", params.id]);
+  const { documents: License } = useDoc("user", ["uid", "==", params.id]);
   const { accountData, setAccountData, handleAddUser, alert, handleDeleteUser, handleDeleteTeam } = useAccountData(
     accounts,
     License
   );
 
   const handleCreateTeamsAccount = () => {
-    const ref = doc(db, 'teamAccounts', params.id);
+    const ref = doc(db, "teamAccounts", params.id);
     setDoc(ref, {
       uid: params.id,
       users: [
@@ -23,7 +23,7 @@ const MultiAccountContainer = ({ email }) => {
           uid: params.id,
         },
       ],
-      expireDate: License.expireDate || '',
+      expireDate: License.expireDate || "",
     });
   };
   return (
@@ -35,10 +35,7 @@ const MultiAccountContainer = ({ email }) => {
         <>
           <div>
             <p className="ml-5">Stwórz pakiet drużynowy i podepnij do 4 użytkowników pod swoją licencje</p>
-            <button
-              className="btn"
-              onClick={() => handleCreateTeamsAccount()}
-              disabled={accounts?.users?.length === 5}>
+            <button className="btn" onClick={() => handleCreateTeamsAccount()} disabled={accounts?.users?.length === 5}>
               Stwórz
             </button>
           </div>
@@ -48,9 +45,7 @@ const MultiAccountContainer = ({ email }) => {
         <>
           <div>
             <p className="ml-5">Konta podpięte do licencji</p>
-            <span
-              className="ml-5"
-              style={{ fontSize: '10px' }}>
+            <span className="ml-5" style={{ fontSize: "10px" }}>
               Możesz dodać jeszcze: {5 - accounts?.users?.length} użytkowników
             </span>
           </div>
@@ -60,11 +55,9 @@ const MultiAccountContainer = ({ email }) => {
               className="w-75"
               placeholder="email użytkownika"
               value={accountData}
-              onChange={e => setAccountData(e.target.value)}
+              onChange={(e) => setAccountData(e.target.value)}
             />
-            <button
-              className="btn"
-              onClick={() => handleAddUser(accountData)}>
+            <button className="btn" onClick={() => handleAddUser(accountData)}>
               Dodaj
             </button>
           </div>
@@ -87,9 +80,7 @@ const MultiAccountContainer = ({ email }) => {
                     <td>{users.email}</td>
                     <td>
                       {params.id !== users.uid ? (
-                        <button
-                          onClick={() => handleDeleteUser(users.uid)}
-                          className="btn">
+                        <button onClick={() => handleDeleteUser(users.uid)} className="btn">
                           -
                         </button>
                       ) : null}
@@ -98,9 +89,7 @@ const MultiAccountContainer = ({ email }) => {
                 ))}
               </tbody>
             </table>
-            <button
-              className="btn mt-5"
-              onClick={() => handleDeleteTeam()}>
+            <button className="btn mt-5" onClick={() => handleDeleteTeam()}>
               Usuń
             </button>
           </div>

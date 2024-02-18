@@ -7,8 +7,8 @@ import { useLanguageContext } from "../../../context/LanguageContext";
 import translation from "../locales/translate.json";
 import PlayerImagePreview from "./PlayerImagePreview";
 import useStorage from "../../../hooks/useStorage";
-import { Player } from "../../../types/playerAndSquadTypes";
 import { translationProps } from "../../../types/translationTypes";
+import { Player, PlayerImage } from "../../../types/teamTypes";
 
 type props = {
   data: Player;
@@ -18,7 +18,6 @@ type props = {
 function EditPlayerWindow({ data, setSelectedModal }: props) {
   const { language } = useLanguageContext();
   const translate: translationProps = translation;
-  console.log(data);
   const [player, setPlayer] = useState<Player>({ ...data });
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams(player.team);
   useEffect(() => {
@@ -47,7 +46,7 @@ function EditPlayerWindow({ data, setSelectedModal }: props) {
     } else {
       const uploadImages = async () => {
         const images = await Promise.all(
-          player.img.map(async (item) => {
+          (player.img as PlayerImage[]).map(async (item) => {
             if (item.src === null || item.src === "") return { type: item.type, src: "" };
             else if (typeof item.src === "string") return { type: item.type, src: item.src };
             else if (typeof item.src === "object") {

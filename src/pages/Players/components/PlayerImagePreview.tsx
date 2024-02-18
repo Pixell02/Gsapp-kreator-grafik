@@ -4,8 +4,8 @@ import { useLanguageContext } from "../../../context/LanguageContext";
 import bin from "../../../img/binIcon.png";
 import useFileReader from "../../../hooks/useFileReader";
 import "./playerimagePreview.css";
-import { Player, PlayerImage } from "../../../types/playerAndSquadTypes";
 import { translationProps } from "../../../types/translationTypes";
+import { Player, PlayerImage } from "../../../types/teamTypes";
 
 type props = {
   player: Player;
@@ -16,10 +16,9 @@ const PlayerImagePreview = ({ player, setPlayer }: props) => {
   const { language } = useLanguageContext();
   const translate: translationProps = translation;
   const [img, setImg] = useState<PlayerImage[]>([
-    { type: "basic", src: player?.img[0]?.src || "" },
-    { type: "celebration", src: player?.img[1]?.src || "" },
+    { type: "basic", src: (player?.img as PlayerImage[])[0].src || "" },
+    { type: "celebration", src: (player?.img as PlayerImage[])[1]?.src || "" },
   ]);
-  console.log(img);
   useEffect(() => {
     setPlayer((prev: Player) => ({
       ...prev,
@@ -28,7 +27,10 @@ const PlayerImagePreview = ({ player, setPlayer }: props) => {
   }, [img]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedImage, setSelectedImage] = useState({ type: "basic", src: player?.img[0]?.src || "" });
+  const [selectedImage, setSelectedImage] = useState({
+    type: "basic",
+    src: (player?.img as PlayerImage[])[0]?.src || "",
+  });
 
   const { preview } = useFileReader(selectedImage.src);
 

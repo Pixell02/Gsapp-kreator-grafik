@@ -1,85 +1,68 @@
-import { useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Dispatch, SetStateAction, useMemo, useRef, useState } from "react";
 import "../../../App.css";
 import ReturnButton from "../../../components/ReturnButton";
-import FilteredBlock from "../../../components/main-content-elements/FilteredBlock";
+import FilteredBlock, { Item } from "../../../components/main-content-elements/FilteredBlock";
 import ItemContainer from "../../../components/main-content-elements/ItemContainer";
 import Title from "../../../components/main-content-elements/Title";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useCollection } from "../../../hooks/useCollection";
-import useEditModal from "../../../hooks/useEditModal";
 import translation from "../locales/translate.json";
-import EditPlayerWindow from "./EditPlayerWindow";
-import AddPlayerWindow from "./AddPlayerWindow";
 import { useLanguageContext } from "../../../context/LanguageContext";
-import usePlayers from "../hooks/usePlayers";
-import { Player, squadPreset } from "../../../types/playerAndSquadTypes";
-import { DocumentData } from "firebase/firestore";
-
-type props = {
-  [key: string]: string;
-  pl: string;
-  en: string;
-  fr: string;
-  de: string;
-  es: string;
-};
-type translationProps = {
-  addPlayer: props;
-  players: props;
-  firstName: props;
-  lastName: props;
-  number: props;
-  birthYear: props;
-  team: props;
-  emptyField: props;
-  addPhoto: props;
-  noTeam: props;
-  Round: props;
-  cancel: props;
-  save: props;
-};
+import { translationProps } from "../../../types/translationTypes";
+import AddPlayerWindow from "./AddPlayerWindow";
+import EditPlayerWindow from "./EditPlayerWindow";
+import Portal from "../../../components/Portal";
+import { useCollection } from "../../../hooks/useCollection";
+import useTeamLicenseCollection from "../../../hooks/useTeamLicenseCollection";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import { Player } from "../../../types/teamTypes";
 
 function PlayerContent() {
-  const { user } = useAuthContext();
   const { language } = useLanguageContext();
-  const { filteredPlayers, licensedPlayers, players } = usePlayers();
-  const { documents: Teams } = useCollection("Teams", ["uid", "==", user.uid]);
-  const [openModal, setOpenModal] = useState(false);
-  const { isEditModal, openEditModal, closeEditModal } = useEditModal();
+  const { user } = useAuthContext();
+  const { documents: players } = useCollection<Player>("Players", ["uid", "==", user.uid]);
+  const { documents: LicensedPlayers } = useTeamLicenseCollection<Player>("Players");
+  const [selectedModal, setSelectedModal] = useState(0);
   const translate: translationProps = translation;
-  const location = useLocation();
-  const goodLocation = location.pathname.split("/")[2];
-  const [data, setData] = useState<DocumentData | squadPreset | undefined | null>(null);
+  const [data, setData] = useState<Player | null>(null);
 
   const hideElement = useRef(null);
 
-  const editClick = (item: Player) => {
-    const playerItem = players?.find((player) => player.id === item.id);
-    setData({ ...playerItem });
-    openEditModal();
-  };
+  const modalComponents = useMemo(
+    () => [
+      { id: 1, component: <AddPlayerWindow setSelectedModal={setSelectedModal} /> },
+      { id: 2, component: <EditPlayerWindow data={data as Player} setSelectedModal={setSelectedModal} /> },
+    ],
+    [data]
+  );
 
   return (
     <div className="main-content" ref={hideElement}>
-      {openModal && <AddPlayerWindow Teams={Teams} onClose={setOpenModal} />}
-      {data && isEditModal && goodLocation === "players" && (
-        <EditPlayerWindow data={data} onClose={closeEditModal} Teams={Teams} />
-      )}
+      <Portal>{modalComponents.map(({ id, component }) => selectedModal === id && component)}</Portal>
       <div className="ml-5">
         <ReturnButton />
         <Title title={translate.players[language]} />
-        <button className="btn primary-btn" onClick={() => setOpenModal(true)}>
+        <button className="btn primary-btn" onClick={() => setSelectedModal(1)}>
           {translate.addPlayer[language]}
         </button>
         <ItemContainer>
           <div className="d-flex flew-row">
             <div className="catalog-container">
-              {filteredPlayers?.map((player, i) => (
-                <FilteredBlock key={i} editClick={editClick} type={"Players"} item={player} />
+              {(players as Player[])?.map((player, i) => (
+                <FilteredBlock
+                  key={i}
+                  setData={setData as Dispatch<SetStateAction<Item>>}
+                  setSelectedModal={setSelectedModal}
+                  type={"Players"}
+                  item={player as Item}
+                />
               ))}
-              {licensedPlayers?.map((player, i: number) => (
-                <FilteredBlock key={i} editClick={editClick} type={"Players"} item={player} />
+              {LicensedPlayers?.map((player: Player, i: number) => (
+                <FilteredBlock
+                  key={i}
+                  setData={setData as Dispatch<SetStateAction<Item>>}
+                  type={"Players"}
+                  setSelectedModal={setSelectedModal}
+                  item={player as Item}
+                />
               ))}
             </div>
           </div>

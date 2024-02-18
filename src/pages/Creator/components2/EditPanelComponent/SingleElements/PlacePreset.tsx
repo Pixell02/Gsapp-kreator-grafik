@@ -1,7 +1,7 @@
 import React, { SetStateAction, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 import usePlacePreset from "./hooks/usePlacePreset";
-import { textCoordsProps } from "./hooks/useTextLayer";
+import { Text } from "../../../../../types/globalPropertiesTypes";
 
 type PlaceOption = {
   label: string;
@@ -10,7 +10,7 @@ type PlaceOption = {
 
 type PlacePresetProps = {
   fabricRef?: React.MutableRefObject<fabric.Canvas>;
-  coords: textCoordsProps;
+  coords: Text;
   name: string;
   defaultValue?: string;
 };

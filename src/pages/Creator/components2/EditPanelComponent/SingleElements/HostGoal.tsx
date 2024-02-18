@@ -1,16 +1,11 @@
 import Select, { SingleValue } from "react-select";
 import React from "react";
-import { PlayerProps } from "../../../hooks/usePlayerGoals";
-
-type goalProps = {
-  player: PlayerProps | string;
-  time: string;
-  [key: string]: PlayerProps | string;
-};
+import { Goal } from "../../../../../types/creatorComponentsTypes";
+import { Player } from "../../../../../types/teamTypes";
 
 type options = {
   label: string;
-  value: PlayerProps | undefined;
+  value: Player | undefined;
 };
 
 type props = {
@@ -18,7 +13,7 @@ type props = {
   handleValueChange: (e: React.ChangeEvent<HTMLInputElement>, i: number, type: string) => void;
   handleSelectChange: (option: SingleValue<options | null>, i: number) => void;
   playerOptions: options[];
-  player: goalProps;
+  player: Goal;
 };
 
 const HostGoal = ({ i, handleValueChange, handleSelectChange, playerOptions, player }: props) => {

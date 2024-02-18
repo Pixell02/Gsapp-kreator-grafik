@@ -9,7 +9,7 @@ const PlayerNameProperties = ({ fabricRef }) => {
   const { fontOptions } = useFontContext();
   return (
     <>
-      {coords?.type === "playerGoal" && (
+      {(coords?.type === "playerGoal" || coords?.type === "playerFirstName" || coords?.type === "playerLastName") && (
         <div>
           <div>Nazwa obiektu: {coords.className}</div>
           <div className="d-flex">

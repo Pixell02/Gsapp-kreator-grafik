@@ -3,12 +3,12 @@ import "../../YourTeamPanel/components/addTeamWindow.css";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useTeamContext } from "../../Creator/context/teamContext";
-import { Player } from "../../../types/playerAndSquadTypes";
 import ButtonContainer from "../../../components/ButtonContainer";
 import useSquadPreset from "../hooks/useSquadPreset";
 import PlayerCheckbox from "./PlayerCheckbox";
 import Select from "../../../components/Select";
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import { Player } from "../../../types/teamTypes";
 
 type props = {
   setSelectedModal: Dispatch<SetStateAction<number>>;

@@ -1,29 +1,22 @@
-import { DocumentData } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { fabric } from "fabric";
 import useFetch from "../../../hooks/useFetch";
 import useImageLayer from "./useImageLayer";
-import useTextLayer, { textCoordsProps } from "../components2/EditPanelComponent/SingleElements/hooks/useTextLayer";
-import { Player, useCalendarContext } from "../context/CalendarContext";
-
-type ImageProps = {
-  Top: number;
-  Left: number;
-  Angle?: number;
-  ScaleToWidth: number;
-  ScaleToHeight: number;
-};
+import useTextLayer from "../components2/EditPanelComponent/SingleElements/hooks/useTextLayer";
+import { useCalendarContext } from "../context/CalendarContext";
+import { Image, Text } from "../../../types/globalPropertiesTypes";
+import { Player } from "../../../types/teamTypes";
 
 const usePlayerFabricObject = (
-  playerCoords: DocumentData,
-  playerImageCoords: DocumentData,
+  playerCoords: Text,
+  playerImageCoords: Image,
   i: number,
   fabricRef: React.MutableRefObject<fabric.Canvas>
 ) => {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-  const { textObject: playerName } = useTextLayer(playerCoords as textCoordsProps, fabricRef);
-  const { image: playerImg } = useFetch(selectedPlayer?.img);
-  const { setImage, imageObject } = useImageLayer(playerImageCoords as ImageProps, fabricRef);
+  const { textObject: playerName } = useTextLayer(playerCoords, fabricRef);
+  const { image: playerImg } = useFetch(selectedPlayer?.img as string);
+  const { setImage, imageObject } = useImageLayer(playerImageCoords as Image, fabricRef);
   const { calendarData, setCalendarData } = useCalendarContext();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import "./addTeamWindow.css";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import translation from "../../Players/locales/translate.json";
@@ -14,7 +14,7 @@ import Select from "react-select";
 import { useTeams } from "../../Players/hooks/useTeams";
 import { useLanguageContext } from "../../../context/LanguageContext";
 import { translationProps } from "../../../types/translationTypes";
-import { Trainer } from "./TrainersContainer";
+import { Trainer } from "../../../types/teamTypes";
 
 type props = {
   setSelectedModal: Dispatch<SetStateAction<number>>;
@@ -33,14 +33,14 @@ const AddTrainerWindow = ({ setSelectedModal }: props) => {
     img: "",
     uid: user.uid,
   });
-  const { preview, setPreview } = useFileReader(trainerData.img);
+  const { preview } = useFileReader(trainerData.img);
   const { uploadImage } = useStorage();
   const { teamOptions, handleTeamChange, selectedTeam } = useTeams();
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { className, value } = e.target;
 
-    setTrainerData((prev) => ({
+    setTrainerData((prev: Trainer) => ({
       ...prev,
       [className]: value,
     }));
@@ -66,11 +66,6 @@ const AddTrainerWindow = ({ setSelectedModal }: props) => {
       setSelectedModal(0);
     }
   };
-  const handleReadFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setTrainerData((prev) => ({ ...prev, img: file }));
-  };
 
   return (
     <div className="active-modal">
@@ -81,8 +76,8 @@ const AddTrainerWindow = ({ setSelectedModal }: props) => {
         <input value={trainerData.secondName} className="secondName" onChange={handleValueChange} />
         <label>{translate.team[language]}</label>
         <Select options={teamOptions} onChange={(e) => handleTeamChange(e?.value as string)} />
-        <InputImage handleReadFile={handleReadFile} />
-        <ImagePreview preview={preview} setPreview={setPreview} />
+        <InputImage setState={setTrainerData} />
+        <ImagePreview preview={preview as string} setState={setTrainerData} />
         <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>
     </div>

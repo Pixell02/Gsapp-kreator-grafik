@@ -3,17 +3,17 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { db } from "../../../firebase/config";
 import "../../YourTeamPanel/components/addTeamWindow.css";
 import { useTeamContext } from "../../Creator/context/teamContext";
-import { Player, squadPreset } from "../../../types/playerAndSquadTypes";
 import ButtonContainer from "../../../components/ButtonContainer";
 import useSquadPreset from "../hooks/useSquadPreset";
 import PlayerCheckbox from "./PlayerCheckbox";
 import Select from "../../../components/Select";
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import { Player, SquadPreset } from "../../../types/teamTypes";
 
 type props = {
   setSelectedModal: Dispatch<SetStateAction<number>>;
   Players: Player[];
-  data: squadPreset;
+  data: SquadPreset;
 };
 
 const EditSquadPlayersPresetWindow = ({ Players, data, setSelectedModal }: props) => {

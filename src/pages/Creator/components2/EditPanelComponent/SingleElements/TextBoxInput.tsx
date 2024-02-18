@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useCalendarContext } from "../../../context/CalendarContext";
-import { textCoordsProps } from "./hooks/useTextLayer";
 import useTextboxLayer from "../../../hooks/useTextboxLayer";
+import { Textbox } from "../../../../../types/globalPropertiesTypes";
 
 type componentProps = {
-  coords: textCoordsProps;
+  coords: Textbox;
   fabricRef?: React.MutableRefObject<fabric.Canvas>;
   i: number;
 };

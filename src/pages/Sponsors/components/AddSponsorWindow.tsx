@@ -14,9 +14,10 @@ import { Sponsor } from "./Sponsors-MainContent";
 type props = {
   defaultNumber: number;
   setSelectedModal: Dispatch<SetStateAction<number>>;
+  sponsorNumbersArray: number[];
 };
 
-function AddSponsorWindow({ defaultNumber, setSelectedModal }: props) {
+function AddSponsorWindow({ defaultNumber, setSelectedModal, sponsorNumbersArray }: props) {
   const { id } = useParams();
   const { user } = useAuthContext();
   const [sponsorData, setSponsorData] = useState<Sponsor>({
@@ -26,22 +27,23 @@ function AddSponsorWindow({ defaultNumber, setSelectedModal }: props) {
     uid: id || user.uid,
   });
 
-  const { preview, setPreview } = useFileReader(sponsorData.img);
+  const { preview } = useFileReader(sponsorData.img);
   const { uploadImage } = useStorage();
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, className } = e.target;
     setSponsorData((prev) => ({
       ...prev,
-      [className]: value,
+      [className]: className === "number" ? parseInt(value) : value,
     }));
   };
-
   const handleSubmit = async () => {
     if (sponsorData.name === "" || sponsorData.number === 0) {
       alert("puste pole");
     } else if (!preview) {
       alert("brak zdjecia");
+    } else if (sponsorNumbersArray.find((item) => item === sponsorData.number)) {
+      alert("taki numer jest już przypisany");
     } else {
       const downloadURL = await uploadImage(sponsorData.img, `${id || user.uid}/sponsorzy/${sponsorData.name}`);
 
@@ -64,7 +66,7 @@ function AddSponsorWindow({ defaultNumber, setSelectedModal }: props) {
         <label>Który z kolei ma się pokazywać</label>
         <input type="number" onChange={handleValueChange} min={1} value={sponsorData.number} className="number" />
         <InputImage setState={setSponsorData} />
-        <ImagePreview preview={preview} setPreview={setPreview} />
+        <ImagePreview preview={preview as string} setState={setSponsorData} />
         <ButtonContainer handleClick={handleClick} handleSubmit={handleSubmit} />
       </div>
     </div>

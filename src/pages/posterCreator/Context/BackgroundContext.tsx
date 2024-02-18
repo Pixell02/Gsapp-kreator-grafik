@@ -42,8 +42,8 @@ export function BackgroundProvider({ children }: PropsWithChildren) {
     setImage(theme);
   }, [theme]);
 
-  const { documents: individual } = useCollection("yourCatalog", ["uuid", "==", id || ""]);
-  const { documents: poster } = useCollection("piecesOfPoster", ["uuid", "==", id || ""]);
+  const { documents: individual } = useCollection<DocumentData>("yourCatalog", ["uuid", "==", id || ""]);
+  const { documents: poster } = useCollection<DocumentData>("piecesOfPoster", ["uuid", "==", id || ""]);
   const [backgrounds, setBackgrounds] = useState<DocumentData[]>([]);
   const [newBackgrounds, setNewBackgrounds] = useState<newBackground[]>([]);
   useEffect(() => {

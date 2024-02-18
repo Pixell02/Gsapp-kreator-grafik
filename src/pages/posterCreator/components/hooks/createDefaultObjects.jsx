@@ -107,6 +107,18 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
             fabricRef.current.add(text);
             fabricRef.current.renderAll();
           });
+        } else if (layer.type === "SponsorBlock") {
+          const rectangle = new fabric.Rect({
+            top: globalProperties[key].Top,
+            left: globalProperties[key].Left,
+            fill: globalProperties[key].Fill,
+            width: globalProperties[key].Width,
+            height: globalProperties[key].Height,
+            type: "SponsorBlock",
+            className: "SponsorBlock",
+          });
+          fabricRef.current.add(rectangle);
+          fabricRef.current.renderAll();
         } else if (layer.type === "text") {
           const font = new FontFaceObserver(globalProperties[key].FontFamily);
           font.load().then(() => {
@@ -260,7 +272,7 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
                 left: globalProperties.Left,
                 fontSize: globalProperties.FontSize,
                 className: globalProperties.className,
-                width: (globalProperties.ScaleToWidth || globalProperties.Width) * 1.2,
+                width: globalProperties.ScaleToWidth || globalProperties.Width,
                 height: globalProperties.ScaleToHeight,
                 textAlign: globalProperties.TextAlign,
                 index: i,
@@ -272,6 +284,28 @@ export default function createDefaultObjects(fabricRef, globalProperties, setIsM
                 originX: globalProperties.OriginX,
                 originY: globalProperties.OriginY || "top",
                 type: "universalTextBox",
+              });
+              fabricRef.current.add(text);
+              fabricRef.current.renderAll();
+            });
+          });
+        } else if (layer.type === "additionalTextBox" && key === "AdditionalText") {
+          globalProperties?.AdditionalText.forEach((globalProperties) => {
+            const font = new FontFaceObserver(globalProperties.FontFamily);
+            font.load().then(() => {
+              const text = new fabric.Textbox(globalProperties.text, {
+                top: globalProperties.Top,
+                left: globalProperties.Left,
+                fontSize: globalProperties.FontSize,
+                className: globalProperties.className,
+                width: globalProperties.ScaleToWidth || globalProperties.Width,
+                height: globalProperties.ScaleToHeight,
+                textAlign: globalProperties.TextAlign,
+                fill: globalProperties.Fill,
+                fontFamily: globalProperties.FontFamily,
+                angle: globalProperties.Angle || null,
+                originX: globalProperties.OriginX,
+                type: "additionalTextBox",
               });
               fabricRef.current.add(text);
               fabricRef.current.renderAll();

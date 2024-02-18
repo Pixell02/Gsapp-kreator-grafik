@@ -70,7 +70,7 @@ const useCoords = (fabricRef, propertyKeys, type) => {
     }
   }, [handleDeleteKeyPress, fabricRef, propertyKeys, handleReadFilters, type]);
 
-  return { coords, updateActiveObjectCoords, handleInputChange, handleSelectChange };
+  return { coords, setCoords, updateActiveObjectCoords, handleInputChange, handleSelectChange };
 };
 
 export default useCoords;

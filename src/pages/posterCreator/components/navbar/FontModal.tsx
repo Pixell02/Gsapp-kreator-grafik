@@ -3,15 +3,16 @@ import { useCollection } from "../../../../hooks/useCollection";
 import useStorage from "../../../../hooks/useStorage";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
+import { Font } from "../../Context/FontsContext";
 
-interface Font {
+type FontFile = {
   name: string;
   file: File | null;
-}
+};
 
 const FontModal: React.FC = () => {
-  const [font, setFont] = useState<Font>({ name: "", file: null });
-  const { documents: fonts } = useCollection("fonts");
+  const [font, setFont] = useState<FontFile>({ name: "", file: null });
+  const { documents: fonts } = useCollection<Font>("fonts");
   const { handleAddImage } = useStorage();
 
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +32,7 @@ const FontModal: React.FC = () => {
   };
 
   const handleSave = async () => {
-    const fontLink = await handleAddImage(font.file, `/fonts/${font.name}`);
+    const fontLink = await handleAddImage(font.file as File, `/fonts/${font.name}`);
     const ref = collection(db, "fonts");
     addDoc(ref, {
       font: fontLink,

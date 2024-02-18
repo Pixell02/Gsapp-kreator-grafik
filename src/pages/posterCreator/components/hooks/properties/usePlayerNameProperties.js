@@ -34,16 +34,39 @@ const usePlayerNameProperties = (fabricRef) => {
   useEffect(() => {
     if (!coords) return;
     if (Object.keys(coords).length === 0) return;
-    if (coords?.type !== "playerGoal") return;
-    setGlobalProperties((prevState) => {
-      const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
-      const updatedCoords = getUniqueTextArray([...(prevState.player || []), updatedCoordsWithThemeOption]);
+    if (coords?.type === "playerGoal") {
+      setGlobalProperties((prevState) => {
+        const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
+        const updatedCoords = getUniqueTextArray([...(prevState.player || []), updatedCoordsWithThemeOption]);
 
-      return {
-        ...prevState,
-        player: updatedCoords,
-      };
-    });
+        return {
+          ...prevState,
+          player: updatedCoords,
+        };
+      });
+    } else if (coords?.type === "playerFirstName") {
+      setGlobalProperties((prevState) => {
+        const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
+        const updatedCoords = getUniqueTextArray([...(prevState.playerFirstName || []), updatedCoordsWithThemeOption]);
+
+        return {
+          ...prevState,
+          playerFirstName: updatedCoords,
+        };
+      });
+    } else if (coords?.type === "playerLastName") {
+      setGlobalProperties((prevState) => {
+        const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
+        const updatedCoords = getUniqueTextArray([...(prevState.playerLastName || []), updatedCoordsWithThemeOption]);
+
+        return {
+          ...prevState,
+          playerLastName: updatedCoords,
+        };
+      });
+    } else {
+      return;
+    }
   }, [coords]);
 
   return { coords, fill, handleInputChange, handleSelectChange };
