@@ -21,7 +21,7 @@ const PosterLink = ({ poster, isEditable }: props) => {
       <div className="name-content">
         <span className="name-content">{poster.name}</span>
         {isEditable && (
-          <OptionButton item={poster} hideElement={hideElement} type={"piecesOfPoster"} editClick={editClick} />
+          <OptionButton handleEdit={editClick} item={poster} hideElement={hideElement} type={"piecesOfPoster"} />
         )}
       </div>
       <Link to={`/${language}/creator/theme/${poster?.coords || poster.uid}`}>
