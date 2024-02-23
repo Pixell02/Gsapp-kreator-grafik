@@ -1,11 +1,14 @@
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-import useSortByDate from "./useSortByDate";
+import useSortByDate, { History } from "./useSortByDate";
+import { User, useUsersContextProvider } from "../../../context/UsersContext";
 
-const useHistory = (user, start, end) => {
+const useHistory = (start: number, end: number) => {
   const { documents: history } = useSortByDate(start, end);
-  const [formattedArray, setFormattedArray] = useState([]);
-  const [dataFiltered, setDataFiltered] = useState([]);
+  const { users: user } = useUsersContextProvider();
+  const [formattedArray, setFormattedArray] = useState<History[]>([]);
+  const [dataFiltered, setDataFiltered] = useState<User[]>([]);
+
   useEffect(() => {
     if (user) {
       const filteredData = user.filter((u, index, self) => {
@@ -18,12 +21,12 @@ const useHistory = (user, start, end) => {
   useEffect(() => {
     if (history) {
       const sortHistory = () => {
-        const sortedData = [...history].sort((a, b) => b.date - a.date);
+        const sortedData = [...history].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         const formattedData = sortedData.map((item) => ({
           ...item,
           date: moment(item.date).locale("pl").format("D MMMM YYYY, HH:mm:ss"),
         }));
-        setFormattedArray(formattedData);
+        setFormattedArray(formattedData); // Zmiana ta została wprowadzona
       };
       sortHistory();
     }

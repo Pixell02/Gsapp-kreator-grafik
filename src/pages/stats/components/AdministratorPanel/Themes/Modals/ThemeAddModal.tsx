@@ -1,9 +1,16 @@
 import { addDoc, collection } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { db } from "../../../../../../firebase/config";
+import { Catalog } from "../../../../../../hooks/useSearchDocsByQuery";
 
-export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, selectedSportOption }) {
+type props = {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  themes: Catalog[];
+  selectedSportOption: string;
+};
+
+export default function ThemeAddModal({ setIsOpen, themes, selectedSportOption }: props) {
   const [themeName, setThemeName] = useState("");
 
   useEffect(() => {
@@ -15,12 +22,11 @@ export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, s
   const handleSaveTheme = () => {
     const docRef = collection(db, "catalog");
     addDoc(docRef, {
-      lang: selectedLangOption,
       public: false,
       sport: selectedSportOption,
       theme: themeName,
     });
-    setIsOpen();
+    setIsOpen(false);
   };
 
   return ReactDOM.createPortal(
@@ -35,7 +41,7 @@ export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, s
         </div>
         <div className="btn-container w-100 d-flex align-items-end">
           <div className="w-100 d-flex justify-content-end">
-            <button className="btn" onClick={setIsOpen}>
+            <button className="btn" onClick={() => setIsOpen(false)}>
               Anuluj
             </button>
             <button className="btn" onClick={() => handleSaveTheme()}>
@@ -45,6 +51,6 @@ export default function ThemeAddModal({ setIsOpen, themes, selectedLangOption, s
         </div>
       </div>
     </div>,
-    document.getElementById("portal")
+    document.getElementById("portal")!
   );
 }

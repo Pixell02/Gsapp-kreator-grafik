@@ -1,12 +1,12 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 
-const useUnixTime = (selectedMonth, selectedYear) => {
-  const [startOfMonthUnix, setStartOfMonthUnix] = useState(null);
-  const [endOfMonthUnix, setEndOfMonthUnix] = useState(null);
+const useUnixTime = (selectedMonth: number, selectedYear: number) => {
+  const [startOfMonthUnix, setStartOfMonthUnix] = useState<number>(0);
+  const [endOfMonthUnix, setEndOfMonthUnix] = useState<number>(0);
 
   useEffect(() => {
-    if (selectedMonth !== "" && selectedYear !== "") {
+    if (selectedMonth && selectedYear) {
       const startOfMonth = moment()
         .year(selectedYear)
         .month(selectedMonth - 1)
@@ -18,9 +18,6 @@ const useUnixTime = (selectedMonth, selectedYear) => {
 
       setStartOfMonthUnix(startOfMonth.unix() * 1000);
       setEndOfMonthUnix(endOfMonth.unix() * 1000);
-    } else {
-      setStartOfMonthUnix(null);
-      setEndOfMonthUnix(null);
     }
   }, [selectedMonth, selectedYear]);
 

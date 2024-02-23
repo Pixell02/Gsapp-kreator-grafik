@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
-import RegisterForm from '../../components/form-elements/RegisterForm';
-import translate from './register.json';
-import '../../App.css';
-import { useLanguageContext } from '../../context/LanguageContext';
+import { Link } from "react-router-dom";
+import RegisterForm from "../../components/form-elements/RegisterForm";
+import translation from "./register.json";
+import "../../App.css";
+import { useLanguageContext } from "../../context/LanguageContext";
+import { translationProps } from "../../types/translationTypes";
 
 function Register() {
   const { language } = useLanguageContext();
+  const translate: translationProps = translation;
+
   return (
     <div className="page-container login-container">
       <div className="content-wrap">

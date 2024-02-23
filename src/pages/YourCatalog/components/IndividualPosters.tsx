@@ -1,23 +1,25 @@
-import { Link } from 'react-router-dom';
-import ItemContainer from '../../../components/main-content-elements/ItemContainer';
-import Title from '../../../components/main-content-elements/Title';
-import { useAuthContext } from '../../../hooks/useAuthContext';
-import useTeamPosters from '../hooks/useTeamPosters';
-import translate from '../locales/translate.json';
-import { useLanguageContext } from '../../../context/LanguageContext';
+import { Link } from "react-router-dom";
+import ItemContainer from "../../../components/main-content-elements/ItemContainer";
+import Title from "../../../components/main-content-elements/Title";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import useTeamPosters from "../hooks/useTeamPosters";
+import translation from "../locales/translate.json";
+import { useLanguageContext } from "../../../context/LanguageContext";
+import { translationProps } from "../../../types/translationTypes";
 
 const IndividualPosters = () => {
   const { user } = useAuthContext();
-  const { yourPoster, License, teamPosters } = useTeamPosters();
+  const { yourPoster, license, teamPosters } = useTeamPosters();
   const { language } = useLanguageContext();
+  const translate: translationProps = translation;
 
   return (
     <div>
       <div className="ml-5 d-flex flex-column">
-        <div style={{ fontSize: '25px', marginBottom: '20px' }}> {translate.yourPosters[language]}</div>
+        <div style={{ fontSize: "25px", marginBottom: "20px" }}> {translate.yourPosters[language]}</div>
         <ItemContainer>
-          {yourPoster?.length > 0 ? (
-            yourPoster.map(poster => (
+          {yourPoster && yourPoster?.length > 0 ? (
+            yourPoster.map((poster) => (
               <>
                 <div className="item-category-window">
                   <Link to={`/${language}/creator/${poster.uuid}`}>
@@ -25,12 +27,7 @@ const IndividualPosters = () => {
                       <span className="name-content">{poster.name}</span>
                     </div>
                     <div className="image-category-content">
-                      {poster.src && (
-                        <img
-                          src={poster.src}
-                          alt={poster.firstName + ' ' + poster.secondName}
-                        />
-                      )}
+                      {poster.src && <img src={poster.src} alt={poster.name} />}
                     </div>
                   </Link>
                 </div>
@@ -42,8 +39,8 @@ const IndividualPosters = () => {
         </ItemContainer>
         <Title title="plakaty drużyny" />
         <ItemContainer>
-          {License?.team !== user.uid &&
-            teamPosters?.map(poster => (
+          {license?.team !== user.uid &&
+            teamPosters?.map((poster) => (
               <>
                 <div className="item-category-window">
                   <Link to={`/${language}/creator/${poster.uuid}`}>
@@ -51,12 +48,7 @@ const IndividualPosters = () => {
                       <span className="name-content">{poster.name}</span>
                     </div>
                     <div className="image-category-content">
-                      {poster.src && (
-                        <img
-                          src={poster.src}
-                          alt={poster.firstName + ' ' + poster.secondName}
-                        />
-                      )}
+                      {poster.src && <img src={poster.src} alt={poster.name} />}
                     </div>
                   </Link>
                 </div>

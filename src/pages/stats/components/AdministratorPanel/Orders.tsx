@@ -6,19 +6,13 @@ import OrderDimension from "./Orders/OrderDimension";
 import TopBar from "./Orders/TopBar";
 import useHistory from "./Orders/hooks/useHistory";
 import useUnixTime from "./Orders/hooks/useUnixTime";
-export default function Orders({ user }) {
+import { User } from "../context/UsersContext";
+export default function Orders() {
   const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1);
   const [selectedYear, setSelectedYear] = useState(moment().year());
-  const { startOfMonthUnix, endOfMonthUnix } = useUnixTime(
-    selectedMonth,
-    selectedYear
-  );
+  const { startOfMonthUnix, endOfMonthUnix } = useUnixTime(selectedMonth, selectedYear);
 
-  const { formattedArray, dataFiltered } = useHistory(
-    user,
-    startOfMonthUnix,
-    endOfMonthUnix
-  );
+  const { formattedArray, dataFiltered } = useHistory(startOfMonthUnix, endOfMonthUnix);
   return (
     <div className="order-container mt-5 ml-5">
       <p>Zamówienia</p>
@@ -42,7 +36,7 @@ export default function Orders({ user }) {
             <OrderDimension
               key={i}
               history={history}
-              dataFiltered={dataFiltered}
+              dataFiltered={dataFiltered.find((data) => data.uid === history.uid) as User}
             />
           ))}
         </table>
