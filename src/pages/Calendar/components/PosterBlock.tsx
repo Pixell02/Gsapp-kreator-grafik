@@ -4,8 +4,6 @@ export type poster = {
   name: string;
   src: string;
   coords?: string;
-  firstName: string;
-  secondName: string;
   uuid: string;
 };
 
@@ -24,9 +22,7 @@ const PosterBlock = ({ poster, setSelectedPoster }: props) => {
       <div className="name-content">
         <span className="name-content">{poster.name}</span>
       </div>
-      <div className="image-category-content">
-        {poster.src && <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />}
-      </div>
+      <div className="image-category-content">{poster.src && <img src={poster.src} alt={poster.name} />}</div>
     </div>
   );
 };

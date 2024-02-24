@@ -25,6 +25,7 @@ import Calendar from "./pages/Calendar/Calendar";
 function App() {
   const { user, authIsReady } = useAuthContext();
   const { language } = useLanguageContext();
+
   return (
     <TeamProvider>
       <BrowserRouter>

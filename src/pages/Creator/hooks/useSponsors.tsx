@@ -1,13 +1,15 @@
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
+import { Sponsor } from "../../../types/teamTypes";
+import { SponsorBlock } from "../../../types/creatorComponentsTypes";
 
 type Image = {
   height: number;
   img: string;
 };
 
-const useSponsors = (sponsors: DocumentData[], coords: DocumentData) => {
+const useSponsors = (sponsors: Sponsor[] | null, coords?: SponsorBlock) => {
   const [sponsorsArray, setSponsorsArray] = useState<DocumentData[] | null>(null);
   const [sponsorHeight, setSponsorHeight] = useState(0);
   const { handleFetch } = useFetch();
@@ -29,7 +31,7 @@ const useSponsors = (sponsors: DocumentData[], coords: DocumentData) => {
             const imageHeight = image.height;
             const imageArea = image.width * imageHeight;
             const dataURL = await handleFetch(item.img);
-            array[parseInt(item.number)] = { ...item, height: imageHeight, img: dataURL };
+            array[item.number] = { ...item, height: imageHeight, img: dataURL };
             totalArea += imageArea;
             resolve();
           };

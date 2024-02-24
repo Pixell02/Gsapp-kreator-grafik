@@ -25,9 +25,7 @@ const PosterLink = ({ poster, isEditable }: props) => {
         )}
       </div>
       <Link to={`/${language}/creator/theme/${poster?.coords || poster.uid}`}>
-        <div className="image-category-content">
-          {poster.src && <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />}
-        </div>
+        <div className="image-category-content">{poster.src && <img src={poster.src} alt={poster.name} />}</div>
       </Link>
     </div>
   );

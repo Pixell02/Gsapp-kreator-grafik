@@ -1,5 +1,4 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import React from "react";
 import { db } from "../../../../firebase/config";
 import { useCollection } from "../../../../hooks/useCollection";
 import usePromoCode from "../hooks/usePromoCode";
@@ -76,14 +75,9 @@ export default function PromoCode() {
                 <div className="code-value">{item.code}</div>
                 <div className="percentage-value">{item.percentage}%</div>
                 <div className="amount-value">{item.amount}</div>
-                <div className="expire-date">
-                  {item.expireDate ? item.expireDate : null}
-                </div>
+                <div className="expire-date">{item.expireDate ? item.expireDate : null}</div>
                 <div className="delete-btn-container">
-                  <button
-                    className="btn"
-                    onClick={() => handleDeleteDoc(item.id)}
-                  >
+                  <button className="btn" onClick={() => handleDeleteDoc(item.id)}>
                     -
                   </button>
                 </div>

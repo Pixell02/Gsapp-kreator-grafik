@@ -1,29 +1,27 @@
-import { useEffect, useState } from 'react';
-import LeftBar from '../../components/Left-Bar';
-import MainYourTeamPanel from './components/MainYourTeamPanel';
-import MainFooter from '../../components/MainFooter';
-import '../../App.css';
-import WelcomeModal from './components/WelcomeModal';
-
+import LeftBar from "../../components/Left-Bar";
+import MainYourTeamPanel from "./components/MainYourTeamPanel";
+import MainFooter from "../../components/MainFooter";
+import "../../App.css";
+// import WelcomeModal from "./components/WelcomeModal";
 
 function YourTeamPanel() {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const firstTime = localStorage.getItem('first');
-    if (firstTime === null) {
-      setIsOpen(true);
-    } else {
-      console.log('not-first-time');
-    }
-  }, []);
- 
+  // useEffect(() => {
+  //   const firstTime = localStorage.getItem('first');
+  //   if (firstTime === null) {
+  //     setIsOpen(true);
+  //   } else {
+  //     console.log('not-first-time');
+  //   }
+  // }, []);
+
   return (
     <div className="page-container">
-      <WelcomeModal
+      {/* <WelcomeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-      />
+      /> */}
       <div className="content-wrap">
         <LeftBar />
         <MainYourTeamPanel />

@@ -48,13 +48,11 @@ const OptionButton = <T extends { id?: string }>({
     if (handleEdit && item) {
       handleEdit(item);
     } else {
-      // W przeciwnym razie wywołaj funkcję do obsługi edycji z przekazaniem item
       handleEditClickDefault(item);
     }
   };
 
   const handleEditClickDefault = (item: T) => {
-    // Poprawiona funkcja do obsługi edycji z domyślną akcją
     if (setData && setSelectedModal) {
       setData(item);
       setSelectedModal(2);

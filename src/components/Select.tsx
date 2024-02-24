@@ -1,11 +1,11 @@
 import React from "react";
 
 type props = {
-  name: string;
+  name?: string;
   value: string | number;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   options: { label: string; value: string | number }[];
-  id: string;
+  id?: string;
 };
 
 const Select = ({ name, value, onChange, options, id }: props) => {

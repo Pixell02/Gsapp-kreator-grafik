@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import "../../../App.css";
 import ReturnButton from "../../../components/ReturnButton";
 import FilteredBlock, { Item } from "../../../components/main-content-elements/FilteredBlock";
@@ -24,8 +24,6 @@ function PlayerContent() {
   const translate: translationProps = translation;
   const [data, setData] = useState<Player | null>(null);
 
-  const hideElement = useRef(null);
-
   const modalComponents = useMemo(
     () => [
       { id: 1, component: <AddPlayerWindow setSelectedModal={setSelectedModal} /> },
@@ -35,7 +33,7 @@ function PlayerContent() {
   );
 
   return (
-    <div className="main-content" ref={hideElement}>
+    <div className="main-content">
       <Portal>{modalComponents.map(({ id, component }) => selectedModal === id && component)}</Portal>
       <div className="ml-5">
         <ReturnButton />
@@ -46,7 +44,7 @@ function PlayerContent() {
         <ItemContainer>
           <div className="d-flex flew-row">
             <div className="catalog-container">
-              {(players as Player[])?.map((player, i) => (
+              {players?.map((player, i) => (
                 <FilteredBlock
                   key={i}
                   setData={setData as Dispatch<SetStateAction<Item>>}
@@ -55,7 +53,7 @@ function PlayerContent() {
                   item={player as Item}
                 />
               ))}
-              {LicensedPlayers?.map((player: Player, i: number) => (
+              {LicensedPlayers?.map((player, i) => (
                 <FilteredBlock
                   key={i}
                   setData={setData as Dispatch<SetStateAction<Item>>}

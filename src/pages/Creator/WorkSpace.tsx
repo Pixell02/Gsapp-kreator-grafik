@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { LegacyRef, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -19,7 +19,7 @@ import { translationProps } from "../../types/translationTypes";
 import { useLicenseContext } from "../../context/LicenseContext";
 function WorkSpace() {
   const { poster } = useParams();
-  const fabricRef = useRef(null);
+  const fabricRef = useRef<LegacyRef<HTMLCanvasElement>>(null);
   const translate: translationProps = translation;
   const { user } = useAuthContext();
   const { language } = useLanguageContext();
@@ -42,7 +42,7 @@ function WorkSpace() {
           <div className="preview-container">
             <TransformWrapper minScale={0.1} initialScale={initScale as number} panning={{ disabled: true }}>
               <TransformComponent>
-                {dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef} coords={coords?.SponsorBlock} />}
+                {dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef.current} coords={coords?.SponsorBlock} />}
               </TransformComponent>
             </TransformWrapper>
           </div>

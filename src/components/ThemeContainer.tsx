@@ -1,14 +1,15 @@
 import { Switch } from "antd";
-import { DocumentData, doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import * as Icon from "react-bootstrap-icons";
 import { db } from "../firebase/config";
 import ThemeDeleteModal from "../pages/stats/components/AdministratorPanel/Themes/Modals/ThemeDeleteModal";
 import ThemeEditModal from "../pages/stats/components/AdministratorPanel/Themes/Modals/ThemeEditModal";
+import { Catalog } from "../hooks/useSearchDocsByQuery";
 
 type props = {
   children: React.ReactNode;
-  category: DocumentData;
+  category: Catalog;
   isEditable?: boolean;
 };
 

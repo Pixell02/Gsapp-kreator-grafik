@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import { useLanguageContext } from "../context/LanguageContext";
 
 export type poster = {
+  id: string;
   uid: string;
   uuid: string;
   name: string;
   src: string;
   themeId: string;
-  firstName: string;
-  secondName: string;
 };
 
 type props = {
@@ -25,9 +24,7 @@ const PosterItem = ({ poster }: props) => {
         <div className="name-content">
           <span className="name-content">{poster.name}</span>
         </div>
-        <div className="image-category-content">
-          {poster.src && <img src={poster.src} alt={poster.firstName + " " + poster.secondName} />}
-        </div>
+        <div className="image-category-content">{poster.src && <img src={poster.src} alt={poster.name} />}</div>
       </Link>
     </div>
   );

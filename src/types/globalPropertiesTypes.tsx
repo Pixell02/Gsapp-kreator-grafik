@@ -30,7 +30,6 @@ export type Textbox = {
   FontSize: number;
   className: string;
   Height: number;
-
   LineHeight: number;
   TextAlign: string;
   Fill: string;

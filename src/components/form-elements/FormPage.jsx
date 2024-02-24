@@ -1,39 +1,24 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useLogin } from '../../hooks/useLogin';
-import { useAuthContext } from '../../hooks/useAuthContext';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../../firebase/config';
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useLogin } from "../../hooks/useLogin";
 
-// import styles and images
-import './formPage.css';
-import google from '../../img/google.png';
-import LanguageOption from '../LanguageOption';
-import translate from './formPage.json';
-import { useLanguageContext } from '../../context/LanguageContext';
+import "./formPage.css";
+import google from "../../img/google.png";
+import LanguageOption from "../LanguageOption";
+import translate from "./formPage.json";
+import { useLanguageContext } from "../../context/LanguageContext";
+import useGoogleLogin from "../../hooks/useGoogleLogin";
 
 function LoginPage(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { error, login, setError } = useLogin();
-  const { dispatch } = useAuthContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { error, login } = useLogin();
+  const { signInWithGoogle } = useGoogleLogin();
   const { language } = useLanguageContext();
-  const handleSubmit = e => {
-    e.preventDefault();
-    login(email, password);
+  const handleSubmit = async () => {
+    await login(email, password);
   };
 
-  const signInWithGoogle = async () => {
-    setError(null);
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider).then(res => {
-        dispatch({ type: 'LOGIN', payload: res.user });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <div className="form">
       <div className="form-group">
@@ -46,15 +31,11 @@ function LoginPage(props) {
         <div className="google-btn">
           <button onClick={signInWithGoogle}>
             <div className="logo-container">
-              <img
-                src={google}
-                alt="google_logo"
-                className="logo"
-              />
+              <img src={google} alt="google_logo" className="logo" />
             </div>
             <div className="login-content">
               <span>
-                {' '}
+                {" "}
                 {props.name} {translate.usingGoogle[language]}
               </span>
             </div>
@@ -65,7 +46,7 @@ function LoginPage(props) {
             type="email"
             name="email"
             placeholder="email *"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
         </div>
@@ -73,25 +54,20 @@ function LoginPage(props) {
           type="password"
           name="password"
           placeholder={translate.password[language]}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
         <div className="email-container">
-          <button
-            type="button"
-            className="btn btn-dark button"
-            onClick={handleSubmit}>
+          <button type="button" className="btn btn-dark button" onClick={handleSubmit}>
             {translate.login[language]}
           </button>
         </div>
-        {error && error === 'Firebase: Error (auth/invalid-email).' && <span style={{ color: 'red' }}>Zły email</span>}
-        {error && error === 'Firebase: Error (auth/wrong-password).' && <span style={{ color: 'red' }}>Złe hasło</span>}
+        {error && error === "Firebase: Error (auth/invalid-email)." && <span style={{ color: "red" }}>Zły email</span>}
+        {error && error === "Firebase: Error (auth/wrong-password)." && <span style={{ color: "red" }}>Złe hasło</span>}
         <div className="text-left register-container">{props.footer}</div>
         <div className="text-left register-container ml-5 mt-0">
-          {translate.forgotPassword[language]}{' '}
-          <Link
-            style={{ color: 'darkBlue' }}
-            to={`/${language}/resetPassword`}>
+          {translate.forgotPassword[language]}{" "}
+          <Link style={{ color: "darkBlue" }} to={`/${language}/resetPassword`}>
             {translate.resetPassword[language]}
           </Link>
         </div>

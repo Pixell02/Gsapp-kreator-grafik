@@ -1,10 +1,17 @@
 import "./themeBlock.css";
 import ThemeContainer from "../../../../../components/ThemeContainer";
 import PosterLink from "../../../../Catalog/components/PosterLink";
+import { Catalog } from "../../../../../hooks/useSearchDocsByQuery";
+import { poster } from "../../../../../components/PosterItem";
 
-export default function ThemeBlock({ themes, posters }) {
+type props = {
+  themes: Catalog[];
+  posters: poster[];
+};
+
+export default function ThemeBlock({ themes, posters }: props) {
   const sortedThemes = themes.sort((a, b) => {
-    const getNumberFromTheme = (theme) => {
+    const getNumberFromTheme = (theme: Catalog) => {
       const match = theme.theme.match(/\d+/);
       return match ? parseInt(match[0]) : 0;
     };

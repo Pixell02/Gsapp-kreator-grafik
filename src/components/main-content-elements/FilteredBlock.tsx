@@ -26,7 +26,7 @@ export default function FilteredBlock<T extends Item>({ item, type, setData, set
   const hideElement = useRef(null);
   return (
     <>
-      <div key={item.id} ref={hideElement} className="item-window">
+      <div ref={hideElement} className="item-window">
         <div className="name-content">
           <span className="name-content">
             {item.firstName ? (

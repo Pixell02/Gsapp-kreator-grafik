@@ -1,26 +1,16 @@
-import {
-  CollectionReference,
-  DocumentData,
-  Query,
-  WhereFilterOp,
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { CollectionReference, Query, WhereFilterOp, collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
-const useSearchDocsByQuery = (
-  c: string,
-  q1: string,
-  Filter: WhereFilterOp,
-  selectedItem: string,
-  q2?: string,
-  Filter2?: WhereFilterOp,
-  selectedItem2?: string
-) => {
-  const [documents, setDocuments] = useState<DocumentData[] | null>(null);
+export type Catalog = {
+  id: string;
+  public: boolean;
+  sport: string;
+  theme: string;
+};
+
+const useSearchDocsByQuery = (c: string, q1: string, Filter: WhereFilterOp, selectedItem: string) => {
+  const [documents, setDocuments] = useState<Catalog[]>([]);
 
   useEffect(() => {
     if (!selectedItem) return;
@@ -29,18 +19,15 @@ const useSearchDocsByQuery = (
     if (q1 && Filter && selectedItem) {
       ref = query(ref, where(q1, Filter, selectedItem));
     }
-    if (q2 && Filter2 && selectedItem2) {
-      ref = query(ref, where(q1, Filter, selectedItem), where(q2, Filter2, selectedItem2));
-    }
 
     const unsub = onSnapshot(ref, (snapshot) => {
       const results = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-      setDocuments(results);
+      setDocuments(results as Catalog[]);
     });
 
     return () => unsub();
-  }, [c, selectedItem, selectedItem2]);
+  }, [c, selectedItem]);
 
   return { documents };
 };
