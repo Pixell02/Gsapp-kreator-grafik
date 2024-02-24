@@ -1,7 +1,9 @@
 import { Image, Text, Textbox, ThemeOption } from "./globalPropertiesTypes";
 import { Player } from "./teamTypes";
 
-type SponsorBlock = {
+export type FabricReference = React.MutableRefObject<fabric.Canvas>;
+
+export type SponsorBlock = {
   Top: number;
   Left: number;
   Height: number;

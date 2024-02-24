@@ -63,3 +63,11 @@ export type SquadPreset = {
   reservePlayers?: Player[];
   uid: string;
 };
+
+export type Sponsor = {
+  id: string;
+  img: string;
+  name: string;
+  number: number;
+  uid: string;
+};
