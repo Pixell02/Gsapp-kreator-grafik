@@ -3,11 +3,12 @@ import useOrderBy from "../../../Catalog/hooks/useOrderBy";
 import ThemeBlock from "./Themes/ThemeBlock";
 import ThemesBar from "./Themes/ThemesBar";
 import useSearchDocsByQuery from "../../../../hooks/useSearchDocsByQuery";
+import { Catalog } from "../../../../types/creatorComponentsTypes";
 
 export default function Themes() {
   const [selectedSportOption, setSelectedSportOption] = useState("piłka nożna");
 
-  const { documents: themes } = useSearchDocsByQuery("catalog", "sport", "==", selectedSportOption);
+  const { documents: themes } = useSearchDocsByQuery<Catalog>("catalog", "sport", "==", selectedSportOption);
   const { documents: posters } = useOrderBy("piecesOfPoster", "themeId");
 
   const handleSportChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

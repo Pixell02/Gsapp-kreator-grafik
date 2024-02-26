@@ -42,7 +42,7 @@ function WorkSpace() {
           <div className="preview-container">
             <TransformWrapper minScale={0.1} initialScale={initScale as number} panning={{ disabled: true }}>
               <TransformComponent>
-                {dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef.current} coords={coords?.SponsorBlock} />}
+                {dataURL && <Canvas dataURL={dataURL} fabricRef={fabricRef} coords={coords?.SponsorBlock} />}
               </TransformComponent>
             </TransformWrapper>
           </div>

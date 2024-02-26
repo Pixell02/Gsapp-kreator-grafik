@@ -1,15 +1,15 @@
-import { fabric } from 'fabric';
+import { fabric } from "fabric";
 
 const useFabricCanvas = () => {
   const initFabric = (fabricRef, image) => {
     if (!fabricRef.current?._objects) {
-      fabricRef.current = new fabric.Canvas('canvas', {
+      fabricRef.current = new fabric.Canvas("canvas", {
         selection: true,
         width: image.width,
         height: image.height,
       });
     }
-    const backgroundImage = fabricRef.current.getObjects().find((item) => item.className === 'background0');
+    const backgroundImage = fabricRef.current.getObjects().find((item) => item.className === "background0");
 
     if (backgroundImage) {
       backgroundImage.setSrc(image.src, () => {
@@ -21,7 +21,7 @@ const useFabricCanvas = () => {
           selectable: false,
           width: image.width,
           height: image.height,
-          className: 'background0',
+          className: "background0",
         });
 
         fabricRef.current.add(img);

@@ -4,6 +4,8 @@ import { useLanguageContext } from "../context/LanguageContext";
 
 export type poster = {
   id: string;
+  additionalLayer?: string;
+  color: string;
   uid: string;
   uuid: string;
   name: string;

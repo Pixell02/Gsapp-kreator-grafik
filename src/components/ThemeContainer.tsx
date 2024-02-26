@@ -5,7 +5,7 @@ import * as Icon from "react-bootstrap-icons";
 import { db } from "../firebase/config";
 import ThemeDeleteModal from "../pages/stats/components/AdministratorPanel/Themes/Modals/ThemeDeleteModal";
 import ThemeEditModal from "../pages/stats/components/AdministratorPanel/Themes/Modals/ThemeEditModal";
-import { Catalog } from "../hooks/useSearchDocsByQuery";
+import { Catalog } from "../types/creatorComponentsTypes";
 
 type props = {
   children: React.ReactNode;

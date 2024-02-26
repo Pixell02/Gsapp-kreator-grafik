@@ -22,7 +22,7 @@ const PosterLinkBlock = ({ userPoster, link, editClick, type }: props) => {
       </div>
       <Link to={link}>
         <div className="image-category-content">
-          {userPoster.src && <img src={userPoster.src} alt={userPoster.firstName + " " + userPoster.secondName} />}
+          {userPoster.src && <img src={userPoster.src} alt={userPoster.name} />}
         </div>
       </Link>
     </div>

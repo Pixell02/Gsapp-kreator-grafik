@@ -9,5 +9,5 @@ export default function AdditionalText({ fabricRef, coords }) {
     setTextValue(coords.text);
   }, [coords]);
 
-  return <input value={textValue} onChange={(e) => setTextValue(e.target.value)} />;
+  return <textarea value={textValue} onChange={(e) => setTextValue(e.target.value)} />;
 }

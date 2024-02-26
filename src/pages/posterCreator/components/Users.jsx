@@ -1,8 +1,16 @@
 import React from "react";
+import useSearchTeam from "./hooks/useSearchTeam";
 
-export default function Users({ users, radioValue, setRadioValue }) {
+export default function Users({ query, radioValue, setRadioValue }) {
+  const [users, loading] = useSearchTeam(query);
+
+  const handleRadioValueChange = (user) => {
+    setRadioValue(user);
+  };
+
   return (
     <ul>
+      {loading && <div>Loading...</div>}
       {users &&
         users.map((user) => (
           <div className="d-flex flex-row w-100 h-50" key={user.id}>
@@ -16,8 +24,8 @@ export default function Users({ users, radioValue, setRadioValue }) {
                 <input
                   type="radio"
                   value={user.uid}
-                  checked={radioValue === user.uid}
-                  onChange={(e) => setRadioValue(e.target.value)}
+                  checked={radioValue && radioValue.uid === user.uid}
+                  onChange={() => handleRadioValueChange(user)}
                 />
                 <span>Wybierz</span>
               </label>

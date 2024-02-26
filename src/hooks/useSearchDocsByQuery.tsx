@@ -2,15 +2,8 @@ import { CollectionReference, Query, WhereFilterOp, collection, onSnapshot, quer
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
-export type Catalog = {
-  id: string;
-  public: boolean;
-  sport: string;
-  theme: string;
-};
-
-const useSearchDocsByQuery = (c: string, q1: string, Filter: WhereFilterOp, selectedItem: string) => {
-  const [documents, setDocuments] = useState<Catalog[]>([]);
+const useSearchDocsByQuery = <T,>(c: string, q1: string, Filter: WhereFilterOp, selectedItem: string) => {
+  const [documents, setDocuments] = useState<T[]>([]);
 
   useEffect(() => {
     if (!selectedItem) return;
@@ -23,7 +16,7 @@ const useSearchDocsByQuery = (c: string, q1: string, Filter: WhereFilterOp, sele
     const unsub = onSnapshot(ref, (snapshot) => {
       const results = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-      setDocuments(results as Catalog[]);
+      setDocuments(results as T[]);
     });
 
     return () => unsub();

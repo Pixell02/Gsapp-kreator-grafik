@@ -1,8 +1,8 @@
 import "./themeBlock.css";
 import ThemeContainer from "../../../../../components/ThemeContainer";
 import PosterLink from "../../../../Catalog/components/PosterLink";
-import { Catalog } from "../../../../../hooks/useSearchDocsByQuery";
 import { poster } from "../../../../../components/PosterItem";
+import { Catalog } from "../../../../../types/creatorComponentsTypes";
 
 type props = {
   themes: Catalog[];

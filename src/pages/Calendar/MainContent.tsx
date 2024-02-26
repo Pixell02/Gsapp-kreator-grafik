@@ -22,7 +22,7 @@ const MainContent = () => {
   const { language } = useLanguageContext();
   const translate: translationProps = translation;
   const { date, onChange, momentDate } = useDate();
-  const { documents: graphics } = useSearchDocsByQuery("calendarPoster", "date", "==", momentDate as string);
+  const { documents: graphics } = useSearchDocsByQuery<poster>("calendarPoster", "date", "==", momentDate as string);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="main-content">
@@ -40,7 +40,7 @@ const MainContent = () => {
         <ItemContainer>
           <Calendar onChange={onChange} value={date} />
           {graphics?.map((item) => (
-            <PosterLink poster={item as poster} />
+            <PosterLink poster={item} />
           ))}
         </ItemContainer>
       </div>

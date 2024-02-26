@@ -2,7 +2,7 @@ import { sportOptions } from "../../../../../components/options";
 import { useState } from "react";
 import ThemeAddModal from "./Modals/ThemeAddModal";
 import Select from "../../../../../components/Select";
-import { Catalog } from "../../../../../hooks/useSearchDocsByQuery";
+import { Catalog } from "../../../../../types/creatorComponentsTypes";
 
 type props = {
   handleSportChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;

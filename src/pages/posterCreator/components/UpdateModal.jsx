@@ -12,7 +12,6 @@ export default function UpdateModal({ setIsOpen }) {
   const { image, setImage, backgrounds, newBackgrounds } = useBackgroundContext();
   const { handleAddImage, progressInfo } = useStorage();
   const { globalProperties } = useGlobalPropertiesContext();
-  console.log(image, backgrounds);
   const handleAddDoc = async () => {
     if (newBackgrounds) {
       newBackgrounds.forEach(async (background, i) => {

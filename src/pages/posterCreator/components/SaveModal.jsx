@@ -5,25 +5,26 @@ import { db } from "../../../firebase/config";
 import { useBackgroundContext } from "../Context/BackgroundContext";
 import "./SaveModal.css";
 import Users from "./Users";
-import useSearchTeam from "./hooks/useSearchTeam";
 import { useLanguageContext } from "../../../context/LanguageContext";
 import useGlobalPropertiesContext from "./hooks/useGlobalPropertiesContext";
 import useStorage from "../../../hooks/useStorage";
+import ButtonContainer from "../../../components/ButtonContainer";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 export default function SaveModal({ setIsOpen }) {
   const { language } = useLanguageContext();
   const navigate = useNavigate();
   const { handleAddImage, progressInfo } = useStorage();
+  const [isChecked, setIsChecked] = useState(false);
   const [query, setQuery] = useState("");
-  const [users, loading, error] = useSearchTeam(query);
   const { image, newBackgrounds } = useBackgroundContext();
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState(null);
   const { globalProperties } = useGlobalPropertiesContext();
   const [name, setName] = useState("");
+  const functions = getFunctions();
+  const addGraphicAlert = httpsCallable(functions, "addGraphicAlert");
+
   console.log(globalProperties);
-  const handleQueryChange = (e) => {
-    setQuery(e.target.value);
-  };
 
   const handleAddDoc = async () => {
     if (newBackgrounds) {
@@ -52,7 +53,7 @@ export default function SaveModal({ setIsOpen }) {
           name: name,
           src: downloadURL,
           additionalLayer: additionalURL,
-          uid: radioValue,
+          uid: radioValue.uid,
           uuid: globalProperties.uid,
         })
           .then(() => console.log("dodano dod. warstwe"))
@@ -62,7 +63,7 @@ export default function SaveModal({ setIsOpen }) {
           color: image.color,
           name: name,
           src: downloadURL,
-          uid: radioValue,
+          uid: radioValue.uid,
           uuid: globalProperties.uid,
         })
           .then(() => console.log("dodano"))
@@ -70,7 +71,20 @@ export default function SaveModal({ setIsOpen }) {
       }
     }
     await setDoc(doc(db, "coords", globalProperties.uid), globalProperties)
-      .then(() => navigate(`/${language}/creator/${globalProperties.uid}`))
+      .then(async () => {
+        if (isChecked) {
+          const response = await addGraphicAlert({
+            mailOptions: {
+              from: "noreply@gsapp.pl",
+              to: radioValue.email,
+              subject: `Dodano nową grafikę do twojego konta`,
+              text: `grafika ${name} została dodana do twojego katalogu`,
+            },
+          });
+          console.log(response);
+        }
+        navigate(`/${language}/creator/${globalProperties.uid}`);
+      })
       .catch((err) => console.error(err));
   };
 
@@ -79,23 +93,18 @@ export default function SaveModal({ setIsOpen }) {
       <div className="p-3  d-flex flex-column h-100 w-100">
         <p>Dodaj grafikę</p>
         <label>Znajdź drużynę</label>
-        <input type="text" value={query} onChange={(e) => handleQueryChange(e)} />
+        <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
         <div className="d-flex w-100 border h-100 overflow-auto">
-          {loading && <div>Loading...</div>}
-          {error && <div>{error.message}</div>}
-          <Users users={users} radioValue={radioValue} setRadioValue={setRadioValue} />
+          <Users query={query} radioValue={radioValue} setRadioValue={setRadioValue} />
         </div>
         <label>Nazwa wzoru</label>
         <input type="text" onChange={(e) => setName(e.target.value)} />
+        <label>
+          <input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+          <span>Powiadom użytkownika</span>
+        </label>
         {progressInfo}
-        <div className="btn-container justify-content-end h-100 align-items-end mb-3">
-          <button onClick={() => setIsOpen(false)} className="btn btn-primary">
-            Anuluj
-          </button>
-          <button onClick={handleAddDoc} className="btn btn-primary">
-            Zapisz
-          </button>
-        </div>
+        <ButtonContainer handleClick={() => setIsOpen(false)} handleSubmit={handleAddDoc} />
       </div>
     </div>
   );

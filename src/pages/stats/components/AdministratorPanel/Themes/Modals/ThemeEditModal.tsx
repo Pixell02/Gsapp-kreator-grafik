@@ -2,8 +2,10 @@ import { doc, updateDoc } from "firebase/firestore";
 import { Dispatch, SetStateAction, useState } from "react";
 import { db } from "../../../../../../firebase/config";
 import Portal from "../../../../../../components/Portal";
-import { Catalog } from "../../../../../../hooks/useSearchDocsByQuery";
 import ButtonContainer from "../../../../../../components/ButtonContainer";
+import { ThemeData } from "./ThemeAddModal";
+import PlanButton from "../components/PlanButton";
+import { Catalog } from "../../../../../../types/creatorComponentsTypes";
 
 type props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -11,12 +13,22 @@ type props = {
 };
 
 const ThemeEditModal = ({ setIsOpen, selectedTheme }: props) => {
-  const [themeName, setThemeName] = useState(selectedTheme.theme);
+  const [themeData, setThemeData] = useState<ThemeData>({
+    id: selectedTheme.id,
+    theme: selectedTheme.theme,
+    sport: selectedTheme.sport,
+    public: false,
+  });
+
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, className } = e.target;
+    setThemeData((prev) => ({ ...prev, [className]: value }));
+  };
 
   const handleEditTheme = async () => {
     const docRef = doc(db, "catalog", selectedTheme.id);
     await updateDoc(docRef, {
-      theme: themeName,
+      ...themeData,
     });
     setIsOpen(false);
   };
@@ -30,7 +42,8 @@ const ThemeEditModal = ({ setIsOpen, selectedTheme }: props) => {
           </div>
           <div className="d-flex flex-column">
             <label className="w-100">Nazwa motywu</label>
-            <input type="text" value={themeName} onChange={(e) => setThemeName(e.target.value)} />
+            <input type="text" className="theme" value={themeData.theme} onChange={handleValueChange} />
+            <PlanButton setThemeData={setThemeData} handleValueChange={handleValueChange} />
           </div>
           <ButtonContainer handleClick={() => setIsOpen(false)} handleSubmit={handleEditTheme} />
         </div>

@@ -1,12 +1,12 @@
-import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { Catalog } from "../../../types/creatorComponentsTypes";
 
-const useSortCatalog = (catalog: DocumentData[] | null) => {
-  const [isOpen, setIsOpen] = useState<DocumentData[] | null>(null);
+const useSortCatalog = (catalog: Catalog[] | null) => {
+  const [isOpen, setIsOpen] = useState<Catalog[] | null>(null);
 
   useEffect(() => {
     if (catalog) {
-      const updatedCatalog: DocumentData[] = catalog.map((item) => ({ ...item, expanded: false }));
+      const updatedCatalog: Catalog[] = catalog.map((item) => ({ ...item, expanded: false }));
       setIsOpen(
         updatedCatalog.sort((a, b) => {
           const themeA = a.theme.toLowerCase();

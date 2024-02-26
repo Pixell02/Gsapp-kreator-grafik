@@ -10,6 +10,12 @@ export type SponsorBlock = {
   Width: number;
   Fill: string;
 };
+export type Catalog = {
+  id: string;
+  public: boolean;
+  sport: string;
+  theme: string;
+};
 
 export type Goal = {
   player: string | Player;

@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({ setIsOpen }: ModalProps) => {
   const [type, setType] = useState<OptionType | null>(null);
 
   return (
-    <div className="active-modal">
+    <div className="modal-container">
       <div className="modal-window rounded">
         <div className="p-3 d-flex flex-column h-100 w-100">
           {!id ? (

@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { db } from "../../../../../../firebase/config";
 import Portal from "../../../../../../components/Portal";
 import { poster } from "../../../../../../components/PosterItem";
-import { Catalog } from "../../../../../../hooks/useSearchDocsByQuery";
 import ButtonContainer from "../../../../../../components/ButtonContainer";
+import { Catalog } from "../../../../../../types/creatorComponentsTypes";
 
 type props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;

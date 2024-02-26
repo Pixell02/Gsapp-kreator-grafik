@@ -1,10 +1,10 @@
 import { addDoc, collection } from "firebase/firestore";
 import { Dispatch, SetStateAction, useState } from "react";
 import { db } from "../../../../../../firebase/config";
-import { Catalog } from "../../../../../../hooks/useSearchDocsByQuery";
 import ButtonContainer from "../../../../../../components/ButtonContainer";
 import PlanButton from "../components/PlanButton";
 import Portal from "../../../../../../components/Portal";
+import { Catalog } from "../../../../../../types/creatorComponentsTypes";
 
 type props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -13,6 +13,7 @@ type props = {
 };
 
 export type ThemeData = {
+  id?: string;
   theme: string;
   sport: string;
   public: boolean;

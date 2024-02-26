@@ -1,4 +1,4 @@
-import { LegacyRef, useEffect } from "react";
+import { LegacyRef, MutableRefObject, useEffect } from "react";
 import useFabricCanvas from "./hooks/useFabricCanvas";
 import { useCollection } from "../../hooks/useCollection";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -9,7 +9,7 @@ import { SponsorBlock } from "../../types/creatorComponentsTypes";
 
 type props = {
   dataURL: string | ArrayBuffer;
-  fabricRef: LegacyRef<HTMLCanvasElement>;
+  fabricRef: MutableRefObject<LegacyRef<HTMLCanvasElement>>;
   coords?: SponsorBlock;
 };
 
@@ -23,7 +23,6 @@ function Canvas({ dataURL, fabricRef, coords }: props) {
   useEffect(() => {
     const img = new Image();
     img.src = dataURL as string;
-    if (!dataURL) return;
     img.onload = () => {
       setResolution({ width: img.width, height: img.height });
       const image = {
@@ -54,7 +53,7 @@ function Canvas({ dataURL, fabricRef, coords }: props) {
       <canvas
         id="canvas"
         className="resposive-canvas"
-        ref={fabricRef}
+        ref={fabricRef.current}
         width={resolution.width}
         height={resolution.height}
       />
