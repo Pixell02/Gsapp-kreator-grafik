@@ -22,9 +22,26 @@ import DataPrivacy from "./DataPrivacy";
 import { TeamProvider } from "./context/TeamContext";
 import { useLanguageContext } from "./context/LanguageContext";
 import Calendar from "./pages/Calendar/Calendar";
+// import { getFunctions, httpsCallable } from "firebase/functions";
+// import { useEffect } from "react";
 function App() {
   const { user, authIsReady } = useAuthContext();
   const { language } = useLanguageContext();
+
+  // const functions = getFunctions();
+  // const fetchWebsite = httpsCallable(functions, "fetchWebsite");
+
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const response = await fetchWebsite({
+  //       url: "https://www.laczynaspilka.pl/rozgrywki?season=2023%2F2024&leagueGroup=48f9a6d6-d38d-46cc-982b-084fede4ba0a&leagueId=20505afb-3cb6-4e59-9bb1-ed56e8201bb8&enumType=None&isAdvanceMode=false&genderType=Male",
+  //       key: "rows",
+  //       includes: "https://competition-api.laczynaspilka.pl/api",
+  //     });
+  //     console.log(response.data);
+  //   };
+  //   fetch();
+  // }, []);
 
   return (
     <TeamProvider>
