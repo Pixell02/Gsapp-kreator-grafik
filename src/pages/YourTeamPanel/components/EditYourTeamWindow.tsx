@@ -15,6 +15,7 @@ import ColorSelect from "./ColorSelect";
 import { Team } from "../../../types/teamTypes";
 import { translationProps } from "../../../types/translationTypes";
 import InputImage from "../../../components/InputImage";
+import { useParams } from "react-router-dom";
 
 const options = [
   { value: "piłka nożna", label: "piłka nożna" },
@@ -32,6 +33,7 @@ type props = {
 function EditYourTeamWindow({ data, setSelectedModal }: props) {
   const { language } = useLanguageContext();
   const { user } = useAuthContext();
+  const { id } = useParams();
   const translate: translationProps = translation;
   const [teamData, setTeamData] = useState<Team>({
     firstName: data.firstName,
@@ -39,7 +41,7 @@ function EditYourTeamWindow({ data, setSelectedModal }: props) {
     sport: data.sport,
     color: data.color || null,
     img: data.img,
-    uid: user.uid,
+    uid: id || data.uid,
   });
   const { preview } = useFileReader(teamData.img);
   const { handleAddImage } = useStorage();
@@ -85,7 +87,7 @@ function EditYourTeamWindow({ data, setSelectedModal }: props) {
   };
 
   return (
-    <div className="active-modal mg-edit">
+    <div className="active-modal">
       <div className="add-window mt-5">
         <label>{translate.firstTeamName[language]}</label>
         <input type="text" onChange={handleValueChange} value={teamData.firstName} className="firstName" />
