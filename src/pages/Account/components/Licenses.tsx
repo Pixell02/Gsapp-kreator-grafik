@@ -3,12 +3,13 @@ import discard from "../../../img/discard.png";
 import { Link } from "react-router-dom";
 import translation from "../locales/translate.json";
 import { useLanguageContext } from "../../../context/LanguageContext";
-import { useLicenseContext } from "../../../context/LicenseContext";
+import { License, useLicenseContext } from "../../../context/LicenseContext";
 import { translationProps } from "../../../types/translationTypes";
 
-export default function Licenses() {
+export default function Licenses({ License }: { License: License }) {
   const { language } = useLanguageContext();
-  const { license } = useLicenseContext();
+  const { license: userLicense } = useLicenseContext();
+  const license = License || userLicense;
   const translate: translationProps = translation;
   return (
     <div>
