@@ -13,6 +13,7 @@ import { CalendarProvider } from "../Creator/context/CalendarContext";
 import useSearchDocsByQuery from "../../hooks/useSearchDocsByQuery";
 import PosterLink from "../Catalog/components/PosterLink";
 import { poster } from "./components/PosterBlock";
+import Portal from "../../components/Portal";
 
 type translationProps = {
   calendar: props;
@@ -28,7 +29,9 @@ const MainContent = () => {
     <div className="main-content">
       {isOpen && (
         <CalendarProvider>
-          <EventModal setIsOpen={setIsOpen} date={momentDate} />
+          <Portal>
+            <EventModal setIsOpen={setIsOpen} date={momentDate} />
+          </Portal>
         </CalendarProvider>
       )}
       <div className="ml-5">
