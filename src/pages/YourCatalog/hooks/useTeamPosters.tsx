@@ -4,18 +4,20 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useState } from "react";
-import { useLicenseContext } from "../../../context/LicenseContext";
+import { License, useLicenseContext } from "../../../context/LicenseContext";
 import { Graphic } from "../../../types/graphicTypes";
+import { useParams } from "react-router-dom";
 
-const useTeamPosters = () => {
+const useTeamPosters = (userLicense?: License) => {
   const { user } = useAuthContext();
+  const { id } = useParams();
   const { license } = useLicenseContext();
-  const { documents: yourPoster } = useCollection<Graphic>("yourCatalog", ["uid", "==", user.uid]);
+  const { documents: yourPoster } = useCollection<Graphic>("yourCatalog", ["uid", "==", id || user.uid]);
 
   const [teamPosters, setTeamPosters] = useState<Graphic[] | null>(null);
   useEffect(() => {
     if (license?.team) {
-      const ref = query(collection(db, "yourCatalog"), where("uid", "==", license.team));
+      const ref = query(collection(db, "yourCatalog"), where("uid", "==", userLicense?.team || license.team));
       onSnapshot(ref, (snapshot) => {
         const results: Graphic[] = [];
         snapshot.docs.forEach((doc) => {
@@ -25,7 +27,7 @@ const useTeamPosters = () => {
         setTeamPosters(results);
       });
     }
-  }, [license]);
+  }, [license, userLicense]);
 
   return { yourPoster, teamPosters, license };
 };
