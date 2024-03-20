@@ -15,6 +15,7 @@ export type Catalog = {
   public: boolean;
   sport: string;
   theme: string;
+  type: "normal" | "story";
 };
 
 export type Goal = {
