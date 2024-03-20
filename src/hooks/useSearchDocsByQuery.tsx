@@ -2,14 +2,24 @@ import { CollectionReference, Query, WhereFilterOp, collection, onSnapshot, quer
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
-const useSearchDocsByQuery = <T,>(c: string, q1: string, Filter: WhereFilterOp, selectedItem: string) => {
+const useSearchDocsByQuery = <T,>(
+  c: string,
+  q1?: string,
+  Filter?: WhereFilterOp,
+  selectedItem?: string,
+  q2?: string,
+  Filter2?: WhereFilterOp,
+  type?: "normal" | "story"
+) => {
   const [documents, setDocuments] = useState<T[]>([]);
 
   useEffect(() => {
     if (!selectedItem) return;
     let ref: CollectionReference | Query = collection(db, c);
 
-    if (q1 && Filter && selectedItem) {
+    if (q2 && Filter2 && type && q1 && Filter && selectedItem) {
+      ref = query(ref, where(q2, Filter2, type), where(q1, Filter, selectedItem));
+    } else if (q1 && Filter && selectedItem) {
       ref = query(ref, where(q1, Filter, selectedItem));
     }
 
@@ -20,7 +30,7 @@ const useSearchDocsByQuery = <T,>(c: string, q1: string, Filter: WhereFilterOp, 
     });
 
     return () => unsub();
-  }, [c, selectedItem]);
+  }, [c, selectedItem, type]);
 
   return { documents };
 };
