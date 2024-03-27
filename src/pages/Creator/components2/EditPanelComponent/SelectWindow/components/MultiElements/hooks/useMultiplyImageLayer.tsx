@@ -23,11 +23,27 @@ const useMultiplyImageLayer = (
             selectable: false,
             top:
               properties.orientation === "vertically"
-                ? coords.Top + (selectedMatch - 1) * properties.Margin
+                ? properties.rollAfter > 0
+                  ? coords.Top + ((selectedMatch - 1) % properties.rollAfter) * properties.Margin
+                  : coords.Top + (selectedMatch - 1) * properties.Margin
+                : properties.rollAfter > 0 && selectedMatch / properties.rollAfter > 1
+                ? coords.Top +
+                  properties.MarginAfterRoll *
+                    Math.floor(
+                      properties.rollAfter > 0 ? (selectedMatch - 1) / properties.rollAfter : selectedMatch - 1
+                    )
                 : coords.Top,
             left:
               properties.orientation === "horizontally"
-                ? coords.Left + (selectedMatch - 1) * properties.Margin
+                ? properties.rollAfter > 0
+                  ? coords.Left + ((selectedMatch - 1) % properties.rollAfter) * properties.Margin
+                  : coords.Left + (selectedMatch - 1) * properties.Margin
+                : properties.rollAfter > 0 && selectedMatch / properties.rollAfter > 1
+                ? coords.Left +
+                  properties.MarginAfterRoll *
+                    Math.floor(
+                      properties.rollAfter > 0 ? (selectedMatch - 1) / properties.rollAfter : selectedMatch - 1
+                    )
                 : coords.Left,
             originX: "center",
             originY: "center",

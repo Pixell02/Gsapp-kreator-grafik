@@ -4,8 +4,8 @@ import ThemeContainer from "../../../components/ThemeContainer";
 import useSortCatalog from "../hooks/useSortCatalog";
 import PosterLink from "./PosterLink";
 
-function CatalogBlock({ setSelectedPoster }) {
-  const { data: catalog, posters } = useCatalog();
+function CatalogBlock({ setSelectedPoster, selectedType }) {
+  const { data: catalog, posters } = useCatalog(selectedType);
   const { isOpen, handleCategory } = useSortCatalog(catalog);
 
   return (

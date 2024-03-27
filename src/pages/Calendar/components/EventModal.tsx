@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import translation from "../locales/translate.json";
 import { useLanguageContext } from "../../../context/LanguageContext";
 import { translationProps } from "../../../types/translationTypes";
@@ -42,7 +41,6 @@ const EventModal = ({ setIsOpen, date }: props) => {
   };
 
   const uniqueId = generateRandomId();
-  console.log(selectedPoster);
   const handleSave = async () => {
     const ref = collection(db, "calendarPoster");
     await addDoc(ref, {
@@ -54,7 +52,7 @@ const EventModal = ({ setIsOpen, date }: props) => {
     await setDoc(coordsRef, { ...calendarData }).then(() => setIsOpen(false));
   };
 
-  return ReactDOM.createPortal(
+  return (
     <div className="active-modal">
       <div className="add-window">
         <label>{translate.type[language]}</label>
@@ -91,8 +89,7 @@ const EventModal = ({ setIsOpen, date }: props) => {
           )}
         </div>
       </div>
-    </div>,
-    document.getElementById("portal")!
+    </div>
   );
 };
 

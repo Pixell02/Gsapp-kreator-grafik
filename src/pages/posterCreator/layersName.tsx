@@ -2,6 +2,15 @@ import yourTeamLogo from "../../img/crest_2.png";
 import opponentTeamLogo from "../../img/crest_1.png";
 import playerImg from "../../img/playerImg.png";
 import image from "../../img/image.jpg";
+
+export type Layer = {
+  name: string;
+  type: string;
+  image?: string;
+  className: string;
+  text?: string;
+};
+
 export const layersName = [
   { name: "herb gospodarza", type: "image", image: yourTeamLogo, className: "yourTeamLogo" },
   { name: "herb przeciwnika", type: "image", image: opponentTeamLogo, className: "opponentImage" },

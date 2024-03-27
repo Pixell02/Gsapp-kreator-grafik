@@ -16,7 +16,7 @@ const PlayerImagePreview = ({ player, setPlayer }: props) => {
   const { language } = useLanguageContext();
   const translate: translationProps = translation;
   const [img, setImg] = useState<PlayerImage[]>([
-    { type: "basic", src: (player?.img as PlayerImage[])[0].src || "" },
+    { type: "basic", src: (player?.img as PlayerImage[])[0]?.src || "" },
     { type: "celebration", src: (player?.img as PlayerImage[])[1]?.src || "" },
   ]);
   useEffect(() => {

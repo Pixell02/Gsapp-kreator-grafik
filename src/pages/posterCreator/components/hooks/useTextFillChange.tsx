@@ -1,26 +1,35 @@
 import { useEffect, useState } from "react";
-import useBackgroundContext from "./useBackgroundContext";
-import useGlobalPropertiesContext from "./useGlobalPropertiesContext";
+import { useGlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
+import { useBackgroundContext } from "../../Context/BackgroundContext";
+import { FabricReference } from "../../../../types/creatorComponentsTypes";
+import { Text } from "../../../../types/globalPropertiesTypes";
 
-const useTextFillChange = (fabricRef) => {
+interface KeysAndFill {
+  [key: string]: string;
+}
+
+interface UseTextFillChangeReturn {
+  keysAndFill: KeysAndFill;
+}
+
+const useTextFillChange = (fabricRef: FabricReference): UseTextFillChangeReturn => {
   const { color } = useBackgroundContext();
   const { globalProperties } = useGlobalPropertiesContext();
-  const [keysAndFill, setKeysAndFill] = useState({});
-  const fill = "asdasdasd";
+  const [keysAndFill, setKeysAndFill] = useState<KeysAndFill>({});
 
   useEffect(() => {
     if (fabricRef.current?._objects) {
-      const objectFill = {};
+      const objectFill: KeysAndFill = {};
       const keys = Object.keys(globalProperties);
       for (const key of keys) {
         if (Array.isArray(globalProperties[key])) {
-          globalProperties[key].forEach((item) => {
+          (globalProperties[key] as Text[]).forEach((item) => {
             const fill = item.themeOption?.find((option) => option.label === color);
             if (fill) objectFill[item.className] = fill.Fill;
           });
         } else {
-          const fill = globalProperties?.[key]?.themeOption?.find((option) => option.label === color);
-          if (fill) objectFill[globalProperties[key].className] = fill.Fill;
+          const fill = (globalProperties[key] as Text).themeOption?.find((option) => option.label === color);
+          if (fill) objectFill[(globalProperties[key] as Text)?.className || ""] = fill.Fill;
         }
       }
       setKeysAndFill(objectFill);
@@ -36,7 +45,6 @@ const useTextFillChange = (fabricRef) => {
     for (const key of keys) {
       objects.forEach((item) => {
         if (item?.className === key && keysAndFill[key]) {
-          
           item.set("fill", keysAndFill[key]);
         }
       });
@@ -44,7 +52,7 @@ const useTextFillChange = (fabricRef) => {
     fabricRef.current.renderAll();
   }, [keysAndFill, fabricRef]);
 
-  return fill;
+  return { keysAndFill };
 };
 
 export default useTextFillChange;

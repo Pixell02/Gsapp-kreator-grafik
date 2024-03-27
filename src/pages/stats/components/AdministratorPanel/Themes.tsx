@@ -7,8 +7,16 @@ import { Catalog } from "../../../../types/creatorComponentsTypes";
 
 export default function Themes() {
   const [selectedSportOption, setSelectedSportOption] = useState("piłka nożna");
-
-  const { documents: themes } = useSearchDocsByQuery<Catalog>("catalog", "sport", "==", selectedSportOption);
+  const [selectedType, setSelectedType] = useState<"normal" | "story">("normal");
+  const { documents: themes } = useSearchDocsByQuery<Catalog>(
+    "catalog",
+    "sport",
+    "==",
+    selectedSportOption,
+    "type",
+    "==",
+    selectedType
+  );
   const { documents: posters } = useOrderBy("piecesOfPoster", "themeId");
 
   const handleSportChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -17,7 +25,13 @@ export default function Themes() {
 
   return (
     <div className="w-100 h-100 d-flex flex-column">
-      <ThemesBar themes={themes} selectedSportOption={selectedSportOption} handleSportChange={handleSportChange} />
+      <ThemesBar
+        themes={themes}
+        selectedType={selectedType}
+        setSelectedType={setSelectedType}
+        selectedSportOption={selectedSportOption}
+        handleSportChange={handleSportChange}
+      />
       <div className="d-flex mt-4 flex-column">
         <p>Motywy</p>
         <div>{themes && <ThemeBlock themes={themes} posters={posters} />}</div>

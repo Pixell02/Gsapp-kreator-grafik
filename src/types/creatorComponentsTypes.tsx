@@ -1,7 +1,20 @@
-import { Image, Text, Textbox, ThemeOption } from "./globalPropertiesTypes";
+import {
+  IBlendColorFilter,
+  IBrightnessFilter,
+  IContrastFilter,
+  IGrayscaleFilter,
+  ISaturationFilter,
+} from "fabric/fabric-impl";
+import { Languages } from "../pages/YourTeamPanel/components/useColorOption";
+import { Image, Text, Textbox } from "./globalPropertiesTypes";
 import { Player } from "./teamTypes";
+import { LegacyRef, MutableRefObject } from "react";
 
-export type FabricReference = React.MutableRefObject<fabric.Canvas>;
+export type FabricReference = MutableRefObject<fabric.Canvas>;
+
+export type MutableFabricRef = MutableRefObject<LegacyRef<HTMLCanvasElement>>;
+
+export type FabricRef = FabricReference | MutableFabricRef;
 
 export type SponsorBlock = {
   Top: number;
@@ -9,6 +22,7 @@ export type SponsorBlock = {
   Height: number;
   Width: number;
   Fill: string;
+  type: string;
 };
 export type Catalog = {
   id: string;
@@ -23,14 +37,55 @@ export type Goal = {
   time: string;
 };
 
+export type BrightnessFilter = {
+  brightness: number;
+};
+export type ContrastFilter = {
+  contrast: number;
+};
+export type SaturationFilter = {
+  saturation: number;
+};
+
+type BlendThemeOption = {
+  color: string;
+  label: string;
+};
+
+export type BlendColorFilter = {
+  [key: string]: unknown;
+  alpha: number;
+  blendMode: string;
+  color: string;
+  mode: string;
+  themeOption: BlendThemeOption[];
+};
+
+export type FilterParameters =
+  | BrightnessFilter
+  | ContrastFilter
+  | SaturationFilter
+  | BlendColorFilter
+  | IGrayscaleFilter;
+
 export type Filters = {
-  blendColor?: {
-    alpha: number;
-    blendMode: string;
-    color: string;
-    mode: string;
-    themeOption: ThemeOption;
-  };
+  [key: string]:
+    | BrightnessFilter
+    | IBrightnessFilter
+    | ContrastFilter
+    | IContrastFilter
+    | SaturationFilter
+    | ISaturationFilter
+    | IGrayscaleFilter
+    | BlendColorFilter
+    | IBlendColorFilter
+    | string
+    | undefined;
+  brightness?: BrightnessFilter | IBrightnessFilter;
+  contrast?: ContrastFilter | IContrastFilter;
+  saturation?: SaturationFilter | ISaturationFilter;
+  grayScale?: IGrayscaleFilter;
+  blendColor?: BlendColorFilter | IBlendColorFilter;
 };
 
 export type ImagesWithFilter = {
@@ -86,4 +141,30 @@ export type Coords = {
   Margin?: number;
   opponentPlayerOneGoal?: Textbox;
   AdditionalText?: Textbox[];
+};
+
+export type ActiveObjectCoords = {
+  Top?: number;
+  Left?: number;
+  [key: string]: string | Languages | number | undefined | Filters[] | Filters;
+  text?: Languages;
+  className?: string;
+  Angle?: number;
+  Width?: number;
+  Height?: number;
+  ScaleToWidth?: number;
+  ScaleToHeight?: number;
+  FontSize?: number;
+  FontFamily?: string;
+  CharSpacing?: number;
+  Fill?: string;
+  OriginX?: string;
+  OriginY?: string;
+  type?: string;
+  TextAlign?: string;
+  Format?: string;
+  FontStyle?: string;
+  LineHeight?: number;
+  Formatter?: string;
+  filters?: Filters[] | Filters;
 };

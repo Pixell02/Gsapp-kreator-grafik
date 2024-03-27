@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import useCoords from "../useCoords";
-import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
 import useTextFillChange from "../useTextFillChange";
 import useThemeOption from "../useThemeOption";
 import useUniqueKey from "../useUniqueKey";
+import { useGlobalPropertiesContext } from "../../../Context/GlobalProperitesContext";
+import { FabricReference } from "../../../../../types/creatorComponentsTypes";
+import { Text } from "../../../../../types/globalPropertiesTypes";
 
-const usePlayerNameProperties = (fabricRef) => {
+const usePlayerNameProperties = (fabricRef: FabricReference) => {
   const propertyKeys = [
     "Top",
     "Left",
@@ -30,14 +32,17 @@ const usePlayerNameProperties = (fabricRef) => {
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { setUniversalThemeOption } = useThemeOption();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
-  const fill = useTextFillChange(fabricRef);
+  const { keysAndFill } = useTextFillChange(fabricRef);
+  console.log(keysAndFill);
   useEffect(() => {
     if (!coords) return;
-    if (Object.keys(coords).length === 0) return;
     if (coords?.type === "playerGoal") {
       setGlobalProperties((prevState) => {
         const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
-        const updatedCoords = getUniqueTextArray([...(prevState.player || []), updatedCoordsWithThemeOption]);
+        const updatedCoords = getUniqueTextArray<Text>([
+          ...(prevState.player as Text[]),
+          updatedCoordsWithThemeOption as Text,
+        ]);
 
         return {
           ...prevState,
@@ -47,7 +52,10 @@ const usePlayerNameProperties = (fabricRef) => {
     } else if (coords?.type === "playerFirstName") {
       setGlobalProperties((prevState) => {
         const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
-        const updatedCoords = getUniqueTextArray([...(prevState.playerFirstName || []), updatedCoordsWithThemeOption]);
+        const updatedCoords = getUniqueTextArray<Text>([
+          ...((prevState?.playerFirstName as Text[]) || []),
+          updatedCoordsWithThemeOption as Text,
+        ]);
 
         return {
           ...prevState,
@@ -57,7 +65,10 @@ const usePlayerNameProperties = (fabricRef) => {
     } else if (coords?.type === "playerLastName") {
       setGlobalProperties((prevState) => {
         const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.player || [], coords);
-        const updatedCoords = getUniqueTextArray([...(prevState.playerLastName || []), updatedCoordsWithThemeOption]);
+        const updatedCoords = getUniqueTextArray<Text>([
+          ...((prevState.playerLastName as Text[]) || []),
+          updatedCoordsWithThemeOption as Text,
+        ]);
 
         return {
           ...prevState,
@@ -69,7 +80,7 @@ const usePlayerNameProperties = (fabricRef) => {
     }
   }, [coords]);
 
-  return { coords, fill, handleInputChange, handleSelectChange };
+  return { coords, handleInputChange, handleSelectChange };
 };
 
 export default usePlayerNameProperties;

@@ -5,5 +5,26 @@
     "es": "catálogo",
     "de": "Katalog",
     "fr": "catalogue"
+  },
+  "noTheme": {
+    "pl": "brak motywu",
+    "en": "no theme",
+    "es": "sin tema",
+    "de": "kein Thema",
+    "fr": "aucun thème"
+  },
+  "themeAdded": {
+    "pl": "motyw dodany",
+    "en": "theme added",
+    "es": "tema añadido",
+    "de": "Thema hinzugefügt",
+    "fr": "thème ajouté"
+  },
+  "codeUsed": {
+    "pl": "kod użyty",
+    "en": "code used",
+    "es": "código utilizado",
+    "de": "Code verwendet",
+    "fr": "code utilisé"
   }
 }

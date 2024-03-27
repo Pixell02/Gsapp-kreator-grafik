@@ -1,20 +1,20 @@
 import { useEffect } from "react";
 import useCoords from "../useCoords";
-import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
+import { useGlobalPropertiesContext } from "../../../Context/GlobalProperitesContext";
+import { FabricReference, SponsorBlock } from "../../../../../types/creatorComponentsTypes";
 
-const useSponsorProperties = (fabricRef) => {
+const useSponsorProperties = (fabricRef: FabricReference) => {
   const propertyKeys = ["Top", "Left", "className", "Width", "Height", "type", "Fill"];
 
-  const { coords, setCoords, handleInputChange } = useCoords(fabricRef, propertyKeys);
+  const { coords, setCoords, handleInputChange } = useCoords<SponsorBlock>(fabricRef, propertyKeys);
   const { setGlobalProperties } = useGlobalPropertiesContext();
 
   useEffect(() => {
     if (!coords) return;
-    if (Object.keys(coords).length === 0) return;
-    if (coords.type === "SponsorBlock") {
+    if (coords?.type === "SponsorBlock") {
       setGlobalProperties((prevState) => {
         const updatedCoords = {
-          SponsorBlock: coords,
+          SponsorBlock: coords as SponsorBlock,
         };
         return {
           ...prevState,

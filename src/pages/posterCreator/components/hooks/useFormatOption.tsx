@@ -1,8 +1,13 @@
+type Format = {
+  [key: string]: string;
+};
+
 const useFormatOption = () => {
   const defaultSquad =
     "Nazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko\nNazwisko";
-  const defaultReserve = "Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko";
-  const squadOptions = {
+  const defaultReserve =
+    "Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko Nazwisko";
+  const squadOptions: Format = {
     dotted:
       "88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko\n88.I.Nazwisko",
     NumSurName:
@@ -12,7 +17,7 @@ const useFormatOption = () => {
     oneDot:
       "88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko\n88 I.Nazwisko",
   };
-  const reserveOptions = {
+  const reserveOptions: Format = {
     dotted:
       "88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko 88.I.Nazwisko",
     NumSurName:

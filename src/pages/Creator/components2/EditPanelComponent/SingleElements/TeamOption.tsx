@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import Select from "react-select";
-// import radioContext, { useRadioContext } from "../../../context/radioContext";
-// import { useYourTeamNameAndLogo } from "../../../hooks2/useYourTeamLogo";
 import translation from "../../../locales/translate.json";
-// import teamFirstName from "./TeamOption/teamFirstName";
-// import teamFullName from "./TeamOption/teamFullName";
-// import teamLogo from "./TeamOption/teamLogo";
-// import teamSecondName from "./TeamOption/teamSecondName";
 import { useLanguageContext } from "../../../../../context/LanguageContext";
 import useTeamOption from "../../../hooks/useTeamOption";
 import useTeamFabricObject from "../../../hooks/useTeamFabricObject";

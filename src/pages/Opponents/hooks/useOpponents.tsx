@@ -7,14 +7,16 @@ import { useLanguageContext } from "../../../context/LanguageContext";
 import { Opponent } from "../../../types/teamTypes";
 import { translationProps } from "../../../types/translationTypes";
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useParams } from "react-router-dom";
 
 const useOpponents = (data?: Opponent) => {
   const translate: translationProps = translation;
   const { user } = useAuthContext();
+  const { id } = useParams();
   const [opponent, setOpponent] = useState<Opponent>({
     firstName: data?.firstName || "",
     secondName: data?.secondName || "",
-    uid: data?.uid || user.uid,
+    uid: data?.uid || id || user.uid,
     team: data?.team || "",
     img: data?.img || "",
   });

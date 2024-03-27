@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import useCoords from "../useCoords";
-import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
+import { GlobalProperties, useGlobalPropertiesContext } from "../../../Context/GlobalProperitesContext";
 import useMultipleObjectProperties from "./useMultipleObjectProperties";
+import { FabricReference } from "../../../../../types/creatorComponentsTypes";
 
-const useSingleCrestProperties = (fabricRef) => {
+const useSingleCrestProperties = (fabricRef: FabricReference) => {
   const propertyKeys = [
     "Top",
     "Left",
@@ -25,19 +26,19 @@ const useSingleCrestProperties = (fabricRef) => {
 
   useEffect(() => {
     if (!coords) return;
-    if (Object.keys(coords).length === 0) return;
-    if (coords.type === "image" || coords.type === "multiplyimage") {
+    if (coords?.type === "image" || coords?.type === "multiplyimage") {
       if (coords.type === "multiplyimage") {
         handlePropertiesChange();
       }
+      const { className } = coords;
       setGlobalProperties((prevState) => {
         const updatedCoords = {
-          [coords.className]: coords,
+          [className as string]: coords,
         };
         return {
           ...prevState,
           ...updatedCoords,
-        };
+        } as GlobalProperties;
       });
     }
   }, [coords]);

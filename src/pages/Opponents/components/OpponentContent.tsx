@@ -11,12 +11,15 @@ import { translationProps } from "../../../types/translationTypes";
 import { useLanguageContext } from "../../../context/LanguageContext";
 import AddOpponentWindow from "./AddOpponentWindow";
 import EditOpponentWindow from "./EditOpponentWindow";
+import { useParams } from "react-router-dom";
+import Title from "../../../components/main-content-elements/Title";
 
 const OpponentContent = () => {
   const { user } = useAuthContext();
+  const { id } = useParams();
   const { language } = useLanguageContext();
   const translate: translationProps = translation;
-  const { documents: Opponents } = useCollection("Opponents", ["uid", "==", user.uid]);
+  const { documents: Opponents } = useCollection("Opponents", ["uid", "==", id || user.uid]);
   const { documents: LicenseOpponents } = useTeamLicenseCollection("Opponents");
   const [data, setData] = useState<Opponent | null>(null);
   const [selectedModal, setSelectedModal] = useState(0);
@@ -29,6 +32,7 @@ const OpponentContent = () => {
   return (
     <>
       <Portal>{modalOptions.map((item) => selectedModal === item.id && item.component)}</Portal>
+      <Title title={translate.opponents[language]} />
       <button onClick={() => setSelectedModal(1)} className="btn primary-btn">
         {translate.addOpponent[language]}
       </button>

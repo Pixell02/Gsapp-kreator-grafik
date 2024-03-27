@@ -1,3 +1,5 @@
+import { FabricReference } from "../../../types/creatorComponentsTypes";
+import { useGlobalPropertiesContext } from "../Context/GlobalProperitesContext";
 import { ImageFiltersProvider } from "../Context/ImageFiltersContext";
 import ImageFilterProperties from "./components2/ImageFilterProperties";
 import ImageProperties from "./components2/ImageProperties";
@@ -8,9 +10,8 @@ import TextBoxUniversalProperties from "./components2/TextBoxUniversalProperties
 import TextProperties from "./components2/TextProperties";
 import TextUniversalProperties from "./components2/TextUniversalProperties";
 import TextboxProperties from "./components2/TextboxProperties";
-import useGlobalPropertiesContext from "./hooks/useGlobalPropertiesContext";
 
-export default function Properties({ fabricRef }) {
+export default function Properties({ fabricRef }: { fabricRef: FabricReference }) {
   const { globalProperties } = useGlobalPropertiesContext();
   console.log(globalProperties);
   return (

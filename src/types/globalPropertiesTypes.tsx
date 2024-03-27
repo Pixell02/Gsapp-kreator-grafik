@@ -3,11 +3,11 @@ import { Opponent, Player, SquadPreset, Team } from "./teamTypes";
 
 export type ThemeOption = {
   label: string;
-  value: string;
+  Fill: string;
 };
 
 export type Text = {
-  [key: string]: string | number | undefined | ThemeOption;
+  [key: string]: string | number | undefined | ThemeOption[];
   Top: number;
   Left: number;
   FontSize: number;
@@ -20,7 +20,7 @@ export type Text = {
   Angle?: number;
   CharSpacing?: number;
   ScaleToWidth: number;
-  themeOption: ThemeOption;
+  themeOption: ThemeOption[];
   FontStyle: "" | "normal" | "italic" | "oblique" | undefined;
 };
 
@@ -39,11 +39,12 @@ export type Textbox = {
   Angle?: number;
   CharSpacing?: number;
   ScaleToWidth: number;
-  themeOption: ThemeOption;
+  themeOption: ThemeOption[];
   format?: string;
   Format?: string;
   Formatter?: string;
   value: string;
+  type: string;
   FontStyle: "" | "normal" | "italic" | "oblique" | undefined;
 };
 

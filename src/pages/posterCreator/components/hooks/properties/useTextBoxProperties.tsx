@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import useCoords from "../useCoords";
-import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
 import useTextFillChange from "../useTextFillChange";
 import useThemeOption from "../useThemeOption";
 import useUniqueKey from "../useUniqueKey";
+import { useGlobalPropertiesContext } from "../../../Context/GlobalProperitesContext";
+import { Textbox } from "../../../../../types/globalPropertiesTypes";
+import { FabricReference } from "../../../../../types/creatorComponentsTypes";
 
-const useTextBoxProperties = (fabricRef) => {
+const useTextBoxProperties = (fabricRef: FabricReference) => {
   const propertyKeys = [
     "Top",
     "Left",
@@ -29,14 +31,13 @@ const useTextBoxProperties = (fabricRef) => {
     "LineHeight",
     "text",
   ];
-  const { coords, handleInputChange, handleSelectChange } = useCoords(fabricRef, propertyKeys);
+  const { coords, handleInputChange, handleWriteToLanguage, handleSelectChange } = useCoords(fabricRef, propertyKeys);
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   const { setThemeOption, setUniversalThemeOption } = useThemeOption();
   const fill = useTextFillChange(fabricRef);
   useEffect(() => {
     if (!coords) return;
-    if (Object.keys(coords).length === 0) return;
     if (coords?.type === "universalTextBox" || coords?.type === "textBox" || coords?.type === "additionalTextBox")
       setGlobalProperties((prevState) => {
         let updatedCoords = {};
@@ -44,20 +45,27 @@ const useTextBoxProperties = (fabricRef) => {
         if (coords?.type === "universalTextBox") {
           const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.TextBox || [], coords);
           updatedCoords = {
-            TextBox: getUniqueTextArray([...(prevState.TextBox || []), updatedCoordsWithThemeOption]),
+            TextBox: getUniqueTextArray<Textbox>([
+              ...((prevState.TextBox as Textbox[]) || []),
+              updatedCoordsWithThemeOption as Textbox,
+            ]),
           };
         } else if (coords?.type === "textBox") {
           const updatedCoordsWithThemeOption = setThemeOption(prevState, coords);
+          const { className } = coords;
           updatedCoords = {
-            [coords.className]: updatedCoordsWithThemeOption,
+            [className as string]: updatedCoordsWithThemeOption,
           };
         } else if (coords?.type === "additionalTextBox") {
           const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.AdditionalText || [], coords);
           updatedCoords = {
-            AdditionalText: getUniqueTextArray([...(prevState.AdditionalText || []), updatedCoordsWithThemeOption]),
+            AdditionalText: getUniqueTextArray<Textbox>([
+              ...((prevState.AdditionalText as Textbox[]) || []),
+              updatedCoordsWithThemeOption as Textbox,
+            ]),
           };
         } else {
-          return;
+          return { ...prevState };
         }
 
         return {
@@ -66,7 +74,7 @@ const useTextBoxProperties = (fabricRef) => {
         };
       });
   }, [coords]);
-  return { coords, fill, handleInputChange, handleSelectChange };
+  return { coords, fill, handleInputChange, handleSelectChange, handleWriteToLanguage };
 };
 
 export default useTextBoxProperties;

@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import useCoords from "../useCoords";
-import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
 import useTextFillChange from "../useTextFillChange";
 import useThemeOption from "../useThemeOption";
 import useUniqueKey from "../useUniqueKey";
+import { useGlobalPropertiesContext } from "../../../Context/GlobalProperitesContext";
 import useMultipleObjectProperties from "./useMultipleObjectProperties";
+import { FabricReference } from "../../../../../types/creatorComponentsTypes";
 
-const useTextProperties = (fabricRef) => {
+const useTextProperties = (fabricRef: FabricReference) => {
   const propertyKeys = [
     "Top",
     "Left",
@@ -35,12 +36,11 @@ const useTextProperties = (fabricRef) => {
 
   useEffect(() => {
     if (!coords) return;
-    if (Object.keys(coords).length === 0) return;
     if (
-      coords.type === "text" ||
-      coords.type === "multiplyText" ||
-      coords.type === "multiplyUniversalText" ||
-      coords.type === "universalText"
+      coords?.type === "text" ||
+      coords?.type === "multiplyText" ||
+      coords?.type === "multiplyUniversalText" ||
+      coords?.type === "universalText"
     ) {
       if (coords.type === "multiplyText" || coords.type === "multiplyUniversalText") {
         handlePropertiesChange();
@@ -49,8 +49,9 @@ const useTextProperties = (fabricRef) => {
         let updatedCoords = {};
         if (coords.type === "text" || coords.type === "multiplyText") {
           const updatedCoordsWithThemeOption = setThemeOption(prevState, coords);
+          const { className } = coords;
           updatedCoords = {
-            [coords.className]: updatedCoordsWithThemeOption,
+            [className as string]: updatedCoordsWithThemeOption,
           };
         } else if (coords.type === "universalText") {
           const updatedCoordsWithThemeOption = setUniversalThemeOption(prevState.Text || [], coords);

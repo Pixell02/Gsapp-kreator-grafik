@@ -1,13 +1,13 @@
 import LeftBar from "../../components/Left-Bar";
 import WorkSpace from "./WorkSpace";
-import { MultiPropertiesProvider } from "./Context/MultiPropertiesContext";
 import { ImageRefProvider } from "../Creator/context/ImageRefContext";
 import { BackgroundProvider } from "./Context/BackgroundContext";
 import { FontProvider } from "./Context/FontsContext";
+import { GlobalPropertiesProvider } from "./Context/GlobalProperitesContext";
 
 export default function PosterCreator() {
   return (
-    <MultiPropertiesProvider>
+    <GlobalPropertiesProvider>
       <FontProvider>
         <BackgroundProvider>
           <ImageRefProvider>
@@ -20,6 +20,6 @@ export default function PosterCreator() {
           </ImageRefProvider>
         </BackgroundProvider>
       </FontProvider>
-    </MultiPropertiesProvider>
+    </GlobalPropertiesProvider>
   );
 }

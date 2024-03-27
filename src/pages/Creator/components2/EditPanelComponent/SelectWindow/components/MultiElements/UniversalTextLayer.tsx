@@ -2,14 +2,12 @@ import { SetStateAction, useEffect, useState } from "react";
 import useMultiplyTextLayer from "./hooks/useMultiplyTextLayer";
 import { useCalendarContext } from "../../../../../context/CalendarContext";
 import { Text } from "../../../../../../../types/globalPropertiesTypes";
+import { Properties } from "./hooks/useProperties";
 
 type props = {
   fabricRef?: React.MutableRefObject<fabric.Canvas>;
   coords: Text;
-  properties: {
-    Margin: number;
-    orientation: string;
-  };
+  properties: Properties;
   i: number;
 };
 

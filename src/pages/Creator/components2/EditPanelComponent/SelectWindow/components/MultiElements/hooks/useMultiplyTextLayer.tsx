@@ -10,15 +10,17 @@ import { Text as FabricText } from "../../../../../../../../types/globalProperti
 const useMultiplyTextLayer = (
   coords: FabricText,
   i: number,
-  properties: Properties | null,
+  properties: Properties,
   fabricRef?: React.MutableRefObject<fabric.Canvas>
 ) => {
   const [textValue, setTextValue] = useState<string>("");
   const [textObject, setTextObject] = useState<Text | null>(null);
+
   const { fontFace } = useFont(coords?.FontFamily);
   const { themeColor } = useThemeContext();
   useEffect(() => {
     if (!coords || !properties || !fabricRef?.current || !fontFace) return;
+
     if (textObject) return;
     fontFace.load().then((font) => {
       document.fonts.add(font);
@@ -29,8 +31,24 @@ const useMultiplyTextLayer = (
         textAlign: coords.OriginX,
         originY: coords.OriginY,
         width: coords.ScaleToWidth,
-        top: properties.orientation === "vertically" ? coords.Top + (i - 1) * properties.Margin : coords.Top,
-        left: properties.orientation === "horizontally" ? coords.Left + (i - 1) * properties.Margin : coords.Left,
+        top:
+          properties.orientation === "vertically"
+            ? properties.rollAfter > 0
+              ? (coords.Top as number) + ((i - 1) % properties.rollAfter) * properties.Margin
+              : (coords.Top as number) + (i - 1) * properties.Margin
+            : properties.rollAfter > 0 && i / properties.rollAfter > 1
+            ? (coords.Top as number) +
+              properties.MarginAfterRoll * Math.floor(properties.rollAfter > 0 ? (i - 1) / properties.rollAfter : i - 1)
+            : (coords.Top as number),
+        left:
+          properties.orientation === "horizontally"
+            ? properties.rollAfter > 0
+              ? (coords.Left as number) + ((i - 1) % properties.rollAfter) * properties.Margin
+              : (coords.Left as number) + (i - 1) * properties.Margin
+            : properties.rollAfter > 0 && i / properties.rollAfter > 1
+            ? (coords.Left as number) +
+              properties.MarginAfterRoll * Math.floor(properties.rollAfter > 0 ? (i - 1) / properties.rollAfter : i - 1)
+            : (coords.Left as number),
         fill: coords.Fill,
         fontSize: coords.FontSize,
         fontFamily: coords.FontFamily,

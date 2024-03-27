@@ -1,3 +1,6 @@
+// import { useMultiPropertiesContext } from "../../Context/MultiPropertiesContext";
+import { FabricReference } from "../../../../types/creatorComponentsTypes";
+import { useGlobalPropertiesContext } from "../../Context/GlobalProperitesContext";
 import {
   createAdditionalTextbox,
   createFabricImage,
@@ -12,12 +15,11 @@ import {
   createUniversalText,
   createUniversalTextBox,
 } from "./createFabricObject";
-import { useMultiPropertiesContext } from "./useMultiPropertiesContext";
 
-export const useAddFabricObject = (fabricRef) => {
-  const { setIsMany, properties } = useMultiPropertiesContext();
+export const useAddFabricObject = (fabricRef: FabricReference) => {
+  const { setIsMany, properties } = useGlobalPropertiesContext();
 
-  const handleAddObject = (e, layer) => {
+  const handleAddObject = (layer) => {
     if (layer.type === "image") {
       createFabricImage(fabricRef, layer.className, layer.image, layer.type);
     } else if (layer.type === "FilteredImage") {

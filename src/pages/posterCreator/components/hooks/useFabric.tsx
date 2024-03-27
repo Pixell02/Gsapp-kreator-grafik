@@ -1,17 +1,22 @@
 import { fabric } from "fabric";
-import useBackgroundContext from "./useBackgroundContext";
 import { useImageRefContext } from "../../../Creator/context/ImageRefContext";
+import { useBackgroundContext } from "../../Context/BackgroundContext";
+import { FabricReference } from "../../../../types/creatorComponentsTypes";
+import { Image } from "fabric/fabric-impl";
 
 const useFabric = () => {
   const { setColor } = useBackgroundContext();
   const { imageRef } = useImageRefContext();
-  const initFabric = (fabricRef, img) => {
+  const initFabric = (
+    fabricRef: FabricReference,
+    img: { color: string; width: number; height: number; src: string }
+  ) => {
     fabricRef.current = new fabric.Canvas("canvas", {
       width: img.width,
       height: img.height,
     });
     fabricRef.current.renderAll();
-    const backgroundImage = fabricRef.current.getObjects().find((item) => item.className === "background0");
+    const backgroundImage = fabricRef.current.getObjects().find((item) => item.className === "background0") as Image;
 
     if (backgroundImage) {
       backgroundImage.setSrc(img.src, () => {

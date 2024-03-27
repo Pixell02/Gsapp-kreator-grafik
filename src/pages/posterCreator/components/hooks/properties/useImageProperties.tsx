@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import useCoords from "../useCoords";
-import useGlobalPropertiesContext from "../useGlobalPropertiesContext";
 import useUniqueKey from "../useUniqueKey";
 import useThemeOption from "../useThemeOption";
 import useImageThemeColor from "../useImageThemeColor";
+import { GlobalProperties, useGlobalPropertiesContext } from "../../../Context/GlobalProperitesContext";
+import { FabricReference, ImagesWithFilter } from "../../../../../types/creatorComponentsTypes";
 
-const useImageProperties = (fabricRef) => {
+const useImageProperties = (fabricRef: FabricReference) => {
   const propertyKeys = [
     "Top",
     "Left",
@@ -18,23 +19,25 @@ const useImageProperties = (fabricRef) => {
     "type",
     "filters",
   ];
-  const { coords, handleInputChange } = useCoords(fabricRef, propertyKeys, "FilteredImage");
+  const { coords, handleInputChange } = useCoords(fabricRef, propertyKeys);
   const { setGlobalProperties } = useGlobalPropertiesContext();
   const { setImageThemeOption } = useThemeOption();
   const { getUniqueTextArray } = useUniqueKey(fabricRef);
   useImageThemeColor(fabricRef);
   useEffect(() => {
     if (!coords) return;
-    if (Object.keys(coords).length === 0) return;
     if (coords?.type !== "FilteredImage") return;
     setGlobalProperties((prevState) => {
       const updatedCoordsWithThemeOption = setImageThemeOption(prevState.Images || [], coords);
-      const updatedCoords = getUniqueTextArray([...(prevState.Images || []), updatedCoordsWithThemeOption]);
+      const updatedCoords = getUniqueTextArray<ImagesWithFilter>([
+        ...(prevState.Images || []),
+        updatedCoordsWithThemeOption as ImagesWithFilter,
+      ]);
 
       return {
         ...prevState,
         Images: updatedCoords,
-      };
+      } as GlobalProperties;
     });
   }, [coords]);
 
